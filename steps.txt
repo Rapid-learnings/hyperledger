@@ -1,0 +1,12 @@
+Commands for this repo setup
+Note : Be conscious of location/dir when running the Commands
+
+Setup the paths 
+1. export PATH:${PWD}/bin:$PATH
+2. export FABRIC_CFG_PATH:${PWD}/config
+
+Create the crypto-graphic material
+3. cryptogen generate --config=${PWD}/crypto-config.yaml
+
+Create the genesis block
+4. 
