@@ -1,14 +1,14 @@
 OrdererOrgs:
   - Name: orderer
     Domain: service.com
-    EnableNodeOUs: true
+    EnableNodeOUs: false
     Specs:
       - Hostname: orderer
 
 PeerOrgs:
   - Name: RapidInnovation
     Domain: ri.blockchain.io
-    EnableNodeOUs: true
+    EnableNodeOUs: false
     Specs:
       - Hostname: ripeer1
       - Hostname: ripeer2
@@ -17,7 +17,7 @@ PeerOrgs:
 
   - Name: Honda
     Domain: honda.bigwing.com
-    EnableNodeOUs: true
+    EnableNodeOUs: false
     Specs:
       - Hostname: honda-peer1
       - Hostname: honda-peer2

@@ -1,12 +1,24 @@
-Commands for this repo setup
-Note : Be conscious of location/dir when running the Commands
+Instructions for this repo setup
+
+Note : 
+Be conscious of location/dir when running the Commands
+Create channel-artefacts directory in root folder if not present.
 
 Setup the paths 
-1. export PATH:${PWD}/bin:$PATH
-2. export FABRIC_CFG_PATH:${PWD}/config
+1. export PATH=${PWD}/bin:$PATH
+2. export FABRIC_CFG_PATH=${PWD}/config
 
 Create the crypto-graphic material
 3. cryptogen generate --config=${PWD}/crypto-config.yaml
 
-Create the genesis block
-4. 
+Create the genesis block, using the configtxgen & genesis profile
+4. configtxgen --outputBlock ./channel-artefacts/genesis.block -profile GenesisProfile -channelID orderer-channel
+
+Create channel transaction for application channel
+5.configtxgen -outputCreateChannelTx ./channel-artefacts/application-channel.tx -profile TwoOrgsChannel -channelID application-channel
+
+Create the anchor peers for organization
+6. configtxgen -profile TwoOrgsChannel -outputAnchorPeersUpdate ./channel-artefacts/rapid-anchor.tx -channelID application-channel -asOrg RapidInnovationMSP
+    configtxgen -profile TwoOrgsChannel -outputAnchorPeersUpdate ./channel-artefacts/honda-anchor.tx -channelID application-channel -asOrg HondaMSP
+
+7. 

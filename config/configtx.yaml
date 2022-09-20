@@ -1,18 +1,18 @@
 Organizations:
-    - &OrdererOrgs
+    - &OrdererOrg
         Name: OrdererOrg
         ID: OrdererMSP
         MSPDir: ../crypto-config/ordererOrganizations/service.com/msp
-        Policies: 
+        Policies: &SamplePolicies
             Readers:
                 Type: Signature
-                Rule: "OR(OrdererMSP.member)"
-            Writer:
+                Rule: "OR('OrdererMSP.member')"
+            Writers:
                 Type: Signature
-                Rule: "OR(OrdererMSP.member)"
+                Rule: "OR('OrdererMSP.member')"
             Admins: 
                 Type: Signature
-                Rule: "OR(OrdererMSP.member)"
+                Rule: "OR('OrdererMSP.admin')"
         OrdererEndpoints:
             - orderer.service.com:7050 # hostname.domain:<port>
     
@@ -23,13 +23,13 @@ Organizations:
         Policies: 
             Readers:
                 Type: Signature
-                Rule: "OR(HondaMSP.member,HondaMSP.client)"
-            Writer:
+                Rule: "OR('HondaMSP.member')"
+            Writers:
                 Type: Signature
-                Rule: "OR(HondaMSP.member, HondaMSP.admin, HondaMSP.peer)"
+                Rule: "OR('HondaMSP.member')"
             Admins: 
                 Type: Signature
-                Rule: "OR(HondaMSP.member)" 
+                Rule: "OR('HondaMSP.admin')" 
         AnchorPeers: #for inter-channel communication 
             Host: honda-peer1.honda.bigwing.com
             Port: 1061
@@ -41,13 +41,13 @@ Organizations:
         Policies: 
             Readers:
                 Type: Signature
-                Rule: "OR(RapidInnovationMSP.member)"
-            Writer:
+                Rule: "OR('RapidInnovationMSP.member')"
+            Writers:
                 Type: Signature
-                Rule: "OR(RapidInnovationMSP.member, RapidInnovationMSP.peer, RapidInnovationMSP.admin)"
+                Rule: "OR('RapidInnovationMSP.member')"
             Admins: 
                 Type: Signature
-                Rule: "OR(RapidInnovationMSP.member)" 
+                Rule: "OR('RapidInnovationMSP.admin')" 
         AnchorPeers: #for inter-channel communication 
             Host: ripeer1.ri.blockchain.io
             Port: 1051
@@ -69,14 +69,14 @@ Application: &ApplicationDefaults
         Writers:
             Type: ImplicitMeta
             Rule: "ANY Writers"
-        Admin:
+        Admins:
             Type: ImplicitMeta
             Rule: "MAJORITY Admins"
     Capabilities: 
         <<: *ApplicationCapabilities
 
 Orderer: &OrdererDefaults
-    OrdererType: Solo
+    OrdererType: solo
     Addresses: 
         - orderer.service.com:7050
     BatchTimeout: 2s
@@ -119,7 +119,7 @@ Profiles:
         Orderer:
             <<: *OrdererDefaults
             Organizations:
-                - *OrdererOrg
+                - <<: *OrdererOrg         
             Capabilities:
                 <<: *OrdererCapabilities
         Consortiums:

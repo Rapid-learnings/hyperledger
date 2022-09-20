@@ -7,9 +7,9 @@ volumes:
   ri-peer-2:
   orderer.service.com:
 
-networks:
-  test:
-    name: test
+# networks:
+#   test:
+#     name: test
 
 
 services:
@@ -44,8 +44,8 @@ services:
       - honda-peer1.honda.bigwing.com:/var/hyperledger/production
     ports:
       - 1060:1060
-    networks:
-      - test
+    # networks:
+    #   - test
 
   honda-peer-2:
     container-name: honda-peer-2
@@ -78,8 +78,8 @@ services:
       - honda-peer2.honda.bigwing.com:/var/hyperledger/production
     ports:
       - 2060:2060
-    networks:
-      - test
+    # networks:
+    #   - test
 
   ri-peer-1:
     container-name: ri-peer-1
@@ -112,8 +112,8 @@ services:
       - ripeer1.ri.blockchain.io:/var/hyperledger/production
     ports:
       - 1050:1050
-    networks:
-      - test
+    # networks:
+    #   - test
 
   ri-peer-2:
     container-name: ri-peer-2
@@ -146,8 +146,8 @@ services:
       - ripeer2.ri.blockchain.io:/var/hyperledger/production
     ports:
       - 2050:2050
-    networks:
-      - test
+    # networks:
+    #   - test
 
   orderer.service.com:
     container_name: orderer.service.com
@@ -175,5 +175,5 @@ services:
       - orderer.service.com:/var/hyperledger/production/orderer
     ports:
       -7050:7050
-    networks:   
-      - test    
+    # networks:   
+    #   - test    
