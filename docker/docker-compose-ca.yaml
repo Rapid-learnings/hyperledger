@@ -64,7 +64,7 @@ services:
       # - "19054:19054"
     command: sh -c 'fabric-ca-server start -b admin:adminpw -d'
     volumes:
-      - ../crypto-config/ordererOrganizations/Honda.fly.com/ca/:/etc/hyperledger/fabric-ca-server
+      - ../crypto-config/ordererOrganizations/service.com/ca/:/etc/hyperledger/fabric-ca-server
     container_name: ca_orderer
     networks:
       - test
@@ -73,26 +73,33 @@ services:
     extends:
       file: ./docker-compose-base.yaml
       service: honda-peer-1
-      networks:
-        - test  
+      # networks:
+      #   - test  
 
   honda-peer-2:
     extends:
       file: ./docker-compose-base.yaml
       service: honda-peer-2
-      networks:
-        - test  
+      # networks:
+      #   - test  
 
   ri-peer-1:
     extends:
       file: ./docker-compose-base.yaml
       service: ri-peer-1
-      networks:
-        - test 
+      # networks:
+      #   - test 
   
   ri-peer-2:
     extends:
       file: ./docker-compose-base.yaml
       service: ri-peer-2
-      networks:
-        - test    
+      # networks:
+      #   - test    
+
+  # orderer.service.com:
+  #   extends:
+  #     file: ./docker-compose-base.yaml
+  #     service: orderer.service.com
+      # networks:
+      #   - test

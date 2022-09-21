@@ -19,7 +19,7 @@ PeerOrgs:
     Domain: honda.bigwing.com
     EnableNodeOUs: false
     Specs:
-      - Hostname: honda-peer1
-      - Hostname: honda-peer2
+      - Hostname: hondapeer1
+      - Hostname: hondapeer2
     Users:
       Count: 1

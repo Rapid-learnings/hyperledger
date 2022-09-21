@@ -7,12 +7,8 @@ volumes:
   ri-peer-2:
   orderer.service.com:
 
-# networks:
-#   test:
-#     name: test
-
-
 services:
+
   honda-peer-1:
     container-name: honda-peer-1
     image: hyperledger/fabric-peer:latest
@@ -24,13 +20,13 @@ services:
       - CORE_PEER_GOSSIP_USELEADERELECTION=true
       - CORE_PEER_GOSSIP_ORGLEADER=false #election is used, hence false
       - CORE_PEER_PROFILE_ENABLED=true
-      - CORE_PEER_ID=honda-peer1.honda.bigwing.com
-      - CORE_PEER_ADDRESS=honda-peer1.honda.bigwing.com:1060
+      - CORE_PEER_ID=hondapeer1.honda.bigwing.com
+      - CORE_PEER_ADDRESS=hondapeer1.honda.bigwing.com:1060
       - CORE_PEER_LISTENADDRESS=0.0.0.0:1060
-      - CORE_PEER_CHAINCODEADDRESS=honda-peer1.honda.bigwing.com:1062
+      - CORE_PEER_CHAINCODEADDRESS=hondapeer1.honda.bigwing.com:1062
       - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:1062
-      - CORE_PEER_GOSSIP_BOOTSTRAP=honda-peer1.honda.bigwing.com:1063
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=honda-peer1.honda.bigwing.com:1060
+      - CORE_PEER_GOSSIP_BOOTSTRAP=hondapeer1.honda.bigwing.com:1063
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=hondapeer1.honda.bigwing.com:1060
       - CORE_PEER_LOCALMSPID=HondaMSP
       - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/fabric/tls/server.crt
       - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
@@ -39,13 +35,13 @@ services:
     command: peer node start
     volumes:
       - /var/run/docker.sock:/host/var/run/docker.sock
-      - ../crypto-config/peerOrganizations/honda.bigwing.com/peers/honda-peer1.honda.bigwing.com/msp:/etc/hyperledger/fabric/msp
-      - ../crypto-config/peerOrganizations/honda.bigwing.com/peers/honda-peer1.honda.bigwing.com/tls:/etc/hyperledger/fabric/tls
-      - honda-peer1.honda.bigwing.com:/var/hyperledger/production
+      - ../crypto-config/peerOrganizations/honda.bigwing.com/peers/hondapeer1.honda.bigwing.com/msp:/etc/hyperledger/fabric/msp
+      - ../crypto-config/peerOrganizations/honda.bigwing.com/peers/hondapeer1.honda.bigwing.com/tls:/etc/hyperledger/fabric/tls
+      - honda-peer-1:/var/hyperledger/production
     ports:
       - 1060:1060
-    # networks:
-    #   - test
+    networks:   
+      - test
 
   honda-peer-2:
     container-name: honda-peer-2
@@ -58,13 +54,13 @@ services:
       - CORE_PEER_GOSSIP_USELEADERELECTION=true
       - CORE_PEER_GOSSIP_ORGLEADER=false #election is used, hence false
       - CORE_PEER_PROFILE_ENABLED=true
-      - CORE_PEER_ID=honda-peer2.honda.bigwing.com
-      - CORE_PEER_ADDRESS=honda-peer2.honda.bigwing.com:2060
+      - CORE_PEER_ID=hondapeer2.honda.bigwing.com
+      - CORE_PEER_ADDRESS=hondapeer2.honda.bigwing.com:2060
       - CORE_PEER_LISTENADDRESS=0.0.0.0:2060
-      - CORE_PEER_CHAINCODEADDRESS=honda-peer2.honda.bigwing.com:2062
+      - CORE_PEER_CHAINCODEADDRESS=hondapeer2.honda.bigwing.com:2062
       - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:2062
-      - CORE_PEER_GOSSIP_BOOTSTRAP=honda-peer2.honda.bigwing.com:2063
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=honda-peer2.honda.bigwing.com:2060
+      - CORE_PEER_GOSSIP_BOOTSTRAP=hondapeer2.honda.bigwing.com:2063
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=hondapeer2.honda.bigwing.com:2060
       - CORE_PEER_LOCALMSPID=HondaMSP
       - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/fabric/tls/server.crt
       - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
@@ -73,13 +69,13 @@ services:
     command: peer node start
     volumes:
       - /var/run/docker.sock:/host/var/run/docker.sock
-      - ../crypto-config/peerOrganizations/honda.bigwing.com/peers/honda-peer2.honda.bigwing.com/msp:/etc/hyperledger/fabric/msp
-      - ../crypto-config/peerOrganizations/honda.bigwing.com/peers/honda-peer2.honda.bigwing.com/tls:/etc/hyperledger/fabric/tls
-      - honda-peer2.honda.bigwing.com:/var/hyperledger/production
+      - ../crypto-config/peerOrganizations/honda.bigwing.com/peers/hondapeer2.honda.bigwing.com/msp:/etc/hyperledger/fabric/msp
+      - ../crypto-config/peerOrganizations/honda.bigwing.com/peers/hondapeer2.honda.bigwing.com/tls:/etc/hyperledger/fabric/tls
+      - honda-peer-2:/var/hyperledger/production
     ports:
       - 2060:2060
-    # networks:
-    #   - test
+    networks:   
+      - test
 
   ri-peer-1:
     container-name: ri-peer-1
@@ -109,11 +105,11 @@ services:
       - /var/run/docker.sock:/host/var/run/docker.sock
       - ../crypto-config/peerOrganizations/ri.blockchain.io/peers/ripeer1.ri.blockchain.io/msp:/etc/hyperledger/fabric/msp
       - ../crypto-config/peerOrganizations/ri.blockchain.io/peers/ripeer1.ri.blockchain.io/tls:/etc/hyperledger/fabric/tls
-      - ripeer1.ri.blockchain.io:/var/hyperledger/production
+      - ri-peer-1:/var/hyperledger/production
     ports:
       - 1050:1050
-    # networks:
-    #   - test
+    networks:   
+      - test
 
   ri-peer-2:
     container-name: ri-peer-2
@@ -143,11 +139,11 @@ services:
       - /var/run/docker.sock:/host/var/run/docker.sock
       - ../crypto-config/peerOrganizations/ri.blockchain.io/peers/ripeer2.ri.blockchain.io/msp:/etc/hyperledger/fabric/msp
       - ../crypto-config/peerOrganizations/ri.blockchain.io/peers/ripeer2.ri.blockchain.io/tls:/etc/hyperledger/fabric/tls
-      - ripeer2.ri.blockchain.io:/var/hyperledger/production
+      - ri-peer-2:/var/hyperledger/production
     ports:
       - 2050:2050
-    # networks:
-    #   - test
+    networks:   
+      - test    
 
   orderer.service.com:
     container_name: orderer.service.com
@@ -169,11 +165,11 @@ services:
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric
     command: orderer
     volumes:
-      - ..channel-artefacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
-      - ..crypto-config/ordererOrganizations/service.com/orderers/orderer.service.com/msp:/var/hyperledger/orderer/msp
-      - ..crypto-config/ordererOrganizations/service.com/orderers/orderer.service.com/tls:/var/hyperledger/orderer/tls
+      - ../channel-artefacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
+      - ../crypto-config/ordererOrganizations/service.com/orderers/orderer.service.com/msp:/var/hyperledger/orderer/msp
+      - ../crypto-config/ordererOrganizations/service.com/orderers/orderer.service.com/tls:/var/hyperledger/orderer/tls
       - orderer.service.com:/var/hyperledger/production/orderer
     ports:
-      -7050:7050
-    # networks:   
-    #   - test    
+      - 7050:7050
+    networks:   
+      - test    

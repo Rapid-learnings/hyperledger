@@ -1,4 +1,4 @@
-Instructions for this repo setup
+***************Instructions for this repo setup************************
 
 Note : 
 Be conscious of location/dir when running the Commands
@@ -18,7 +18,13 @@ Create channel transaction for application channel
 5.configtxgen -outputCreateChannelTx ./channel-artefacts/application-channel.tx -profile TwoOrgsChannel -channelID application-channel
 
 Create the anchor peers for organization
-6. configtxgen -profile TwoOrgsChannel -outputAnchorPeersUpdate ./channel-artefacts/rapid-anchor.tx -channelID application-channel -asOrg RapidInnovationMSP
-    configtxgen -profile TwoOrgsChannel -outputAnchorPeersUpdate ./channel-artefacts/honda-anchor.tx -channelID application-channel -asOrg HondaMSP
+6. configtxgen -profile TwoOrgsChannel -outputAnchorPeersUpdate ./channel-artefacts/rapid-anchor.tx -channelID application-channel -asOrg RapidInnovation
+    configtxgen -profile TwoOrgsChannel -outputAnchorPeersUpdate ./channel-artefacts/honda-anchor.tx -channelID application-channel -asOrg Honda
 
 7. 
+
+
+
+============================================================================================================
+If you face var\\run\docker.sock invalid issue
+> export COMPOSE_CONVERT_WINDOWS_PATHS=1
