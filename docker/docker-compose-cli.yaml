@@ -70,12 +70,12 @@ services:
       - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
       # Peer specific variabes
       - CORE_PEER_ID=hondapeer1.honda.bigwing.com
-      - CORE_PEER_ADDRESS=localhost:1060
+      - CORE_PEER_ADDRESS=hondapeer1.honda.bigwing.com:1060
       - CORE_PEER_LISTENADDRESS=0.0.0.0:1060
-      - CORE_PEER_CHAINCODEADDRESS=localhost:1062
+      - CORE_PEER_CHAINCODEADDRESS=hondapeer1.honda.bigwing.com:1062
       - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:1062
-      - CORE_PEER_GOSSIP_BOOTSTRAP=localhost:1061
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=localhost:1061
+      - CORE_PEER_GOSSIP_BOOTSTRAP=hondapeer1.honda.bigwing.com:1061
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=hondapeer1.honda.bigwing.com:1061
       - CORE_PEER_LOCALMSPID=HondaMSP
       - CORE_OPERATIONS_LISTENADDRESS=0.0.0.0:17051
     volumes:
@@ -107,12 +107,12 @@ services:
       - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
       # Peer specific variabes
       - CORE_PEER_ID=hondapeer2.honda.bigwing.com
-      - CORE_PEER_ADDRESS=localhost:1070
+      - CORE_PEER_ADDRESS=hondapeer2.honda.bigwing.com:1070
       - CORE_PEER_LISTENADDRESS=0.0.0.0:1070
-      - CORE_PEER_CHAINCODEADDRESS=localhost:1072
+      - CORE_PEER_CHAINCODEADDRESS=hondapeer2.honda.bigwing.com:1072
       - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:1072
-      - CORE_PEER_GOSSIP_BOOTSTRAP=localhost:1071
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=localhost:1071
+      - CORE_PEER_GOSSIP_BOOTSTRAP=hondapeer2.honda.bigwing.com:1071
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=hondapeer2.honda.bigwing.com:1071
       - CORE_PEER_LOCALMSPID=HondaMSP
       - CORE_OPERATIONS_LISTENADDRESS=0.0.0.0:18051
     volumes:
@@ -144,12 +144,12 @@ services:
       - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
       # Peer specific variabes
       - CORE_PEER_ID=ripeer1.ri.blockchain.io
-      - CORE_PEER_ADDRESS=localhost:1081
+      - CORE_PEER_ADDRESS=ripeer1.ri.blockchain.io:1081
       - CORE_PEER_LISTENADDRESS=0.0.0.0:1081
-      - CORE_PEER_CHAINCODEADDRESS=localhost:1082
+      - CORE_PEER_CHAINCODEADDRESS=ripeer1.ri.blockchain.io:1082
       - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:1082
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=localhost:1082
-      - CORE_PEER_GOSSIP_BOOTSTRAP=localhost:1081
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=ripeer1.ri.blockchain.io:1082
+      - CORE_PEER_GOSSIP_BOOTSTRAP=ripeer1.ri.blockchain.io:1081
       - CORE_PEER_LOCALMSPID=RapidInnovationMSP
       - CORE_OPERATIONS_LISTENADDRESS=0.0.0.0:19051
     volumes:
@@ -181,12 +181,12 @@ services:
       - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
       # Peer specific variabes
       - CORE_PEER_ID=ripeer2.ri.blockchain.io
-      - CORE_PEER_ADDRESS=localhost:1091
+      - CORE_PEER_ADDRESS=ripeer2.ri.blockchain.io:1091
       - CORE_PEER_LISTENADDRESS=0.0.0.0:1091
-      - CORE_PEER_CHAINCODEADDRESS=localhost:1092
+      - CORE_PEER_CHAINCODEADDRESS=ripeer2.ri.blockchain.io:1092
       - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:1092
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=localhost:1092
-      - CORE_PEER_GOSSIP_BOOTSTRAP=localhost:1091
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=ripeer2.ri.blockchain.io:1092
+      - CORE_PEER_GOSSIP_BOOTSTRAP=ripeer2.ri.blockchain.io:1091
       - CORE_PEER_LOCALMSPID=RapidInnovationMSP
       - CORE_OPERATIONS_LISTENADDRESS=0.0.0.0:20051
     volumes:

@@ -5,26 +5,55 @@ Be conscious of location/dir when running the Commands
 Create channel-artefacts directory in root folder if not present.
 
 Setup the paths 
-1. export PATH=${PWD}/bin:$PATH
-2. export FABRIC_CFG_PATH=${PWD}/config
+> export PATH=${PWD}/bin:$PATH
+> export FABRIC_CFG_PATH=${PWD}/config
 
-Create the crypto-graphic material
-3. cryptogen generate --config=${PWD}/crypto-config.yaml
+2. Create the crypto-graphic material
+> cryptogen generate --config=${PWD}/crypto-config.yaml
 
-Create the genesis block, using the configtxgen & genesis profile
-4. configtxgen --outputBlock ./channel-artefacts/genesis.block -profile GenesisProfile -channelID orderer-channel
+3. Create the genesis block, using the configtxgen & genesis profile
+> configtxgen --outputBlock ./channel-artefacts/genesis.block -profile GenesisProfile -channelID orderer-channel
 
-Create channel transaction for application channel
-5. configtxgen -outputCreateChannelTx ./channel-artefacts/application-channel.tx -profile TwoOrgsChannel -channelID application-channel
+4. Create channel transaction for application channel
+> configtxgen -outputCreateChannelTx ./channel-artefacts/application-channel.tx -profile TwoOrgsChannel -channelID application-channel
 
-Create the anchor peers for organization
-6. configtxgen -profile TwoOrgsChannel -outputAnchorPeersUpdate ./channel-artefacts/rapid-anchor.tx -channelID application-channel -asOrg RapidInnovation
-    configtxgen -profile TwoOrgsChannel -outputAnchorPeersUpdate ./channel-artefacts/honda-anchor.tx -channelID application-channel -asOrg Honda
+5. Create the anchor peers for organization
+>   configtxgen -profile TwoOrgsChannel -outputAnchorPeersUpdate ./channel-artefacts/rapid-anchor.tx -channelID application-channel -asOrg RapidInnovation
+>   configtxgen -profile TwoOrgsChannel -outputAnchorPeersUpdate ./channel-artefacts/honda-anchor.tx -channelID application-channel -asOrg Honda
 
-7. 
+6. Move to docker folder / or wherever docker files artefacts are
+>  docker compose -f docker-compose-cli.yaml up -d
+
+7. Lets move to root directory
+Set the cli as one of the peers
+    export CORE_PEER_ADDRESS=hondapeer1.honda.bigwing.com:1060
+    export CORE_PEER_LOCALMSPID="HondaMSP"
+    export CORE_PEER_TLS_ENABLED=true
+    export CORE_PEER_TLS_ROOTCERT_FILE=${PWD}/crypto-config/peerOrganizations/honda.bigwing.com/peers/hondapeer1.honda.bigwing.com/tls/ca.crt
+    export CORE_PEER_MSPCONFIGPATH=${PWD}/crypto-config/peerOrganizations/honda.bigwing.com/users/Admin@honda.bigwing.com/msp
+
+8. Create channel using the peer Commands
+>   peer channel create -o localhost:7050  --ordererTLSHostnameOverride orderer -c application-channel -f ../channel-artefacts/application-channel.tx --outputBlock ../channel-artefacts/application-channel-block.block --tls --cafile "../crypto-config/ordererOrganizations/service.com/orderers/orderer.service.com/msp/tlscacerts/tlsca.service.com-cert.pem"
+
+9. Join other peers to network
+> peer channel join -b ./channel-artefacts/application-channel-block.block
+
+
 
 
 
 ============================================================================================================
+
+Some error resolutions : 
+
 If you face var\\run\docker.sock invalid issue
 > export COMPOSE_CONVERT_WINDOWS_PATHS=1
+
+If you face issues like state needs to be 0 but current level is 1, try following
+> docker-compose -f docker-compose.yaml down --volumes
+> docker volume prune
+Also remove all the artifacts created by you.
+
+If facing issues regarding tcp dial look up
+Add following in peers in configtx.yaml
+> dns_search: .
