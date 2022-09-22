@@ -15,7 +15,7 @@ Create the genesis block, using the configtxgen & genesis profile
 4. configtxgen --outputBlock ./channel-artefacts/genesis.block -profile GenesisProfile -channelID orderer-channel
 
 Create channel transaction for application channel
-5.configtxgen -outputCreateChannelTx ./channel-artefacts/application-channel.tx -profile TwoOrgsChannel -channelID application-channel
+5. configtxgen -outputCreateChannelTx ./channel-artefacts/application-channel.tx -profile TwoOrgsChannel -channelID application-channel
 
 Create the anchor peers for organization
 6. configtxgen -profile TwoOrgsChannel -outputAnchorPeersUpdate ./channel-artefacts/rapid-anchor.tx -channelID application-channel -asOrg RapidInnovation

@@ -31,7 +31,7 @@ Organizations:
                 Type: Signature
                 Rule: "OR('HondaMSP.admin')" 
         AnchorPeers: #for inter-channel communication 
-            Host: honda-peer1.honda.bigwing.com
+            Host: hondapeer1.honda.bigwing.com
             Port: 1061
 
     - &RapidInnovation
