@@ -10,166 +10,102 @@ volumes:
 services:
 
   honda-peer-1:
-    container-name: honda-peer-1
-    image: hyperledger/fabric-peer:latest
+    container_name: hondapeer1.honda.bigwing.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
     environment:
-      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
-      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=Car-Industry
-      - FABRIC_LOGGING_SPEC=INFO
-      - CORE_PEER_TLS_ENABLED=true
-      - CORE_PEER_GOSSIP_USELEADERELECTION=true
-      - CORE_PEER_GOSSIP_ORGLEADER=false #election is used, hence false
-      - CORE_PEER_PROFILE_ENABLED=true
       - CORE_PEER_ID=hondapeer1.honda.bigwing.com
-      - CORE_PEER_ADDRESS=hondapeer1.honda.bigwing.com:1060
-      - CORE_PEER_LISTENADDRESS=0.0.0.0:1060
-      - CORE_PEER_CHAINCODEADDRESS=hondapeer1.honda.bigwing.com:1062
-      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:1062
-      - CORE_PEER_GOSSIP_BOOTSTRAP=hondapeer1.honda.bigwing.com:1063
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=hondapeer1.honda.bigwing.com:1060
+      - CORE_PEER_ADDRESS=hondapeer1.honda.bigwing.com:7051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:7051
+      - CORE_PEER_CHAINCODEADDRESS=hondapeer1.honda.bigwing.com:7052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:7052
+      - CORE_PEER_GOSSIP_BOOTSTRAP=hondapeer1.honda.bigwing.com:8051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=hondapeer1.honda.bigwing.com:7051
       - CORE_PEER_LOCALMSPID=HondaMSP
-      - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/fabric/tls/server.crt
-      - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
-      - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt      
-    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
-    command: peer node start
     volumes:
-      - /var/run/docker.sock:/host/var/run/docker.sock
-      - ../crypto-config/peerOrganizations/honda.bigwing.com/peers/hondapeer1.honda.bigwing.com/msp:/etc/hyperledger/fabric/msp
-      - ../crypto-config/peerOrganizations/honda.bigwing.com/peers/hondapeer1.honda.bigwing.com/tls:/etc/hyperledger/fabric/tls
-      - honda-peer-1:/var/hyperledger/production
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/honda.bigwing.com/peers/hondapeer1.honda.bigwing.com/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/honda.bigwing.com/peers/hondapeer1.honda.bigwing.com/tls:/etc/hyperledger/fabric/tls
+        - honda-peer-1:/var/hyperledger/production
     ports:
-      - 1060:1060
-    networks:   
-      - test
+      - 7051:7051
 
   honda-peer-2:
-    container-name: honda-peer-2
-    image: hyperledger/fabric-peer:latest
+    container_name: hondapeer2.honda.bigwing.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
     environment:
-      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
-      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=Car-Industry
-      - FABRIC_LOGGING_SPEC=INFO
-      - CORE_PEER_TLS_ENABLED=true
-      - CORE_PEER_GOSSIP_USELEADERELECTION=true
-      - CORE_PEER_GOSSIP_ORGLEADER=false #election is used, hence false
-      - CORE_PEER_PROFILE_ENABLED=true
       - CORE_PEER_ID=hondapeer2.honda.bigwing.com
-      - CORE_PEER_ADDRESS=hondapeer2.honda.bigwing.com:2060
-      - CORE_PEER_LISTENADDRESS=0.0.0.0:2060
-      - CORE_PEER_CHAINCODEADDRESS=hondapeer2.honda.bigwing.com:2062
-      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:2062
-      - CORE_PEER_GOSSIP_BOOTSTRAP=hondapeer2.honda.bigwing.com:2063
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=hondapeer2.honda.bigwing.com:2060
+      - CORE_PEER_ADDRESS=hondapeer2.honda.bigwing.com:8051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:8051
+      - CORE_PEER_CHAINCODEADDRESS=hondapeer2.honda.bigwing.com:8052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:8052
+      - CORE_PEER_GOSSIP_BOOTSTRAP=hondapeer2.honda.bigwing.com:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=hondapeer2.honda.bigwing.com:8051
       - CORE_PEER_LOCALMSPID=HondaMSP
-      - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/fabric/tls/server.crt
-      - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
-      - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt      
-    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
-    command: peer node start
     volumes:
-      - /var/run/docker.sock:/host/var/run/docker.sock
-      - ../crypto-config/peerOrganizations/honda.bigwing.com/peers/hondapeer2.honda.bigwing.com/msp:/etc/hyperledger/fabric/msp
-      - ../crypto-config/peerOrganizations/honda.bigwing.com/peers/hondapeer2.honda.bigwing.com/tls:/etc/hyperledger/fabric/tls
-      - honda-peer-2:/var/hyperledger/production
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/honda.bigwing.com/peers/hondapeer2.honda.bigwing.com/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/honda.bigwing.com/peers/hondapeer2.honda.bigwing.com/tls:/etc/hyperledger/fabric/tls
+        - honda-peer-2:/var/hyperledger/production
     ports:
-      - 2060:2060
-    networks:   
-      - test
+      - 8051:8051
 
   ri-peer-1:
-    container-name: ri-peer-1
-    image: hyperledger/fabric-peer:latest
+    container_name: ripeer1.ri.blockchain.io
+    extends:
+      file: peer-base.yaml
+      service: peer-base
     environment:
-      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
-      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=Car-Industry
-      - FABRIC_LOGGING_SPEC=INFO
-      - CORE_PEER_TLS_ENABLED=true
-      - CORE_PEER_GOSSIP_USELEADERELECTION=true
-      - CORE_PEER_GOSSIP_ORGLEADER=false #election is used, hence false
-      - CORE_PEER_PROFILE_ENABLED=true
       - CORE_PEER_ID=ripeer1.ri.blockchain.io
-      - CORE_PEER_ADDRESS=ripeer1.ri.blockchain.io:1050
-      - CORE_PEER_LISTENADDRESS=0.0.0.0:1050
-      - CORE_PEER_CHAINCODEADDRESS=ripeer1.ri.blockchain.io:1052
-      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:1052
-      - CORE_PEER_GOSSIP_BOOTSTRAP=ripeer1.ri.blockchain.io:1053
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=ripeer1.ri.blockchain.io:1050
+      - CORE_PEER_ADDRESS=ripeer1.ri.blockchain.io:9051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:9051
+      - CORE_PEER_CHAINCODEADDRESS=ripeer1.ri.blockchain.io:9052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:9052
+      - CORE_PEER_GOSSIP_BOOTSTRAP=ripeer1.ri.blockchain.io:10051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=ripeer1.ri.blockchain.io:9051
       - CORE_PEER_LOCALMSPID=RapidInnovationMSP
-      - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/fabric/tls/server.crt
-      - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
-      - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt      
-    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
-    command: peer node start
     volumes:
-      - /var/run/docker.sock:/host/var/run/docker.sock
-      - ../crypto-config/peerOrganizations/ri.blockchain.io/peers/ripeer1.ri.blockchain.io/msp:/etc/hyperledger/fabric/msp
-      - ../crypto-config/peerOrganizations/ri.blockchain.io/peers/ripeer1.ri.blockchain.io/tls:/etc/hyperledger/fabric/tls
-      - ri-peer-1:/var/hyperledger/production
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/ri.blockchain.io/peers/ripeer1.ri.blockchain.io/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/ri.blockchain.io/peers/ripeer1.ri.blockchain.io/tls:/etc/hyperledger/fabric/tls
+        - ri-peer-1:/var/hyperledger/production
     ports:
-      - 1050:1050
-    networks:   
-      - test
-
+      - 9051:9051
+    
   ri-peer-2:
-    container-name: ri-peer-2
-    image: hyperledger/fabric-peer:latest
+    container_name: ripeer2.ri.blockchain.io
+    extends:
+      file: peer-base.yaml
+      service: peer-base
     environment:
-      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
-      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=Car-Industry
-      - FABRIC_LOGGING_SPEC=INFO
-      - CORE_PEER_TLS_ENABLED=true
-      - CORE_PEER_GOSSIP_USELEADERELECTION=true
-      - CORE_PEER_GOSSIP_ORGLEADER=false #election is used, hence false
-      - CORE_PEER_PROFILE_ENABLED=true
       - CORE_PEER_ID=ripeer2.ri.blockchain.io
-      - CORE_PEER_ADDRESS=ripeer2.ri.blockchain.io:2050
-      - CORE_PEER_LISTENADDRESS=0.0.0.0:2050
-      - CORE_PEER_CHAINCODEADDRESS=ripeer2.ri.blockchain.io:2052
-      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:2052
-      - CORE_PEER_GOSSIP_BOOTSTRAP=ripeer2.ri.blockchain.io:2053
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=ripeer2.ri.blockchain.io:2050
+      - CORE_PEER_ADDRESS=ripeer2.ri.blockchain.io:10051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:10051
+      - CORE_PEER_CHAINCODEADDRESS=ripeer2.ri.blockchain.io:10052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:10052
+      - CORE_PEER_GOSSIP_BOOTSTRAP=ripeer2.ri.blockchain.io:9051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=ripeer2.ri.blockchain.io:10051
       - CORE_PEER_LOCALMSPID=RapidInnovationMSP
-      - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/fabric/tls/server.crt
-      - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
-      - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt      
-    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
-    command: peer node start
     volumes:
-      - /var/run/docker.sock:/host/var/run/docker.sock
-      - ../crypto-config/peerOrganizations/ri.blockchain.io/peers/ripeer2.ri.blockchain.io/msp:/etc/hyperledger/fabric/msp
-      - ../crypto-config/peerOrganizations/ri.blockchain.io/peers/ripeer2.ri.blockchain.io/tls:/etc/hyperledger/fabric/tls
-      - ri-peer-2:/var/hyperledger/production
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/ri.blockchain.io/peers/ripeer2.ri.blockchain.io/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/ri.blockchain.io/peers/ripeer2.ri.blockchain.io/tls:/etc/hyperledger/fabric/tls
+        - ri-peer-2:/var/hyperledger/production
     ports:
-      - 2050:2050
-    networks:   
-      - test    
+      - 10051:10051
 
   orderer.service.com:
     container_name: orderer.service.com
-    image: hyperledger/fabric-orderer:latest
-    environment:    
-      - FABRIC_LOGGING_SPEC=INFO
-      - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0 #listening to this machine only
-      - ORDERER_GENERAL_GENESISMETHOD=file
-      - ORDERER_GENERAL_GENESISFILE=/var/hyperledger/orderer/orderer.genesis.block
-      - ORDERER_GENERAL_LOCALMSPID=OrdererMSP
-      - ORDERER_GENERAL_LOCALMSPDIR=/var/hyperledger/orderer/msp
-      - ORDERER_GENERAL_TLS_ENABLED=true
-      - ORDERER_GENERAL_TLS_PRIVATEKEY=/var/hyperledger/orderer/tls/server.key
-      - ORDERER_GENERAL_TLS_CERTIFICATE=/var/hyperledger/orderer/tls/server.crt
-      - ORDERER_GENERAL_TLS_ROOTCAS=[/var/hyperledger/orderer/tls/ca.crt]
-      # - ORDERER_KAFKA_TOPIC_REPLICATIONFACTOR=1
-      # - ORDERER_KAFKA_VERBOSE=true
-
-    working_dir: /opt/gopath/src/github.com/hyperledger/fabric
-    command: orderer
+    extends:
+      file: peer-base.yaml
+      service: orderer-base
     volumes:
-      - ../channel-artefacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
-      - ../crypto-config/ordererOrganizations/service.com/orderers/orderer.service.com/msp:/var/hyperledger/orderer/msp
-      - ../crypto-config/ordererOrganizations/service.com/orderers/orderer.service.com/tls:/var/hyperledger/orderer/tls
-      - orderer.service.com:/var/hyperledger/production/orderer
+        - ../channel-artefacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
+        - ../crypto-config/ordererOrganizations/service.com/orderers/orderer.service.com/msp:/var/hyperledger/orderer/msp
+        - ../crypto-config/ordererOrganizations/service.com/orderers/orderer.service.com/tls/:/var/hyperledger/orderer/tls
+        - orderer.service.com:/var/hyperledger/production/orderer
     ports:
-      - 7050:7050
-    networks:   
-      - test    
+      - 6050:6050    
