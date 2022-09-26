@@ -30,13 +30,19 @@ Set the cli as one of the peers
     export CORE_PEER_LOCALMSPID="HondaMSP"
     export CORE_PEER_TLS_ENABLED=true
     export CORE_PEER_TLS_ROOTCERT_FILE=${PWD}/crypto-config/peerOrganizations/honda.bigwing.com/peers/hondapeer1.honda.bigwing.com/tls/ca.crt
+    export CORE_PEER_TLS_CERT_FILE=${PWD}/crypto-config/peerOrganizations/honda.bigwing.com/peers/hondapeer1.honda.bigwing.com/tls/server.crt
+    export CORE_PEER_TLS_KEY_FILE=${PWD}/crypto-config/peerOrganizations/honda.bigwing.com/peers/hondapeer1.honda.bigwing.com/tls/server.key 
     export CORE_PEER_MSPCONFIGPATH=${PWD}/crypto-config/peerOrganizations/honda.bigwing.com/users/Admin@honda.bigwing.com/msp
 
 8. Create channel using the peer Commands
->   peer channel create -o localhost:7050  --ordererTLSHostnameOverride orderer -c application-channel -f ../channel-artefacts/application-channel.tx --outputBlock ../channel-artefacts/application-channel-block.block --tls --cafile "../crypto-config/ordererOrganizations/service.com/orderers/orderer.service.com/msp/tlscacerts/tlsca.service.com-cert.pem"
+>   peer channel create -o localhost:7050  --ordererTLSHostnameOverride orderer -c application-channel -f ../channel-artefacts/application-channel.tx --outputBlock ../channel-artefacts/application.genesis.block --tls --cafile "../crypto-config/ordererOrganizations/service.com/orderers/orderer.service.com/msp/tlscacerts/tlsca.service.com-cert.pem"
+
+ 2nd option command for same task
+>    peer channel create -c application-channel -f ../channel-artefacts/application-channel.tx --orderer orderer.service.com:7050
+
 
 9. Join other peers to network
-> peer channel join -b ./channel-artefacts/application-channel-block.block
+> peer channel join -b ../channel-artefacts/application-channel-block.block
 
 
 
@@ -55,5 +61,5 @@ If you face issues like state needs to be 0 but current level is 1, try followin
 Also remove all the artifacts created by you.
 
 If facing issues regarding tcp dial look up
-Add following in peers in configtx.yaml
+Add following in peers in configtx.yaml in cli section
 > dns_search: .

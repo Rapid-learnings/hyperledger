@@ -13,8 +13,8 @@ Organizations:
             Admins: 
                 Type: Signature
                 Rule: "OR('OrdererMSP.admin')"
-        OrdererEndpoints:
-            - orderer.service.com:7050 # hostname.domain:<port>
+        # OrdererEndpoints:
+        #     - orderer.service.com:7050 # hostname.domain:<port>
     
     - &Honda
         Name: Honda
@@ -23,10 +23,10 @@ Organizations:
         Policies: 
             Readers:
                 Type: Signature
-                Rule: "OR('HondaMSP.member')"
+                Rule: "OR('HondaMSP.member','HondaMSP.client','HondaMSP.peer')"
             Writers:
                 Type: Signature
-                Rule: "OR('HondaMSP.member')"
+                Rule: "OR('HondaMSP.client','HondaMSP.admin')"
             Admins: 
                 Type: Signature
                 Rule: "OR('HondaMSP.admin')" 
@@ -41,7 +41,7 @@ Organizations:
         Policies: 
             Readers:
                 Type: Signature
-                Rule: "OR('RapidInnovationMSP.member')"
+                Rule: "OR('RapidInnovationMSP.member','RapidInnovationMSP.client','RapidInnovationMSP.peer')"
             Writers:
                 Type: Signature
                 Rule: "OR('RapidInnovationMSP.member')"
@@ -55,10 +55,13 @@ Organizations:
 Capabilities:
     Channel: &ChannelCapabilities
         V2_0: true
+        V1_4_3: true
     Orderer: &OrdererCapabilities
         V2_0: true
+        V1_4_2: true
     Application: &ApplicationCapabilities
         V2_0: true
+        V1_4_2: true
 
 Application: &ApplicationDefaults
     Organizations:

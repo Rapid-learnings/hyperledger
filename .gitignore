@@ -1,3 +1,4 @@
 /crypto-config/*
 channel-artefacts/*.tx
 channel-artefacts/*.block
+/bin/
