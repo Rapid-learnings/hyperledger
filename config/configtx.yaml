@@ -31,8 +31,8 @@ Organizations:
                 Type: Signature
                 Rule: "OR('HondaMSP.admin')" 
         # AnchorPeers: #for inter-channel communication 
-        #     Host: hondapeer1.honda.bigwing.com
-        #     Port: 1061
+            Host: hondapeer1.honda.bigwing.com
+            Port: 7051
 
     - &RapidInnovation
         Name: RapidInnovation
@@ -49,8 +49,8 @@ Organizations:
                 Type: Signature
                 Rule: "OR('RapidInnovationMSP.admin')" 
         # AnchorPeers: #for inter-channel communication 
-        #     Host: ripeer1.ri.blockchain.io
-        #     Port: 1051
+            Host: ripeer1.ri.blockchain.io
+            Port: 8051
 
 Capabilities:
     Channel: &ChannelCapabilities
