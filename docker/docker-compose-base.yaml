@@ -1,15 +1,15 @@
 version: '2'
 
 volumes:
-  hondapeer1:
-  hondapeer2:
-  ripeer1:
-  ripeer2:
+  hondapeer1.honda.bigwing.com:
+  hondapeer2.honda.bigwing.com:
+  ripeer1.ri.blockchain.io:
+  ripeer2.ri.blockchain.io:
   orderer:
 
 services:
 
-  hondapeer1:
+  hondapeer1.honda.bigwing.com:
     container_name: hondapeer1.honda.bigwing.com
     extends:
       file: peer-base.yaml
@@ -27,11 +27,11 @@ services:
       - /var/run/:/host/var/run/
       - ../crypto-config/peerOrganizations/honda.bigwing.com/peers/hondapeer1.honda.bigwing.com/msp:/etc/hyperledger/fabric/msp
       - ../crypto-config/peerOrganizations/honda.bigwing.com/peers/hondapeer1.honda.bigwing.com/tls:/etc/hyperledger/fabric/tls
-      - hondapeer1:/var/hyperledger/production
+      - hondapeer1.honda.bigwing.com:/var/hyperledger/production
     ports:
       - 7051:7051
 
-  hondapeer2:
+  hondapeer2.honda.bigwing.com:
     container_name: hondapeer2.honda.bigwing.com
     extends:
       file: peer-base.yaml
@@ -49,11 +49,11 @@ services:
       - /var/run/:/host/var/run/
       - ../crypto-config/peerOrganizations/honda.bigwing.com/peers/hondapeer2.honda.bigwing.com/msp:/etc/hyperledger/fabric/msp
       - ../crypto-config/peerOrganizations/honda.bigwing.com/peers/hondapeer2.honda.bigwing.com/tls:/etc/hyperledger/fabric/tls
-      - hondapeer2:/var/hyperledger/production
+      - hondapeer2.honda.bigwing.com:/var/hyperledger/production
     ports:
       - 8051:8051
 
-  ripeer1:
+  ripeer1.ri.blockchain.io:
     container_name: ripeer1.ri.blockchain.io
     extends:
       file: peer-base.yaml
@@ -71,11 +71,11 @@ services:
       - /var/run/:/host/var/run/
       - ../crypto-config/peerOrganizations/ri.blockchain.io/peers/ripeer1.ri.blockchain.io/msp:/etc/hyperledger/fabric/msp
       - ../crypto-config/peerOrganizations/ri.blockchain.io/peers/ripeer1.ri.blockchain.io/tls:/etc/hyperledger/fabric/tls
-      - ripeer1:/var/hyperledger/production
+      - ripeer1.ri.blockchain.io:/var/hyperledger/production
     ports:
       - 9051:9051
     
-  ripeer2:
+  ripeer2.ri.blockchain.io:
     container_name: ripeer2.ri.blockchain.io
     extends:
       file: peer-base.yaml
@@ -93,7 +93,7 @@ services:
       - /var/run/:/host/var/run/
       - ../crypto-config/peerOrganizations/ri.blockchain.io/peers/ripeer2.ri.blockchain.io/msp:/etc/hyperledger/fabric/msp
       - ../crypto-config/peerOrganizations/ri.blockchain.io/peers/ripeer2.ri.blockchain.io/tls:/etc/hyperledger/fabric/tls
-      - ripeer2:/var/hyperledger/production
+      - ripeer2.ri.blockchain.io:/var/hyperledger/production
     ports:
       - 10051:10051
 
@@ -108,4 +108,4 @@ services:
       - ../crypto-config/ordererOrganizations/service.com/orderers/orderer.service.com/tls:/var/hyperledger/orderer/tls
       - orderer:/var/hyperledger/production/orderer
     ports:
-      - 6050:6050    
+      - 7050:7050

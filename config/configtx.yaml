@@ -30,7 +30,7 @@ Organizations:
             Admins: 
                 Type: Signature
                 Rule: "OR('HondaMSP.admin')" 
-        # AnchorPeers: #for inter-channel communication 
+        AnchorPeers: #for inter-channel communication 
             Host: hondapeer1.honda.bigwing.com
             Port: 7051
 
@@ -48,7 +48,7 @@ Organizations:
             Admins: 
                 Type: Signature
                 Rule: "OR('RapidInnovationMSP.admin')" 
-        # AnchorPeers: #for inter-channel communication 
+        AnchorPeers: #for inter-channel communication 
             Host: ripeer1.ri.blockchain.io
             Port: 8051
 
@@ -122,7 +122,7 @@ Profiles:
         Orderer:
             <<: *OrdererDefaults
             Organizations:
-                - <<: *OrdererOrg         
+                - *OrdererOrg         
             Capabilities:
                 <<: *OrdererCapabilities
         Consortiums:
