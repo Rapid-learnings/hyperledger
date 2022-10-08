@@ -57,6 +57,8 @@ peer channel create -o localhost:7050  --ordererTLSHostnameOverride orderer -c a
 
 10. join all peers to this
 
+11. Package chaincode
+peer lifecycle chaincode package basic.tar.gz --path ../chaincode --lang node --label basic_1.0
 
 
 ============================================================================================================
@@ -73,4 +75,14 @@ Also remove all the artifacts created by you.
 
 If facing issues regarding tcp dial look up
 Add following in peers in configtx.yaml in cli section
+
 > dns_search: .
+
+
+============================================================================
+
+Install nodejs on ec2 Commands
+> curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.0/install.sh | bash
+> . ~/.nvm/nvm.sh
+> nvm install --lts
+
