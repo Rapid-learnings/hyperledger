@@ -82,7 +82,7 @@ services:
     command: /bin/bash
     volumes:
       - /var/run/:/host/var/run/
-      - ./../chaincode/:/opt/gopath/src/github.com/chaincode
+      - ./../chaincode/:/opt/gopath/src/github.com/hyperledger/fabric/peer/chaincode
       - ../crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
       - ../:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
       - ../channel-artefacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
@@ -118,7 +118,7 @@ services:
     command: /bin/bash
     volumes:
       - /var/run/:/host/var/run/
-      - ./../chaincode/:/opt/gopath/src/github.com/chaincode
+      - ./../chaincode/:/opt/gopath/src/github.com/hyperledger/fabric/peer/chaincode
       - ../crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
       - ../:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
       - ../channel-artefacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
@@ -154,7 +154,7 @@ services:
     command: /bin/bash
     volumes:
       - /var/run/:/host/var/run/
-      - ./../chaincode/:/opt/gopath/src/github.com/chaincode
+      - ./../chaincode/:/opt/gopath/src/github.com/hyperledger/fabric/peer/chaincode
       - ../crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
       - ../:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
       - ../channel-artefacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
@@ -190,7 +190,7 @@ services:
     command: /bin/bash
     volumes:
       - /var/run/:/host/var/run/
-      - ./../chaincode/:/opt/gopath/src/github.com/chaincode
+      - ./../chaincode/:/opt/gopath/src/github.com/hyperledger/fabric/peer/chaincode
       - ../crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
       - ../:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
       - ../channel-artefacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
