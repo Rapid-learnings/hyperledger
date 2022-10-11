@@ -23,7 +23,7 @@ services:
     extends:
       file: docker-compose-base.yaml
       service: orderer
-    container_name: orderer
+    container_name: orderer.service.com
     networks:
       - test
 

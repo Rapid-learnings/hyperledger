@@ -13,8 +13,8 @@ Organizations:
             Admins: 
                 Type: Signature
                 Rule: "OR('OrdererMSP.admin')"
-        # OrdererEndpoints:
-        #     - orderer.service.com:7050 # hostname.domain:<port>
+        OrdererEndpoints:
+            - orderer.service.com:7050 # hostname.domain:<port>
     
     - &Honda
         Name: Honda
@@ -29,7 +29,10 @@ Organizations:
                 Rule: "OR('HondaMSP.client','HondaMSP.admin')"
             Admins: 
                 Type: Signature
-                Rule: "OR('HondaMSP.admin')" 
+                Rule: "OR('HondaMSP.admin')"
+            Endorsement:
+                Type: Signature
+                Rule: "OR('HondaMSP.peer')" 
         AnchorPeers: #for inter-channel communication 
             Host: hondapeer1.honda.bigwing.com
             Port: 7051
@@ -48,9 +51,12 @@ Organizations:
             Admins: 
                 Type: Signature
                 Rule: "OR('RapidInnovationMSP.admin')" 
+            Endorsement:
+                Type: Signature
+                Rule: "OR('RapidInnovationMSP.peer')"        
         AnchorPeers: #for inter-channel communication 
             Host: ripeer1.ri.blockchain.io
-            Port: 8051
+            Port: 9051
 
 Capabilities:
     Channel: &ChannelCapabilities
@@ -75,6 +81,12 @@ Application: &ApplicationDefaults
         Admins:
             Type: ImplicitMeta
             Rule: "MAJORITY Admins"
+        LifecycleEndorsement:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Endorsement"
+        Endorsement:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Endorsement"    
     Capabilities: 
         <<: *ApplicationCapabilities
 
