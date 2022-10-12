@@ -28,13 +28,20 @@ Create channel-artefacts directory in root folder if not present.
 
 ## Lets move to root directory
 > Set the cli as one of the peers
-    export CORE_PEER_ADDRESS=hondapeer1.honda.bigwing.com:7051
-    export CORE_PEER_LOCALMSPID="HondaMSP"
-    export CORE_PEER_TLS_ENABLED=true
-    export CORE_PEER_TLS_ROOTCERT_FILE=${PWD}/crypto-config/peerOrganizations/honda.bigwing.com/peers/hondapeer1.honda.bigwing.com/tls/ca.crt
-    export CORE_PEER_TLS_CERT_FILE=${PWD}/crypto-config/peerOrganizations/honda.bigwing.com/peers/hondapeer1.honda.bigwing.com/tls/server.crt
-    export CORE_PEER_TLS_KEY_FILE=${PWD}/crypto-config/peerOrganizations/honda.bigwing.com/peers/hondapeer1.honda.bigwing.com/tls/server.key 
-    export CORE_PEER_MSPCONFIGPATH=${PWD}/crypto-config/peerOrganizations/honda.bigwing.com/users/Admin@honda.bigwing.com/msp
+
+>export CORE_PEER_ADDRESS=hondapeer1.honda.bigwing.com:7051
+
+>export CORE_PEER_LOCALMSPID="HondaMSP"
+    
+>export CORE_PEER_TLS_ENABLED=true
+    
+>export CORE_PEER_TLS_ROOTCERT_FILE=${PWD}/crypto-config/peerOrganizations/honda.bigwing.com/peers/hondapeer1.honda.bigwing.com/tls/ca.crt
+    
+>export CORE_PEER_TLS_CERT_FILE=${PWD}/crypto-config/peerOrganizations/honda.bigwing.com/peers/hondapeer1.honda.bigwing.com/tls/server.crt
+    
+>export CORE_PEER_TLS_KEY_FILE=${PWD}/crypto-config/peerOrganizations/honda.bigwing.com/peers/hondapeer1.honda.bigwing.com/tls/server.key 
+    
+>export CORE_PEER_MSPCONFIGPATH=${PWD}/crypto-config/peerOrganizations/honda.bigwing.com/users/Admin@honda.bigwing.com/msp
 
 
 ## Create channel using the peer Commands
