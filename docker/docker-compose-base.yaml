@@ -1,4 +1,4 @@
-version: '2'
+version: '2.1'
 
 volumes:
   hondapeer1.honda.bigwing.com:

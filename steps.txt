@@ -57,9 +57,9 @@ export CORE_PEER_ADDRESS=hondapeer1.honda.bigwing.com:7051
 10. join all peers to this
 
 11. Package chaincode
-peer lifecycle chaincode package basic.tar.gz --path chaincode --lang node --label basic_1.0
+peer lifecycle chaincode package basic.tar.gz --path /opt/gopath/src/github.com/hyperledger/fabric/peer/chaincode --lang node --label basic_1.0
 
-12. Install chaincode package ( only on 1 peer of 1 org)
+12. Install chaincode package
 > Set the env variables according to the peers of org that wil endorse tx.
 
 > For Honda peer-1
@@ -92,7 +92,7 @@ export CORE_PEER_MSPCONFIGPATH=${PWD}/crypto-config/peerOrganizations/ri.blockch
 export CORE_PEER_ADDRESS=ripeer1.ri.blockchain.io:10051
 
 > use the peer's install command
-peer lifecycle chaincode install basic.tar.gz
+peer lifecycle chaincode install /opt/gopath/src/github.com/hyperledger/fabric/peer/basic.tar.gz
 
 13. Approve the chaincode for the org
     If an organization has installed the chaincode on their peer, they need
@@ -120,12 +120,12 @@ peer lifecycle chaincode commit -o orderer.service.com:7050 --ordererTLSHostname
 
 
 > Invoke the chaincode
-peer chaincode invoke -o orderer.service.com:7050 --ordererTLSHostnameOverride orderer --tls --cafile "${PWD}/crypto/ordererOrganizations/service.com/orderers/orderer.service.com/msp/tlscacerts/tlsca.service.com-cert.pem" -C application-channel -n basic --peerAddresses hondapeer1.honda.bigwing.com:7051 --tlsRootCertFiles "${PWD}/crypto/peerOrganizations/honda.bigwing.com/peers/hondapeer1.honda.bigwing.com/tls/ca.crt" --peerAddresses ripeer1.ri.blockchain.io:9051 --tlsRootCertFiles "${PWD}/crypto/peerOrganizations/ri.blockchain.io/peers/ripeer1.ri.blockchain.io/tls/ca.crt" -c '{"function":"ReadAsset","Args":[0]}'
+peer chaincode invoke -o orderer.service.com:7050 --ordererTLSHostnameOverride orderer --tls --cafile "${PWD}/crypto/ordererOrganizations/service.com/orderers/orderer.service.com/msp/tlscacerts/tlsca.service.com-cert.pem" -C application-channel -n basic --peerAddresses hondapeer1.honda.bigwing.com:7051 --tlsRootCertFiles "${PWD}/crypto/peerOrganizations/honda.bigwing.com/peers/hondapeer1.honda.bigwing.com/tls/ca.crt" --peerAddresses ripeer1.ri.blockchain.io:9051 --tlsRootCertFiles "${PWD}/crypto/peerOrganizations/ri.blockchain.io/peers/ripeer1.ri.blockchain.io/tls/ca.crt" -c '{"function":"InitLedger","Args":[]}'
 
 
 
 
-=============================================`===============================================================
+============================================================================================================
 
 Some error resolutions : 
 

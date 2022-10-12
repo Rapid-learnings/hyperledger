@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-version: '2'
+version: '2.1'
 
 volumes:
   orderer:
@@ -15,7 +15,7 @@ volumes:
 
 networks:
   test:
-    # name: test
+    name: test
 
 services:
 
@@ -216,12 +216,12 @@ services:
       - CORE_PEER_ADDRESS=hondapeer1.honda.bigwing.com:7051
       - CORE_PEER_LOCALMSPID=HondaMSP
       - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp
-    working_dir: /opt/gopath/src/chaincode
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer #/opt/gopath/src/chaincode
     command: /bin/sh -c 'sleep 6000000'
     volumes:
       - /var/run/:/host/var/run/
       - ./msp:/etc/hyperledger/msp
-      - ./../chaincode:/opt/gopath/src/chaincode
+      - ./../chaincode:/opt/gopath/src/github.com/hyperledger/fabric/peer/chaincode
     depends_on:
       - orderer
       - ripeer1.ri.blockchain.io

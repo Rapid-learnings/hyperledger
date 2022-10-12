@@ -23,7 +23,7 @@ Organizations:
         Policies: 
             Readers:
                 Type: Signature
-                Rule: "OR('HondaMSP.member','HondaMSP.client','HondaMSP.peer')"
+                Rule: "OR('HondaMSP.admin','HondaMSP.member','HondaMSP.client','HondaMSP.peer')"
             Writers:
                 Type: Signature
                 Rule: "OR('HondaMSP.client','HondaMSP.admin')"
@@ -32,7 +32,7 @@ Organizations:
                 Rule: "OR('HondaMSP.admin')"
             Endorsement:
                 Type: Signature
-                Rule: "OR('HondaMSP.peer')" 
+                Rule: "OR('HondaMSP.peer','HondaMSP.admin')" 
         AnchorPeers: #for inter-channel communication 
             Host: hondapeer1.honda.bigwing.com
             Port: 7051
@@ -44,16 +44,16 @@ Organizations:
         Policies: 
             Readers:
                 Type: Signature
-                Rule: "OR('RapidInnovationMSP.member','RapidInnovationMSP.client','RapidInnovationMSP.peer')"
+                Rule: "OR('RapidInnovationMSP.admin','RapidInnovationMSP.member','RapidInnovationMSP.client','RapidInnovationMSP.peer')"
             Writers:
                 Type: Signature
-                Rule: "OR('RapidInnovationMSP.member')"
+                Rule: "OR('RapidInnovationMSP.member','RapidInnovationMSP.admin')"
             Admins: 
                 Type: Signature
                 Rule: "OR('RapidInnovationMSP.admin')" 
             Endorsement:
                 Type: Signature
-                Rule: "OR('RapidInnovationMSP.peer')"        
+                Rule: "OR('RapidInnovationMSP.peer','RapidInnovationMSP.admin')"        
         AnchorPeers: #for inter-channel communication 
             Host: ripeer1.ri.blockchain.io
             Port: 9051
