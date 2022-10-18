@@ -21,7 +21,7 @@ Organizations:
     - &teafarm
         Name: teafarmOrg
         ID: teafarmMSP
-        MSPDir: ../crypto-config/peerOrganizations/
+        MSPDir: ../crypto-config/peerOrganizations/production.com/msp
         Policies:
             Readers:
                 Type: Signature
@@ -42,8 +42,7 @@ Organizations:
     - &tata
         Name: tata
         ID: tataMSP
-        MSPDir: ../crypto-config/peerOrganizations/
-        Policies:
+        MSPDir: ../crypto-config/peerOrganizations/manufacturer.com/msp
         Policies:
             Readers:
                 Type: Signature
@@ -64,7 +63,7 @@ Organizations:
     - &tatastore
         Name: tatastore
         ID: tatastoreMSP
-        MSPDir: ../crypto-config/peerOrganizations/
+        MSPDir: ../crypto-config/peerOrganizations/wharehouse.com/msp
         Policies: 
             Readers:
                 Type: Signature
@@ -85,7 +84,7 @@ Organizations:
     - &bigbazar
         Name: bigbazar
         ID: bigbazarMSP
-        MSPDir: ../crypto-config/peerOrganizations/
+        MSPDir: ../crypto-config/peerOrganizations/retailer.com/msp
         Policies: 
             Readers:
                 Type: Signature
