@@ -1,0 +1,24 @@
+***************Instructions for this repo setup************************
+
+Note : 
+Be conscious of location/dir when running the Commands
+Create channel-artefacts directory in root folder if not present.
+
+Setup the paths 
+export PATH=${PWD}/bin:$PATH
+export FABRIC_CFG_PATH=${PWD}/config
+
+2. Create the crypto-graphic material
+> cryptogen generate --config=${PWD}/crypto-config.yaml
+
+3. Create the genesis block, using the configtxgen & genesis profile
+> configtxgen --outputBlock ./channel-artefacts/genesis.block -profile GenesisProfile -channelID orderer-channel
+
+4. Create channel transaction for application channel
+> configtxgen -profile CoffeeChannelProfile -outputCreateChannelTx ./channel-artefacts/application-channel.tx -channelID application-channel
+
+5. Create the anchor peers for organization
+> configtxgen -profile CoffeeChannelProfile -outputAnchorPeersUpdate ./channel-artefacts/teafarm-anchor.tx -channelID application-channel -asOrg teafarm
+> configtxgen -profile CoffeeChannelProfile -outputAnchorPeersUpdate ./channel-artefacts/tata-anchor.tx -channelID application-channel -asOrg tata
+> configtxgen -profile CoffeeChannelProfile -outputAnchorPeersUpdate ./channel-artefacts/tatastore-anchor.tx -channelID application-channel -asOrg tatastore
+> configtxgen -profile CoffeeChannelProfile -outputAnchorPeersUpdate ./channel-artefacts/bigbazar-anchor.tx -channelID application-channel -asOrg bigbazar

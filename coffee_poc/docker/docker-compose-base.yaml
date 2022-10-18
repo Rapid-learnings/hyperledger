@@ -20,12 +20,12 @@ services:
       service: peer-base
     environment:
       - CORE_PEER_ID=peertm1.manufacturer.com
-      - CORE_PEER_ADDRESS=peertm1.manufacturer.com:8050
-      - CORE_PEER_LISTENADDRESS=0.0.0.0:8050
-      - CORE_PEER_CHAINCODEADDRESS=peertm1.manufacturer.com:8051
-      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:8051
-      - CORE_PEER_GOSSIP_BOOTSTRAP=peertm1.manufacturer.com:8080
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peertm1.manufacturer.com:8050
+      - CORE_PEER_ADDRESS=peertm1.manufacturer.com:9050
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:9050
+      - CORE_PEER_CHAINCODEADDRESS=peertm1.manufacturer.com:9051
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:9051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peertm1.manufacturer.com:9080
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peertm1.manufacturer.com:9050
       - CORE_PEER_LOCALMSPID=tataMSP
     volumes:
       - /var/run/:/host/var/run/
@@ -33,7 +33,7 @@ services:
       - ../crypto-config/peerOrganizations/manufacturer.com/peers/peertm1.manufacturer.com/tls:/etc/hyperledger/fabric/tls
       - peertm1.manufacturer.com:/var/hyperledger/production
     ports:
-      - 8050:8050
+      - 9050:9050
 
   peertm2.manufacturer.com:
     container_name: peertm2.manufacturer.com
@@ -42,12 +42,12 @@ services:
       service: peer-base
     environment:
       - CORE_PEER_ID=peertm2.manufacturer.com
-      - CORE_PEER_ADDRESS=peertm2.manufacturer.com:8080
-      - CORE_PEER_LISTENADDRESS=0.0.0.0:8080
-      - CORE_PEER_CHAINCODEADDRESS=peertm2.manufacturer.com:8081
+      - CORE_PEER_ADDRESS=peertm2.manufacturer.com:9080
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:9080
+      - CORE_PEER_CHAINCODEADDRESS=peertm2.manufacturer.com:9081
       - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:8081
-      - CORE_PEER_GOSSIP_BOOTSTRAP=peertm2.manufacturer.com:8050
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peertm2.manufacturer.com:8080
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peertm2.manufacturer.com:9050
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peertm2.manufacturer.com:9080
       - CORE_PEER_LOCALMSPID=tataMSP
     volumes:
       - /var/run/:/host/var/run/
@@ -55,7 +55,7 @@ services:
       - ../crypto-config/peerOrganizations/manufacturer.com/peers/peertm2.manufacturer.com/tls:/etc/hyperledger/fabric/tls
       - peertm1.manufacturer.com:/var/hyperledger/production
     ports:
-      - 8080:8080
+      - 9080:9080
 
   peertf1.production.com:
     container_name: peertf1.production.com
@@ -64,12 +64,12 @@ services:
       service: peer-base
     environment:
       - CORE_PEER_ID=peertf1.production.com
-      - CORE_PEER_ADDRESS=peertf1.production.com:9050
-      - CORE_PEER_LISTENADDRESS=0.0.0.0:9050
-      - CORE_PEER_CHAINCODEADDRESS=peertf1.production.com:9051
-      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:9051
-      - CORE_PEER_GOSSIP_BOOTSTRAP=peertf1.production.com:9080
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peertf1.production.com:9050
+      - CORE_PEER_ADDRESS=peertf1.production.com:8050
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:8050
+      - CORE_PEER_CHAINCODEADDRESS=peertf1.production.com:8051
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:8051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peertf1.production.com:8080
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peertf1.production.com:8050
       - CORE_PEER_LOCALMSPID=teafarmMSP
     volumes:
       - /var/run/:/host/var/run/
@@ -77,7 +77,7 @@ services:
       - ../crypto-config/peerOrganizations/production.com/peers/peertf1.production.com/tls:/etc/hyperledger/fabric/tls
       - peertf1.production.com:/var/hyperledger/production
     ports:
-      - 9050:9050
+      - 8050:8050
 
   peertf2.production.com:
     container_name: peertf2.production.com
@@ -86,12 +86,12 @@ services:
       service: peer-base
     environment:
       - CORE_PEER_ID=peertf2.production.com
-      - CORE_PEER_ADDRESS=peertf2.production.com:9080
-      - CORE_PEER_LISTENADDRESS=0.0.0.0:9080
-      - CORE_PEER_CHAINCODEADDRESS=peertf2.production.com:9081
-      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:9081
-      - CORE_PEER_GOSSIP_BOOTSTRAP=peertf2.production.com:9050
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peertf2.production.com:9080
+      - CORE_PEER_ADDRESS=peertf2.production.com:8080
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:8080
+      - CORE_PEER_CHAINCODEADDRESS=peertf2.production.com:8081
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:8081
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peertf2.production.com:8050
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peertf2.production.com:8080
       - CORE_PEER_LOCALMSPID=teafarmMSP
     volumes:
       - /var/run/:/host/var/run/
@@ -99,7 +99,7 @@ services:
       - ../crypto-config/peerOrganizations/production.com/peers/peertf2.production.com/tls:/etc/hyperledger/fabric/tls
       - peertf1.production.com:/var/hyperledger/production
     ports:
-      - 9080:9080
+      - 8080:8080
 
   peerbb1.retailer.com:
     container_name: peerbb1.retailer.com
@@ -188,3 +188,16 @@ services:
       - peerbb2.retailer.com:/var/hyperledger/production
     ports:
       - 10080:10080
+  
+  orderer:
+    container_name: orderer
+    extends:
+      file: peer-base.yaml
+      service: orderer-base
+    volumes:
+      - ../channel-artefacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
+      - ../crypto-config/ordererOrganizations/production.com/orderers/orderer.production.com/msp:/var/hyperledger/orderer/msp
+      - ../crypto-config/ordererOrganizations/production.com/orderers/orderer.production.com/tls:/var/hyperledger/orderer/tls
+      - orderer:/var/hyperledger/production/orderer
+    ports:
+      - 7050:7050
