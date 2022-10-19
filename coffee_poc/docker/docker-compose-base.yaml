@@ -45,7 +45,7 @@ services:
       - CORE_PEER_ADDRESS=peertm2.manufacturer.com:9080
       - CORE_PEER_LISTENADDRESS=0.0.0.0:9080
       - CORE_PEER_CHAINCODEADDRESS=peertm2.manufacturer.com:9081
-      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:8081
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:9081
       - CORE_PEER_GOSSIP_BOOTSTRAP=peertm2.manufacturer.com:9050
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peertm2.manufacturer.com:9080
       - CORE_PEER_LOCALMSPID=tataMSP
@@ -190,7 +190,7 @@ services:
       - 10080:10080
   
   orderer:
-    container_name: orderer
+    container_name: orderer1.production.com
     extends:
       file: peer-base.yaml
       service: orderer-base

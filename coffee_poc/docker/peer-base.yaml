@@ -1,6 +1,7 @@
 version: '2.1'
 
 services:
+
   peer-base:
     image: hyperledger/fabric-peer:2.4
     environment:
