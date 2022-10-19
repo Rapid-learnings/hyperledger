@@ -22,3 +22,27 @@ export FABRIC_CFG_PATH=${PWD}/config
 > configtxgen -profile CoffeeChannelProfile -outputAnchorPeersUpdate ./channel-artefacts/tata-anchor.tx -channelID application-channel -asOrg tata
 > configtxgen -profile CoffeeChannelProfile -outputAnchorPeersUpdate ./channel-artefacts/tatastore-anchor.tx -channelID application-channel -asOrg tatastore
 > configtxgen -profile CoffeeChannelProfile -outputAnchorPeersUpdate ./channel-artefacts/bigbazar-anchor.tx -channelID application-channel -asOrg bigbazar
+
+6. move to docker directory
+    sudo docker-compose -f docker-compose-cli.yaml up -d
+
+Lets move to root directory
+Set the cli as one of the peers
+    export CORE_PEER_ADDRESS=peertf1.manufacturer.com:8050
+    export CORE_PEER_LOCALMSPID="teafarmMSP"
+    export CORE_PEER_TLS_ENABLED=true
+    export CORE_PEER_TLS_ROOTCERT_FILE=${PWD}/crypto-config/peerOrganizations/manufacturer.com/peers/peertf1.manufacturer.com/tls/ca.crt
+    export CORE_PEER_TLS_CERT_FILE=${PWD}/crypto-config/peerOrganizations/manufacturer.com/peers/peertf1.manufacturer.com/tls/server.crt
+    export CORE_PEER_TLS_KEY_FILE=${PWD}/crypto-config/peerOrganizations/manufacturer.com/peers/peertf1.manufacturer.com/tls/server.key 
+    export CORE_PEER_MSPCONFIGPATH=${PWD}/crypto-config/peerOrganizations/manufacturer.com/users/Admin@manufacturer.com/msp
+
+Execute the respective cli's in your terminal
+So for manufacturer cli enter command
+ sudo docker exec -it cli-manufacturer-1 sh
+
+
+7. Create channel using the peer Commands
+> peer channel create -o localhost:7050  --ordererTLSHostnameOverride orderer1.gov.io:7050 -c application-channel -f ../channel-artefacts/application-channel.tx --outputBlock ../channel-artefacts/application-genesis.block --tls --cafile ../crypto-config/ordererOrganizations/gov.io/orderers/orderer.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem
+
+8. Join other peers to network
+> peer channel join -b /opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts/application-genesis.block

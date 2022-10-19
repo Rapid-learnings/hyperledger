@@ -2,7 +2,7 @@ Organizations:
     - &OrdererOrg
         Name: OrdererOrg
         ID: OrdererMSP
-        MSPDir: ../crypto-config/ordererOrganizations/production.com/msp
+        MSPDir: ../crypto-config/ordererOrganizations/gov.io/msp
         Policies:
             Readers:
                 Type: Signature
@@ -14,12 +14,33 @@ Organizations:
                 Type: Signature
                 Rule: "OR('OrdererMSP.admin')"
         OrdererEndpoints:
-            - orderer1.production.com:7050
-            - orderer2.production.com:7051
-            - orderer3.production.com:7052
-    
+            - orderer1.gov.io:7050
+            - orderer2.gov.io:7051
+            - orderer3.gov.io:7052
+
+    - &governance
+        Name: governance
+        ID: govMSP
+        MSPDir: ../crypto-config/peerOrganizations/gov.io/msp
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('govMSP.member', 'govMSP.peer', 'govMSP.admin', 'govMSP.client')"
+            Writers:
+                Type: Signature
+                Rule: "OR('govMSP.member', 'govMSP.peer', 'govMSP.admin', 'govMSP.client')"
+            Admins:
+                Type: Signature
+                Rule: "OR('govMSP.admin')"
+            Endorsement:
+                Type: Signature
+                Rule: "OR('govMSP.peer', 'govMSP.admin')"
+        AnchorPeers:
+            Host: peergov1.gov.io
+            Port: 13050    
+
     - &teafarm
-        Name: teafarmOrg
+        Name: teafarm
         ID: teafarmMSP
         MSPDir: ../crypto-config/peerOrganizations/production.com/msp
         Policies:
@@ -293,7 +314,7 @@ Orderer: &OrdererDefaults
     # as TLS validation.  The preferred way to specify orderer addresses is now
     # to include the OrdererEndpoints item in your org definition
     Addresses:
-        - orderer1.production.com:7050
+        - orderer1.gov.io:7050
 
     # Batch Timeout: The amount of time to wait before creating a batch.
     BatchTimeout: 2s
