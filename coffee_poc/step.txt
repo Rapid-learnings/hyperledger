@@ -17,6 +17,20 @@ export FABRIC_CFG_PATH=${PWD}/config
 4. Create channel transaction for application channel
 > configtxgen -profile CoffeeChannelProfile -outputCreateChannelTx ./channel-artefacts/application-channel.tx -channelID application-channel
 
+Therer are other channels needs to be created for org purposes
+
+a. b/w manufacturer & production
+> configtxgen -profile ManufacturerProductionProfile -outputCreateChannelTx ./channel-artefacts/mfd-prd-channel.tx -channelID mfd-prd-channel
+
+b. b/w manufacturer & wharehouse
+> configtxgen -profile ManufacturerWharehouseProfile -outputCreateChannelTx ./channel-artefacts/mfd-whs-channel.tx -channelID mfd-whs-channel
+
+c. b/w wharehouse & retailer
+> configtxgen -profile WharehouseRetailerProfile -outputCreateChannelTx ./channel-artefacts/whs-rtlr-channel.tx -channelID whs-rtlr-channel
+
+
+
+
 5. Create the anchor peers for organization
 > configtxgen -profile CoffeeChannelProfile -outputAnchorPeersUpdate ./channel-artefacts/teafarm-anchor.tx -channelID application-channel -asOrg teafarm
 > configtxgen -profile CoffeeChannelProfile -outputAnchorPeersUpdate ./channel-artefacts/tata-anchor.tx -channelID application-channel -asOrg tata
@@ -43,6 +57,23 @@ So for manufacturer cli enter command
 
 7. Create channel using the peer Commands
 > peer channel create -o localhost:7050  --ordererTLSHostnameOverride orderer1.gov.io:7050 -c application-channel -f ../channel-artefacts/application-channel.tx --outputBlock ../channel-artefacts/application-genesis.block --tls --cafile ../crypto-config/ordererOrganizations/gov.io/orderers/orderer.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem
+
+There are other channels needs to be joined
+
+a. by production & manufacturer
+> peer channel create -o localhost:7050  --ordererTLSHostnameOverride orderer1.gov.io:7050 -c mfd-prd-channel -f ../channel-artefacts/application-channel.tx --outputBlock ../channel-artefacts/application-genesis.block --tls --cafile ../crypto-config/ordererOrganizations/gov.io/orderers/orderer.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem
+
+b. by manufacturer & wharehouse
+
+> configtxgen -profile ManufacturerWharehouseProfile -outputCreateChannelTx ./channel-artefacts/mfd-whs-channel.tx -channelID mfd-whs-channel
+
+
+c. by wharehouse & retailer
+
+> configtxgen -profile WharehouseRetailerProfile -outputCreateChannelTx ./channel-artefacts/whs-rtlr-channel.tx -channelID whs-rtlr-channel
+
+
+
 
 8. Join other peers to network
 > peer channel join -b /opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts/application-genesis.block

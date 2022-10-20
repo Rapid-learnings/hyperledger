@@ -494,6 +494,19 @@ Profiles:
                     - *tata
                     - *tatastore
                     - *bigbazar
+            Mfd-Prd-Consortium:
+                Organizations:
+                    - *teafarm
+                    - *tata
+            Mfd-Whs-Consortium:
+                Organizations:
+                    - *tata
+                    - *tatastore
+            Whs-Rtlr-Consortium:
+                Organizations:
+                    - *tatastore
+                    - *bigbazar
+
     CoffeeChannelProfile:
         Consortium: SampleConsortium
         <<: *ChannelDefaults
@@ -502,6 +515,39 @@ Profiles:
             Organizations:
                 - *teafarm
                 - *tata
+                - *tatastore
+                - *bigbazar
+            Capabilities:
+                <<: *ApplicationCapabilities
+
+    ManufacturerProductionProfile:
+        Consortium: Mfd-Prd-Consortium
+        <<: *ChannelDefaults
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+                - *teafarm
+                - *tata
+            Capabilities:
+                <<: *ApplicationCapabilities
+
+    ManufacturerWharehouseProfile:
+        Consortium: Mfd-Whs-Consortium
+        <<: *ChannelDefaults
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+                - *tata
+                - *tatastore
+            Capabilities:
+                <<: *ApplicationCapabilities
+
+    WharehouseRetailerProfile:
+        Consortium: Whs-Rtlr-Consortium
+        <<: *ChannelDefaults
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
                 - *tatastore
                 - *bigbazar
             Capabilities:
