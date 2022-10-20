@@ -22,7 +22,7 @@ services:
     extends:
       file: docker-compose-base.yaml
       service: orderer
-    container_name: orderer1.production.com
+    container_name: orderer1.gov.io
     networks:
       - test
 
@@ -100,7 +100,7 @@ services:
 
   cli-manufacturer-1:
     container_name: cli-manufacturer-1
-    image: hyperledger/fabric-tools:2.4
+    image: hyperledger/fabric-tools:2.2
     tty: true
     stdin_open: true
     environment:
@@ -140,7 +140,7 @@ services:
 
   cli-manufacturer-2:
     container_name: cli-manufacturer-2
-    image: hyperledger/fabric-tools:2.4
+    image: hyperledger/fabric-tools:2.2
     tty: true
     stdin_open: true
     environment:
@@ -180,7 +180,7 @@ services:
 
   cli-production-1:
     container_name: cli-production-1
-    image: hyperledger/fabric-tools:2.4
+    image: hyperledger/fabric-tools:2.2
     tty: true
     stdin_open: true
     environment:
@@ -220,7 +220,7 @@ services:
 
   cli-production-2:
     container_name: cli-production-2
-    image: hyperledger/fabric-tools:2.4
+    image: hyperledger/fabric-tools:2.2
     tty: true
     stdin_open: true
     environment:
@@ -260,7 +260,7 @@ services:
 
   cli-retail-1:
     container_name: cli-retail-1
-    image: hyperledger/fabric-tools:2.4
+    image: hyperledger/fabric-tools:2.2
     tty: true
     stdin_open: true
     environment:
@@ -300,7 +300,7 @@ services:
 
   cli-retail-2:
     container_name: cli-retail-2
-    image: hyperledger/fabric-tools:2.4
+    image: hyperledger/fabric-tools:2.2
     tty: true
     stdin_open: true
     environment:
@@ -340,7 +340,7 @@ services:
 
   cli-wharehouse-1:
     container_name: cli-wharehouse-1
-    image: hyperledger/fabric-tools:2.4
+    image: hyperledger/fabric-tools:2.2
     tty: true
     stdin_open: true
     environment:
@@ -380,7 +380,7 @@ services:
 
   cli-wharehouse-2:
     container_name: cli-wharehouse-2
-    image: hyperledger/fabric-tools:2.4
+    image: hyperledger/fabric-tools:2.2
     tty: true
     stdin_open: true
     environment:
@@ -421,7 +421,7 @@ services:
 
   cli-gov-1:
     container_name: cli-gov-1
-    image: hyperledger/fabric-tools:2.4
+    image: hyperledger/fabric-tools:2.2
     tty: true
     stdin_open: true
     environment:
