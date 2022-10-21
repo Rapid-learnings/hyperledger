@@ -80,6 +80,8 @@ Organizations:
         AnchorPeers:
             Host: peertm1.manufacturer.com
             Port: 9050
+            Host: peertm2.manufacturer.com
+            Port: 9080
     
     - &tatastore
         Name: tatastore
@@ -101,6 +103,8 @@ Organizations:
         AnchorPeers:
             Host: peerts1.wharehouse.com
             Port: 10050
+            Host: peerts2.wharehouse.com
+            Port: 10080
 
     - &bigbazar
         Name: bigbazar

@@ -21,7 +21,7 @@ services:
   orderer:
     extends:
       file: docker-compose-base.yaml
-      service: orderer
+      service: orderer1.gov.io
     container_name: orderer1.gov.io
     networks:
       - test

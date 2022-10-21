@@ -10,7 +10,7 @@ volumes:
   peerbb2.retailer.com:
   peerts1.wharehouse.com:
   peerts2.wharehouse.com:
-  orderer:
+  orderer1.gov.io:
 
 services:
 
@@ -212,7 +212,7 @@ services:
     ports:
       - 10080:10080
   
-  orderer:
+  orderer1.gov.io:
     container_name: orderer1.gov.io
     extends:
       file: peer-base.yaml

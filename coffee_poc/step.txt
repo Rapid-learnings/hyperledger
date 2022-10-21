@@ -74,13 +74,13 @@ sudo docker exec -it cli-manufacturer-1 sh
 7. Create channels 
 
 a. Create channel using the peer Commands for manufacturer & production
-> peer channel create -o localhost:7050  --ordererTLSHostnameOverride orderer1.gov.io:7050 -c mfd-prd-channel -f ../channel-artefacts/mfd-prd-channel.tx --outputBlock ../channel-artefacts/mfd-prd-genesis.block --tls --cafile ../crypto-config/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem
+> peer channel create -o orderer1.gov.io:7050 -c mfd-prd-channel -f ./channel-artifacts/mfd-prd-channel.tx --outputBlock ./channel-artifacts/mfd-prd-genesis.block --tls --cafile ${PWD}/crypto/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem
 
 b. Create channel using the peer Commands for manufacturer & wharehouse
-> peer channel create -o localhost:7050  --ordererTLSHostnameOverride orderer1.gov.io:7050 -c mfd-whs-channel -f ../channel-artefacts/mfd-whs-channel.tx --outputBlock ../channel-artefacts/mfd-whs-genesis.block --tls --cafile ../crypto-config/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem
+> peer channel create -o orderer1.gov.io:7050 -c mfd-whs-channel -f ./channel-artifacts/mfd-whs-channel.tx --outputBlock ./channel-artifacts/mfd-whs-genesis.block --tls --cafile ./crypto/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem
 
 c. Create channel using the peer Commands for wharehouse & retailer
-> peer channel create -o localhost:7050  --ordererTLSHostnameOverride orderer1.gov.io:7050 -c whs-rtlr-channel -f ../channel-artefacts/whs-rtlr-channel.tx --outputBlock ../channel-artefacts/whs-rtlr-genesis.block --tls --cafile ../crypto-config/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem
+> peer channel create -o orderer1.gov.io:7050 -c whs-rtlr-channel -f ./channel-artifacts/whs-rtlr-channel.tx --outputBlock ./channel-artifacts/whs-rtlr-genesis.block --tls --cafile ./crypto/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem
 
 
 8. 
