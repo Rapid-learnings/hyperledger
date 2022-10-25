@@ -115,7 +115,7 @@ peer lifecycle chaincode queryinstalled
     Chaincode is approved at the organization level, so the command only needs to target one peer.
     The approval is distributed to the other peers within the organization using gossip. 
 
-peer lifecycle chaincode approveformyorg -o orderer1.gov.io:7050 --ordererTLSHostnameOverride orderer --channelID application-channel --name basic --version 1.0 --package-id $CC_PACKAGE_ID --sequence 1 --tls --cafile "${PWD}/crypto/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem"
+peer lifecycle chaincode approveformyorg -o orderer1.gov.io:7050 --channelID mfd-prd-channel --name basic --version 1.0 --package-id $CC_PACKAGE_ID --sequence 1 --tls --cafile "${PWD}/crypto/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem"
 
 > Commit chaincode to channel
     After a sufficient number of organizations have approved a chaincode definition, 
@@ -126,7 +126,7 @@ peer lifecycle chaincode approveformyorg -o orderer1.gov.io:7050 --ordererTLSHos
 a. For manufacturer & production
 
 peer lifecycle chaincode checkcommitreadiness --channelID mfd-prd-channel --name basic --version 1.0 --sequence 1 --tls --cafile "${PWD}/crypto/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem" --output json
-peer lifecycle chaincode commit -o orderer1.gov.io:7050 --ordererTLSHostnameOverride orderer --channelID mfd-prd-channel --name basic --version 1.0 --sequence 1 --tls --cafile "${PWD}/crypto/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem" --peerAddresses peertf1.production.com:8050 --tlsRootCertFiles "${PWD}/crypto/peerOrganizations/production.com/peers/peertf1.production.com/tls/ca.crt" --peerAddresses peertm1.manufacturer.com:9050 --tlsRootCertFiles "${PWD}/crypto/peerOrganizations/manufacturer.com/peers/peertm1.manufacturer.com/tls/ca.crt"
+peer lifecycle chaincode commit -o orderer1.gov.io:7050 --channelID mfd-prd-channel --name basic --version 1.0 --sequence 1 --tls --cafile "${PWD}/crypto/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem" --peerAddresses peertf1.production.com:8050 --tlsRootCertFiles "${PWD}/crypto/peerOrganizations/production.com/peers/peertf1.production.com/tls/ca.crt" --peerAddresses peertm1.manufacturer.com:9050 --tlsRootCertFiles "${PWD}/crypto/peerOrganizations/manufacturer.com/peers/peertm1.manufacturer.com/tls/ca.crt"
 
 b. For manufacturer & wharehouse
 

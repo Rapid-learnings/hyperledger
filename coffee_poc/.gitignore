@@ -4,4 +4,8 @@ channel-artefacts/*.tx
 channel-artefacts/*.block
 /chaincode/node_modules/*
 /*.tar.*
+/chaincode/package-lock.json
+/api/node_modules/*
+api/package-lock.json
+/chaincode/package-lock.json
 # /bin/

@@ -46,19 +46,21 @@ Organizations:
         Policies:
             Readers:
                 Type: Signature
-                Rule: "OR('teafarmMSP.member', 'teafarm.peer', 'teafarm.admin', 'teafarm.client')"
+                Rule: "OR('teafarmMSP.member', 'teafarmMSP.peer', 'teafarmMSP.admin', 'teafarmMSP.client')"
             Writers:
                 Type: Signature
-                Rule: "OR('teafarmMSP.member', 'teafarm.peer', 'teafarm.admin', 'teafarm.client')"
+                Rule: "OR('teafarmMSP.member', 'teafarmMSP.peer', 'teafarmMSP.admin', 'teafarmMSP.client')"
             Admins:
                 Type: Signature
-                Rule: "OR('teafarm.admin')"
+                Rule: "OR('teafarmMSP.admin')"
             Endorsement:
                 Type: Signature
-                Rule: "OR('teafarm.peer', 'teafarm.admin')"
+                Rule: "OR('teafarmMSP.peer', 'teafarmMSP.admin')"
         AnchorPeers:
             Host: peertf1.production.com
             Port: 8050
+            Host: peertf2.production.com
+            Port: 8080
     
     - &tata
         Name: tata

@@ -1,0 +1,82 @@
+{
+    "name": "test",
+    "version": "1.1",
+    "channels": {
+        "mfd-prd-channel": {
+            "orderers": [
+                "orderer.gov.io"
+            ],
+            "peers": [
+                "peertf1.production.com",
+                "peertm1.manufacturer.com"
+            ]
+        }
+    },
+    "organizations": {
+        "teafarm": {
+            "mspid": "teafarmMSP",
+            "peers": [
+                "peertf1.production.com"
+            ]
+        },
+        "tata": {
+            "mspid": "tataMSP",
+            "peers": [
+                "peertm1.manufacturer.com"
+            ]
+        }
+    },
+    "orderers": {
+        "orderer.gov.io": {
+            "url": "orderer1.gov.io:7050",
+            "grpcOptions": {
+                "ssl-target-name-override": "orderer.gov.io"
+            },
+            "tlsCACerts": {
+                "path": "../../crypto-config/ordererOrganizations/gov.io/orderers/orderer.gov.io/tlscacerts/gov.io-cert.pem"
+            }
+        }
+    },
+    "peers": {
+        "peertf1.production.com": {
+            "url": "grpcs://localhost:8050",
+            "grpcOptions": {
+                "ssl-target-name-override": "peertf1.production.com"
+            },
+            "tlsCACerts": {
+                "path": "../../crypto-config/peerOrganizations/production.com/peers/peertf1.production.com/tlscacerts/production.com-cert.pem"
+            }
+        },
+        "peertm1.manufacturer.com": {
+            "url": "grpcs://localhost:9050",
+            "grpcOptions": {
+                "ssl-target-name-override": "peertm1.manufacturer.com"
+            },
+            "tlsCACerts": {
+                "path": "../../crypto/peerOrganizations/manufacturer.com/peers/peertm1.manufacturer.com/tlscacerts/manufacturer.com-cert.pem"
+            }
+        }
+    },
+    "certificateAuthorities": {
+        "ca.manufacturer.com": {
+            "url": "http://localhost:1060",
+            "caName": "ca.manufacturer.com",
+            "tlsCAcerts": {
+                "path": null
+            },
+            "httpOptions": {
+                "verify": false
+            }
+        },
+        "ca.production.com": {
+            "url": "http://localhost:1050",
+            "caName": "ca.production.com",
+            "tlsCAcerts": {
+                "path": null
+            },
+            "httpOptions": {
+                "verify": false
+            }
+        }
+    }
+}
