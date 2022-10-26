@@ -1,32 +1,56 @@
 // index.js
 'use strict';
+var { Gateway, Wallets } = require('fabric-network');
+const fs = require('fs');
 const express = require('express');
 const bodyParser = require('body-parser')
 const cors = require('cors')
 
 const app = express();
-app.use(bodyParser);
-app.use(bodyParser.urlencoded({
-    extended: false
-}));
+// app.use(bodyParser);
+// app.use(bodyParser.urlencoded({
+//     extended: false
+// }));
+app.use(bodyParser.urlencoded());
+app.use(bodyParser.json());
 app.use(cors());
 
 const manufactuererProducer = require('../chaincode/mfcPrd.js')
+const helper = require("./helper")
 // module.exports.contracts = [manufactuererProducer];
 
 app.post('/register', async(req,res,next)=>{
+console.log(req.body);
     let usrname = req.body.username;
     console.log("Name = ",usrname);
     let orgName = req.body.orgName;
-    let response = await helper.getRegisteredUser(usrname, orgName, true);
+    let response = await helper.registerAndGerSecret(usrname, orgName);
     res.json(response);
 })
 
 
 app.get('/getStorage', async(req,res,next)=>{
-    await manufactuererProducer.setInitialStorageForProducer();
-    let storage = await manufactuererProducer.getStorageFromProducer();
-    return res.json({message:"Storage is "+storage})
+    try{
+        let ccp = JSON.parse(fs.readFile("./connection-profiles/mfc-prd-config.json",'utf8'))
+        const walletPath = path.join(process.cwd(),'teafarm-wallet');
+        const wallet = await Wallets.newFileSystemWallet(walletPath)
+        // omitting check for identity
+        const gateway = new Gateway();
+        await gateway.connect(ccp, {wallet, identity:'', discovery:{enabled:true, asLocalhost:false}})
+        
+        // n/w to which contract is deployed
+        const network = await gateway.getNetwork('mfd-prd-channel')
+        // get contract
+        const contract = network.getContract('mfcPrd.js')
+        const storage = await contract.evaluateTransaction('getStorage');
+
+        res.json(storage);
+    }catch(err){
+        throw err;
+    }
+    // await manufactuererProducer.setInitialStorageForProducer();
+    // let storage = await manufactuererProducer.getStorageFromProducer();
+    // return res.json({message:"Storage is "+storage})
 });
 
 

@@ -30,7 +30,7 @@
         "orderer.gov.io": {
             "url": "orderer1.gov.io:7050",
             "grpcOptions": {
-                "ssl-target-name-override": "orderer.gov.io"
+                "ssl-target-name-override": "orderer1.gov.io"
             },
             "tlsCACerts": {
                 "path": "../../crypto-config/ordererOrganizations/gov.io/orderers/orderer.gov.io/tlscacerts/gov.io-cert.pem"
@@ -58,21 +58,21 @@
         }
     },
     "certificateAuthorities": {
-        "ca.manufacturer.com": {
-            "url": "http://localhost:1060",
-            "caName": "ca.manufacturer.com",
+        "caManufacturer": {
+            "url": "http://localhost:2051",
+            "caName": "caManufacturer",
             "tlsCAcerts": {
-                "path": null
+                "path": "hyperledger/coffee_poc/crypto-config/peerOrganizations/manufacturer.com/ca/ca.manufacturer.com-cert.pem"
             },
             "httpOptions": {
                 "verify": false
             }
         },
-        "ca.production.com": {
-            "url": "http://localhost:1050",
-            "caName": "ca.production.com",
+        "caProduction": {
+            "url": "http://localhost:2052",
+            "caName": "caProduction",
             "tlsCAcerts": {
-                "path": null
+                "path": "hyperledger/coffee_poc/crypto-config/peerOrganizations/production.com/ca/ca.production.com-cert.pem"
             },
             "httpOptions": {
                 "verify": false
