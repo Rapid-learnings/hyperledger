@@ -16,17 +16,33 @@ app.use(bodyParser.json());
 app.use(cors());
 
 const manufactuererProducer = require('../chaincode/mfcPrd.js')
-const helper = require("./helper")
+const helper = require("./helper");
+const enrollAdmin = require('./enrollAdmin.js');
+const registerUser = require('./registerUser.js');
 // module.exports.contracts = [manufactuererProducer];
 
-app.post('/register', async(req,res,next)=>{
-console.log(req.body);
-    let usrname = req.body.username;
-    console.log("Name = ",usrname);
-    let orgName = req.body.orgName;
-    let response = await helper.registerAndGerSecret(usrname, orgName);
-    res.json(response);
+app.post('/register/admin', async(req,res,next)=>{
+    let org = req.body.orgName;
+    console.log(org);
+    let resp = await enrollAdmin.enroll(org);
+    res.json(resp);
 })
+
+app.post('/register/user', async(req,res,next)=>{
+    let usrname = req.body.username;
+    let orgName = req.body.orgName;
+    let resp = registerUser.registerEnrollUser(usrname,orgName);
+    res.json(resp);
+})
+
+// app.post('/register', async(req,res,next)=>{
+// console.log(req.body);
+//     let usrname = req.body.username;
+//     console.log("Name = ",usrname);
+//     let orgName = req.body.orgName;
+//     let response = await helper.registerAndGerSecret(usrname, orgName);
+//     res.json(response);
+// })
 
 
 app.get('/getStorage', async(req,res,next)=>{

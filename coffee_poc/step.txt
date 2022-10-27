@@ -3,6 +3,7 @@
 Note : 
 Be conscious of location/dir when running the Commands
 Create channel-artefacts directory in root folder if not present.
+Create tata-wallet, teafarm-wallet folders inside api folder.
 
 Setup the paths 
 export PATH=${PWD}/bin:$PATH
