@@ -10,4 +10,5 @@ api/package-lock.json
 /chaincode/package-lock.json
 /api/tata-wallet/*.id
 /api/teafarm-wallet/*.id
+# /fabric-ca-config/*
 # /bin/
