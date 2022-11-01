@@ -16,15 +16,36 @@ const status = ['BATCH_CREATED', 'DRIED', 'ROASTED', 'QA_COMPLETE', 'PACKAGED', 
 class mwcc extends Contract {
 
     async initialize(ctx, name) {
-        currentStockBytes = await ctx.stub.getState(stockKey);
-        const clientMSP = await ctx.clientIdentity.getMSPID();
-        if (clientMSP !== 'ManufacturerMSP') {
-            throw new Error('Only Manufacturer can see stock');
-        }
-        currentStock = parseInt(currentStockBytes.toString());
-        await ctx.stub.putState(nameKey, Buffer.from(name.toString()));
+        await ctx.stub.putState(nameKey, Buffer.from('0'));
         console.log('Current stock is %s', currentStock);
         return currentStock;
+    }
+
+    async updateStock(ctx, amt) {
+        const clientMSPID = await ctx.clientIdentity.getMSPID();
+        if (clientMSPID !== 'ManufacturerMSP') {
+            throw new Error('only Manufacturer can update stock');
+        }
+        const stockBytes = await ctx.getState(stockKey);
+        let stock
+        if (!stockBytes || stockBytes.length === 0) {
+            stock = amt;
+        } else {
+            stock = parseInt(stockBytes.toString()) + amt;
+        }
+        await ctx.stub.putState(stockKey, Buffer.from(stock.toString()));
+        return stock;
+    }
+
+    async availableStock(ctx) {
+        const clientMSPID = await ctx.clientIdentity.getMSPID();
+        if (clientMSPID !== 'ManufacturerMSP') {
+            throw new Error('only Manufacturer can check available stock')
+        }
+        const ASBytes = await ctx.stub.getState(stockKey);
+        const AS = parseInt(ASBytes.toString())
+        console.log("Available Stock is %s kg", AS);
+        return AS;
     }
 
     async createBatch(ctx, amountInKg) {
@@ -42,7 +63,8 @@ class mwcc extends Contract {
                 "Hash": hash,
                 "Status": status[0],
                 "Weight": batchSize,
-                "AmountRejected": 0
+                "AmountRejected": 0,
+                "Owner": "ManufacturerMSP"
             }
             const batchDetailsKey = await ctx.stub.createCompositeKey(batchPrefix, [totalBatches + i]);
             await ctx.stub.putState(batchDetailsKey, Buffer.from(JSON.stringify(batchDetails)));
@@ -113,6 +135,7 @@ class mwcc extends Contract {
         const bdBytes = await ctx.stub.getState(batchDetailsKey);
         const bd = parse(JSON.stringify(bdBytes));
         bd.Status = status[5];
+        bd.owner = 'WarehouseMSP';
         await ctx.stub.putState(batchDetailsKey, Buffer.from(JSON.stringify(bd)));
         console.log('Status of batch %s changed to %s', batchNo, bd.Status);
     }

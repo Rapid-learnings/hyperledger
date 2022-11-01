@@ -57,7 +57,7 @@ class pmcc extends Contract {
     async availableStock(ctx) {
         const clientMSPID = await ctx.clientIdentity.getMSPID();
         if (clientMSPID !== 'ProducerMSP') {
-            throw new Error('only producer can check available stock')
+            throw new Error('only Producer can check available stock')
         }
         const ASBytes = await ctx.stub.getState(stockKey);
         const AS = parseInt(ASBytes.toString())
@@ -67,7 +67,7 @@ class pmcc extends Contract {
 
     // loc - string
     // amt - int
-    async placeOrder(ctx, amt, country, state) {
+    async placeOrder(ctx, qty, amt, country, state) {
         const clientMSPID = await ctx.clientIdentity.getMSPID();
         if (clientMSPID !== 'ManufacturerMSP') {
             throw new Error('only manufacturer can place an order')
@@ -84,12 +84,13 @@ class pmcc extends Contract {
         this.updateStatusToOrderPlaced(ctx, orderNo);
         const time = ctx.stub.getDateTimestamp();
         let order = {
-            "deliverylocation": {
-                "country": country,
-                "state": state
+            "DeliveryLocation": {
+                "Country": country,
+                "State": state
             },
-            "time": time,
-            "amount": amt  
+            "Time": time,
+            "Amount": amt,
+            "Quantity": qty  
         }
         orderDetailsKey = await ctx.stub.createCompositeKey(orderDetailsPrefix, [orderNo])
         await ctx.stub.putState(orderDetailsKey, Buffer.from(JSON.stringify(order)));
