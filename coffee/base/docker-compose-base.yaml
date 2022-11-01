@@ -1,0 +1,264 @@
+version: '2'
+
+services:
+
+##############################################################################################################################
+# orderer containers
+##############################################################################################################################
+
+  orderer.poc.com:
+    container_name: orderer.poc.com
+    extends:
+      file: peer-base.yaml
+      service: orderer-base
+    volumes:
+      - ../channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
+      - ../crypto-config/ordererOrganizations/poc.com/orderers/orderer.poc.com/msp:/var/hyperledger/orderer/msp
+      - ../crypto-config/ordererOrganizations/poc.com/orderers/orderer.poc.com/tls/:/var/hyperledger/orderer/tls
+      - orderer.poc.com:/var/hyperledger/production/orderer
+    ports:
+      - 7050:7050
+
+##############################################################################################################################
+# peer containers
+##############################################################################################################################
+# producer
+##############################################################################################################################
+
+  peer0.producer.poc.com:
+    container_name: peer0.producer.poc.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.producer.poc.com
+      - CORE_PEER_ADDRESS=peer0.producer.poc.com:7051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:7051
+      - CORE_PEER_CHAINCODEADDRESS=peer0.producer.poc.com:7052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:7052
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.producer.poc.com:8051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.producer.poc.com:7051
+      - CORE_PEER_LOCALMSPID=ProducerMSP
+    volumes:
+      - /var/run/:/host/var/run/
+      - ../crypto-config/peerOrganizations/producer.poc.com/peers/peer0.producer.poc.com/msp:/etc/hyperledger/fabric/msp
+      - ../crypto-config/peerOrganizations/producer.poc.com/peers/peer0.producer.poc.com/tls:/etc/hyperledger/fabric/tls
+      - peer0.producer.poc.com:/var/hyperledger/production
+    ports:
+      - 7051:7051
+    
+  peer1.producer.poc.com:
+    container_name: peer1.producer.poc.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer1.producer.poc.com
+      - CORE_PEER_ADDRESS=peer1.producer.poc.com:8051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:8051
+      - CORE_PEER_CHAINCODEADDRESS=peer1.producer.poc.com:8052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:7052
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.producer.poc.com:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.producer.poc.com:8051
+      - CORE_PEER_LOCALMSPID=ProducerMSP
+    volumes:
+      - /var/run/:/host/var/run/
+      - ../crypto-config/peerOrganizations/producer.poc.com/peers/peer1.producer.poc.com/msp:/etc/hyperledger/fabric/msp
+      - ../crypto-config/peerOrganizations/producer.poc.com/peers/peer1.producer.poc.com/tls:/etc/hyperledger/fabric/tls
+      - peer1.producer.poc.com:/var/hyperledger/production
+    ports:
+      - 8051:8051
+
+##############################################################################################################################
+# manufacturer
+##############################################################################################################################
+
+  peer0.manufacturer.poc.com:
+    container_name: peer0.manufacturer.poc.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.manufacturer.poc.com
+      - CORE_PEER_ADDRESS=peer0.manufacturer.poc.com:9051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:9051
+      - CORE_PEER_CHAINCODEADDRESS=peer0.manufacturer.poc.com:9052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:9052
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.manufacturer.poc.com:10051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.manufacturer.poc.com:9051
+      - CORE_PEER_LOCALMSPID=ManufacturerMSP
+    volumes:
+      - /var/run/:/host/var/run/
+      - ../crypto-config/peerOrganizations/manufacturer.poc.com/peers/peer0.manufacturer.poc.com/msp:/etc/hyperledger/fabric/msp
+      - ../crypto-config/peerOrganizations/manufacturer.poc.com/peers/peer0.manufacturer.poc.com/tls:/etc/hyperledger/fabric/tls
+      - peer0.manufacturer.poc.com:/var/hyperledger/production
+    ports:
+      - 9051:9051
+    
+  peer1.manufacturer.poc.com:
+    container_name: peer1.manufacturer.poc.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer1.manufacturer.poc.com
+      - CORE_PEER_ADDRESS=peer1.manufacturer.poc.com:10051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:8051
+      - CORE_PEER_CHAINCODEADDRESS=peer1.manufacturer.poc.com:10052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:10052
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.manufacturer.poc.com:9051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.manufacturer.poc.com:10051
+      - CORE_PEER_LOCALMSPID=ManufacturerMSP
+    volumes:
+      - /var/run/:/host/var/run/
+      - ../crypto-config/peerOrganizations/manufacturer.poc.com/peers/peer1.manufacturer.poc.com/msp:/etc/hyperledger/fabric/msp
+      - ../crypto-config/peerOrganizations/manufacturer.poc.com/peers/peer1.manufacturer.poc.com/tls:/etc/hyperledger/fabric/tls
+      - peer1.manufacturer.poc.com:/var/hyperledger/production
+    ports:
+      - 10051:10051
+
+##############################################################################################################################
+# warehouse
+##############################################################################################################################
+
+  peer0.warehouse.poc.com:
+    container_name: peer0.warehouse.poc.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.warehouse.poc.com
+      - CORE_PEER_ADDRESS=peer0.warehouse.poc.com:11051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:11051
+      - CORE_PEER_CHAINCODEADDRESS=peer0.warehouse.poc.com:11052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:11052
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.warehouse.poc.com:12051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.warehouse.poc.com:11051
+      - CORE_PEER_LOCALMSPID=WarehouseMSP
+    volumes:
+      - /var/run/:/host/var/run/
+      - ../crypto-config/peerOrganizations/warehouse.poc.com/peers/peer0.warehouse.poc.com/msp:/etc/hyperledger/fabric/msp
+      - ../crypto-config/peerOrganizations/warehouse.poc.com/peers/peer0.warehouse.poc.com/tls:/etc/hyperledger/fabric/tls
+      - peer0.warehouse.poc.com:/var/hyperledger/production
+    ports:
+      - 11051:11051
+    
+  peer1.warehouse.poc.com:
+    container_name: peer1.warehouse.poc.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer1.warehouse.poc.com
+      - CORE_PEER_ADDRESS=peer1.warehouse.poc.com:12051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:12051
+      - CORE_PEER_CHAINCODEADDRESS=peer1.warehouse.poc.com:12052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:12052
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.warehouse.poc.com:11051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.warehouse.poc.com:12051
+      - CORE_PEER_LOCALMSPID=WarehouseMSP
+    volumes:
+      - /var/run/:/host/var/run/
+      - ../crypto-config/peerOrganizations/warehouse.poc.com/peers/peer1.warehouse.poc.com/msp:/etc/hyperledger/fabric/msp
+      - ../crypto-config/peerOrganizations/warehouse.poc.com/peers/peer1.warehouse.poc.com/tls:/etc/hyperledger/fabric/tls
+      - peer1.warehouse.poc.com:/var/hyperledger/production
+    ports:
+      - 12051:12051
+
+##############################################################################################################################
+# retailer
+##############################################################################################################################
+
+  peer0.retailer.poc.com:
+    container_name: peer0.retailer.poc.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.retailer.poc.com
+      - CORE_PEER_ADDRESS=peer0.retailer.poc.com:13051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:13051
+      - CORE_PEER_CHAINCODEADDRESS=peer0.retailer.poc.com:13052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:13052
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.retailer.poc.com:14051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.retailer.poc.com:13051
+      - CORE_PEER_LOCALMSPID=RetailerMSP
+    volumes:
+      - /var/run/:/host/var/run/
+      - ../crypto-config/peerOrganizations/retailer.poc.com/peers/peer0.retailer.poc.com/msp:/etc/hyperledger/fabric/msp
+      - ../crypto-config/peerOrganizations/retailer.poc.com/peers/peer0.retailer.poc.com/tls:/etc/hyperledger/fabric/tls
+      - peer0.retailer.poc.com:/var/hyperledger/production
+    ports:
+      - 13051:13051
+    
+  peer1.retailer.poc.com:
+    container_name: peer1.retailer.poc.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer1.retailer.poc.com
+      - CORE_PEER_ADDRESS=peer1.retailer.poc.com:14051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:14051
+      - CORE_PEER_CHAINCODEADDRESS=peer1.retailer.poc.com:14052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:14052
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.retailer.poc.com:13051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.retailer.poc.com:14051
+      - CORE_PEER_LOCALMSPID=RetailerMSP
+    volumes:
+      - /var/run/:/host/var/run/
+      - ../crypto-config/peerOrganizations/retailer.poc.com/peers/peer1.retailer.poc.com/msp:/etc/hyperledger/fabric/msp
+      - ../crypto-config/peerOrganizations/retailer.poc.com/peers/peer1.retailer.poc.com/tls:/etc/hyperledger/fabric/tls
+      - peer1.retailer.poc.com:/var/hyperledger/production
+    ports:
+      - 14051:14051
+
+##############################################################################################################################
+# gov
+##############################################################################################################################
+
+  peer0.gov.poc.com:
+    container_name: peer0.gov.poc.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.gov.poc.com
+      - CORE_PEER_ADDRESS=peer0.gov.poc.com:15051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:15051
+      - CORE_PEER_CHAINCODEADDRESS=peer0.gov.poc.com:15052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:15052
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.gov.poc.com:16051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.gov.poc.com:15051
+      - CORE_PEER_LOCALMSPID=GovMSP
+    volumes:
+      - /var/run/:/host/var/run/
+      - ../crypto-config/peerOrganizations/gov.poc.com/peers/peer0.gov.poc.com/msp:/etc/hyperledger/fabric/msp
+      - ../crypto-config/peerOrganizations/gov.poc.com/peers/peer0.gov.poc.com/tls:/etc/hyperledger/fabric/tls
+      - peer0.gov.poc.com:/var/hyperledger/production
+    ports:
+      - 15051:15051
+    
+  peer1.gov.poc.com:
+    container_name: peer1.gov.poc.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer1.gov.poc.com
+      - CORE_PEER_ADDRESS=peer1.gov.poc.com:16051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:16051
+      - CORE_PEER_CHAINCODEADDRESS=peer1.gov.poc.com:16052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:16052
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.gov.poc.com:15051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.gov.poc.com:16051
+      - CORE_PEER_LOCALMSPID=GovMSP
+    volumes:
+      - /var/run/:/host/var/run/
+      - ../crypto-config/peerOrganizations/gov.poc.com/peers/peer1.gov.poc.com/msp:/etc/hyperledger/fabric/msp
+      - ../crypto-config/peerOrganizations/gov.poc.com/peers/peer1.gov.poc.com/tls:/etc/hyperledger/fabric/tls
+      - peer1.gov.poc.com:/var/hyperledger/production
+    ports:
+      - 16051:16051
+    
+    

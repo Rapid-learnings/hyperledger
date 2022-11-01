@@ -1,0 +1,346 @@
+# Copyright IBM Corp. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+Organizations:
+
+########################################################################################################################
+# orderer organizations
+########################################################################################################################
+
+  - &OrdererOrg
+      Name: OrdererOrg
+      ID: OrdererMSP
+      MSPDir: crypto-config/ordererOrganizations/poc.com/msp
+      Policies:
+        Readers:
+          Type: Signature
+          Rule: "OR('OrdererMSP.member')"
+        Writers:
+          Type: Signature
+          Rule: "OR('OrdererMSP.member')"
+        Admins:
+          Type: Signature
+          Rule: "OR('OrdererMSP.admin')"
+      OrdererEndpoints:
+        - orderer.poc.com:7050
+
+  # - &OrdererOrg2
+  #     Name: OrdererOrg2
+  #     ID: Orderer2MSP
+  #     MSPDir: crypto-config/ordererOrganizations/poc.com/msp
+  #     Policies:
+  #       Readers:
+  #         Type: Signature
+  #         Rule: "OR('Orderer2MSP.member')"
+  #       Writers:
+  #         Type: Signature
+  #         Rule: "OR('Orderer2MSP.member')"
+  #       Admins:
+  #         Type: Signature
+  #         Rule: "OR('Orderer2MSP.admin')"
+  #     OrdererEndpoints:
+  #       - orderer2.poc.com:8050
+
+  # - &OrdererOrg3
+  #     Name: OrdererOrg3
+  #     ID: Orderer3MSP
+  #     MSPDir: crypto-config/ordererOrganizations/poc.com/msp
+  #     Policies:
+  #       Readers:
+  #         Type: Signature
+  #         Rule: "OR('Orderer3MSP.member')"
+  #       Writers:
+  #         Type: Signature
+  #         Rule: "OR('Orderer3MSP.member')"
+  #       Admins:
+  #         Type: Signature
+  #         Rule: "OR('Orderer3MSP.admin')"
+  #     OrdererEndpoints:
+  #       - orderer3.poc.com:9050
+
+  # - &OrdererOrg4
+  #     Name: OrdererOrg4
+  #     ID: Orderer4MSP
+  #     MSPDir: crypto-config/ordererOrganizations/poc.com/msp
+  #     Policies:
+  #       Readers:
+  #         Type: Signature
+  #         Rule: "OR('Orderer4MSP.member')"
+  #       Writers:
+  #         Type: Signature
+  #         Rule: "OR('Orderer4MSP.member')"
+  #       Admins:
+  #         Type: Signature
+  #         Rule: "OR('Orderer4MSP.admin')"
+  #     OrdererEndpoints:
+  #       - orderer4.poc.com:10050
+
+########################################################################################################################
+# peer organizations
+########################################################################################################################
+
+  - &Producer
+      Name: ProducerMSP
+      ID: ProducerMSP
+      MSPDir: crypto-config/peerOrganizations/producer.poc.com/msp
+      Policies:
+        Readers:
+          Type: Signature
+          Rule: "OR('ProducerMSP.admin', 'ProducerMSP.peer', 'ProducerMSP.client')"
+        Writers:
+          Type: Signature
+          Rule: "OR('ProducerMSP.admin', 'ProducerMSP.client')"
+        Admins:
+          Type: Signature
+          Rule: "OR('ProducerMSP.admin')"
+        Endorsement:
+          Type: Signature
+          Rule: "OR('ProducerMSP.peer')"
+      AnchorPeers:
+        Host: peer0.producer.poc.com
+        Port: 7051
+
+  - &Manufacturer
+      Name: ManufacturerMSP
+      ID: ManufacturerMSP
+      MSPDir: crypto-config/peerOrganizations/manufacturer.poc.com/msp
+      Policies:
+        Readers:
+          Type: Signature
+          Rule: "OR('ManufacturerMSP.admin', 'ManufacturerMSP.peer', 'ManufacturerMSP.client')"
+        Writers:
+          Type: Signature
+          Rule: "OR('ManufacturerMSP.admin', 'ManufacturerMSP.client')"
+        Admins:
+          Type: Signature
+          Rule: "OR('ManufacturerMSP.admin')"
+        Endorsement:
+          Type: Signature
+          Rule: "OR('ManufacturerMSP.peer')"
+      AnchorPeers:
+        Host: peer0.manufacturer.poc.com
+        Port: 9051
+
+  - &Warehouse
+      Name: WarehouseMSP
+      ID: WarehouseMSP
+      MSPDir: crypto-config/peerOrganizations/warehouse.poc.com/msp
+      Policies:
+        Readers:
+          Type: Signature
+          Rule: "OR('WarehouseMSP.admin', 'WarehouseMSP.peer', 'WarehouseMSP.client')"
+        Writers:
+          Type: Signature
+          Rule: "OR('WarehouseMSP.admin', 'WarehouseMSP.client')"
+        Admins:
+          Type: Signature
+          Rule: "OR('WarehouseMSP.admin')"
+        Endorsement:
+          Type: Signature
+          Rule: "OR('WarehouseMSP.peer')"
+      AnchorPeers:
+        Host: peer0.warehouse.poc.com
+        Port: 11051
+
+  - &Retailer
+      Name: RetailerMSP
+      ID: RetailerMSP
+      MSPDir: crypto-config/peerOrganizations/retailer.poc.com/msp
+      Policies:
+        Readers:
+          Type: Signature
+          Rule: "OR('RetailerMSP.admin', 'RetailerMSP.peer', 'RetailerMSP.client')"
+        Writers:
+          Type: Signature
+          Rule: "OR('RetailerMSP.admin', 'RetailerMSP.client')"
+        Admins:
+          Type: Signature
+          Rule: "OR('RetailerMSP.admin')"
+        Endorsement:
+          Type: Signature
+          Rule: "OR('RetailerMSP.peer')"
+      AnchorPeers:
+        Host: peer0.retailer.poc.com
+        Port: 13051
+
+  - &Gov
+      Name: GovMSP
+      ID: GovMSP
+      MSPDir: crypto-config/peerOrganizations/gov.poc.com/msp
+      Policies:
+        Readers:
+          Type: Signature
+          Rule: "OR('GovMSP.admin', 'GovMSP.peer', 'GovMSP.client')"
+        Writers:
+          Type: Signature
+          Rule: "OR('GovMSP.admin', 'GovMSP.client')"
+        Admins:
+          Type: Signature
+          Rule: "OR('GovMSP.admin')"
+        Endorsement:
+          Type: Signature
+          Rule: "OR('GovMSP.peer')"
+      AnchorPeers:
+        Host: peer0.gov.poc.com
+        Port: 15051
+
+Capabilities:
+
+  Channel: &ChannelCapabilities
+
+    V2_0: true
+
+  Orderer: &OrdererCapabilities
+
+    V2_0: true
+
+  Application: &ApplicationCapabilities
+
+    V2_0: true
+
+Application: &ApplicationDefaults
+
+  Organizations:
+
+  Policies:
+    Readers:
+      Type: ImplicitMeta
+      Rule: "ANY Readers"
+    Writers:
+      Type: ImplicitMeta
+      Rule: "ANY Writers"
+    Admins:
+      Type: ImplicitMeta
+      Rule: "MAJORITY Admins"
+    LifecycleEndorsement:
+      Type: ImplicitMeta
+      Rule: "MAJORITY Endorsement"
+    Endorsement:
+      Type: ImplicitMeta
+      Rule: "MAJORITY Endorsement"
+
+  Capabilities:
+    <<: *ApplicationCapabilities
+
+Channel: &ChannelDefaults
+
+  Policies:
+    Readers:
+      Type: ImplicitMeta
+      Rule: "ANY Readers"
+    Writers:
+      Type: ImplicitMeta
+      Rule: "ANY Writers"
+    Admins:
+      Type: ImplicitMeta
+      Rule: "MAJORITY Admins"
+
+  Capabilities:
+    <<: *ChannelCapabilities
+
+Orderer: &OrdererDefaults
+
+  OrdererType: solo
+
+  Addresses:
+    - orderer.poc.com:7050
+  
+  EtcdRaft:
+    Consenters:
+      - Host: orderer1.poc.com
+        Port: 7050
+        ClientTLSCert: ./crypto-config/ordererOrganizations/poc.com/orderers/orderer1.poc.com/tls/server.crt
+        ServerTLSCert: ./crypto-config/ordererOrganizations/poc.com/orderers/orderer1.poc.com/tls/server.crt
+
+      - Host: orderer2.poc.com
+        Port: 8050
+        ClientTLSCert: ./crypto-config/ordererOrganizations/poc.com/orderers/orderer2.poc.com/tls/server.crt
+        ServerTLSCert: ./crypto-config/ordererOrganizations/poc.com/orderers/orderer2.poc.com/tls/server.crt
+
+      - Host: orderer3.poc.com
+        Port: 9050
+        ClientTLSCert: ./crypto-config/ordererOrganizations/poc.com/orderers/orderer3.poc.com/tls/server.crt
+        ServerTLSCert: ./crypto-config/ordererOrganizations/poc.com/orderers/orderer3.poc.com/tls/server.crt
+
+      - Host: orderer4.poc.com
+        Port: 10050
+        ClientTLSCert: ./crypto-config/ordererOrganizations/poc.com/orderers/orderer4.poc.com/tls/server.crt
+        ServerTLSCert: ./crypto-config/ordererOrganizations/poc.com/orderers/orderer4.poc.com/tls/server.crt
+  
+  BatchTimeout: 2s
+  BatchSize:
+    MaxMessageCount: 10
+    AbsoluteMaxBytes: 99 MB
+    PreferredMaxBytes: 512 KB
+  
+  Organizations:
+
+  Policies:
+    Readers:
+      Type: ImplicitMeta
+      Rule: "ANY Readers"
+    Writers:
+      Type: ImplicitMeta
+      Rule: "ANY Writers"
+    Admins:
+      Type: ImplicitMeta
+      Rule: "MAJORITY Admins"
+    BlockValidation:
+      Type: ImplicitMeta
+      Rule: "ANY Writers"
+
+Profiles:
+  Genesis:
+    <<: *ChannelDefaults
+    Orderer:
+      <<: *OrdererDefaults
+      Organizations:
+        - *OrdererOrg
+      Capabilities:
+        <<: *OrdererCapabilities
+    Consortiums:
+      POCConsortium:
+        Organizations:
+          - *Producer
+          - *Manufacturer
+          - *Warehouse
+          - *Retailer
+          - *Gov
+  
+  PMChannel:
+    Consortium: POCConsortium
+    <<: *ChannelDefaults
+    Application:
+      <<: *ApplicationDefaults
+      Organizations:
+        - *Producer
+        - *Manufacturer
+        - *Gov
+      Capabilities:
+        <<: *ApplicationCapabilities
+
+  MWChannel:
+    Consortium: POCConsortium
+    <<: *ChannelDefaults
+    Application:
+      <<: *ApplicationDefaults
+      Organizations:
+        - *Manufacturer
+        - *Warehouse
+        - *Gov
+      Capabilities:
+        <<: *ApplicationCapabilities
+
+  WRChannel:
+    Consortium: POCConsortium
+    <<: *ChannelDefaults
+    Application:
+      <<: *ApplicationDefaults
+      Organizations:
+        - *Warehouse
+        - *Retailer
+        - *Gov
+      Capabilities:
+        <<: *ApplicationCapabilities

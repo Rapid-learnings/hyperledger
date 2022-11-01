@@ -1,0 +1,17 @@
+{
+  "name": "pmcc",
+  "version": "1.0.0",
+  "description": "",
+  "main": "pm-cc.js",
+  "dependencies": {
+    "fabric-contract-api": "^2.2.3",
+    "fabric-shim": "^2.2.3",
+    "subtle-crypto": "^0.0.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "fabric-chaincode-node start"
+  },
+  "author": "",
+  "license": "ISC"
+}
