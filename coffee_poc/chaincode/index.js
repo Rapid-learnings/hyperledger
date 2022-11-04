@@ -1,7 +1,7 @@
 // index.js
 'use strict';
 
-const AssetTransfer = require('./mfcPrd.js')
+const PmCc = require('./mfc-prdc/pmcc')
 // const RemoveValues = require('./removevalues')
 
-module.exports.contracts = [AssetTransfer];
+module.exports.contracts = [PmCc];
