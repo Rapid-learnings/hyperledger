@@ -37,7 +37,8 @@ class pmcc extends Contract {
         console.log("====== name is set to %s ======", name);
     }
     // amt - int
-    async updateStock(ctx, amt) {
+    // this function updates the stock in production.
+    async updateStock(ctx, amtInKg, flag) {
         const clientMSPID = await ctx.clientIdentity.getMSPID();
         if (clientMSPID !== 'ProducerMSP') {
             throw new Error('only producer can update stock')
@@ -45,9 +46,22 @@ class pmcc extends Contract {
         const currentStockBytes = await ctx.stub.getState(stockKey);
         let updatedStock;
         if (!currentStockBytes || currentStockBytes.length === 0) {
-            updatedStock = amt;
-        } else {
-            updatedStock = parseInt(currentStockBytes.toString()) + amt;
+            updatedStock = amtInKg;
+        }
+
+        let currentStock = parseInt(currentStockBytes.toString()) //get current stock in production
+        
+        if(flag == 0 && currentStock < amtInKg){ //chck for outstanding amt  
+            throw new Error("Current Stock Is Less Than The Asked Amount");
+        }
+        
+        if(flag == 0){ 
+            //flag == 0 is for deduction of stock in production
+            updatedStock = currentStock - amtInKg;
+        }else {
+            //flag == 1 is for deduction of stock in production
+            // new stock added here
+            updatedStock = currentStock + amtInKg;
         }
         await ctx.stub.putState(stockKey, Buffer.from(updatedStock.toString()))
         console.log("Stock is updated to %s", updatedStock);
@@ -72,15 +86,26 @@ class pmcc extends Contract {
         if (clientMSPID !== 'ManufacturerMSP') {
             throw new Error('only manufacturer can place an order')
         }
-        await TokenERC20Contract.transferFrom(ctx, clientMSPID, this.toString(), amt)
+
+        // check for quantity in production stock & update stock
+        let stock
+        try{
+            stock = await this.updateStock(ctx, qty,1);
+        }catch(err){
+            throw err;
+        }
+
+        // creating new order no.
         const orderNoBytes = await ctx.stub.getState(orderKey);
-        orderNo = parseInt(orderNoBytes.toString());
+        let orderNo = parseInt(orderNoBytes.toString());
         if (!orderNoBytes || orderNoBytes.length === 0) {
             await ctx.stub.putState(orderKey, Buffer.from('1'));
         } else {
             orderNo += 1;
             await ctx.stub.putState(orderKey, Buffer.from(orderNo.toString()));
         }
+
+        // change order status 
         this.updateStatusToOrderPlaced(ctx, orderNo);
         const time = ctx.stub.getDateTimestamp();
         let order = {
@@ -92,6 +117,10 @@ class pmcc extends Contract {
             "Amount": amt,
             "Quantity": qty  
         }
+
+        // add approval
+        await TokenERC20Contract.transferFrom(ctx, clientMSPID, this.toString(), amt)
+
         orderDetailsKey = await ctx.stub.createCompositeKey(orderDetailsPrefix, [orderNo])
         await ctx.stub.putState(orderDetailsKey, Buffer.from(JSON.stringify(order)));
     }
