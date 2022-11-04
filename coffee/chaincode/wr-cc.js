@@ -69,7 +69,8 @@ class wrcc extends Contract {
             },
             "Time": time,
             "Amount": amt,
-            "Quantity": qty
+            "Quantity": qty,
+            "Status": Status[0]
         }
         orderDetailsKey = await ctx.stub.createCompositeKey(orderDetailsPrefix, [orderNo])
         await ctx.stub.putState(orderDetailsKey, Buffer.from(JSON.stringify(order)));
