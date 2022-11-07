@@ -16,7 +16,7 @@ const producerBalanceKey = 'PRODUCER_BALANCE'
 class PmCc extends Contract {
 
     // initializes the stock of the producer to a set amount and also initializes the erc20 token contract
-    async initialize(ctx) {
+    async init(ctx) {
         const currentStockBytes = await ctx.stub.getState(stockKey);
         // await TokenERC20Contract.initialize(ctx, "token", "TOK", 18);
         if (currentStockBytes || currentStockBytes.length > 0) {
@@ -51,6 +51,10 @@ class PmCc extends Contract {
 
     // this function updates the stock in production.
     async updateStock(ctx, amtInKg, flag) {
+        console.log(ctx);
+        console.log(amtInKg);
+        console.log(flag);
+
         const clientMSPID = await ctx.clientIdentity.getMSPID();
         if (clientMSPID !== 'teafarmMSP') {
             throw new Error('only producer can update stock')
@@ -85,6 +89,7 @@ class PmCc extends Contract {
     // Queries available stock of the producer using the stockKey
     async availableStock(ctx) {
         const clientMSPID = await ctx.clientIdentity.getMSPID();
+        console.log(clientMSPID);
         if (clientMSPID !== 'teafarmMSP') {
             throw new Error('only Producer can check available stock')
         }
