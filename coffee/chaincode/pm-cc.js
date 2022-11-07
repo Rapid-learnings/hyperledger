@@ -7,7 +7,8 @@ SPDX-License-Identifier: Apache-2.0
 const { Contract } = require('fabric-contract-api');
 const { ClientIdentity } = require('fabric-shim');
 // const { TokenERC20Contract } = require('./token-erc-20/chaincode-javascript/lib/tokenERC20.js')
-const stockKey = 'stock'
+const producerStockKey = 'producer-stock'
+const manufacturerStockKey = 'maufacturer-stock'
 const orderKey = 'orderNumber'
 const Status = ['order-placed', 'in-transit', 'delivered', 'payout-claimed']
 const manufacturerBalanceKey = 'MANUFACTURER_BALANCE'
@@ -22,7 +23,7 @@ class pmcc extends Contract {
             throw new Error('Only Producer can initialize the stock');
         }
         console.log("====== Initializing Coffee Stock ======");
-        await ctx.stub.putState(stockKey, Buffer.from('100'));
+        await ctx.stub.putState(producerStockKey, Buffer.from('100'));
         console.log("====== Initial Coffee Stock Set To 100 Kg ======");
     }
 
@@ -49,48 +50,53 @@ class pmcc extends Contract {
     }
 
     // this function updates the stock in production.
-    async updateStock(ctx, amtInKg, flag) {
+    async updateProducerStock(ctx, amtInKg, flag) {
         const clientMSPID = await ctx.clientIdentity.getMSPID();
         if (clientMSPID !== 'teafarmMSP') {
             throw new Error('only producer can update stock')
         }
 
         // Fetching current stock
-        const currentStockBytes = await ctx.stub.getState(stockKey);
+        const currentStockBytes = await ctx.stub.getState(producerStockKey);
         let updatedStock;
         if (!currentStockBytes || currentStockBytes.length === 0) {
             updatedStock = amtInKg;
         }
-
+        // Parse to int
+        const amt = parseInt(amtInKg);
         let currentStock = parseInt(currentStockBytes.toString()) //get current stock in production
         
-        if (flag == 0 && currentStock < amtInKg) { //check for outstanding amt  
+        if (flag == 0 && currentStock < amt) { //check for outstanding amt  
             throw new Error("Current Stock Is Less Than The Asked Amount");
         }
         
         if (flag == 0) { 
             //flag == 0 is for deduction of stock in production
-            updatedStock = currentStock - amtInKg;
+            updatedStock = currentStock - amt;
         } else {
             //flag == 1 is for addition of stock in production
             // new stock added here
-            updatedStock = currentStock + amtInKg;
+            updatedStock = currentStock + amt;
         }
-        await ctx.stub.putState(stockKey, Buffer.from(updatedStock.toString()))
+        await ctx.stub.putState(producerStockKey, Buffer.from(updatedStock.toString()))
         console.log("Stock is updated to %s", updatedStock);
         return updatedStock;
     }
 
-    // Queries available stock of the producer using the stockKey
+    // Queries available stock of the producer using the producerStockKey
     async availableStock(ctx) {
         const clientMSPID = await ctx.clientIdentity.getMSPID();
-        if (clientMSPID !== 'teafarmMSP') {
-            throw new Error('only Producer can check available stock')
+        if (clientMSPID === 'teafarmMSP') {
+            const ASBytes = await ctx.stub.getState(producerStockKey);
+            const AS = parseInt(ASBytes.toString())
+            console.log("Available Stock of producer is %s kg", AS);
+            return AS;
+        } else {
+            const ASBytes = await ctx.stub.getState(manufacturerStockKey);
+            const AS = parseInt(ASBytes.toString())
+            console.log("Available Stock of manufacturer is %s kg", AS);
+            return AS;
         }
-        const ASBytes = await ctx.stub.getState(stockKey);
-        const AS = parseInt(ASBytes.toString())
-        console.log("Available Stock is %s kg", AS);
-        return AS;
     }
 
     async placeOrder(ctx, qty, amt, country, state) {
@@ -99,18 +105,11 @@ class pmcc extends Contract {
             throw new Error('only manufacturer can place an order')
         }
 
-        // check for quantity in production stock & update stock
-        let stock
-        try {
-            stock = await this.updateStock(ctx, qty, 0);
-        } catch (err) { 
-            throw err;
-        }
-
         // creating new order no.
         const orderNoBytes = await ctx.stub.getState(orderKey);
         let orderNo = parseInt(orderNoBytes.toString());
         if (!orderNoBytes || orderNoBytes.length === 0) {
+            orderNo = 1;
             await ctx.stub.putState(orderKey, Buffer.from('1'));
         } else {
             orderNo += 1;
@@ -145,6 +144,8 @@ class pmcc extends Contract {
         await ctx.stub.putState(manufacturerBalanceKey, Buffer.from(newBalance.toString()))
         // store the order details in the blockchain with the orderNo as key
         await ctx.stub.putState(orderNo, Buffer.from(JSON.stringify(order)));
+        console.log('Order Number for you order is %s', orderNo);
+        return orderNo;
     }
 
     // updates the status of the order to in-transit
@@ -166,9 +167,17 @@ class pmcc extends Contract {
         orderObj.Status = Status[1]
         //storing the new order details object with the orderNo key
         await ctx.stub.putState(orderNo, Buffer.from(JSON.stringify(orderObj)));
+
+        // check for quantity in producer stock & update stock
+        let qty = orderObj.Quantity;
+        try {
+            await this.updateProducerStock(ctx, qty, 0);
+        } catch (err) { 
+            throw err;
+        }
     }
 
-    // updates the status of the order to delivered
+    // updates the status of the order to delivered and update the manufacturer stock
     async updateStatusToDelivered(ctx, orderNo) {
         const clientMSP = await ctx.clientIdentity.getMSPID()
         if (clientMSP !== 'tataMSP') {
@@ -179,6 +188,7 @@ class pmcc extends Contract {
         const orderObjBytes = await ctx.stub.getState(orderNo);
         const orderObj = parse(JSON.stringify(orderObjBytes));
         const status = orderObj.Status;
+        const qty = parseInt(orderObj.Quantity);
         if (status !== Status[1]) {
             throw new Error('cannot change status to delivered as package is not even shipped');
         }
@@ -187,6 +197,15 @@ class pmcc extends Contract {
         orderObj.Status = Status[2]
         //storing the new order details object with the orderNo key
         await ctx.stub.putState(orderNo, Buffer.from(JSON.stringify(orderObj)));
+        // Update manufacturer stock
+        let manufacturerStock
+        try {
+            manufacturerStock = await this.availableStock(ctx);
+        } catch(err) {
+            throw err;
+        }
+        const newManufacturerStock = manufacturerStock + qty;
+        await ctx.stub.putState(manufacturerStockKey, Buffer.from(newManufacturerStock.toString()));
     }
 
     async claimPayout(ctx, orderNo) {
@@ -203,7 +222,7 @@ class pmcc extends Contract {
 
         // check whether status is 'delivered' else throws error
         if (status === Status[2]) {
-            amt = orderObj.Amount;
+            amt = parseInt(orderObj.Amount);
             // transferring amount to producer
             let balance;
             try {
