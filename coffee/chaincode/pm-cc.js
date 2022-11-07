@@ -15,12 +15,11 @@ const producerBalanceKey = 'PRODUCER_BALANCE'
 
 class pmcc extends Contract {
 
-    // initializes the stock of the producer to a set amount and also initializes the erc20 token contract
+    // initializes the stock of the producer to a set amount
     async initialize(ctx) {
-        const currentStockBytes = await ctx.stub.getState(stockKey);
-        // await TokenERC20Contract.initialize(ctx, "token", "TOK", 18);
-        if (currentStockBytes || currentStockBytes.length > 0) {
-            throw new Error('Contract already initialised');
+        const clientMSP = await ctx.clientIdentity.getMSPID();
+        if (clientMSP !== 'teafarmMSP') {
+            throw new Error('Only Producer can initialize the stock');
         }
         console.log("====== Initializing Coffee Stock ======");
         await ctx.stub.putState(stockKey, Buffer.from('100'));
@@ -31,9 +30,9 @@ class pmcc extends Contract {
     async initializeBalanceForManufacturer(ctx) {
         const clientMSP = await ctx.clientIdentity.getMSPID();
         if (clientMSP !== 'tataMSP') {
-            throw new Error('Only Manufacturer can initialize balance');
+            throw new Error('Only Manufacturer can initialize Manufacturer balance');
         }
-        // storing the balance of 1000000 $ with the manufacturer MSP ID as key
+        // storing the balance of 1000000 $
         console.log('Balance of tataMSP initialized to 1000000 $');
         await ctx.stub.putState(manufacturerBalanceKey, Buffer.from('1000000'));
     }
@@ -42,9 +41,9 @@ class pmcc extends Contract {
     async initializeBalanceForProducer(ctx) {
         const clientMSP = await ctx.clientIdentity.getMSPID();
         if (clientMSP !== 'teafarmMSP') {
-            throw new Error('Only Manufacturer can initialize balance');
+            throw new Error('Only Producer can initialize Producer balance');
         }
-        // storing the balance of 1000000 $ with the manufacturer MSP ID as key
+        // storing the balance of 0 $ 
         console.log('Balance of teafarmMSP initialized to 0 $');
         await ctx.stub.putState(producerBalanceKey, Buffer.from('0'));
     }
