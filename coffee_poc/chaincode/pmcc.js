@@ -4,74 +4,45 @@ SPDX-License-Identifier: Apache-2.0
 
 'use strict';
 
-const { Contract } = require('fabric-contract-api');
-const { ClientIdentity } = require('fabric-shim');
-// const { TokenERC20Contract } = require('./token-erc-20/chaincode-javascript/lib/tokenERC20.js')
-const stockKey = 'stock'
-const orderKey = 'orderNumber'
-const Status = ['order-placed', 'in-transit', 'delivered', 'payout-claimed']
-const manufacturerBalanceKey = 'MANUFACTURER_BALANCE'
-const producerBalanceKey = 'PRODUCER_BALANCE'
+let { Contract } = require('fabric-contract-api');
+let { ClientIdentity } = require('fabric-shim');
+// let { TokenERC20Contract } = require('./token-erc-20/chaincode-javascript/lib/tokenERC20.js')
+let productionStock = 'stock'
+let orderNumber = 'orderNumber'
+let Status = ['order-placed', 'in-transit', 'delivered', 'payout-claimed', 'cancelled']
+let manufacturerFunds = 'MANUFACTURER_BALANCE'
+let producerFunds = 'PRODUCER_BALANCE'
+let pricePerKg = 100 // 100$ for 1 kg coffee
 
 class PmCc extends Contract {
 
     // initializes the stock of the producer to a set amount and also initializes the erc20 token contract
-    async init(ctx) {
-        const currentStockBytes = await ctx.stub.getState(stockKey);
-        // await TokenERC20Contract.initialize(ctx, "token", "TOK", 18);
-        if (currentStockBytes || currentStockBytes.length > 0) {
-            throw new Error('Contract already initialised');
-        }
-        console.log("====== Initializing Coffee Stock ======");
-        await ctx.stub.putState(stockKey, Buffer.from('100'));
-        console.log("====== Initial Coffee Stock Set To 100 Kg ======");
-    }
-
-    // fucntion for initializing the balances for the manufacturer
-    async initializeBalanceForManufacturer(ctx) {
-        const clientMSP = await ctx.clientIdentity.getMSPID();
-        if (clientMSP !== 'tataMSP') {
-            throw new Error('Only Manufacturer can initialize balance');
-        }
-        // storing the balance of 1000000 $ with the manufacturer MSP ID as key
+    async init(ctx, initialStock) {
+        await ctx.stub.putState(manufacturerFunds, Buffer.from('1000000'));
         console.log('Balance of tataMSP initialized to 1000000 $');
-        await ctx.stub.putState(manufacturerBalanceKey, Buffer.from('1000000'));
-    }
 
-    // fucntion for initializing the balances for the manufacturer
-    async initializeBalanceForProducer(ctx) {
-        const clientMSP = await ctx.clientIdentity.getMSPID();
-        if (clientMSP !== 'teafarmMSP') {
-            throw new Error('Only Manufacturer can initialize balance');
-        }
-        // storing the balance of 1000000 $ with the manufacturer MSP ID as key
         console.log('Balance of teafarmMSP initialized to 0 $');
-        await ctx.stub.putState(producerBalanceKey, Buffer.from('0'));
+        await ctx.stub.putState(producerFunds, Buffer.from('1000000'));
+
+        await ctx.stub.putState(productionStock, Buffer.from(initialStock));
+        console.log("Production Stock Initailized to "+initialStock);
     }
 
     // this function updates the stock in production.
-    async updateStock(ctx, amtInKg, flag) {
-        console.log(ctx);
-        console.log(amtInKg);
-        console.log(flag);
-
-        const clientMSPID = await ctx.clientIdentity.getMSPID();
-        if (clientMSPID !== 'teafarmMSP') {
-            throw new Error('only producer can update stock')
-        }
+    async updateProductionStock(ctx, amtInKg, flag) {
+        // let clientMSPID = await ctx.clientIdentity.getMSPID();
+        // if (clientMSPID !== 'teafarmMSP') {
+        //     throw new Error('only producer can update stock')
+        // }
 
         // Fetching current stock
-        const currentStockBytes = await ctx.stub.getState(stockKey);
-        let updatedStock;
-        if (!currentStockBytes || currentStockBytes.length === 0) {
-            updatedStock = amtInKg;
-        }
-
+        let currentStockBytes = await ctx.stub.getState(productionStock);
+        let updatedStock = 0;
         let currentStock = parseInt(currentStockBytes.toString()) //get current stock in production
         
-        if (flag == 0 && currentStock < amtInKg) { //check for outstanding amt  
-            throw new Error("Current Stock Is Less Than The Asked Amount");
-        }
+        // if (flag == 0 && currentStock < amtInKg) { //check for outstanding amt  
+        //     throw new Error("Current Stock Is Less Than The Asked Amount");
+        // }
         
         if (flag == 0) { 
             //flag == 0 is for deduction of stock in production
@@ -81,89 +52,95 @@ class PmCc extends Contract {
             // new stock added here
             updatedStock = currentStock + amtInKg;
         }
-        await ctx.stub.putState(stockKey, Buffer.from(updatedStock.toString()))
+        await ctx.stub.putState(productionStock, Buffer.from(updatedStock.toString()))
         console.log("Stock is updated to %s", updatedStock);
-        return updatedStock;
+        let stock = await ctx.stub.getState(productionStock)
+        return parseInt(stock.toString());
     }
 
-    // Queries available stock of the producer using the stockKey
+    // Queries available stock of the producer using the productionStock
     async availableStock(ctx) {
-        const clientMSPID = await ctx.clientIdentity.getMSPID();
-        console.log(clientMSPID);
-        if (clientMSPID !== 'teafarmMSP') {
-            throw new Error('only Producer can check available stock')
-        }
-        const ASBytes = await ctx.stub.getState(stockKey);
-        const AS = parseInt(ASBytes.toString())
-        console.log("Available Stock is %s kg", AS);
-        return AS;
+        let ASBytes = await ctx.stub.getState(productionStock);
+        let availableStock = parseInt(ASBytes.toString())
+        console.log("Available Stock is %s kg", availableStock);
+        return availableStock;
     }
 
-    async placeOrder(ctx, qty, amt, country, state) {
-        const clientMSPID = await ctx.clientIdentity.getMSPID();
-        if (clientMSPID !== 'tataMSP') {
-            throw new Error('only manufacturer can place an order')
+    async placeOrder(ctx, qty, country, state) {
+        // let clientMSPID = await ctx.clientIdentity.getMSPID();
+        // if (clientMSPID !== 'tataMSP') {
+        //     throw new Error('only manufacturer can place an order')
+        // }
+        console.log(ctx);
+        console.log(qty);
+        console.log(country);
+        console.log(state);
+        let time = await ctx.stub.getDateTimestamp();
+        
+        // Updating the balances of the manufacturer
+        let manufacturerBalance = await this.getManufacturerFunds(ctx);
+        let prdBalance = await this.getProducerFunds(ctx);
+        
+        // Check for insufficient funds
+        let amt = qty * pricePerKg // calculate price to be paid
+        if (manufacturerBalance < amt) {
+            throw new Error('Manufacturer Has Insufficient Funds');
+        }
+        let prodStock = await this.availableStock(ctx);
+        // check for sufficient stock
+        if(prodStock < qty){
+            throw new Error("Sufficient Stock Is Not There")
         }
 
-        // check for quantity in production stock & update stock
-        let stock
+        // update stock
         try {
-            stock = await this.updateStock(ctx, qty, 0);
+            let stock = await this.updateProductionStock(ctx, qty, 0);
         } catch (err) { 
             throw err;
         }
-
-        // creating new order no.
-        const orderNoBytes = await ctx.stub.getState(orderKey);
-        let orderNo = parseInt(orderNoBytes.toString());
-        if (!orderNoBytes || orderNoBytes.length === 0) {
-            await ctx.stub.putState(orderKey, Buffer.from('1'));
-        } else {
-            orderNo += 1;
-            await ctx.stub.putState(orderKey, Buffer.from(orderNo.toString()));
-        }
-
-        // creating an object which stores all order details
-        const time = await ctx.stub.getDateTimestamp();
+        
+        prdBalance+=amt;
+        manufacturerBalance -= amt;
+        await ctx.stub.putState(manufacturerFunds,Buffer.from(manufacturerBalance.toString()))
+        await ctx.stub.putState(producerFunds, Buffer.from(prdBalance.toString()));
+        console.log("106 -> Check Point Reached");
         let order = {
-            "DeliveryLocation": {
-                "Country": country,
-                "State": state
-            },
-            "Time": time,
-            "Amount": amt,
-            "Quantity": qty,  
-            "Status": Status[0]
+            "time": time,
+            "amount": amt,
+            "quantity": qty,  
+            "status": Status[0],
+            "deliveryLocation": {
+                "country": country,
+                "state": state
+            }
         }
-
-        // add approval
-        // await TokenERC20Contract.Approve()
-        // await TokenERC20Contract.TransferFrom(ctx, clientMSPID, this.toString(), amt)
-
-        // Updating the balances of the manufacturer
-        const balanceBytes = await ctx.stub.getState(manufacturerBalanceKey);
-        const balance = parseInt(balanceBytes.toString());
-        // Check for insufficient funds
-        if (balance < amt) {
-            throw new Error('Insufficient funds');
-        }
-        const newBalance = balance - amt;
-        await ctx.stub.putState(manufacturerBalanceKey, Buffer.from(newBalance.toString()))
+        console.log(order);
+        // creating new order no.
+         let orderNoBytes = await ctx.stub.getState(orderNumber);
+         let orderNo = parseInt(orderNoBytes.toString());
+         if (!orderNoBytes || orderNoBytes.length === 0) {
+            //  await ctx.stub.putState(orderNumber, Buffer.from('1'));
+            orderNo = 1;
+         } else {
+             orderNo += 1;
+            //  await ctx.stub.putState(orderNumber, Buffer.from(orderNo.toString()));
+         }
+         console.log("OrderNo", orderNo);
         // store the order details in the blockchain with the orderNo as key
         await ctx.stub.putState(orderNo, Buffer.from(JSON.stringify(order)));
     }
 
     // updates the status of the order to in-transit
     async updateStatusToInTransit(ctx, orderNo) {
-        const clientMSP = await ctx.clientIdentity.getMSPID()
+        let clientMSP = await ctx.clientIdentity.getMSPID()
         if (clientMSP !== 'teafarmMSP') {
             throw new Error('Only teafarm can upadte the status of shipment');
         }
 
         // fetching order details
-        const orderObjBytes = await ctx.stub.getState(orderNo);
-        const orderObj = parse(JSON.stringify(orderObjBytes));
-        const status = orderObj.Status;
+        let orderObjBytes = await ctx.stub.getState(orderNo);
+        let orderObj = parse(JSON.stringify(orderObjBytes));
+        let status = orderObj.Status;
         if (status !== Status[0]) {
             throw new Error('cannot change status to in-transit as order is not even placed');
         }
@@ -176,15 +153,15 @@ class PmCc extends Contract {
 
     // updates the status of the order to delivered
     async updateStatusToDelivered(ctx, orderNo) {
-        const clientMSP = await ctx.clientIdentity.getMSPID()
+        let clientMSP = await ctx.clientIdentity.getMSPID()
         if (clientMSP !== 'tataMSP') {
             throw new Error('only Producer has permission to this update status');
         }
 
         // fetching order details
-        const orderObjBytes = await ctx.stub.getState(orderNo);
-        const orderObj = parse(JSON.stringify(orderObjBytes));
-        const status = orderObj.Status;
+        let orderObjBytes = await ctx.stub.getState(orderNo);
+        let orderObj = parse(JSON.stringify(orderObjBytes));
+        let status = orderObj.Status;
         if (status !== Status[1]) {
             throw new Error('cannot change status to delivered as package is not even shipped');
         }
@@ -195,49 +172,43 @@ class PmCc extends Contract {
         await ctx.stub.putState(orderNo, Buffer.from(JSON.stringify(orderObj)));
     }
 
-    async claimPayout(ctx, orderNo) {
-        const clientMSP = await ctx.clientIdentity.getMSPID()
-        if (clientMSP !== 'teafarmMSP') {
-            throw new Error('only Producer has permission to claim payout');
-        }
+    // async claimPayout(ctx, orderNo) {
+    //     let clientMSP = await ctx.clientIdentity.getMSPID()
+    //     if (clientMSP !== 'teafarmMSP') {
+    //         throw new Error('only Producer has permission to claim payout');
+    //     }
 
-        // fetching order details object with orderNo
-        const orderObjBytes = await ctx.stub.getState(orderNo);
-        const orderObj = parse(JSON.stringify(orderObjBytes));
-        const status = orderObj.Status;
-        let amt;
+    //     // fetching order details object with orderNo
+    //     let orderObjBytes = await ctx.stub.getState(orderNo);
+    //     let orderObj = parse(JSON.stringify(orderObjBytes));
+    //     let status = orderObj.Status;
+    //     let amt;
 
-        // check whether status is 'delivered' else throws error
-        if (status === Status[2]) {
-            amt = orderObj.Amount;
-            // transferring amount to producer
-            let balance;
-            try {
-                balance = await this.getBalance(ctx);
-            } catch (err) {
-                throw err;
-            }
-            const newBalance = balance + amt;
-            await ctx.stub.putState(producerBalanceKey, Buffer.from(newBalance.toString()));
-            // await TokenERC20Contract.transferFrom(ctx, this.toString(), clientMSP, amt)
+    //     // check whether status is 'delivered' else throws error
+    //     if (status === Status[2]) {
+    //         amt = orderObj.Amount;
+    //         // transferring amount to producer
+    //         let newBalance = balance + amt;
+    //         await ctx.stub.putState(producerFunds, Buffer.from(newBalance.toString()));
+    //         // await TokenERC20Contract.transferFrom(ctx, this.toString(), clientMSP, amt)
 
-            // updating the status of the order to payout-claimed
-            orderObj.Status = Status[3];
+    //         // updating the status of the order to payout-claimed
+    //         orderObj.Status = Status[3];
 
-            //storing the new order details object with the orderNo key
-            await ctx.stub.putState(orderNo, Buffer.from(JSON.stringify(orderObj)));
-            console.log('====== Payout of %s $ has been claimed ======', amt);
-            return amt;
-        } else {
-            throw new Error('shipment must be delivered in order to collect payout');
-        }
-    }
+    //         //storing the new order details object with the orderNo key
+    //         await ctx.stub.putState(orderNo, Buffer.from(JSON.stringify(orderObj)));
+    //         console.log('====== Payout of %s $ has been claimed ======', amt);
+    //         return amt;
+    //     } else {
+    //         throw new Error('shipment must be delivered in order to collect payout');
+    //     }
+    // }
 
     // Queries the order details object with orderNo as key
     async getOrderDetails(ctx, orderNo) {
         //fetching order details
-        const orderObjBytes = await ctx.stub.getState(orderNo);
-        const orderObj = parse(JSON.stringify(orderObjBytes));
+        let orderObjBytes = await ctx.stub.getState(orderNo);
+        let orderObj = parse(JSON.stringify(orderObjBytes));
         console.log("Order must be delivered to %s, %s", orderObj.DeliveryLocation.Country, orderObj.DeliveryLocation.State);
         console.log("Order amount is %s", orderObj.Amount);
         console.log("Order quantity is %s Kg", orderObj.Quantity);
@@ -246,19 +217,18 @@ class PmCc extends Contract {
     }
 
     // function to check account balances in $ of the user
-    async getBalance(ctx) {
-        const clientMSP = await ctx.clientIdentity.getMSPID();
-        if (clientMSP === 'teafarmMSP') {
-            const balanceBytes = await ctx.stub.getState(producerBalanceKey);
-            const balance = parseInt(balanceBytes.toString());
-            console.log('Balance for %s is %s $', clientMSP, balance);
+    async getManufacturerFunds(ctx) {
+            let balanceBytes = await ctx.stub.getState(producerFunds);
+            let balance = parseInt(balanceBytes.toString());
+            console.log('Balance for %s is %s $', balance);
             return balance;
-        } else {
-            const balanceBytes = await ctx.stub.getState(manufacturerBalanceKey);
-            const balance = parseInt(balanceBytes.toString());
-            console.log('Balance for %s is %s $', clientMSP, balance);
-            return balance;
-        }
+    }
+
+    async getProducerFunds(ctx){
+        let balanceBytes = await ctx.stub.getState(manufacturerFunds);
+        let balance = parseInt(balanceBytes.toString());
+        console.log('Balance for %s is %s $', balance);
+        return balance;
     }
 }
 

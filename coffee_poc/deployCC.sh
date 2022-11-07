@@ -3,12 +3,12 @@ VERSION="1"
 mfdPrdCC(){
     echo "********** Packaging CC for Manufacture-Production-Channel ********************"
     # sudo docker exec -it cli-manufacturer-1 peer lifecycle chaincode package basic.tar.gz --path /opt/gopath/src/github.com/hyperledger/fabric/peer/chaincode/mfc-prdc --lang node --label basic_1.0
-    sudo docker exec -it cli-manufacturer-1 peer lifecycle chaincode package basic.tar.gz --path /opt/gopath/src/github.com/hyperledger/fabric/peer/chaincode --lang node --label basic_1.0
+    sudo docker exec -it cli-manufacturer-1 peer lifecycle chaincode package basic.tar.gz --path /opt/gopath/src/github.com/hyperledger/fabric/peer/chaincode --lang node --label basic_${VERSION}
 
     sleep 6
 
     # sudo docker exec -it cli-production-1 peer lifecycle chaincode package basic.tar.gz --path /opt/gopath/src/github.com/hyperledger/fabric/peer/chaincode/mfc-prdc --lang node --label basic_1.0
-    sudo docker exec -it cli-production-1 peer lifecycle chaincode package basic.tar.gz --path /opt/gopath/src/github.com/hyperledger/fabric/peer/chaincode --lang node --label basic_1.0
+    sudo docker exec -it cli-production-1 peer lifecycle chaincode package basic.tar.gz --path /opt/gopath/src/github.com/hyperledger/fabric/peer/chaincode --lang node --label basic_${VERSION}
 
     sleep 6
 
@@ -90,18 +90,37 @@ InstantiateCCMfdPrd(){
 
 InvokeCCMfdPrd(){
     echo "****** Invoking ChainCode On Mfc-Prd-Channel *********"
-    sudo docker exec -it cli-production-1 peer chaincode invoke -o orderer1.gov.io:7050 --tls --cafile "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem" -C mfd-prd-channel -n basic --peerAddresses peertf1.production.com:8050 --tlsRootCertFiles "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/production.com/peers/peertf1.production.com/tls/ca.crt" --peerAddresses peertm1.manufacturer.com:9050 --tlsRootCertFiles "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/manufacturer.com/peers/peertm1.manufacturer.com/tls/ca.crt" -c '{"function":"init","Args":[]}'
-    sleep 5
+    sudo docker exec -it cli-production-1 peer chaincode invoke -o orderer1.gov.io:7050 --tls --cafile "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem" -C mfd-prd-channel -n basic --peerAddresses peertf1.production.com:8050 --tlsRootCertFiles "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/production.com/peers/peertf1.production.com/tls/ca.crt" --peerAddresses peertm1.manufacturer.com:9050 --tlsRootCertFiles "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/manufacturer.com/peers/peertm1.manufacturer.com/tls/ca.crt" -c '{"function":"init","Args":["1000"]}'
+    sleep 8
 }
 
-QueryCCMfdPrd(){
-    echo "*********************** Query ChainCode For Mfd-Prd-Channel , Invoking Manufacturer Balance *********************************"
-    sudo docker exec -it cli-manufacturer-1 peer chaincode invoke -o orderer1.gov.io:7050 --tls --cafile "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem" -C mfd-prd-channel -n basic --peerAddresses peertf1.production.com:8050 --tlsRootCertFiles "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/production.com/peers/peertf1.production.com/tls/ca.crt" --peerAddresses peertm1.manufacturer.com:9050 --tlsRootCertFiles "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/manufacturer.com/peers/peertm1.manufacturer.com/tls/ca.crt" -c '{"function":"initializeBalanceForManufacturer","Args":[]}'
-    sleep 8   
-  
+QueryCCMfdPrd(){  
     echo "*********************** Query ChainCode For Mfd-Prd-Channel , Fetching Balance Of Manufacturer *********************************"
+    sudo docker exec -it cli-manufacturer-1 peer chaincode query -C mfd-prd-channel -n basic -c '{"Args":["getManufacturerFunds"]}'
 
-    sudo docker exec -it cli-manufacturer-1 peer chaincode query -C mfd-prd-channel -n basic -c '{"Args":["getBalance"]}'
+    sleep 8
+
+    echo "*********************** Query ChainCode For Mfd-Prd-Channel , Fetching Balance Of Production *********************************"
+    sudo docker exec -it cli-manufacturer-1 peer chaincode query -C mfd-prd-channel -n basic -c '{"Args":["getProducerFunds"]}'
+
+    sleep 8
+
+    echo "*********************** Query ChainCode For Mfd-Prd-Channel , Fetching Initial Production Stock *********************************"
+    sudo docker exec -it cli-manufacturer-1 peer chaincode query -C mfd-prd-channel -n basic -c '{"Args":["availableStock"]}'
+
+}
+
+PlaceOrder(){
+        echo "*********************** Query ChainCode For Mfd-Prd-Channel , Placing Order *********************************"
+    sudo docker exec -it cli-manufacturer-1 peer chaincode query -C mfd-prd-channel -n basic -c '{"Args":["placeOrder","2","INDIA","DELHI"]}'
+
+    sleep 8
+        echo "*********************** Query ChainCode For Mfd-Prd-Channel , Query Order *********************************"
+    sudo docker exec -it cli-manufacturer-1 peer chaincode query -C mfd-prd-channel -n basic -c '{"Args":["getOrderDetails","1"]}'
+
+    sleep 8
+
+    sudo docker exec -it cli-manufacturer-1 peer chaincode query -C mfd-prd-channel -n basic -c '{"Args":["availableStock2"]}'
 
 }
 
@@ -116,3 +135,4 @@ CommitCCMfdPrd
 # InstantiateCCMfdPrd
 InvokeCCMfdPrd
 QueryCCMfdPrd
+PlaceOrder
