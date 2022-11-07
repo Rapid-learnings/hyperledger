@@ -18,12 +18,12 @@ class mwcc extends Contract {
 
     // intializes stock to a fixed amount
     async initialize(ctx) {
+        console.log('===== Initializing all stocks =====');
         await ctx.stub.putState(rawstockKey, Buffer.from('1000'));
         await ctx.stub.putState(driedstockKey, Buffer.from('0'));
         await ctx.stub.putState(roastedstockKey, Buffer.from('0'));
         await ctx.stub.putState(finishedstockKey, Buffer.from('0'));
         console.log('===== Current raw stock is initialized to 1000 Kg =====');
-        return currentStock;
     }
 
     async updateRawStock(ctx, amt, flag) {
