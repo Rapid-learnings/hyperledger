@@ -280,3 +280,5 @@ class mwcc extends Contract {
     //     return totalDispatched;  
     // }
 }
+
+module.exports = mwcc;
