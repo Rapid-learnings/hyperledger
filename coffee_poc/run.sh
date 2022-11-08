@@ -11,3 +11,5 @@ sleep 5
 ./deployCC.sh
 
 sleep 5
+
+./mfdPrd.sh
