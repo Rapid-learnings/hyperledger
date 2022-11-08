@@ -238,3 +238,5 @@ class wrcc extends Contract {
         return orderNo;
     }
 }
+
+module.exports = wrcc;
