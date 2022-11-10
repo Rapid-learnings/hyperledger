@@ -33,7 +33,7 @@
                 "ssl-target-name-override": "orderer1.gov.io"
             },
             "tlsCACerts": {
-                "path": "../../crypto-config/ordererOrganizations/gov.io/orderers/orderer.gov.io/tlscacerts/gov.io-cert.pem"
+                "pem": "-----BEGIN CERTIFICATE-----\nMIICLzCCAdWgAwIBAgIQKa9AU11TY6X7pTxO0imnojAKBggqhkjOPQQDAjBiMQsw\nCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMNU2FuIEZy\nYW5jaXNjbzEPMA0GA1UEChMGZ292LmlvMRUwEwYDVQQDEwx0bHNjYS5nb3YuaW8w\nHhcNMjIxMTEwMDc1OTAwWhcNMzIxMTA3MDc1OTAwWjBiMQswCQYDVQQGEwJVUzET\nMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMNU2FuIEZyYW5jaXNjbzEPMA0G\nA1UEChMGZ292LmlvMRUwEwYDVQQDEwx0bHNjYS5nb3YuaW8wWTATBgcqhkjOPQIB\nBggqhkjOPQMBBwNCAASub4nstCRqzghDFMZhi8ZDl0W64i09dxBqSTKKTUeCC/ye\nlNu/cSzS9Gk52Hb8kKktK9IxObwgFYaBSjiNrKP9o20wazAOBgNVHQ8BAf8EBAMC\nAaYwHQYDVR0lBBYwFAYIKwYBBQUHAwIGCCsGAQUFBwMBMA8GA1UdEwEB/wQFMAMB\nAf8wKQYDVR0OBCIEIDxGJ17NK+DDXhg2AiDeriU+MRUx9XqSjKYzYb8aKSMZMAoG\nCCqGSM49BAMCA0gAMEUCIQDRrb4VuPmA3nSqTvKccl5pBNeyZrQYaUGHu5ktaNqI\nZQIgNlk1eut8OyAkYOsa6+a6xartnzdkoXuVym4ukC4Km04=\n-----END CERTIFICATE-----\n"
             }
         }
     },
@@ -44,7 +44,7 @@
                 "ssl-target-name-override": "peertf1.production.com"
             },
             "tlsCACerts": {
-                "path": "../../crypto-config/peerOrganizations/production.com/peers/peertf1.production.com/tlscacerts/production.com-cert.pem"
+                "pem":"-----BEGIN CERTIFICATE-----\nMIICUDCCAfagAwIBAgIRAPWIyNbJiRzwYYELXzGMW0YwCgYIKoZIzj0EAwIwcjEL\nMAkGA1UEBhMCVVMxEzARBgNVBAgTCkNhbGlmb3JuaWExFjAUBgNVBAcTDVNhbiBG\ncmFuY2lzY28xFzAVBgNVBAoTDnByb2R1Y3Rpb24uY29tMR0wGwYDVQQDExR0bHNj\nYS5wcm9kdWN0aW9uLmNvbTAeFw0yMjExMDkwNjM5MDBaFw0zMjExMDYwNjM5MDBa\nMHIxCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpDYWxpZm9ybmlhMRYwFAYDVQQHEw1T\nYW4gRnJhbmNpc2NvMRcwFQYDVQQKEw5wcm9kdWN0aW9uLmNvbTEdMBsGA1UEAxMU\ndGxzY2EucHJvZHVjdGlvbi5jb20wWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAAQj\njQ4rCPL9u/Hsw+JQPJJkIRDMJkZpdCI510dibxBIipMubPvLdJQXW3uDG/maVP8f\nNBtIqO/QbOhjZytYVL3Bo20wazAOBgNVHQ8BAf8EBAMCAaYwHQYDVR0lBBYwFAYI\nKwYBBQUHAwIGCCsGAQUFBwMBMA8GA1UdEwEB/wQFMAMBAf8wKQYDVR0OBCIEIKXI\nehkVLE6gPd06LXH7+HNYBiw1o4r2+ReEGUvkIjbnMAoGCCqGSM49BAMCA0gAMEUC\nIQD9uUTlujACv/xN8zi0C+NnjkUoibb18BuJt481RrTKAgIgVwgjQYGZ8s1heSI+\n/1AUSwwQBGxOtOYSjVnObD59bqc=\n-----END CERTIFICATE-----\n"        
             }
         },
         "peertm1.manufacturer.com": {
@@ -53,7 +53,7 @@
                 "ssl-target-name-override": "peertm1.manufacturer.com"
             },
             "tlsCACerts": {
-                "path": "../../crypto/peerOrganizations/manufacturer.com/peers/peertm1.manufacturer.com/tlscacerts/manufacturer.com-cert.pem"
+                "pem":"-----BEGIN CERTIFICATE-----\nMIICVjCCAf2gAwIBAgIQD7NV65w52Yd5cjZNrxJLTDAKBggqhkjOPQQDAjB2MQsw\nCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMNU2FuIEZy\nYW5jaXNjbzEZMBcGA1UEChMQbWFudWZhY3R1cmVyLmNvbTEfMB0GA1UEAxMWdGxz\nY2EubWFudWZhY3R1cmVyLmNvbTAeFw0yMjExMDkwNjM5MDBaFw0zMjExMDYwNjM5\nMDBaMHYxCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpDYWxpZm9ybmlhMRYwFAYDVQQH\nEw1TYW4gRnJhbmNpc2NvMRkwFwYDVQQKExBtYW51ZmFjdHVyZXIuY29tMR8wHQYD\nVQQDExZ0bHNjYS5tYW51ZmFjdHVyZXIuY29tMFkwEwYHKoZIzj0CAQYIKoZIzj0D\nAQcDQgAEryr+nqmvI+8GLY4uoWJ7z5fTJogjlbT6awoAOhrANzSEcoPLv+3ZFVTc\n2+tWDfAOi9ukOI6ALzq89K6nR33tlKNtMGswDgYDVR0PAQH/BAQDAgGmMB0GA1Ud\nJQQWMBQGCCsGAQUFBwMCBggrBgEFBQcDATAPBgNVHRMBAf8EBTADAQH/MCkGA1Ud\nDgQiBCCTfI3aaDsFCgi/f2PQ2yWZksWPBuaOp7K/iHoz7vf57TAKBggqhkjOPQQD\nAgNHADBEAiBKYnN4hEd3hxb3+CT6+36jCyTKW9VSp13C6Ij3RlvH+AIgWKTJGIEP\nLg4wXVe8Xo0zccG6ZLfbAU3Pm+hURj6AY4Y=\n-----END CERTIFICATE-----\n"
             }
         }
     },

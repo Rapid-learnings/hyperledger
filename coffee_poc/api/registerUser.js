@@ -6,11 +6,11 @@
 
 "use strict";
 
-const { Wallets } = require("fabric-network");
+const { Wallets,FileSystemWallet, Gateway, X509WalletMixin } = require("fabric-network");
 const FabricCAServices = require("fabric-ca-client");
 const fs = require("fs");
 const path = require("path");
-const { enroll } = require("./enrollAdmin");
+// const { enroll } = require("./enrollAdmin");
 
 const registerUser = {};
 
@@ -18,7 +18,7 @@ registerUser.registerEnrollUser = async (usr, org) => {
   try {
     // load the network configuration
     const ccpPath =
-      "/home/ubuntu/pankajb/hyperledger/coffee_poc/api/connection-profiles/mfc-prd-config.json";
+      "/home/ubuntu/pankajb/hyperledger/coffee_poc/api/connection-profiles/mfc-cc.json";
     const ccp = JSON.parse(fs.readFileSync(ccpPath, "utf8"));
 
     // Create a new CA client for interacting with the CA.
@@ -30,8 +30,9 @@ registerUser.registerEnrollUser = async (usr, org) => {
     } else if (org == "wharehouse") {
     } else if (org == "retailer") {
     }
+    // console.log("CA URL = ", caURL);
     const ca = new FabricCAServices(caURL);
-
+    // console.log("CA = ", ca);
     // Create a new file system based wallet for managing identities.
     let walletPath;
     if (org == "tata") {
@@ -76,10 +77,20 @@ registerUser.registerEnrollUser = async (usr, org) => {
 
     // console.log("\n====== Admin User ===== \n", adminUser);
 
+
+        // Create a new gateway for connecting to our peer node.
+        // const gateway = new Gateway();
+        // await gateway.connect(ccp, { wallet, identity: 'admin', discovery: { enabled: true, asLocalhost: true } });
+
+        // // Get the CA client object from the gateway for interacting with the CA.
+        // const ca1 = gateway.getClient().getCertificateAuthority();
+        // const adminIdentity1 = gateway.getCurrentIdentity();
+
+
     // Register the user, enroll the user, and import the new identity into the wallet.
     const secret = await ca.register(
       {
-        affiliation: "tata.department1",
+        affiliation: "tata",
         enrollmentID: usr,
         role: "client",
       },

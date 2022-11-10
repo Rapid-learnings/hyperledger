@@ -1,12 +1,13 @@
 {
-  "name": "api",
+  "name": "mfd-whs",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "mwcc.js",
   "scripts": {
     "start": "fabric-chaincode-node start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
@@ -18,12 +19,13 @@
     "fabric-ca-client": "^2.1.0",
     "fabric-client": "^1.4.8",
     "fabric-common": "2.2.3",
+    "fabric-contract-api": "^2.2.3",
     "fabric-network": "^2.2.15",
+    "fabric-shim": "^2.2.3",
     "http": "0.0.1-security",
     "js-yaml": "^3.14.1",
     "jsonwebtoken": "^8.5.1",
     "log4js": "^6.2.0",
-    "nodemon": "^2.0.20",
     "save": "^2.4.0"
   }
 }

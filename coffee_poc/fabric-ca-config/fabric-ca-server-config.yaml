@@ -85,11 +85,11 @@ tls:
 #############################################################################
 ca:
   # Name of this CA
-  name: gov-ca
+  name: govca
   # Key file (is only used to import a private key into BCCSP)
   keyfile: 
   # Certificate file (default: ca-cert.pem)
-  certfile: ca-cert.pem
+  certfile: ./ca-cert.pem
   # Chain file
   chainfile:
   # Ignore Certificate Expiration in the case of re-enroll
@@ -140,18 +140,6 @@ registry:
           hf.GenCRL: true
           hf.Registrar.Attributes: "*"
           hf.AffiliationMgr: true
-     - name: user
-       pass: userpw
-       type: client
-       affiliation: "tata"
-       attrs:
-          hf.Registrar.Roles: ""
-          hf.Registrar.DelegateRoles: ""
-          hf.Revoker: false
-          hf.IntermediateCA: false
-          hf.GenCRL: false
-          hf.Registrar.Attributes: ""
-          hf.AffiliationMgr: false
 
 #############################################################################
 #  Database section
@@ -255,10 +243,10 @@ ldap:
 #############################################################################
 affiliations:
    tata:
-      - department1
-      - department2
+      # - department1
+      # - department2
    teafarm:
-      - department1
+      # - department1
 
 #############################################################################
 #  Signing section
