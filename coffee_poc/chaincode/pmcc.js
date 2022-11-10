@@ -96,7 +96,7 @@ class PmCc extends Contract {
     let prdBalance = await this.getProducerFunds(ctx);
 
     // Check for insufficient funds
-    let amt = qty * pricePerKg; // calculate price to be paid
+    let amt = parseInt(qty) * pricePerKg; // calculate price to be paid
     if (manufacturerBalance < amt) {
       throw new Error("Manufacturer Has Insufficient Funds");
     }
@@ -148,9 +148,10 @@ class PmCc extends Contract {
     let orderBuff = Buffer.from(JSON.stringify(order).toString("base64"))
     console.log("Order Buffer = ", orderBuff);
     await ctx.stub.putState(orderNo.toString(),orderBuff)
-    
+    await ctx.stub.putState(orderNumber, Buffer.from(orderNo.toString()))
 
-    return await this.getOrderDetails(ctx, orderNo);
+    return orderNo;
+    // return await this.getOrderDetails(ctx, orderNo);
   }
 
   // updates the status of the order to in-transit
@@ -235,6 +236,7 @@ class PmCc extends Contract {
   async getOrderDetails(ctx, orderNo) {
     //fetching order details
     console.log("OrderNO IN DETAILS = ", orderNo);
+    // let orderNo = String(oNo)
     let orderObjBytes = await ctx.stub.getState(orderNo);
     console.log("---Order Bytes----\n", orderObjBytes);
     console.log(JSON.parse(orderObjBytes));
