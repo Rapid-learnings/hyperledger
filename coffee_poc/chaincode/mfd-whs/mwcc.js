@@ -5,7 +5,7 @@ SPDX-License-Identifier: Apache-2.0
 'use strict';
 
 let { Contract, Context } = require('fabric-contract-api');
-let { hasher } = require('./hasher.js');
+// let { hasher } = require('./hasher.js');
 let rawstockKey = 'raw-stock'
 let driedstockKey = 'dried-stock'
 let roastedstockKey = 'roasted-stock'
@@ -37,9 +37,9 @@ class mwcc extends Contract {
         let currentStock = await this.availableRawStock(ctx);
         currentStock = parseInt(currentStock)
         let stock
-        if (!stockBytes || stockBytes.length === 0) {
-            currentStock = 0;
-        }
+        // if (!stockBytes || stockBytes.length === 0) {
+        //     currentStock = 0;
+        // }
         if (flag == 1 && currentStock < amt) {
             throw new Error('Current stock is lesser than amount');
         }
@@ -219,8 +219,8 @@ class mwcc extends Contract {
 
     async getTotalPackages(ctx) {
         let totalPackagesBytes = await ctx.stub.getState(totalPackages);
-        let totalPackages = parseInt(totalPackagesBytes.toString());
-        return parseInt(totalPackages);
+        let totalPackage = parseInt(totalPackagesBytes.toString());
+        return parseInt(totalPackage);
     }
 
     async updateTotalPackages(ctx, pck, flag){

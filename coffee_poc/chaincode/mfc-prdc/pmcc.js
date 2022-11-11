@@ -163,16 +163,17 @@ class PmCc extends Contract {
 
     // fetching order details
     let orderObjBytes = await ctx.stub.getState(orderNo);
-    let orderObj = parse(JSON.stringify(orderObjBytes));
-    let status = orderObj.Status;
-    if (status !== Status[0]) {
+    let orderObj = JSON.parse(orderObjBytes.toString());
+    console.log("In transit",orderObj);
+    let status = orderObj.orderStatus;
+    if (status != Status[0]) {
       throw new Error(
         "cannot change status to in-transit as order is not even placed"
       );
     }
 
     // updating the status
-    orderObj.Status = Status[1];
+    orderObj.orderStatus = Status[1];
     //storing the new order details object with the orderNo key
     await ctx.stub.putState(orderNo, Buffer.from(JSON.stringify(orderObj)));
   }
@@ -180,22 +181,24 @@ class PmCc extends Contract {
   // updates the status of the order to delivered
   async updateStatusToDelivered(ctx, orderNo) {
     let clientMSP = await ctx.clientIdentity.getMSPID();
-    if (clientMSP !== "tataMSP") {
+    if (clientMSP !== "teafarmMSP") {
       throw new Error("only Producer has permission to this update status");
     }
 
     // fetching order details
     let orderObjBytes = await ctx.stub.getState(orderNo);
-    let orderObj = parse(JSON.stringify(orderObjBytes));
-    let status = orderObj.Status;
-    if (status !== Status[1]) {
+    let orderObj = JSON.parse(orderObjBytes.toString());
+    console.log("In Delivery",orderObj);
+
+    let status = orderObj.orderStatus;
+    if (status != Status[1]) {
       throw new Error(
         "cannot change status to delivered as package is not even shipped"
       );
     }
 
     // updating the status to delivered
-    orderObj.Status = Status[2];
+    orderObj.orderStatus = Status[2];
     //storing the new order details object with the orderNo key
     await ctx.stub.putState(orderNo, Buffer.from(JSON.stringify(orderObj)));
   }
