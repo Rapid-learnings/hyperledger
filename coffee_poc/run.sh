@@ -13,3 +13,11 @@ sleep 5
 sleep 5
 
 ./mfdPrd.sh
+
+sleep 5
+
+./mfcWhs.sh
+
+sleep 5
+
+./whsRtlr.sh
