@@ -124,20 +124,19 @@ class wrcc extends Contract {
             orderNo = parseInt(orderNoBytes.toString());
             orderNo += 1;
         }
-        await ctx.stub.putState(orderNumber, Buffer.from(orderNo.toString()));
         // const time = ctx.stub.getDateTimestamp();
         let order = {
-            "docType":"order-whs-rtlr",
-            "DeliveryLocation": {
-                "Country": country,
-                "State": state
-            },
-            "Amount": amt,
-            "Quantity": qty,
-            "Status": Status[0]
+            docType:"order-whs-rtlr",
+            Country: country,
+            State: state,
+            Amount: amt.toString(),
+            Quantity: qty.toString(),
+            Status: Status[0]
         }
         // Store order details
-        await ctx.stub.putState(orderNo.toString(), Buffer.from(JSON.stringify(order).toString('base64')));
+        let orderBuff = Buffer.from(JSON.stringify(order).toString('base64'))
+        await ctx.stub.putState(orderNo.toString(), orderBuff);
+        await ctx.stub.putState(orderNumber, Buffer.from(orderNo.toString()))
 
         // await this.getOrderDetails(ctx, orderNo);
     }
@@ -174,12 +173,8 @@ class wrcc extends Contract {
         // }
 
         // fetching order details
-        let orderObj;
-        try {
-            orderObj = await this.getOrderDetails(ctx, orderNo)
-        } catch(err) {
-            throw err;
-        }
+        let orderObj = await this.getOrderDetails(ctx, orderNo)
+        console.log("In delivery = ", orderObj);
         let status = orderObj.Status;
         if (status !== Status[1]) {
             throw new Error('cannot change status to delivered as package is not even shipped');
@@ -262,12 +257,17 @@ class wrcc extends Contract {
     // Queries the order details object with orderNo as key
     async getOrderDetails(ctx, orderNo) {
         //fetching order details
+        console.log("Order No = ", orderNo);
         let orderObjBytes = await ctx.stub.getState(orderNo);
+        // console.log("Object Bytes", orderObjBytes);
+        console.log("---Order Bytes----\n", orderObjBytes);
+        console.log(orderObjBytes.toString());
         let orderObj = JSON.parse(orderObjBytes.toString());
-        console.log("Order must be delivered to %s, %s", orderObj.DeliveryLocation.Country, orderObj.DeliveryLocation.State);
+        console.log("Order must be delivered to %s, %s", orderObj.Country, orderObj.State);
         console.log("Order amount is %s", orderObj.Amount);
         console.log("Order quantity is %s Kg", orderObj.Quantity);
         console.log("Current status of order is %s", Status);
+        console.log("Details ", orderObj);
         return orderObj;
     }
 
