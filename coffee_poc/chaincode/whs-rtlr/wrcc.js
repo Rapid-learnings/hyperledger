@@ -125,13 +125,13 @@ class wrcc extends Contract {
             orderNo += 1;
         }
         // const time = ctx.stub.getDateTimestamp();
+        let orderStatus = Status[0]
         let order = {
-            docType:"order-whs-rtlr",
-            Country: country,
-            State: state,
-            Amount: amt.toString(),
-            Quantity: qty.toString(),
-            Status: Status[0]
+            country: country,
+            state: state,
+            amount: amt.toString(),
+            quantity: qty.toString(),
+            status: orderStatus
         }
         // Store order details
         let orderBuff = Buffer.from(JSON.stringify(order).toString('base64'))
@@ -154,15 +154,15 @@ class wrcc extends Contract {
         } catch(err) {
             throw err;
         }
-        let status = orderObj.Status;
+        let status = orderObj.status;
         if (status !== Status[0]) {
             throw new Error('cannot change status to in-transit as order is not even placed');
         }
 
         // updating the status
-        orderObj.Status = Status[1]
+        orderObj.status = Status[1]
         //storing the new order details object with the orderNo key
-        await ctx.stub.putState(orderNo, Buffer.from(orderObj.toString()));
+        await ctx.stub.putState(orderNo, Buffer.from(JSON.stringify(orderObj).toString('base64')));
     }
 
     // updates the status of the order to delivered
@@ -175,15 +175,15 @@ class wrcc extends Contract {
         // fetching order details
         let orderObj = await this.getOrderDetails(ctx, orderNo)
         console.log("In delivery = ", orderObj);
-        let status = orderObj.Status;
+        let status = orderObj.status;
         if (status !== Status[1]) {
             throw new Error('cannot change status to delivered as package is not even shipped');
         }
 
         // updating the status to delivered
-        orderObj.Status = Status[2]
+        orderObj.status = Status[2]
         //storing the new order details object with the orderNo key
-        await ctx.stub.putState(orderNo.toString(), Buffer.from(orderObj.toString()));
+        await ctx.stub.putState(orderNo.toString(), Buffer.from(JSON.stringify(orderObj).toString('base64')));
     }
 
     // async claimPayout(ctx, orderNo) {
@@ -262,11 +262,8 @@ class wrcc extends Contract {
         // console.log("Object Bytes", orderObjBytes);
         console.log("---Order Bytes----\n", orderObjBytes);
         console.log(orderObjBytes.toString());
+        console.log("Details - 1 = ",JSON.parse(orderObjBytes.toString()));
         let orderObj = JSON.parse(orderObjBytes.toString());
-        console.log("Order must be delivered to %s, %s", orderObj.Country, orderObj.State);
-        console.log("Order amount is %s", orderObj.Amount);
-        console.log("Order quantity is %s Kg", orderObj.Quantity);
-        console.log("Current status of order is %s", Status);
         console.log("Details ", orderObj);
         return orderObj;
     }

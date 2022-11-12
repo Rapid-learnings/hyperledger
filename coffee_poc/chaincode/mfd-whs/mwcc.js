@@ -4,7 +4,7 @@ SPDX-License-Identifier: Apache-2.0
 
 'use strict';
 
-let { Contract, Context } = require('fabric-contract-api');
+let { Contract, Context, Info } = require('fabric-contract-api');
 // let { hasher } = require('./hasher.js');
 let rawstockKey = 'raw-stock'
 let driedstockKey = 'dried-stock'
@@ -20,13 +20,20 @@ class mwcc extends Contract {
     // intializes stock to a fixed amount
     async initialize(ctx) {
         console.log('===== Initializing all stocks =====');
-        await ctx.stub.putState(rawstockKey, Buffer.from('1000')); //link this to pmcc.js
+        // await ctx.stub.putState(rawstockKey, Buffer.from('1000')); //link this to pmcc.js
         await ctx.stub.putState(driedstockKey, Buffer.from('0'));
         await ctx.stub.putState(roastedstockKey, Buffer.from('0'));
         await ctx.stub.putState(finishedstockKey, Buffer.from('0'));
         await ctx.stub.putState(totalPackages, Buffer.from('0'));
         await ctx.stub.putState(whareHouseStock, Buffer.from('0'));
-        console.log('===== Current raw stock is initialized to 1000 Kg =====');
+        await this.updateFromPmcc(ctx);
+    }
+
+    async updateFromPmcc(ctx){
+        let result = await ctx.stub.invokeChaincode('pmcc', ['getManufacturerStock'], 'mfd-prd-channel');
+        let stock = result.payload.toString();
+        console.info("Stock from pmcc = ",stock);
+        await ctx.stub.putState(rawstockKey, Buffer.from(stock.toString()));
     }
 
     async updateRawStock(ctx, amt, flag) {
@@ -57,10 +64,10 @@ class mwcc extends Contract {
 
     // Queries available stock
     async availableRawStock(ctx) {
-        let clientMSPID = await ctx.clientIdentity.getMSPID();
-        if (clientMSPID !== 'tataMSP') {
-            throw new Error('only Manufacturer can check available stock')
-        }
+        // let clientMSPID = await ctx.clientIdentity.getMSPID();
+        // if (clientMSPID !== 'tataMSP') {
+        //     throw new Error('only Manufacturer can check available stock')
+        // }
         let ASBytes = await ctx.stub.getState(rawstockKey);
         let AS = parseInt(ASBytes.toString())
         console.log("Available Stock is %s kg", AS);
