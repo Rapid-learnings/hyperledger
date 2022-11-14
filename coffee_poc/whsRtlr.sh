@@ -7,7 +7,7 @@ InvokeCCWhsRtlr(){
 
 placeOrder(){
     echo "****** Placing Order For Retailer *********"
-    sudo docker exec -it cli-retail-1 peer chaincode invoke -o orderer1.gov.io:7050 --tls --cafile "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem" -C whs-rtlr-channel -n wr --peerAddresses peerts2.wharehouse.com:10080 --tlsRootCertFiles "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/wharehouse.com/peers/peerts2.wharehouse.com/tls/ca.crt" --peerAddresses peerbb1.retailer.com:11050 --tlsRootCertFiles "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/retailer.com/peers/peerbb1.retailer.com/tls/ca.crt" -c '{"function":"placeOrder","Args":["1","INDIA","KERALA"]}'
+    sudo docker exec -it cli-retail-1 peer chaincode invoke -o orderer1.gov.io:7050 --tls --cafile "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem" -C whs-rtlr-channel -n wr --peerAddresses peerts2.wharehouse.com:10080 --tlsRootCertFiles "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/wharehouse.com/peers/peerts2.wharehouse.com/tls/ca.crt" --peerAddresses peerbb1.retailer.com:11050 --tlsRootCertFiles "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/retailer.com/peers/peerbb1.retailer.com/tls/ca.crt" -c '{"function":"placeOrder","Args":["5","INDIA","KERALA"]}'
     sleep 8
 }
 

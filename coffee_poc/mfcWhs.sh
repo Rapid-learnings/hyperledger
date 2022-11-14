@@ -13,31 +13,41 @@ availableRawStock(){
 
 dryOperation(){
     echo "######## Performing Dry Coffee Operation #######"
-    sudo docker exec -it cli-manufacturer-2 peer chaincode invoke -o orderer1.gov.io:7050 --tls --cafile "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem" -C mfd-whs-channel -n mw --peerAddresses peertm2.manufacturer.com:9080 --tlsRootCertFiles "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/manufacturer.com/peers/peertm2.manufacturer.com/tls/ca.crt" --peerAddresses peerts1.wharehouse.com:10050 --tlsRootCertFiles "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/wharehouse.com/peers/peerts1.wharehouse.com/tls/ca.crt" -c '{"function":"dry","Args":["300","250"]}'
+    echo "Coffee Going For Dry Operation = 1000 kg"
+    echo "Coffee After Dry Operation = 900 kg"
+
+    sudo docker exec -it cli-manufacturer-2 peer chaincode invoke -o orderer1.gov.io:7050 --tls --cafile "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem" -C mfd-whs-channel -n mw --peerAddresses peertm2.manufacturer.com:9080 --tlsRootCertFiles "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/manufacturer.com/peers/peertm2.manufacturer.com/tls/ca.crt" --peerAddresses peerts1.wharehouse.com:10050 --tlsRootCertFiles "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/wharehouse.com/peers/peerts1.wharehouse.com/tls/ca.crt" -c '{"function":"dry","Args":["1000","900"]}'
     sleep 8
 }
 
 roastOperation(){
     echo "######## Performing Roast Coffee Operation #######"
-    sudo docker exec -it cli-manufacturer-2 peer chaincode invoke -o orderer1.gov.io:7050 --tls --cafile "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem" -C mfd-whs-channel -n mw --peerAddresses peertm2.manufacturer.com:9080 --tlsRootCertFiles "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/manufacturer.com/peers/peertm2.manufacturer.com/tls/ca.crt" --peerAddresses peerts1.wharehouse.com:10050 --tlsRootCertFiles "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/wharehouse.com/peers/peerts1.wharehouse.com/tls/ca.crt" -c '{"function":"roast","Args":["250","250"]}'
+    echo "Coffee Going For Roast Operation = 900 kg"
+    echo "Coffee After Roast Operation = 750 kg"
+
+    sudo docker exec -it cli-manufacturer-2 peer chaincode invoke -o orderer1.gov.io:7050 --tls --cafile "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem" -C mfd-whs-channel -n mw --peerAddresses peertm2.manufacturer.com:9080 --tlsRootCertFiles "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/manufacturer.com/peers/peertm2.manufacturer.com/tls/ca.crt" --peerAddresses peerts1.wharehouse.com:10050 --tlsRootCertFiles "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/wharehouse.com/peers/peerts1.wharehouse.com/tls/ca.crt" -c '{"function":"roast","Args":["900","750"]}'
     sleep 8    
 }
 
 QAOps(){
     echo "######## Performing QA Coffee Operation #######"
-    sudo docker exec -it cli-manufacturer-2 peer chaincode invoke -o orderer1.gov.io:7050 --tls --cafile "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem" -C mfd-whs-channel -n mw --peerAddresses peertm2.manufacturer.com:9080 --tlsRootCertFiles "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/manufacturer.com/peers/peertm2.manufacturer.com/tls/ca.crt" --peerAddresses peerts1.wharehouse.com:10050 --tlsRootCertFiles "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/wharehouse.com/peers/peerts1.wharehouse.com/tls/ca.crt" -c '{"function":"doQA","Args":["250","200"]}'
+    echo "Coffee Going For Roast Operation = 750 kg"
+    echo "Coffee Going For Roast Operation = 500 kg"
+
+    sudo docker exec -it cli-manufacturer-2 peer chaincode invoke -o orderer1.gov.io:7050 --tls --cafile "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem" -C mfd-whs-channel -n mw --peerAddresses peertm2.manufacturer.com:9080 --tlsRootCertFiles "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/manufacturer.com/peers/peertm2.manufacturer.com/tls/ca.crt" --peerAddresses peerts1.wharehouse.com:10050 --tlsRootCertFiles "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/wharehouse.com/peers/peerts1.wharehouse.com/tls/ca.crt" -c '{"function":"doQA","Args":["750","500"]}'
     sleep 8    
 }
 
 packageCoffee(){
     echo "######## Packaging Coffee Operation #######"
-    sudo docker exec -it cli-manufacturer-2 peer chaincode invoke -o orderer1.gov.io:7050 --tls --cafile "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem" -C mfd-whs-channel -n mw --peerAddresses peertm2.manufacturer.com:9080 --tlsRootCertFiles "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/manufacturer.com/peers/peertm2.manufacturer.com/tls/ca.crt" --peerAddresses peerts1.wharehouse.com:10050 --tlsRootCertFiles "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/wharehouse.com/peers/peerts1.wharehouse.com/tls/ca.crt" -c '{"function":"package","Args":["200"]}'
+    echo "Final Packages Created = 10"
+    sudo docker exec -it cli-manufacturer-2 peer chaincode invoke -o orderer1.gov.io:7050 --tls --cafile "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem" -C mfd-whs-channel -n mw --peerAddresses peertm2.manufacturer.com:9080 --tlsRootCertFiles "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/manufacturer.com/peers/peertm2.manufacturer.com/tls/ca.crt" --peerAddresses peerts1.wharehouse.com:10050 --tlsRootCertFiles "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/wharehouse.com/peers/peerts1.wharehouse.com/tls/ca.crt" -c '{"function":"package","Args":["500"]}'
     sleep 8
 }
 
 dispatchCoffee(){
-    echo "######## Packaging Coffee Operation #######"
-    sudo docker exec -it cli-manufacturer-2 peer chaincode invoke -o orderer1.gov.io:7050 --tls --cafile "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem" -C mfd-whs-channel -n mw --peerAddresses peertm2.manufacturer.com:9080 --tlsRootCertFiles "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/manufacturer.com/peers/peertm2.manufacturer.com/tls/ca.crt" --peerAddresses peerts1.wharehouse.com:10050 --tlsRootCertFiles "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/wharehouse.com/peers/peerts1.wharehouse.com/tls/ca.crt" -c '{"function":"dispatch","Args":["4"]}'
+    echo "######## Dispatching Coffee Operation #######"
+    sudo docker exec -it cli-manufacturer-2 peer chaincode invoke -o orderer1.gov.io:7050 --tls --cafile "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem" -C mfd-whs-channel -n mw --peerAddresses peertm2.manufacturer.com:9080 --tlsRootCertFiles "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/manufacturer.com/peers/peertm2.manufacturer.com/tls/ca.crt" --peerAddresses peerts1.wharehouse.com:10050 --tlsRootCertFiles "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/wharehouse.com/peers/peerts1.wharehouse.com/tls/ca.crt" -c '{"function":"dispatch","Args":["10"]}'
     sleep 8
 }
 

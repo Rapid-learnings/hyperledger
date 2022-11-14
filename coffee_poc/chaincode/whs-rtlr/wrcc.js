@@ -20,7 +20,7 @@ class wrcc extends Contract {
         await ctx.stub.putState(retailerBalance, Buffer.from('100000'));
         await ctx.stub.putState(warehouseBalance, Buffer.from('100000'));
         //! connect wharehouse i.e wHstock stock from mwcc.js
-        await ctx.stub.putState(wHStock, Buffer.from('1000'));
+        await ctx.stub.putState(wHStock, Buffer.from('10'));
         await ctx.stub.putState(retailerStock, Buffer.from('0'));
 
     }
