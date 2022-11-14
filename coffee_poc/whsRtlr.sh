@@ -27,7 +27,7 @@ UpdateStatus(){
     sleep 8
 }
 
-# InvokeCCWhsRtlr
-# placeOrder
-# getOrderDetails
-# UpdateStatus
+InvokeCCWhsRtlr
+placeOrder
+getOrderDetails
+UpdateStatus

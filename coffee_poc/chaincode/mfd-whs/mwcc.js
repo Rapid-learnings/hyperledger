@@ -20,20 +20,20 @@ class mwcc extends Contract {
     // intializes stock to a fixed amount
     async initialize(ctx) {
         console.log('===== Initializing all stocks =====');
-        // await ctx.stub.putState(rawstockKey, Buffer.from('1000')); //link this to pmcc.js
+        await ctx.stub.putState(rawstockKey, Buffer.from('1000')); //link this to pmcc.js
         await ctx.stub.putState(driedstockKey, Buffer.from('0'));
         await ctx.stub.putState(roastedstockKey, Buffer.from('0'));
         await ctx.stub.putState(finishedstockKey, Buffer.from('0'));
         await ctx.stub.putState(totalPackages, Buffer.from('0'));
         await ctx.stub.putState(whareHouseStock, Buffer.from('0'));
-        await this.updateFromPmcc(ctx);
+        // await this.updateFromPmcc(ctx);
     }
 
     async updateFromPmcc(ctx){
         let result = await ctx.stub.invokeChaincode('pmcc', ['getManufacturerStock'], 'mfd-prd-channel');
         let stock = result.payload.toString();
         console.info("Stock from pmcc = ",stock);
-        await ctx.stub.putState(rawstockKey, Buffer.from(stock.toString()));
+        // await ctx.stub.putState(rawstockKey, Buffer.from(stock.toString()));
     }
 
     async updateRawStock(ctx, amt, flag) {

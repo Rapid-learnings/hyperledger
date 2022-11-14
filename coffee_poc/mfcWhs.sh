@@ -42,9 +42,9 @@ dispatchCoffee(){
 }
 
 InvokeCCMfdPrd
-# availableRawStock
-# dryOperation
-# roastOperation
-# QAOps
-# packageCoffee
-# dispatchCoffee
+availableRawStock
+dryOperation
+roastOperation
+QAOps
+packageCoffee
+dispatchCoffee
