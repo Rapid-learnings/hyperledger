@@ -11,3 +11,13 @@ sleep 5
 ./deployCC.sh
 
 sleep 5
+
+./mfdPrd.sh
+
+sleep 5
+
+./mfcWhs.sh
+
+sleep 5
+
+./whsRtlr.sh

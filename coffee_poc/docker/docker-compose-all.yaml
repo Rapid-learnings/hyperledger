@@ -30,7 +30,7 @@ networks:
 
 services:
 
-  caManufacturer:
+  caManufacturer: 
     image: hyperledger/fabric-ca
     environment:
       - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
@@ -116,10 +116,10 @@ services:
 
   couchdb0:
     container_name: couchdb0
-    image: hyperledger/fabric-couchdb
+    image: couchdb:3.1.1
     environment:
-      - COUCHDB_USER=
-      - COUCHDB_PASSWORD=
+      - COUCHDB_USER=admin
+      - COUCHDB_PASSWORD=adminpw
     ports:
       - "2001:5984"
     networks:
@@ -127,10 +127,10 @@ services:
 
   couchdb1:
     container_name: couchdb1
-    image: hyperledger/fabric-couchdb
+    image: couchdb:3.1.1
     environment:
-      - COUCHDB_USER=
-      - COUCHDB_PASSWORD=
+      - COUCHDB_USER=admin
+      - COUCHDB_PASSWORD=adminpw
     ports:
       - "2002:5984"
     networks:
@@ -138,10 +138,10 @@ services:
 
   couchdb2:
     container_name: couchdb2
-    image: hyperledger/fabric-couchdb
+    image: couchdb:3.1.1
     environment:
-      - COUCHDB_USER=
-      - COUCHDB_PASSWORD=
+      - COUCHDB_USER=admin
+      - COUCHDB_PASSWORD=adminpw
     ports:
       - "2003:5984"
     networks:
@@ -149,10 +149,10 @@ services:
 
   couchdb3:
     container_name: couchdb3
-    image: hyperledger/fabric-couchdb
+    image: couchdb:3.1.1
     environment:
-      - COUCHDB_USER=
-      - COUCHDB_PASSWORD=
+      - COUCHDB_USER=admin
+      - COUCHDB_PASSWORD=adminpw
     ports:
       - "2004:5984"
     networks:
@@ -160,10 +160,10 @@ services:
 
   couchdb4:
     container_name: couchdb4
-    image: hyperledger/fabric-couchdb
+    image: couchdb:3.1.1
     environment:
-      - COUCHDB_USER=
-      - COUCHDB_PASSWORD=
+      - COUCHDB_USER=admin
+      - COUCHDB_PASSWORD=adminpw
     ports:
       - "2005:5984"
     networks:
@@ -171,10 +171,10 @@ services:
 
   couchdb5:
     container_name: couchdb5
-    image: hyperledger/fabric-couchdb
+    image: couchdb:3.1.1
     environment:
-      - COUCHDB_USER=
-      - COUCHDB_PASSWORD=
+      - COUCHDB_USER=admin
+      - COUCHDB_PASSWORD=adminpw
     ports:
       - "2006:5984"
     networks:
@@ -182,10 +182,10 @@ services:
 
   couchdb6:
     container_name: couchdb6
-    image: hyperledger/fabric-couchdb
+    image: couchdb:3.1.1
     environment:
-      - COUCHDB_USER=
-      - COUCHDB_PASSWORD=
+      - COUCHDB_USER=admin
+      - COUCHDB_PASSWORD=adminpw
     ports:
       - "2007:5984"
     networks:
@@ -193,12 +193,23 @@ services:
 
   couchdb7:
     container_name: couchdb7
-    image: hyperledger/fabric-couchdb
+    image: couchdb:3.1.1
     environment:
-      - COUCHDB_USER=
-      - COUCHDB_PASSWORD=
+      - COUCHDB_USER=admin
+      - COUCHDB_PASSWORD=adminpw
     ports:
       - "2008:5984"
+    networks:
+      - test
+
+  couchdb8:
+    container_name: couchdb8
+    image: couchdb:3.1.1
+    environment:
+      - COUCHDB_USER=admin
+      - COUCHDB_PASSWORD=adminpw
+    ports:
+      - "2009:5984"
     networks:
       - test
 
@@ -217,8 +228,8 @@ services:
     environment:
       - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
       - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb0:5984
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=admin
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=adminpw
       - CORE_METRICS_PROVIDER=prometheus
     container_name: peertm1.manufacturer.com
     depends_on:
@@ -232,9 +243,9 @@ services:
       service: peertm2.manufacturer.com
     environment:
       - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb0:5984
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb1:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=admin
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=adminpw
       - CORE_METRICS_PROVIDER=prometheus
     container_name: peertm2.manufacturer.com
     depends_on:
@@ -248,9 +259,9 @@ services:
       service: peertf1.production.com
     environment:
       - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb0:5984
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb2:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=admin
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=adminpw
       - CORE_METRICS_PROVIDER=prometheus
     container_name: peertf1.production.com
     depends_on:
@@ -264,9 +275,9 @@ services:
       service: peertf2.production.com
     environment:
       - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb0:5984
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb3:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=admin
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=adminpw
       - CORE_METRICS_PROVIDER=prometheus
     container_name: peertf2.production.com
     depends_on:
@@ -280,9 +291,9 @@ services:
       service: peerbb1.retailer.com
     environment:
       - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb0:5984
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb4:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=admin
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=adminpw
       - CORE_METRICS_PROVIDER=prometheus
     container_name: peerbb1.retailer.com
     depends_on:
@@ -296,9 +307,9 @@ services:
       service: peerbb2.retailer.com
     environment:
       - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb0:5984
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb5:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=admin
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=adminpw
       - CORE_METRICS_PROVIDER=prometheus
     container_name: peerbb2.retailer.com
     depends_on:
@@ -312,9 +323,9 @@ services:
       service: peerts1.wharehouse.com
     environment:
       - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb0:5984
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb6:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=admin
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=adminpw
       - CORE_METRICS_PROVIDER=prometheus
     container_name: peerts1.wharehouse.com
     depends_on:
@@ -328,9 +339,9 @@ services:
       service: peerts2.wharehouse.com
     environment:
       - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb0:5984
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb7:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=admin
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=adminpw
       - CORE_METRICS_PROVIDER=prometheus
     container_name: peerts2.wharehouse.com
     depends_on:
@@ -344,11 +355,13 @@ services:
       service: peergov1.gov.io
     environment:
       - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb0:5984
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb8:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=admin
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=adminpw
       - CORE_METRICS_PROVIDER=prometheus
     container_name: peergov1.gov.io
+    depends_on:
+      - couchdb8
     networks:
       - test
 
@@ -376,6 +389,7 @@ services:
     volumes:
       - /var/run/:/host/var/run/
       - ./../chaincode/:/opt/gopath/src/github.com/hyperledger/fabric/peer/chaincode
+      # - ./../chaincode:/usr/local/src/
       - ../crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
       - ../:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
       - ../channel-artefacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
@@ -732,6 +746,7 @@ services:
       - /var/run/:/host/var/run/
       - ./msp:/etc/hyperledger/msp
       - ./../chaincode:/opt/gopath/src/github.com/hyperledger/fabric/peer/chaincode
+      # - ./../chaincode:/usr/local/src
     depends_on:
       - peertm1.manufacturer.com
       - peertm2.manufacturer.com
