@@ -14,6 +14,10 @@ api/package-lock.json
 /chaincode/mfc-prdc/node_modules/*
 /chaincode/mfd-whs/node_modules/*
 /chaincode/whs-rtlr/node_modules/*
+/fabric-ca-client
+/fabric-ca-mfc
+/fabric-ca-server-tls
+/fabric-ca-config
 # /api/tata-wallet/*.id
 # /api/teafarm-wallet/*.id
 # /fabric-ca-config/*

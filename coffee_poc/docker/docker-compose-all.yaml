@@ -1,7 +1,7 @@
 version: '2.1'
 
 volumes:
-  caManufacturer:
+  ca.manufacturer.com:
   caProduction:
   caWharehouse:
   caRetailer:
@@ -30,7 +30,7 @@ networks:
 
 services:
 
-  caManufacturer: 
+  ca.manufacturer.com: 
     image: hyperledger/fabric-ca
     environment:
       - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
