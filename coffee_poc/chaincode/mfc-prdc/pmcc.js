@@ -21,7 +21,7 @@ let producerFunds = "PRODUCER_BALANCE";
 let manufacturerOrderedStock = "MANUFACTURE_ORDERED_STOCK";
 let pricePerKg = 100; // 100$ for 1 kg coffee
 
-class PmCc extends Contract {
+class pmcc extends Contract {
   // initializes the stock of the producer to a set amount and also initializes the erc20 token contract
   async init(ctx, initialStock) {
     await ctx.stub.putState(manufacturerFunds, Buffer.from("1000000"));
@@ -263,4 +263,4 @@ class PmCc extends Contract {
   }
 }
 
-module.exports = PmCc;
+module.exports = pmcc;
