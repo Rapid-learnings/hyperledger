@@ -43,21 +43,21 @@ createChannels(){
 
 # 5. Create anchor peers according to different channels 
 createAnchorPeers(){
- echo "*===========Creating the anchor peers for Manufacturer & Production=========*"
- configtxgen -profile ManufacturerProductionProfile -outputAnchorPeersUpdate ./channel-artefacts/mfd-prd-anchor.tx -channelID mfd-prd-channel -asOrg teafarm
- configtxgen -profile ManufacturerProductionProfile -outputAnchorPeersUpdate ./channel-artefacts/mfd-prd-anchor.tx -channelID mfd-prd-channel -asOrg tata
+    echo "*===========Creating the anchor peers for Manufacturer & Production=========*"
+    configtxgen -profile ManufacturerProductionProfile -outputAnchorPeersUpdate ./channel-artefacts/mfd-prd-anchor.tx -channelID mfd-prd-channel -asOrg teafarm
+    configtxgen -profile ManufacturerProductionProfile -outputAnchorPeersUpdate ./channel-artefacts/mfd-prd-anchor.tx -channelID mfd-prd-channel -asOrg tata
 
-sleep 2
+    sleep 2
 
- echo "*===============Creating anchor peers for Manufacturer & Wharehouse===========*"
-configtxgen -profile ManufacturerWharehouseProfile -outputAnchorPeersUpdate ./channel-artefacts/mfd-whs-anchor.tx -channelID mfd-whs-channel -asOrg tata
-configtxgen -profile ManufacturerWharehouseProfile -outputAnchorPeersUpdate ./channel-artefacts/mfd-whs-anchor.tx -channelID mfd-whs-channel -asOrg tatastore
+    echo "*===============Creating anchor peers for Manufacturer & Wharehouse===========*"
+    configtxgen -profile ManufacturerWharehouseProfile -outputAnchorPeersUpdate ./channel-artefacts/mfd-whs-anchor.tx -channelID mfd-whs-channel -asOrg tata
+    configtxgen -profile ManufacturerWharehouseProfile -outputAnchorPeersUpdate ./channel-artefacts/mfd-whs-anchor.tx -channelID mfd-whs-channel -asOrg tatastore
 
-sleep 2
+    sleep 2
 
-echo "*================Creating anchor peers for Wharehouse & Retailer================================*"
- configtxgen -profile WharehouseRetailerProfile -outputAnchorPeersUpdate ./channel-artefacts/whs-rtlr-anchor.tx -channelID whs-rtlr-channel -asOrg tatastore
- configtxgen -profile WharehouseRetailerProfile -outputAnchorPeersUpdate ./channel-artefacts/whs-rtlr-anchor.tx -channelID whs-rtlr-channel -asOrg bigbazar
+    echo "*================Creating anchor peers for Wharehouse & Retailer================================*"
+    configtxgen -profile WharehouseRetailerProfile -outputAnchorPeersUpdate ./channel-artefacts/whs-rtlr-anchor.tx -channelID whs-rtlr-channel -asOrg tatastore
+    configtxgen -profile WharehouseRetailerProfile -outputAnchorPeersUpdate ./channel-artefacts/whs-rtlr-anchor.tx -channelID whs-rtlr-channel -asOrg bigbazar
 
 }
 

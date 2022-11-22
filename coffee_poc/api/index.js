@@ -16,7 +16,7 @@ app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
 app.use(cors());
 
-const manufactuererProducer = require('../chaincode/pmcc.js')
+// const manufactuererProducer = require('../chaincode/pmcc.js')
 const helper = require("./helper");
 const enrollAdmin = require('./enrollAdmin.js');
 const registerUser = require('./registerUser.js');
