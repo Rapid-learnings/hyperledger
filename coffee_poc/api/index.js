@@ -1,11 +1,12 @@
 // index.js
-'use strict';
-var { Gateway, Wallets } = require('fabric-network');
-const fs = require('fs');``
-const express = require('express');
-const bodyParser = require('body-parser')
-const cors = require('cors')
-const path = require('path');
+"use strict";
+var { Gateway, Wallets } = require("fabric-network");
+const fs = require("fs");
+``;
+const express = require("express");
+const bodyParser = require("body-parser");
+const cors = require("cors");
+const path = require("path");
 
 const app = express();
 // app.use(bodyParser);
@@ -16,27 +17,27 @@ app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
 app.use(cors());
 
-// const manufactuererProducer = require('../chaincode/pmcc.js')
 const helper = require("./helper");
-const enrollAdmin = require('./enrollAdmin.js');
-const registerUser = require('./registerUser.js');
+const { log } = require("console");
+// const enrollAdmin = require('./enrollAdmin.js');
+// const registerUser = require('./registerUser.js');
 // module.exports.contracts = [manufactuererProducer];
 
-app.post('/register/admin', async(req,res,next)=>{
-    let org = req.body.orgName;
-    console.log(org);
-    let resp = await enrollAdmin.enroll(org);
-    res.json(resp);
-})
+// app.post('/register/admin', async(req,res,next)=>{
+//     let org = req.body.orgName;
+//     console.log(org);
+//     let resp = await enrollAdmin.enroll(org);
+//     res.json(resp);
+// })
 
-app.post('/register/user', async(req,res,next)=>{
-    let usrname = req.body.username;
-    let orgName = req.body.orgName;
-    console.log(orgName);
-    console.log(usrname);
-    let resp = registerUser.registerEnrollUser(usrname,orgName);
-    res.json(resp);
-})
+app.post("/register/user", async (req, res, next) => {
+  let usrname = req.body.username;
+  let orgName = req.body.orgName;
+  console.log(orgName);
+  console.log(usrname);
+  let resp = await helper.getRegisteredUser(usrname, orgName, true);
+  res.json(resp);
+});
 
 // app.post('/register', async(req,res,next)=>{
 // console.log(req.body);
@@ -47,25 +48,36 @@ app.post('/register/user', async(req,res,next)=>{
 //     res.json(response);
 // })
 
-
-app.get('/getStorage', async(req,res,next)=>{
-    let ccp = fs.readFile("./connection-profiles/mfc-prd-config.json",'utf8',function(err, data){})
-    const walletPath = path.join(process.cwd(),'teafarm-wallet');
-    const wallet = await Wallets.newFileSystemWallet(walletPath)
+app.get("/producer/getStorage", async (req, res, next) => {
+  try {
+    // console.log(__dirname);
+    let ccpPath = path.resolve(__dirname,"connection-profiles","mfc-prd-config.json");
+    // console.log(ccpPath);
+    let ccp = JSON.parse(fs.readFileSync(ccpPath, "utf8", (err, data)=>{}));
+    // console.log("ccp = ",ccp);
+    const walletPath = path.join(process.cwd(), "teafarm-wallet");
+    const wallet = await Wallets.newFileSystemWallet(walletPath);
     // omitting check for identity
     const gateway = new Gateway();
-    await gateway.connect(ccp, {wallet, identity:'user1', discovery:{enabled:true, asLocalhost:false}})
-    
+    await gateway.connect(ccp, {
+      wallet,
+      identity: "user1",
+      discovery: { enabled: true, asLocalhost: true },
+    });
+
     // n/w to which contract is deployed
-    const network = await gateway.getNetwork('mfd-prd-channel')
+    const network = await gateway.getNetwork("mfd-prd-channel");
     // get contract
-    const contract = network.getContract('mfcPrd.js')
-    const storage = await contract.evaluateTransaction('getStorage');
+    const contract = network.getContract("pmcc");
+    const storage = await contract.evaluateTransaction("availableStock");
 
     res.json(storage);
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
 });
 
-
-app.listen(1080,()=>{
-    console.log("======== Server Listening At 1080 =======");
+app.listen(1080, () => {
+  console.log("======== Server Listening At 1080 =======");
 });
