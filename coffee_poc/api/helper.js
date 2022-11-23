@@ -8,10 +8,12 @@ const util = require('util');
 const getCCP = async (org) => {
     let ccpPath;
     if (org == "teafarm") {
-        ccpPath = "./connection-profiles/mfc-prd-config.json";
+        ccpPath = "./connection-profiles/prd-cc.json";
+        // ccpPath = "./connection-profiles/mfc-prd-config.json";
 
     } else if (org == "tata") {
-        ccpPath = "./connection-profiles/mfc-prd-config.json";
+        ccpPath = "./connection-profiles/mfc-cc.json";
+        // ccpPath = "./connection-profiles/mfc-prd-config.json";
     } else
         return null
     const ccpJSON = fs.readFileSync(ccpPath, 'utf8')

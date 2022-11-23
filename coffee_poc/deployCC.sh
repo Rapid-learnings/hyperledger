@@ -74,8 +74,12 @@ whsRtlrCC(){
 
 
 ApproveCCMfdPrd(){
-    sed -i 'd' log.txt
-    sudo docker exec -it cli-production-1 peer lifecycle chaincode queryinstalled >&log.txt
+    echo -n "" > log.txt
+    echo -n "" > mw.txt
+    
+    # sed -i 'd' log.txt
+    # sed -i 'd' mw.txt
+    sudo docker exec -it cli-manufacturer-1 peer lifecycle chaincode queryinstalled >&log.txt
     cat log.txt
     # CC_PACKAGE_ID=$(sed -n "/${CC_NAME}_${CC_VERSION}/{s/^Package ID: //; s/, Label:.*$//; p;}" log.txt)
     export CC_PACKAGE_ID=$(cat log.txt | grep "Package" | cut -d " " -f 3 | cut -d "," -f 1)
@@ -90,7 +94,11 @@ ApproveCCMfdPrd(){
 }
 
 ApproveCCMfdWhs(){
-    sed -i 'd' mw.txt
+    echo -n "" > mw.txt
+    echo -n "" > log.txt
+
+    # sed -i 'd' mw.txt
+    # sed -i 'd' log.txt
     sudo docker exec -it cli-wharehouse-1 peer lifecycle chaincode queryinstalled >&mw.txt
     # cat mw.txt
     # MW_PACKAGE_ID=$(sed -n "/${CC_NAME}_${CC_VERSION}/{s/^Package ID: //; s/, Label:.*$//; p;}" mw.txt)
@@ -106,7 +114,11 @@ ApproveCCMfdWhs(){
 }
 
 ApproveCCWhsRtlr(){
-    sed -i 'd' wr.txt
+    echo -n "" > wr.txt
+    echo -n "" > mw.txt
+
+    # sed -i 'd' wr.txt
+    # sed -i 'd' mw.txt
     sudo docker exec -it cli-retail-1 peer lifecycle chaincode queryinstalled >&wr.txt
     # cat wr.txt
     # CC_PACKAGE_ID=$(sed -n "/${CC_NAME}_${CC_VERSION}/{s/^Package ID: //; s/, Label:.*$//; p;}" wr.txt)

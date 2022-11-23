@@ -1,0 +1,49 @@
+{
+    "name": "test",
+    "version": "1.0.0",
+    "client": {
+        "organization": "tata",
+        "connection": {
+            "timeout": {
+                "peer": {
+                    "endorser": "300"
+                }
+            }
+        }
+    },
+    "organizations": {
+        "Org1": {
+            "mspid": "teafarmMSP",
+            "peers": [
+                "peertf1.production.com"
+            ],
+            "certificateAuthorities": [
+                "ca.production.com"
+            ]
+        }
+    },
+    "peers": {
+        "peertf1.production.com": {
+            "url": "grpcs://localhost:8050",
+            "tlsCACerts": {
+                "path":"/home/ubuntu/pankajb/hyperledger/coffee_poc/crypto-config/peerOrganizations/production.com/peers/peertf1.production.com/msp/tlscacerts/tlsca.production.com-cert.pem"
+            },
+            "grpcOptions": {
+                "ssl-target-name-override": "peertf1.production.com",
+                "hostnameOverride": "peertf1.production.com"
+            }
+        }
+    },
+    "certificateAuthorities": {
+        "ca.production.com": {
+            "url": "https://localhost:2052",
+            "caName": "ca.production.com",
+            "tlsCACerts": {
+                "path":"/home/ubuntu/pankajb/hyperledger/coffee_poc/crypto-config/peerOrganizations/production.com/ca/ca.production.com-cert.pem"
+            },
+            "httpOptions": {
+                "verify": false
+            }
+        }
+    }
+}

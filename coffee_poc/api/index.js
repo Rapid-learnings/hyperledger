@@ -18,7 +18,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 const helper = require("./helper");
-const { log } = require("console");
+const invoke = require("./invoke");
 // const enrollAdmin = require('./enrollAdmin.js');
 // const registerUser = require('./registerUser.js');
 // module.exports.contracts = [manufactuererProducer];
@@ -48,35 +48,44 @@ app.post("/register/user", async (req, res, next) => {
 //     res.json(response);
 // })
 
-app.get("/producer/getStorage", async (req, res, next) => {
-  try {
-    // console.log(__dirname);
-    let ccpPath = path.resolve(__dirname,"connection-profiles","mfc-prd-config.json");
-    // console.log(ccpPath);
-    let ccp = JSON.parse(fs.readFileSync(ccpPath, "utf8", (err, data)=>{}));
-    // console.log("ccp = ",ccp);
-    const walletPath = path.join(process.cwd(), "teafarm-wallet");
-    const wallet = await Wallets.newFileSystemWallet(walletPath);
-    // omitting check for identity
-    const gateway = new Gateway();
-    await gateway.connect(ccp, {
-      wallet,
-      identity: "user1",
-      discovery: { enabled: true, asLocalhost: true },
-    });
+// app.get("/producer/getStorage", async (req, res, next) => {
+//   try {
+//     // console.log(__dirname);
+//     let ccpPath = path.resolve(
+//       __dirname,
+//       "connection-profiles",
+//       "mfc-prd-config.json"
+//     );
+//     // console.log(ccpPath);
+//     let ccp = JSON.parse(fs.readFileSync(ccpPath, "utf8", (err, data) => {}));
+//     // console.log("ccp = ",ccp);
+//     const walletPath = path.join(process.cwd(), "teafarm-wallet");
+//     const wallet = await Wallets.newFileSystemWallet(walletPath);
+//     // omitting check for identity
+//     const gateway = new Gateway();
+//     await gateway.connect(ccp, {
+//       wallet,
+//       identity: "user1",
+//       discovery: { enabled: true, asLocalhost: true },
+//     });
 
-    // n/w to which contract is deployed
-    const network = await gateway.getNetwork("mfd-prd-channel");
-    // get contract
-    const contract = network.getContract("pmcc");
-    const storage = await contract.evaluateTransaction("availableStock");
+//     // n/w to which contract is deployed
+//     const network = await gateway.getNetwork("mfd-prd-channel");
+//     // get contract
+//     const contract = network.getContract("pmcc");
+//     const storage = await contract.evaluateTransaction("availableStock");
 
-    res.json(storage);
-  } catch (err) {
-    console.log(err);
-    throw err;
-  }
-});
+//     res.json(storage);
+//   } catch (err) {
+//     console.log(err);
+//     throw err;
+//   }
+// });
+
+
+app.get('/producer/storage', async(req,res,next)=>{
+  let message = await invoke.invokeTransaction("mfd-prd-channel", "pmcc", "availableStock", "", "user1", "teafarm");
+})
 
 app.listen(1080, () => {
   console.log("======== Server Listening At 1080 =======");
