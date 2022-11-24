@@ -3,9 +3,6 @@
     "version": "1.1",
     "channels": {
         "mfd-prd-channel": {
-            "orderers": [
-                "orderer.gov.io"
-            ],
             "peers": [
                 "peertf1.production.com",
                 "peertm1.manufacturer.com"
@@ -24,17 +21,6 @@
             "peers": [
                 "peertm1.manufacturer.com"
             ]
-        }
-    },
-    "orderers": {
-        "orderer.gov.io": {
-            "url": "orderer1.gov.io:7050",
-            "grpcOptions": {
-                "ssl-target-name-override": "orderer1.gov.io"
-            },
-            "tlsCACerts": {
-                "path":"/home/ubuntu/pankajb/hyperledger/coffee_poc/crypto-config/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem"
-            }
         }
     },
     "peers": {

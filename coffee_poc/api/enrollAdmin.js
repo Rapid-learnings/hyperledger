@@ -13,10 +13,24 @@ const path = require("path");
 
 const enrollAdmin = {};
 
+const getCCP = async (org) => {
+  let ccpPath;
+  if (org == "teafarm") {
+    ccpPath = "./connection-profiles/prd-cc.json";
+    // ccpPath = "./connection-profiles/mfc-prd-config.json";
+  } else if (org == "tata") {
+    ccpPath = "./connection-profiles/mfc-cc.json";
+    // ccpPath = "./connection-profiles/mfc-prd-config.json";
+  } else return null;
+  const ccpJSON = fs.readFileSync(ccpPath, "utf8");
+  const ccp = JSON.parse(ccpJSON);
+  return ccp;
+};
+
 enrollAdmin.enroll = async (org) => {
   try {
     // load the network configuration
-    const ccpPath =
+    const ccpPath = //await getCCP(org);
       "/home/ubuntu/pankajb/hyperledger/coffee_poc/api/connection-profiles/mfc-prd-config.json";
     const ccp = JSON.parse(fs.readFileSync(ccpPath, "utf8"));
 
@@ -29,7 +43,7 @@ enrollAdmin.enroll = async (org) => {
     }
     // console.log(caInfo);
     // console.log(caInfo.tlsCAcerts.pem);
-    const caTLSCACerts = caInfo.tlsCAcerts.pem;
+    const caTLSCACerts = caInfo.tlsCAcerts.path;
     const ca = new FabricCAServices(
       caInfo.url,
       { trustedRoots: caTLSCACerts, verify: false },

@@ -6,7 +6,12 @@
 
 "use strict";
 
-const { Wallets,FileSystemWallet, Gateway, X509WalletMixin } = require("fabric-network");
+const {
+  Wallets,
+  FileSystemWallet,
+  Gateway,
+  X509WalletMixin,
+} = require("fabric-network");
 const FabricCAServices = require("fabric-ca-client");
 const fs = require("fs");
 const path = require("path");
@@ -14,11 +19,30 @@ const path = require("path");
 
 const registerUser = {};
 
+const getAffiliation = async (org) => {
+  // return org == "tata" ? 'tata' : 'teafarm'
+  return org == "teafarm" ? "org1.department1" : "org2.department1";
+};
+
+const getCCP = async (org) => {
+  let ccpPath;
+  if (org == "teafarm") {
+    ccpPath = "./connection-profiles/prd-cc.json";
+    // ccpPath = "./connection-profiles/mfc-prd-config.json";
+  } else if (org == "tata") {
+    ccpPath = "./connection-profiles/mfc-cc.json";
+    // ccpPath = "./connection-profiles/mfc-prd-config.json";
+  } else return null;
+  const ccpJSON = fs.readFileSync(ccpPath, "utf8");
+  const ccp = JSON.parse(ccpJSON);
+  return ccp;
+};
+
 registerUser.registerEnrollUser = async (usr, org) => {
   try {
     // load the network configuration
-    const ccpPath =
-      "/home/ubuntu/pankajb/hyperledger/coffee_poc/api/connection-profiles/mfc-cc.json";
+    const ccpPath = //await getCCP(org);
+      "/home/ubuntu/pankajb/hyperledger/coffee_poc/api/connection-profiles/mfc-prd-config.json";
     const ccp = JSON.parse(fs.readFileSync(ccpPath, "utf8"));
 
     // Create a new CA client for interacting with the CA.
@@ -75,22 +99,10 @@ registerUser.registerEnrollUser = async (usr, org) => {
 
     const adminUser = await provider.getUserContext(adminIdentity, "admin");
 
-    // console.log("\n====== Admin User ===== \n", adminUser);
-
-
-        // Create a new gateway for connecting to our peer node.
-        // const gateway = new Gateway();
-        // await gateway.connect(ccp, { wallet, identity: 'admin', discovery: { enabled: true, asLocalhost: true } });
-
-        // // Get the CA client object from the gateway for interacting with the CA.
-        // const ca1 = gateway.getClient().getCertificateAuthority();
-        // const adminIdentity1 = gateway.getCurrentIdentity();
-
-
     // Register the user, enroll the user, and import the new identity into the wallet.
     const secret = await ca.register(
       {
-        affiliation: "tata",
+        affiliation: await getAffiliation(org),
         enrollmentID: usr,
         role: "client",
       },

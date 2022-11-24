@@ -19,23 +19,24 @@ app.use(cors());
 
 const helper = require("./helper");
 const invoke = require("./invoke");
-// const enrollAdmin = require('./enrollAdmin.js');
-// const registerUser = require('./registerUser.js');
+const enrollAdmin = require('./enrollAdmin.js');
+const registerUser = require('./registerUser.js');
 // module.exports.contracts = [manufactuererProducer];
 
-// app.post('/register/admin', async(req,res,next)=>{
-//     let org = req.body.orgName;
-//     console.log(org);
-//     let resp = await enrollAdmin.enroll(org);
-//     res.json(resp);
-// })
+app.post('/register/admin', async(req,res,next)=>{
+    let org = req.body.orgName;
+    console.log(org);
+    let resp = await enrollAdmin.enroll(org);
+    res.json(resp);
+})
 
 app.post("/register/user", async (req, res, next) => {
   let usrname = req.body.username;
   let orgName = req.body.orgName;
   console.log(orgName);
   console.log(usrname);
-  let resp = await helper.getRegisteredUser(usrname, orgName, true);
+  let resp = await registerUser.registerEnrollUser(usrname, orgName);
+  // let resp = await helper.getRegisteredUser(usrname, orgName, true);
   res.json(resp);
 });
 
@@ -85,6 +86,7 @@ app.post("/register/user", async (req, res, next) => {
 
 app.get('/producer/storage', async(req,res,next)=>{
   let message = await invoke.invokeTransaction("mfd-prd-channel", "pmcc", "availableStock", "", "user1", "teafarm");
+  res.json(message);
 })
 
 app.listen(1080, () => {
