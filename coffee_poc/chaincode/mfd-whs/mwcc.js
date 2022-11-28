@@ -31,9 +31,9 @@ class mwcc extends Contract {
 
     async updateFromPmcc(ctx){
         let result = await ctx.stub.invokeChaincode('pmcc', ['getManufacturerStock'], "mfd-prd-channel"); //ctx.stub.getChannelID() if cc on same channel
-        let stock = result.payload.toString();
+        let stock = result;
         console.info("Stock from pmcc = ",stock);
-        // await ctx.stub.putState(rawstockKey, Buffer.from(result)); //link this to pmcc.js
+        await ctx.stub.putState(rawstockKey, Buffer.from(stock.toString())); //link this to pmcc.js
         return stock;
         // await ctx.stub.putState(rawstockKey, Buffer.from(stock.toString()));
     }
@@ -71,9 +71,9 @@ class mwcc extends Contract {
         //     throw new Error('only Manufacturer can check available stock')
         // }
         let ASBytes = await ctx.stub.getState(rawstockKey);
-        let AS = parseInt(ASBytes.toString())
-        console.log("Available Stock is %s kg", AS);
-        return parseInt(AS);
+        let AS = (ASBytes.toString())
+        console.log("Available RAW Stock is %s kg", String(AS));
+        return String(AS);
     }
 
     async availableDriedStock(ctx) {
@@ -83,7 +83,7 @@ class mwcc extends Contract {
         // }
         let ASBytes = await ctx.stub.getState(driedstockKey);
         let AS = parseInt(ASBytes.toString())
-        console.log("Available Stock is %s kg", AS);
+        console.log("Available DRIED Stock is %s kg", AS);
         return parseInt(AS);
     }
 
@@ -94,14 +94,14 @@ class mwcc extends Contract {
         // }
         let ASBytes = await ctx.stub.getState(roastedstockKey);
         let AS = parseInt(ASBytes.toString())
-        console.log("Available Stock is %s kg", AS);
+        console.log("Available ROASTED Stock is %s kg", AS);
         return parseInt(AS);
     }
 
     async availableFinishedStock(ctx) {
         let ASBytes = await ctx.stub.getState(finishedstockKey);
         let AS = parseInt(ASBytes.toString())
-        console.log("Available Stock is %s kg", AS);
+        console.log("Available FINISHED Stock is %s kg", AS);
         return parseInt(AS);
     }
 

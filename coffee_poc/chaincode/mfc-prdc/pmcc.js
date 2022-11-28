@@ -80,7 +80,7 @@ class pmcc extends Contract {
   async updateManufacturerStock(ctx, qty){
     let stock = await ctx.stub.getState(manufacturerOrderedStock);
     let mfcStock = parseInt(stock.toString());
-    mfcStock += qty;
+    mfcStock += parseInt(qty);
     await ctx.stub.putState(manufacturerOrderedStock, Buffer.from(mfcStock.toString()));
     console.log("Manufacturer Ordered Stock Updated to ", mfcStock);
   }
@@ -131,9 +131,9 @@ class pmcc extends Contract {
     };
     // creating new order no.
     let orderNoBytes = await ctx.stub.getState(orderNumber);
-    console.log("OrderNoBytes = ", orderNoBytes);
+    // console.log("OrderNoBytes = ", orderNoBytes);
     let orderNo = parseInt(orderNoBytes.toString());
-    console.log(orderNo);
+    console.log("Order No = ",String(orderNo));
     if (!orderNoBytes || orderNoBytes.length === 0) {
       //  await ctx.stub.putState(orderNumber, Buffer.from('1'));
       orderNo = 1;
@@ -144,9 +144,8 @@ class pmcc extends Contract {
     console.log(JSON.stringify(order).toString("base64"));
     // store the order details in the blockchain with the orderNo as key
     orderNo = String(orderNo);
-    console.log("Orde Number = ", orderNo);
     let orderBuff = Buffer.from(JSON.stringify(order).toString("base64"))
-    console.log("Order Buffer = ", orderBuff);
+    // console.log("Order Buffer = ", orderBuff);
     await ctx.stub.putState(orderNo.toString(),orderBuff)
     await ctx.stub.putState(orderNumber, Buffer.from(orderNo.toString()))
 
@@ -241,8 +240,8 @@ class pmcc extends Contract {
     console.log("OrderNO IN DETAILS = ", orderNo);
     // let orderNo = String(oNo)
     let orderObjBytes = await ctx.stub.getState(orderNo);
-    console.log("---Order Bytes----\n", orderObjBytes);
-    console.log(JSON.parse(orderObjBytes));
+    // console.log("---Order Bytes----\n", orderObjBytes);
+    // console.log(JSON.parse(orderObjBytes));
     let orderObj = JSON.parse(orderObjBytes.toString());
     return orderObj;
   }

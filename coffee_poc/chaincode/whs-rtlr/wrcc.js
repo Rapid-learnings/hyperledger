@@ -260,11 +260,11 @@ class wrcc extends Contract {
         console.log("Order No = ", orderNo);
         let orderObjBytes = await ctx.stub.getState(orderNo);
         // console.log("Object Bytes", orderObjBytes);
-        console.log("---Order Bytes----\n", orderObjBytes);
+        // console.log("---Order Bytes----\n", orderObjBytes);
         console.log(orderObjBytes.toString());
         console.log("Details - 1 = ",JSON.parse(orderObjBytes.toString()));
         let orderObj = JSON.parse(orderObjBytes.toString());
-        console.log("Details ", orderObj);
+        // console.log("Details ", orderObj);`
         return orderObj;
     }
 

@@ -15,6 +15,7 @@ const util = require("util");
 
 const helper = require("./helper");
 const { blockListener, contractListener } = require("./Listener");
+const registerUser = require("./registerUser");
 
 const invokeTransaction = async (
   channelName,
@@ -45,7 +46,8 @@ const invokeTransaction = async (
       console.log(
         `An identity for the user ${username} does not exist in the wallet, so registering user`
       );
-      await helper.getRegisteredUser(username, org_name, true);
+      // await helper.getRegisteredUser(username, org_name, true);
+      await registerUser.registerEnrollUser(username, org_name);
       identity = await wallet.get(username);
       console.log("Run the registerUser.js application before retrying");
       return;
