@@ -1,4 +1,4 @@
-version: '2.1'
+version: '2'
 
 volumes:
   orderer:
@@ -14,7 +14,7 @@ volumes:
 
 networks:
   test:
-    name: test
+    # name: test
 
 services:
 

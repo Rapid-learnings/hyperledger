@@ -32,9 +32,9 @@ class mwcc extends Contract {
     async updateFromPmcc(ctx){
         let result = await ctx.stub.invokeChaincode('pmcc', ['getManufacturerStock'], "mfd-prd-channel"); //ctx.stub.getChannelID() if cc on same channel
         let stock = result;
-        console.info("Stock from pmcc = ",stock);
+        console.info("Stock from pmcc = ",stock.toString());
         await ctx.stub.putState(rawstockKey, Buffer.from(stock.toString())); //link this to pmcc.js
-        return stock;
+        return stock.toString();
         // await ctx.stub.putState(rawstockKey, Buffer.from(stock.toString()));
     }
 

@@ -1,4 +1,4 @@
-version: '2.1'
+version: '2'
 
 volumes:
   ca.manufacturer.com:
@@ -26,7 +26,7 @@ volumes:
 
 networks:
   test:
-    name: test
+    # name: test
 
 services:
 
@@ -377,7 +377,7 @@ services:
       #- FABRIC_LOGGING_SPEC=DEBUG
       - FABRIC_LOGGING_SPEC=INFO
       - CORE_PEER_ID=peertm1.manufacturer.com
-      - CORE_PEER_ADDRESS=peertm1.manufacturer.com:9050
+      - CORE_PEER_ADDRESS=peertm1.manufacturer.com:9051
       - CORE_PEER_LOCALMSPID=tataMSP
       - CORE_PEER_TLS_ENABLED=true
       - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/manufacturer.com/peers/peertm1.manufacturer.com/tls/server.crt
@@ -418,7 +418,7 @@ services:
       #- FABRIC_LOGGING_SPEC=DEBUG
       - FABRIC_LOGGING_SPEC=INFO
       - CORE_PEER_ID=peertm2.manufacturer.com
-      - CORE_PEER_ADDRESS=peertm2.manufacturer.com:9080
+      - CORE_PEER_ADDRESS=peertm2.manufacturer.com:9081
       - CORE_PEER_LOCALMSPID=tataMSP
       - CORE_PEER_TLS_ENABLED=true
       - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/manufacturer.com/peers/peertm2.manufacturer.com/tls/server.crt
@@ -458,7 +458,7 @@ services:
       #- FABRIC_LOGGING_SPEC=DEBUG
       - FABRIC_LOGGING_SPEC=INFO
       - CORE_PEER_ID=peertf1.production.com
-      - CORE_PEER_ADDRESS=peertf1.production.com:8050
+      - CORE_PEER_ADDRESS=peertf1.production.com:8051
       - CORE_PEER_LOCALMSPID=teafarmMSP
       - CORE_PEER_TLS_ENABLED=true
       - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/production.com/peers/peertf1.production.com/tls/server.crt
@@ -498,7 +498,7 @@ services:
       #- FABRIC_LOGGING_SPEC=DEBUG
       - FABRIC_LOGGING_SPEC=INFO
       - CORE_PEER_ID=peertf1.production.com
-      - CORE_PEER_ADDRESS=peertf2.production.com:8080
+      - CORE_PEER_ADDRESS=peertf2.production.com:8081
       - CORE_PEER_LOCALMSPID=teafarmMSP
       - CORE_PEER_TLS_ENABLED=true
       - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/production.com/peers/peertf2.production.com/tls/server.crt
@@ -538,7 +538,7 @@ services:
       #- FABRIC_LOGGING_SPEC=DEBUG
       - FABRIC_LOGGING_SPEC=INFO
       - CORE_PEER_ID=peerbb1.retailer.com
-      - CORE_PEER_ADDRESS=peerbb1.retailer.com:11050
+      - CORE_PEER_ADDRESS=peerbb1.retailer.com:11051
       - CORE_PEER_LOCALMSPID=bigbazarMSP
       - CORE_PEER_TLS_ENABLED=true
       - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/retailer.com/peers/peerbb1.retailer.com/tls/server.crt
@@ -578,7 +578,7 @@ services:
       #- FABRIC_LOGGING_SPEC=DEBUG
       - FABRIC_LOGGING_SPEC=INFO
       - CORE_PEER_ID=peerbb2.retailer.com
-      - CORE_PEER_ADDRESS=peerbb2.retailer.com:11080
+      - CORE_PEER_ADDRESS=peerbb2.retailer.com:11081
       - CORE_PEER_LOCALMSPID=bigbazarMSP
       - CORE_PEER_TLS_ENABLED=true
       - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/retailer.com/peers/peerbb2.retailer.com/tls/server.crt
@@ -618,7 +618,7 @@ services:
       #- FABRIC_LOGGING_SPEC=DEBUG
       - FABRIC_LOGGING_SPEC=INFO
       - CORE_PEER_ID=peerts1.wharehouse.com
-      - CORE_PEER_ADDRESS=peerts1.wharehouse.com:10050
+      - CORE_PEER_ADDRESS=peerts1.wharehouse.com:10051
       - CORE_PEER_LOCALMSPID=tatastoreMSP
       - CORE_PEER_TLS_ENABLED=true
       - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/wharehouse.com/peers/peerts1.wharehouse.com/tls/server.crt
@@ -658,7 +658,7 @@ services:
       #- FABRIC_LOGGING_SPEC=DEBUG
       - FABRIC_LOGGING_SPEC=INFO
       - CORE_PEER_ID=peerts2.wharehouse.com
-      - CORE_PEER_ADDRESS=peerts2.wharehouse.com:10080
+      - CORE_PEER_ADDRESS=peerts2.wharehouse.com:10081
       - CORE_PEER_LOCALMSPID=tatastoreMSP
       - CORE_PEER_TLS_ENABLED=true
       - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/wharehouse.com/peers/peerts2.wharehouse.com/tls/server.crt
@@ -737,7 +737,7 @@ services:
       - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
       - FABRIC_LOGGING_SPEC=DEBUG
       - CORE_PEER_ID=chaincode
-      - CORE_PEER_ADDRESS=peertf1.production.com:8050
+      - CORE_PEER_ADDRESS=peertf1.production.com:8051
       - CORE_PEER_LOCALMSPID=teafarmMSP
       - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer #/opt/gopath/src/chaincode

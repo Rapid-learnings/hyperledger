@@ -1,4 +1,4 @@
-version: '2.1'
+version: '2'
 
 volumes:
   caManufacturer:
@@ -18,7 +18,7 @@ volumes:
 
 networks:
   test:
-    name: test
+    # name: test
 
 services:
 
