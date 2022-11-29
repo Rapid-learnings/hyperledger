@@ -13,14 +13,12 @@ const path = require("path");
 
 const enrollAdmin = {};
 
-const getCCP = async (org) => {
+enrollAdmin.getCCP = async (org) => {
   let ccpPath;
   if (org == "teafarm") {
-    ccpPath = "./connection-profiles/prd-cc.json";
-    // ccpPath = "./connection-profiles/mfc-prd-config.json";
+    ccpPath = "./connection-profiles/mfc-prd-config.json";
   } else if (org == "tata") {
-    ccpPath = "./connection-profiles/mfc-cc.json";
-    // ccpPath = "./connection-profiles/mfc-prd-config.json";
+    ccpPath = "./connection-profiles/mfc-prd-config.json";
   } else return null;
   const ccpJSON = fs.readFileSync(ccpPath, "utf8");
   const ccp = JSON.parse(ccpJSON);
@@ -30,9 +28,7 @@ const getCCP = async (org) => {
 enrollAdmin.enroll = async (org) => {
   try {
     // load the network configuration
-    const ccpPath = //await getCCP(org);
-      "/home/ubuntu/pankajb/hyperledger/coffee_poc/api/connection-profiles/mfc-prd-config.json";
-    const ccp = JSON.parse(fs.readFileSync(ccpPath, "utf8"));
+    const ccp = await enrollAdmin.getCCP(org);
 
     // Create a new CA client for interacting with the CA.
     let caInfo = {};

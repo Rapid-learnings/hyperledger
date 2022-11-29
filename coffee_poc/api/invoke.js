@@ -12,10 +12,9 @@ const path = require("path");
 const log4js = require("log4js");
 const logger = log4js.getLogger("BasicNetwork");
 const util = require("util");
-
-const helper = require("./helper");
 const { blockListener, contractListener } = require("./Listener");
 const registerUser = require("./registerUser");
+
 
 const invokeTransaction = async (
   channelName,
@@ -26,7 +25,8 @@ const invokeTransaction = async (
   org_name
 ) => {
   try {
-    const ccp = await helper.getCCP(org_name);
+    console.log("Entered");
+    const ccp = await registerUser.getCCP(org_name);
     console.log(
       "==================",
       channelName,
@@ -37,7 +37,7 @@ const invokeTransaction = async (
       org_name
     );
 
-    const walletPath = await helper.getWalletPath(org_name);
+    const walletPath = await registerUser.getWalletPath(org_name);
     const wallet = await Wallets.newFileSystemWallet(walletPath);
     console.log(`Wallet path: ${walletPath}`);
 
@@ -46,7 +46,7 @@ const invokeTransaction = async (
       console.log(
         `An identity for the user ${username} does not exist in the wallet, so registering user`
       );
-      // await helper.getRegisteredUser(username, org_name, true);
+      
       await registerUser.registerEnrollUser(username, org_name);
       identity = await wallet.get(username);
       console.log("Run the registerUser.js application before retrying");
@@ -60,12 +60,15 @@ const invokeTransaction = async (
       // eventHandlerOptions: EventStrategies.NONE
     };
 
+    console.log("Connection Object = ",connectOptions);
+
     const gateway = new Gateway();
     await gateway.connect(ccp, connectOptions);
 
     const network = await gateway.getNetwork(channelName);
+    console.log("N/w = ",network);
     const contract = network.getContract(chaincodeName);
-
+    console.log("Contract  = ", contract);
     // Important: Please dont set listener here, I just showed how to set it. If we are doing here, it will set on every invoke call.
     // Instead create separate function and call it once server started, it will keep listening.
     // await contract.addContractListener(contractListener);

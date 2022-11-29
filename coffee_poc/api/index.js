@@ -85,7 +85,7 @@ app.post("/register/user", async (req, res, next) => {
 
 
 app.get('/producer/storage', async(req,res,next)=>{
-  let message = await invoke.invokeTransaction("mfd-prd-channel", "pmcc", "availableStock", "", "user41", "teafarm");
+  let message = await invoke.invokeTransaction("mfd-prd-channel", "pmcc", "availableStock", "", "user1", "teafarm");
   res.json(message);
 })
 

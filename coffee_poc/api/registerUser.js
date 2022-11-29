@@ -19,19 +19,27 @@ const path = require("path");
 
 const registerUser = {};
 
-const getAffiliation = async (org) => {
+registerUser.getAffiliation = async (org) => {
   // return org == "tata" ? 'tata' : 'teafarm'
   return org == "teafarm" ? "org1.department1" : "org2.department1";
 };
 
-const getCCP = async (org) => {
+registerUser.getWalletPath = async (org) => {
+  let walletPath;
+  if (org == "tata") {
+    walletPath = path.join(process.cwd(), "tata-wallet");
+  } else if (org == "teafarm") {
+    walletPath = path.join(process.cwd(), "teafarm-wallet");
+  } else return null;
+  return walletPath;
+};
+
+registerUser.getCCP = async (org) => {
   let ccpPath;
   if (org == "teafarm") {
-    ccpPath = "./connection-profiles/prd-cc.json";
-    // ccpPath = "./connection-profiles/mfc-prd-config.json";
+    ccpPath = "./connection-profiles/mfc-prd-config.json";
   } else if (org == "tata") {
-    ccpPath = "./connection-profiles/mfc-cc.json";
-    // ccpPath = "./connection-profiles/mfc-prd-config.json";
+    ccpPath = "./connection-profiles/mfc-prd-config.json";
   } else return null;
   const ccpJSON = fs.readFileSync(ccpPath, "utf8");
   const ccp = JSON.parse(ccpJSON);
@@ -41,9 +49,8 @@ const getCCP = async (org) => {
 registerUser.registerEnrollUser = async (usr, org) => {
   try {
     // load the network configuration
-    const ccpPath = //await getCCP(org);
-      "/home/ubuntu/pankajb/hyperledger/coffee_poc/api/connection-profiles/mfc-prd-config.json";
-    const ccp = JSON.parse(fs.readFileSync(ccpPath, "utf8"));
+    // const ccpPath = await this.getCCP(org);
+    const ccp = await registerUser.getCCP(org);
 
     // Create a new CA client for interacting with the CA.
     let caURL;
@@ -58,16 +65,7 @@ registerUser.registerEnrollUser = async (usr, org) => {
     const ca = new FabricCAServices(caURL);
     // console.log("CA = ", ca);
     // Create a new file system based wallet for managing identities.
-    let walletPath;
-    if (org == "tata") {
-      walletPath = path.join(process.cwd(), "tata-wallet");
-    } else if (org == "teafarm") {
-      walletPath = path.join(process.cwd(), "teafarm-wallet");
-    } else if (org == "wharehouse") {
-      walletPath = path.join(process.cwd(), "wharehouse-wallet");
-    } else if (org == "retailer") {
-      walletPath = path.join(process.cwd(), "retailer-wallet");
-    }
+    let walletPath = await registerUser.getWalletPath(org);
     const wallet = await Wallets.newFileSystemWallet(walletPath);
     console.log(`Wallet path: ${walletPath}`);
 
@@ -102,21 +100,21 @@ registerUser.registerEnrollUser = async (usr, org) => {
     // Register the user, enroll the user, and import the new identity into the wallet.
     const secret = await ca.register(
       {
-        affiliation: await getAffiliation(org),
+        affiliation: await registerUser.getAffiliation(org),
         enrollmentID: usr,
         role: "client",
       },
       adminUser
     );
 
-    console.log("====== Secret ===== \n", secret);
+    // console.log("====== Secret ===== \n", secret);
 
     const enrollment = await ca.enroll({
       enrollmentID: usr,
       enrollmentSecret: secret,
     });
 
-    console.log("\n====== Enrollment ===== \n", enrollment);
+    // console.log("\n====== Enrollment ===== \n", enrollment);
 
     const x509Identity = {
       credentials: {
@@ -126,11 +124,11 @@ registerUser.registerEnrollUser = async (usr, org) => {
       mspId: "tataMSP",
       type: "X.509",
     };
-    console.log("\n====== x509Identity ===== \n", x509Identity);
+    // console.log("\n====== x509Identity ===== \n", x509Identity);
 
     await wallet.put(usr, x509Identity);
     console.log(
-      "Successfully registered and enrolled admin user" +
+      "Successfully registered and enrolled user" +
         `${usr}` +
         " and imported it into the wallet"
     );
