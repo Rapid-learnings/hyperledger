@@ -1,0 +1,3 @@
+Installed chaincodes on peer:
+Package ID: mw_1:6d64bd0acea40386c3dd344183c90ad9a41d65bd32e2898d86b6461705966a0f, Label: mw_1
+Package ID: mfcprd_1:1989b05d4f3e1b105f30890a89be4805d0f2e293bde4231e02ce2b4198144585, Label: mfcprd_1

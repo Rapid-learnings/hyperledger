@@ -1,0 +1,63 @@
+OrdererOrgs:
+  - Name: orderer
+    Domain: gov.io
+    EnableNodeOUs: true
+    Specs:
+      - Hostname: orderer1
+      - Hostname: orderer2
+      - Hostname: orderer3
+
+PeerOrgs:
+  - Name: governance
+    Domain: gov.io
+    EnableNodeOUs: true
+    Specs:
+      - Hostname: peergov1
+    Template:
+      Count: 1
+    Users:
+      Count: 1
+
+  - Name: teafarm
+    Domain: production.com
+    EnableNodeOUs: true
+    Specs:
+      - Hostname: peertf1
+      - Hostname: peertf2
+    Template:
+      Count: 2
+    Users:
+      Count: 2
+
+  - Name: tata
+    Domain: manufacturer.com
+    EnableNodeOUs: true
+    Specs:
+      - Hostname: peertm1
+      - Hostname: peertm2
+    Template:
+      Count: 2
+    Users:
+      Count: 2
+
+  - Name: tatastore
+    Domain: wharehouse.com
+    EnableNodeOUs: true
+    Specs:
+      - Hostname: peerts1
+      - Hostname: peerts2
+    Template:
+      Count: 2
+    Users:
+      Count: 2
+
+  - Name: bigbazar
+    Domain: retailer.com
+    EnableNodeOUs: true
+    Specs:
+      - Hostname: peerbb1
+      - Hostname: peerbb2
+    Template:
+      Count: 1
+    Users:
+      Count: 1
