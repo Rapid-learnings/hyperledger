@@ -25,7 +25,6 @@ const invokeTransaction = async (
   org_name
 ) => {
   try {
-    console.log("Entered");
     const ccp = await registerUser.getCCP(org_name);
     console.log(
       "==================",
@@ -44,19 +43,18 @@ const invokeTransaction = async (
     let identity = await wallet.get(username);
     if (!identity) {
       console.log(
-        `An identity for the user ${username} does not exist in the wallet, so registering user`
-      );
-      
-      await registerUser.registerEnrollUser(username, org_name);
-      identity = await wallet.get(username);
-      console.log("Run the registerUser.js application before retrying");
+        `An identity for the user ${username} does not exist in the wallet, so register user before retry`
+      );      
+      // await registerUser.registerEnrollUser(username, org_name);
+      // identity = await wallet.get(username);
+      // console.log("Run the registerUser.js application before retrying");
       return;
     }
 
     const connectOptions = {
       wallet,
       identity: username,
-      discovery: { enabled: true, asLocalhost: true },
+      discovery: { enabled: true, asLocalhost: false },
       // eventHandlerOptions: EventStrategies.NONE
     };
 
@@ -80,32 +78,11 @@ const invokeTransaction = async (
 
     switch (fcn) {
       case "availableStock":
-        result = await contract.submitTransaction(fcn);
+        result = await contract.evaluateTransaction(fcn);
         result = { txid: result.toString() };
         break;
-      case "CreatePrivateDataImplicitForOrg1":
-      case "ABACTest":
-      case "CreateContract":
-      case "CreateCar":
-        result = await contract.submitTransaction(fcn, args[0]);
-        result = { txid: result.toString() };
-        break;
-      case "UpdateCarOwner":
-        console.log("=============");
-        result = await contract.submitTransaction(
-          "SmartContract:" + fcn,
-          args[0],
-          args[1]
-        );
-        result = { txid: result.toString() };
-        break;
-      case "CreateDocument":
-        result = await contract.submitTransaction(
-          "DocumentContract:" + fcn,
-          args[0]
-        );
-        console.log(result.toString());
-        result = { txid: result.toString() };
+      case "init":
+        await contract.submitTransaction(fcn,"10000");
         break;
       default:
         break;

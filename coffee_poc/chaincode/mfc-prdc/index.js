@@ -1,10 +1,10 @@
 // index.js
 'use strict';
 
-const PmCc = require('./pmcc')
+const pmcc = require('./pmcc')
 // const RemoveValues = require('./removevalues')
 // const PmCc = require('./mfcPrd')
 
 
 
-module.exports.contracts = [PmCc];
+module.exports.contracts = [pmcc];
