@@ -67,7 +67,7 @@ class wrcc extends Contract {
         // console.log("Available Stock is %s kg", AS);
         // return parseInt(AS);
         let ASBytes = await ctx.stub.getState(wHStock);
-        let AS = ASBytes.toString()
+        let AS = parseInt(ASBytes.toString())
         console.log("Available Stock is %s kg", AS);
         return AS;
     }
@@ -87,7 +87,7 @@ class wrcc extends Contract {
         }else if(flag == 1){
             bal -= amt;
         }
-        await ctx.putState(retailerBalance, Buffer.from(bal.toString()));
+        await ctx.stub.putState(retailerBalance, Buffer.from(bal.toString()));
         return bal;
     }
 
@@ -150,9 +150,7 @@ class wrcc extends Contract {
             "Status": Status[0]
         }
         // Store order details
-        await ctx.stub.putState(orderNo, Buffer.from(JSON.stringify(order).toString('base64')));
-
-        await this.getOrderDetails(ctx, orderNo);
+        await ctx.stub.putState(orderNo.toString(), Buffer.from(JSON.stringify(order).toString('base64')));
     }
 
     async updateStatusToInTransit(ctx, orderNo) {
@@ -276,11 +274,7 @@ class wrcc extends Contract {
     async getOrderDetails(ctx, orderNo) {
         //fetching order details
         const orderObjBytes = await ctx.stub.getState(orderNo);
-        const orderObj = parse(JSON.stringify(orderObjBytes));
-        console.log("Order must be delivered to %s, %s", orderObj.DeliveryLocation.Country, orderObj.DeliveryLocation.State);
-        console.log("Order amount is %s", orderObj.Amount);
-        console.log("Order quantity is %s Kg", orderObj.Quantity);
-        console.log("Current status of order is %s", Status);
+        const orderObj = JSON.parse(orderObjBytes.toString());
         return orderObj;
     }
 

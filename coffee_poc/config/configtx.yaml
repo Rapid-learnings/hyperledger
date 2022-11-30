@@ -15,8 +15,8 @@ Organizations:
                 Rule: "OR('OrdererMSP.admin')"
         OrdererEndpoints:
             - orderer1.gov.io:7050
-            - orderer2.gov.io:7051
-            - orderer3.gov.io:7052
+            - orderer2.gov.io:8051
+            - orderer3.gov.io:8052
 
     - &governance
         Name: governance
@@ -37,7 +37,7 @@ Organizations:
                 Rule: "OR('govMSP.peer')"
         AnchorPeers:
             Host: peergov1.gov.io
-            Port: 14051    
+            Port: 13050    
 
     - &teafarm
         Name: teafarm
@@ -58,7 +58,7 @@ Organizations:
                 Rule: "OR('teafarmMSP.peer')"
         AnchorPeers:
             Host: peertf1.production.com
-            Port: 7051
+            Port: 8051
     
     - &tata
         Name: tata
@@ -100,7 +100,7 @@ Organizations:
                 Rule:  "OR('tatastoreMSP.peer')"
         AnchorPeers:
             Host: peerts1.wharehouse.com
-            Port: 11051
+            Port: 10051
 
     - &bigbazar
         Name: bigbazar
@@ -121,7 +121,7 @@ Organizations:
                 Rule:  "OR('bigbazarMSP.peer')"
         AnchorPeers:
             Host: peerbb1.retailer.com
-            Port: 13051
+            Port: 10051
 
 ################### #############################################################
 #

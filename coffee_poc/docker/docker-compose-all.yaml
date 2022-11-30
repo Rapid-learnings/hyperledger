@@ -41,7 +41,7 @@ services:
       - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-tls/tlsca.manufacturer.com-cert.pem
       - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-tls/priv_sk
     ports:
-      - "2051:7054"
+      - "2051:80524"
     command:  sh -c 'fabric-ca-server start -b admin:adminpw -d'
     volumes:
       - ../crypto-config/peerOrganizations/manufacturer.com/ca/:/etc/hyperledger/fabric-ca-server-config
@@ -62,7 +62,7 @@ services:
       - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-tls/tlsca.production.com-cert.pem
       - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-tls/priv_sk
     ports:
-      - "2052:7054"
+      - "2052:80524"
     command:  sh -c 'fabric-ca-server start -b admin:adminpw -d'
     volumes:
       - ../crypto-config/peerOrganizations/production.com/ca/:/etc/hyperledger/fabric-ca-server-config
@@ -83,7 +83,7 @@ services:
       - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-tls/tlsca.wharehouse.com-cert.pem
       - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-tls/priv_sk
     ports:
-      - "2053:7054"
+      - "2053:80524"
     command:  sh -c 'fabric-ca-server start -b admin:adminpw -d'
     volumes:
       - ../crypto-config/peerOrganizations/wharehouse.com/ca/:/etc/hyperledger/fabric-ca-server-config
@@ -104,7 +104,7 @@ services:
       - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-tls/tlsca.retailer.com-cert.pem
       - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-tls/priv_sk
     ports:
-      - "2054:7054"
+      - "2054:80524"
     command:  sh -c 'fabric-ca-server start -b admin:adminpw -d'
     volumes:
       - ../crypto-config/peerOrganizations/retailer.com/ca/:/etc/hyperledger/fabric-ca-server-config
@@ -458,7 +458,7 @@ services:
       #- FABRIC_LOGGING_SPEC=DEBUG
       - FABRIC_LOGGING_SPEC=INFO
       - CORE_PEER_ID=peertf1.production.com
-      - CORE_PEER_ADDRESS=peertf1.production.com:7051
+      - CORE_PEER_ADDRESS=peertf1.production.com:8051
       - CORE_PEER_LOCALMSPID=teafarmMSP
       - CORE_PEER_TLS_ENABLED=true
       - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/production.com/peers/peertf1.production.com/tls/server.crt
@@ -498,7 +498,7 @@ services:
       #- FABRIC_LOGGING_SPEC=DEBUG
       - FABRIC_LOGGING_SPEC=INFO
       - CORE_PEER_ID=peertf1.production.com
-      - CORE_PEER_ADDRESS=peertf2.production.com:7081
+      - CORE_PEER_ADDRESS=peertf2.production.com:8081
       - CORE_PEER_LOCALMSPID=teafarmMSP
       - CORE_PEER_TLS_ENABLED=true
       - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/production.com/peers/peertf2.production.com/tls/server.crt
@@ -538,7 +538,7 @@ services:
       #- FABRIC_LOGGING_SPEC=DEBUG
       - FABRIC_LOGGING_SPEC=INFO
       - CORE_PEER_ID=peerbb1.retailer.com
-      - CORE_PEER_ADDRESS=peerbb1.retailer.com:13051
+      - CORE_PEER_ADDRESS=peerbb1.retailer.com:11051
       - CORE_PEER_LOCALMSPID=bigbazarMSP
       - CORE_PEER_TLS_ENABLED=true
       - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/retailer.com/peers/peerbb1.retailer.com/tls/server.crt
@@ -618,7 +618,7 @@ services:
       #- FABRIC_LOGGING_SPEC=DEBUG
       - FABRIC_LOGGING_SPEC=INFO
       - CORE_PEER_ID=peerts1.wharehouse.com
-      - CORE_PEER_ADDRESS=peerts1.wharehouse.com:11051
+      - CORE_PEER_ADDRESS=peerts1.wharehouse.com:10051
       - CORE_PEER_LOCALMSPID=tatastoreMSP
       - CORE_PEER_TLS_ENABLED=true
       - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/wharehouse.com/peers/peerts1.wharehouse.com/tls/server.crt
@@ -658,7 +658,7 @@ services:
       #- FABRIC_LOGGING_SPEC=DEBUG
       - FABRIC_LOGGING_SPEC=INFO
       - CORE_PEER_ID=peerts2.wharehouse.com
-      - CORE_PEER_ADDRESS=peerts2.wharehouse.com:11081
+      - CORE_PEER_ADDRESS=peerts2.wharehouse.com:10081
       - CORE_PEER_LOCALMSPID=tatastoreMSP
       - CORE_PEER_TLS_ENABLED=true
       - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/wharehouse.com/peers/peerts2.wharehouse.com/tls/server.crt
@@ -699,7 +699,7 @@ services:
       #- FABRIC_LOGGING_SPEC=DEBUG
       - FABRIC_LOGGING_SPEC=INFO
       - CORE_PEER_ID=peergov1.gov.io
-      - CORE_PEER_ADDRESS=peergov1.gov.io:14051
+      - CORE_PEER_ADDRESS=peergov1.gov.io:13050
       - CORE_PEER_LOCALMSPID=govMSP
       - CORE_PEER_TLS_ENABLED=true
       - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/gov.io/peers/peergov1.gov.io/tls/server.crt

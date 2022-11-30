@@ -126,7 +126,7 @@ class PmCc extends Contract {
     const order = {
       amount: amt.toString(),
       quantity: qty.toString(),
-      orderStatus: orderStatus,
+      Status: orderStatus,
       country: cty,
       state: stateName,
     };
@@ -162,8 +162,7 @@ class PmCc extends Contract {
     }
 
     // fetching order details
-    let orderObjBytes = await ctx.stub.getState(orderNo);
-    let orderObj = parse(JSON.stringify(orderObjBytes));
+    let orderObj = await this.getOrderDetails(ctx, orderNo);
     let status = orderObj.Status;
     if (status !== Status[0]) {
       throw new Error(
@@ -185,8 +184,7 @@ class PmCc extends Contract {
     }
 
     // fetching order details
-    let orderObjBytes = await ctx.stub.getState(orderNo);
-    let orderObj = parse(JSON.stringify(orderObjBytes));
+    let orderObj = await this.getOrderDetails(ctx, orderNo);
     let status = orderObj.Status;
     if (status !== Status[1]) {
       throw new Error(
