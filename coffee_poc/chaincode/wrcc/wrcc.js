@@ -41,7 +41,7 @@ class wrcc extends Contract {
         //     throw new Error('only Warehouse can update stock');
         // }
 
-        const stockBytes = await ctx.getState(wHStock);
+        const stockBytes = await ctx.stub.getState(wHStock);
         const stock = parseInt(stockBytes.toString())
         let updatedStock = 0
         // if (!stockBytes || stockBytes.length === 0) {

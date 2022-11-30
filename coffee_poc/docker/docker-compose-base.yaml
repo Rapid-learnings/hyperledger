@@ -47,7 +47,7 @@ services:
       - CORE_PEER_LISTENADDRESS=0.0.0.0:9051
       - CORE_PEER_CHAINCODEADDRESS=peertm1.manufacturer.com:9052
       - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:9052
-      - CORE_PEER_GOSSIP_BOOTSTRAP=peertm1.manufacturer.com:10051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peertm2.manufacturer.com:9081
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peertm1.manufacturer.com:9051
       - CORE_PEER_LOCALMSPID=tataMSP
     volumes:
@@ -65,12 +65,12 @@ services:
       service: peer-base
     environment:
       - CORE_PEER_ID=peertm2.manufacturer.com
-      - CORE_PEER_ADDRESS=peertm2.manufacturer.com:9051
-      - CORE_PEER_LISTENADDRESS=0.0.0.0:9051
-      - CORE_PEER_CHAINCODEADDRESS=peertm2.manufacturer.com:9052
-      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:9052
-      - CORE_PEER_GOSSIP_BOOTSTRAP=peertm2.manufacturer.com:9051
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peertm2.manufacturer.com:10051
+      - CORE_PEER_ADDRESS=peertm2.manufacturer.com:9081
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:9081
+      - CORE_PEER_CHAINCODEADDRESS=peertm2.manufacturer.com:9082
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:9082
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peertm1.manufacturer.com:9051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peertm2.manufacturer.com:9081
       - CORE_PEER_LOCALMSPID=tataMSP
     volumes:
       - /var/run/:/host/var/run/
@@ -78,7 +78,7 @@ services:
       - ../crypto-config/peerOrganizations/manufacturer.com/peers/peertm2.manufacturer.com/tls:/etc/hyperledger/fabric/tls
       - peertm2.manufacturer.com:/var/hyperledger/production
     ports:
-      - 10051:10051
+      - 9081:9081
 
   peertf1.production.com:
     container_name: peertf1.production.com
@@ -91,7 +91,7 @@ services:
       - CORE_PEER_LISTENADDRESS=0.0.0.0:7051
       - CORE_PEER_CHAINCODEADDRESS=peertf1.production.com:7052
       - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:7052
-      - CORE_PEER_GOSSIP_BOOTSTRAP=peertf1.production.com:8051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peertf2.production.com:7081
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peertf1.production.com:7051
       - CORE_PEER_LOCALMSPID=teafarmMSP
     volumes:
@@ -109,12 +109,12 @@ services:
       service: peer-base
     environment:
       - CORE_PEER_ID=peertf2.production.com
-      - CORE_PEER_ADDRESS=peertf2.production.com:8051
-      - CORE_PEER_LISTENADDRESS=0.0.0.0:8051
-      - CORE_PEER_CHAINCODEADDRESS=peertf2.production.com:8052
-      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:8052
-      - CORE_PEER_GOSSIP_BOOTSTRAP=peertf2.production.com:7051
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peertf2.production.com:8051
+      - CORE_PEER_ADDRESS=peertf2.production.com:7081
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:7081
+      - CORE_PEER_CHAINCODEADDRESS=peertf2.production.com:7082
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:7082
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peertf1.production.com:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peertf2.production.com:7081
       - CORE_PEER_LOCALMSPID=teafarmMSP
     volumes:
       - /var/run/:/host/var/run/
@@ -122,7 +122,7 @@ services:
       - ../crypto-config/peerOrganizations/production.com/peers/peertf2.production.com/tls:/etc/hyperledger/fabric/tls
       - peertf2.production.com:/var/hyperledger/production
     ports:
-      - 8051:8051
+      - 7081:7081
 
   peerbb1.retailer.com:
     container_name: peerbb1.retailer.com
@@ -179,7 +179,7 @@ services:
       - CORE_PEER_LISTENADDRESS=0.0.0.0:11051
       - CORE_PEER_CHAINCODEADDRESS=peerts1.wharehouse.com:11052
       - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:11052
-      - CORE_PEER_GOSSIP_BOOTSTRAP=peerts1.wharehouse.com:12051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peerts2.wharehouse.com:11081
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peerts1.wharehouse.com:11051
       - CORE_PEER_LOCALMSPID=tatastoreMSP
     volumes:
@@ -197,12 +197,12 @@ services:
       service: peer-base
     environment:
       - CORE_PEER_ID=peerts2.wharehouse.com
-      - CORE_PEER_ADDRESS=peerts2.wharehouse.com:12051
-      - CORE_PEER_LISTENADDRESS=0.0.0.0:12051
-      - CORE_PEER_CHAINCODEADDRESS=peerts2.wharehouse.com:12052
-      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:12052
-      - CORE_PEER_GOSSIP_BOOTSTRAP=peerts2.wharehouse.com:11051
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peerts2.wharehouse.com:12051
+      - CORE_PEER_ADDRESS=peerts2.wharehouse.com:11081
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:11081
+      - CORE_PEER_CHAINCODEADDRESS=peerts2.wharehouse.com:11082
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:11082
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peerts1.wharehouse.com:11051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peerts2.wharehouse.com:11081
       - CORE_PEER_LOCALMSPID=tatastoreMSP
     volumes:
       - /var/run/:/host/var/run/
@@ -210,7 +210,7 @@ services:
       - ../crypto-config/peerOrganizations/wharehouse.com/peers/peerts2.wharehouse.com/tls:/etc/hyperledger/fabric/tls
       - peerts2.wharehouse.com:/var/hyperledger/production
     ports:
-      - 12051:12051
+      - 11081:11081
   
   orderer1.gov.io:
     container_name: orderer1.gov.io

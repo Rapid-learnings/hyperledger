@@ -13,7 +13,7 @@ mfdPrdChannel(){
     echo "====== Creating shell for cli-manufacturer-1 & mfd-prd-channel =========="
     sudo docker exec -it cli-manufacturer-1 peer channel create -o orderer1.gov.io:7050 --channelID mfd-prd-channel -f /opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts/mfd-prd-channel.tx --outputBlock /opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts/mfd-prd-genesis.block --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem
 
-    # sleep 8
+    sleep 8
 
     echo "====== Joining channel by cli-manufacturer-1 ======"
     sudo docker exec -it cli-manufacturer-1 peer channel join -b /opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts/mfd-prd-genesis.block
@@ -41,7 +41,7 @@ mfdWhsChannel(){
 
     sleep 8
 
-    # Joining channel by manufacturer-2 peer
+    # Joining channel by manufacturer-1 peer
     echo "Joining channel by manufacturer-1 peer"
     sudo docker exec -it cli-manufacturer-1 peer channel join -b /opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts/mfd-whs-genesis.block
 
@@ -81,7 +81,7 @@ whsRtlrChannel(){
     # Joining channel rtlr-1
     echo "Joining channel rtlr-1"
     sudo docker exec -it cli-retail-1 peer channel join -b /opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts/whs-rtlr-genesis.block
-    
+
     sleep 10
 
     echo "====== Updating Anchor peers by cli-retail-1 for whs-rtlr-channel ======="
