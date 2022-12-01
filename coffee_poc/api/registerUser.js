@@ -58,7 +58,7 @@ registerUser.registerEnrollUser = async (usr, org) => {
       caURL = ccp.certificateAuthorities["ca.manufacturer.com"].url;
     } else if (org == "teafarm") {
       caURL = ccp.certificateAuthorities["ca.production.com"].url;
-    } else if (org == "wharehouse") {
+    } else if (org == "warehouse") {
     } else if (org == "retailer") {
     }
     // console.log("CA URL = ", caURL);

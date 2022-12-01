@@ -25,33 +25,33 @@ mfdPrdCC(){
 }
 
 mfdWhsCC(){
-    echo "********** Packaging CC for Manufacture-WhareHouse-Channel ********************"
+    echo "********** Packaging CC for Manufacture-warehouse-Channel ********************"
     # sudo docker exec -it cli-manufacturer-1 peer lifecycle chaincode package basic.tar.gz --path /opt/gopath/src/github.com/hyperledger/fabric/peer/chaincode/mfc-prdc --lang node --label basic_1.0
     sudo docker exec -it cli-manufacturer-1 peer lifecycle chaincode package mwcc.tar.gz --path /opt/gopath/src/github.com/hyperledger/fabric/peer/chaincode/mfd-whs --lang node --label mw_${VERSION}
 
     sleep 6
 
     # sudo docker exec -it cli-production-1 peer lifecycle chaincode package basic.tar.gz --path /opt/gopath/src/github.com/hyperledger/fabric/peer/chaincode/mfc-prdc --lang node --label basic_1.0
-    sudo docker exec -it cli-wharehouse-1 peer lifecycle chaincode package mwcc.tar.gz --path /opt/gopath/src/github.com/hyperledger/fabric/peer/chaincode/mfd-whs --lang node --label mw_${VERSION}
+    sudo docker exec -it cli-warehouse-1 peer lifecycle chaincode package mwcc.tar.gz --path /opt/gopath/src/github.com/hyperledger/fabric/peer/chaincode/mfd-whs --lang node --label mw_${VERSION}
 
     sleep 6
 
-    echo "********** ChainCode Packaged for Manufacture-WhareHouse-Channel ********************"
+    echo "********** ChainCode Packaged for Manufacture-warehouse-Channel ********************"
 
-    echo "********* Installing CC for Manufacture-Wharehouse-Channel ************ "
+    echo "********* Installing CC for Manufacture-warehouse-Channel ************ "
     sudo docker exec -it cli-manufacturer-1 peer lifecycle chaincode install /opt/gopath/src/github.com/hyperledger/fabric/peer/mwcc.tar.gz
     
     sleep 6
     
-    sudo docker exec -it cli-wharehouse-1 peer lifecycle chaincode install /opt/gopath/src/github.com/hyperledger/fabric/peer/mwcc.tar.gz
+    sudo docker exec -it cli-warehouse-1 peer lifecycle chaincode install /opt/gopath/src/github.com/hyperledger/fabric/peer/mwcc.tar.gz
 
     sleep 6
 }
 
 whsRtlrCC(){
-    echo "********** Packaging CC for Retailer-WhareHouse-Channel ********************"
+    echo "********** Packaging CC for Retailer-warehouse-Channel ********************"
     # sudo docker exec -it cli-manufacturer-1 peer lifecycle chaincode package basic.tar.gz --path /opt/gopath/src/github.com/hyperledger/fabric/peer/chaincode/mfc-prdc --lang node --label basic_1.0
-    sudo docker exec -it cli-wharehouse-1 peer lifecycle chaincode package wrcc.tar.gz --path /opt/gopath/src/github.com/hyperledger/fabric/peer/chaincode/whs-rtlr --lang node --label wr_${VERSION}
+    sudo docker exec -it cli-warehouse-1 peer lifecycle chaincode package wrcc.tar.gz --path /opt/gopath/src/github.com/hyperledger/fabric/peer/chaincode/whs-rtlr --lang node --label wr_${VERSION}
 
     sleep 6
 
@@ -60,10 +60,10 @@ whsRtlrCC(){
 
     sleep 6
 
-    echo "********** ChainCode Packaged for Retailer-WhareHouse-Channel ********************"
+    echo "********** ChainCode Packaged for Retailer-warehouse-Channel ********************"
 
-    echo "********* Installing CC for Retailer-Wharehouse-Channel ************ "
-    sudo docker exec -it cli-wharehouse-1 peer lifecycle chaincode install /opt/gopath/src/github.com/hyperledger/fabric/peer/wrcc.tar.gz
+    echo "********* Installing CC for Retailer-warehouse-Channel ************ "
+    sudo docker exec -it cli-warehouse-1 peer lifecycle chaincode install /opt/gopath/src/github.com/hyperledger/fabric/peer/wrcc.tar.gz
     
     sleep 6
     
@@ -99,7 +99,7 @@ ApproveCCMfdWhs(){
 
     # sed -i 'd' mw.txt
     # sed -i 'd' log.txt
-    sudo docker exec -it cli-wharehouse-1 peer lifecycle chaincode queryinstalled >&mw.txt
+    sudo docker exec -it cli-warehouse-1 peer lifecycle chaincode queryinstalled >&mw.txt
     # cat mw.txt
     # MW_PACKAGE_ID=$(sed -n "/${CC_NAME}_${CC_VERSION}/{s/^Package ID: //; s/, Label:.*$//; p;}" mw.txt)
     export MW_PACKAGE_ID=$(cat mw.txt | grep "Package" | cut -d " " -f 3 | cut -d "," -f 1)
@@ -108,7 +108,7 @@ ApproveCCMfdWhs(){
 
     sleep 5
 
-    sudo docker exec -it cli-wharehouse-1 peer lifecycle chaincode approveformyorg -o orderer1.gov.io:7050 --channelID mfd-whs-channel --name mwcc --version 1 --package-id ${MW_PACKAGE_ID} --sequence ${VERSION} --tls true --cafile "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem"
+    sudo docker exec -it cli-warehouse-1 peer lifecycle chaincode approveformyorg -o orderer1.gov.io:7050 --channelID mfd-whs-channel --name mwcc --version 1 --package-id ${MW_PACKAGE_ID} --sequence ${VERSION} --tls true --cafile "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem"
 
     sleep 5
 }
@@ -124,7 +124,7 @@ ApproveCCWhsRtlr(){
     # CC_PACKAGE_ID=$(sed -n "/${CC_NAME}_${CC_VERSION}/{s/^Package ID: //; s/, Label:.*$//; p;}" wrcc.txt)
     export CC_PACKAGE_ID=$(cat wr.txt | grep "Package" | cut -d " " -f 3 | cut -d "," -f 1)
     #   export CC_PACKAGE_ID
-    sudo docker exec -it cli-wharehouse-1 peer lifecycle chaincode approveformyorg -o orderer1.gov.io:7050 --channelID whs-rtlr-channel --name wrcc --version 1 --package-id ${CC_PACKAGE_ID} --sequence ${VERSION} --tls true --cafile "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem"
+    sudo docker exec -it cli-warehouse-1 peer lifecycle chaincode approveformyorg -o orderer1.gov.io:7050 --channelID whs-rtlr-channel --name wrcc --version 1 --package-id ${CC_PACKAGE_ID} --sequence ${VERSION} --tls true --cafile "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem"
 
     sleep 5
 
@@ -147,7 +147,7 @@ CheckCommitMfdWhs(){
 
 CheckCommitWhsRtlr(){
     echo "Checking Commit Readiness for Channel whs-rtlr-channel"
-    sudo docker exec -it cli-wharehouse-1 peer lifecycle chaincode checkcommitreadiness --channelID whs-rtlr-channel --name wrcc --version 1 --sequence ${VERSION} --tls true --cafile "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem" --output json
+    sudo docker exec -it cli-warehouse-1 peer lifecycle chaincode checkcommitreadiness --channelID whs-rtlr-channel --name wrcc --version 1 --sequence ${VERSION} --tls true --cafile "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem" --output json
     sleep 8
 }
 
@@ -161,14 +161,14 @@ CommitCCMfdPrd(){
 
 CommitCCMfdWhs(){
     echo "******************** Making commit **********************"
-    sudo docker exec -it cli-wharehouse-1 peer lifecycle chaincode commit -o orderer1.gov.io:7050 --channelID mfd-whs-channel --name mwcc --version 1 --sequence ${VERSION} --tls true --cafile "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem" --peerAddresses peerts1.wharehouse.com:10051 --tlsRootCertFiles "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/wharehouse.com/peers/peerts1.wharehouse.com/tls/ca.crt" --peerAddresses peertm1.manufacturer.com:9051 --tlsRootCertFiles "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/manufacturer.com/peers/peertm1.manufacturer.com/tls/ca.crt"
+    sudo docker exec -it cli-warehouse-1 peer lifecycle chaincode commit -o orderer1.gov.io:7050 --channelID mfd-whs-channel --name mwcc --version 1 --sequence ${VERSION} --tls true --cafile "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem" --peerAddresses peerts1.warehouse.com:10051 --tlsRootCertFiles "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/warehouse.com/peers/peerts1.warehouse.com/tls/ca.crt" --peerAddresses peertm1.manufacturer.com:9051 --tlsRootCertFiles "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/manufacturer.com/peers/peertm1.manufacturer.com/tls/ca.crt"
 
     sleep 8
 }
 
 CommitCCWhsRtlr(){
     echo "******************** Making commit **********************"
-    sudo docker exec -it cli-retail-1 peer lifecycle chaincode commit -o orderer1.gov.io:7050 --channelID whs-rtlr-channel --name wrcc --version 1 --sequence ${VERSION} --tls true --cafile "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem" --peerAddresses peerts1.wharehouse.com:10051 --tlsRootCertFiles "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/wharehouse.com/peers/peerts1.wharehouse.com/tls/ca.crt" --peerAddresses peerbb1.retailer.com:11051 --tlsRootCertFiles "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/retailer.com/peers/peerbb1.retailer.com/tls/ca.crt"
+    sudo docker exec -it cli-retail-1 peer lifecycle chaincode commit -o orderer1.gov.io:7050 --channelID whs-rtlr-channel --name wrcc --version 1 --sequence ${VERSION} --tls true --cafile "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem" --peerAddresses peerts1.warehouse.com:10051 --tlsRootCertFiles "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/warehouse.com/peers/peerts1.warehouse.com/tls/ca.crt" --peerAddresses peerbb1.retailer.com:11051 --tlsRootCertFiles "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/retailer.com/peers/peerbb1.retailer.com/tls/ca.crt"
 
     sleep 8
 }
