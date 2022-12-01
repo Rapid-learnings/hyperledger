@@ -17,6 +17,7 @@ api/package-lock.json
 /fabric-ca-client
 /fabric-ca-mfc
 /fabric-ca-server-tls
+.env
 # /api/tata-wallet/*.id
 # /api/teafarm-wallet/*.id
 # /fabric-ca-config/*
