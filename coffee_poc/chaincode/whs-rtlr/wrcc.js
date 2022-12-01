@@ -4,7 +4,7 @@ SPDX-License-Identifier: Apache-2.0
 
 'use strict';
 
-const { Contract, Context } = require('fabric-contract-api');
+const { Contract } = require('fabric-contract-api');
 // const { TokenERC20Contract } = require('./token-erc-20/chaincode-javascript/lib/tokenERC20.js')
 const wHStock = 'WHARE_HOUSE_STOCK'
 const orderNumber = 'orderNumber'
@@ -20,9 +20,19 @@ class wrcc extends Contract {
         await ctx.stub.putState(retailerBalance, Buffer.from('100000'));
         await ctx.stub.putState(warehouseBalance, Buffer.from('100000'));
         //! connect wharehouse i.e wHstock stock from mwcc.js
-        await ctx.stub.putState(wHStock, Buffer.from('10'));
         await ctx.stub.putState(retailerStock, Buffer.from('0'));
+    }
 
+    async returnWarehouseSTockAccordingToPMCC(ctx) {
+        const rstock = await this.getRetailerStock(ctx)
+        // Query the Manufacturers stock from pmcc
+        const response = await ctx.stub.invokeChaincode('mwcc', ['getWharehouseStock'], 'mfd-whs-channel');
+        // Extract value from the response object
+        const currentManufacturerStockInPMCC = response.payload.toString();
+        // return currentManufacturerStockInPMCC;
+        let stock = parseInt(currentManufacturerStockInPMCC);
+        let rawStock = stock - rstock;
+        return rawStock
     }
 
     async updateWharehouseStock(ctx, qty, flag) {
@@ -31,8 +41,8 @@ class wrcc extends Contract {
         //     throw new Error('only Warehouse can update stock');
         // }
 
-        let stockBytes = await ctx.stub.getState(wHStock);
-        let stock = parseInt(stockBytes.toString())
+        const stockBytes = await ctx.stub.getState(wHStock);
+        const stock = parseInt(stockBytes.toString())
         let updatedStock = 0
         // if (!stockBytes || stockBytes.length === 0) {
         //     updatedStock = qty;
@@ -52,10 +62,14 @@ class wrcc extends Contract {
     }
 
     async availableWharehouseStock(ctx) {
+        // const ASBytes = await ctx.stub.getState(wHStock);
+        // const AS = parseInt(ASBytes.toString())
+        // console.log("Available Stock is %s kg", AS);
+        // return parseInt(AS);
         let ASBytes = await ctx.stub.getState(wHStock);
         let AS = parseInt(ASBytes.toString())
         console.log("Available Stock is %s kg", AS);
-        return parseInt(AS);
+        return AS;
     }
 
     async getRetailerBalance(ctx){
@@ -113,10 +127,10 @@ class wrcc extends Contract {
 
         await this.updateRetailerBalance(ctx, amt, 1);
         await this.updateWharehouseBalance(ctx, amt, 0);
-        await this.updateWharehouseStock(ctx, qty, 1);
+        // await this.updateWharehouseStock(ctx, qty, 1);
         await this.updateRetailerStock(ctx, qty, 0);
 
-        let orderNoBytes = await ctx.stub.getState(orderNumber);
+        const orderNoBytes = await ctx.stub.getState(orderNumber);
         let orderNo
         if (!orderNoBytes || orderNoBytes.length === 0) {
             orderNo = 1
@@ -124,21 +138,19 @@ class wrcc extends Contract {
             orderNo = parseInt(orderNoBytes.toString());
             orderNo += 1;
         }
+        await ctx.stub.putState(orderNumber, Buffer.from(orderNo.toString()));
         // const time = ctx.stub.getDateTimestamp();
-        let orderStatus = Status[0]
         let order = {
-            country: country,
-            state: state,
-            amount: amt.toString(),
-            quantity: qty.toString(),
-            status: orderStatus
+            "DeliveryLocation": {
+                "Country": country,
+                "State": state
+            },
+            "Amount": amt,
+            "Quantity": qty,
+            "Status": Status[0]
         }
         // Store order details
-        let orderBuff = Buffer.from(JSON.stringify(order).toString('base64'))
-        await ctx.stub.putState(orderNo.toString(), orderBuff);
-        await ctx.stub.putState(orderNumber, Buffer.from(orderNo.toString()))
-
-        // await this.getOrderDetails(ctx, orderNo);
+        await ctx.stub.putState(orderNo.toString(), Buffer.from(JSON.stringify(order).toString('base64')));
     }
 
     async updateStatusToInTransit(ctx, orderNo) {
@@ -154,36 +166,40 @@ class wrcc extends Contract {
         } catch(err) {
             throw err;
         }
-        let status = orderObj.status;
+        const status = orderObj.Status;
         if (status !== Status[0]) {
             throw new Error('cannot change status to in-transit as order is not even placed');
         }
 
         // updating the status
-        orderObj.status = Status[1]
+        orderObj.Status = Status[1]
         //storing the new order details object with the orderNo key
-        await ctx.stub.putState(orderNo, Buffer.from(JSON.stringify(orderObj).toString('base64')));
+        await ctx.stub.putState(orderNo, Buffer.from(JSON.stringify(orderObj)));
     }
 
     // updates the status of the order to delivered
     async updateStatusToDelivered(ctx, orderNo) {
         // const clientMSP = await ctx.clientIdentity.getMSPID()
-        // if (clientMSP !== 'tatastoreMSP') {
+        // if (clientMSP !== 'bigbazarMSP') {
         //     throw new Error('only retailer has permission to this update status');
         // }
 
         // fetching order details
-        let orderObj = await this.getOrderDetails(ctx, orderNo)
-        console.log("In delivery = ", orderObj);
-        let status = orderObj.status;
+        let orderObj;
+        try {
+            orderObj = await this.getOrderDetails(ctx, orderNo)
+        } catch(err) {
+            throw err;
+        }
+        const status = orderObj.Status;
         if (status !== Status[1]) {
             throw new Error('cannot change status to delivered as package is not even shipped');
         }
 
         // updating the status to delivered
-        orderObj.status = Status[2]
+        orderObj.Status = Status[2]
         //storing the new order details object with the orderNo key
-        await ctx.stub.putState(orderNo.toString(), Buffer.from(JSON.stringify(orderObj).toString('base64')));
+        await ctx.stub.putState(orderNo, Buffer.from(JSON.stringify(orderObj)));
     }
 
     // async claimPayout(ctx, orderNo) {
@@ -229,15 +245,15 @@ class wrcc extends Contract {
     // }
 
     async getWhareHouseBalance(ctx) {
-        let clientMSP = await ctx.clientIdentity.getMSPID();
+        const clientMSP = await ctx.clientIdentity.getMSPID();
         if (clientMSP === 'tatastoreMSP') {
-            let balanceBytes = await ctx.stub.getState(warehouseBalance);
-            let balance = parseInt(balanceBytes.toString());
+            const balanceBytes = await ctx.stub.getState(warehouseBalance);
+            const balance = parseInt(balanceBytes.toString());
             console.log('Balance for %s is %s $', clientMSP, balance);
             return balance;
         } else {
-            let balanceBytes = await ctx.stub.getState(retailerBalance);
-            let balance = parseInt(balanceBytes.toString());
+            const balanceBytes = await ctx.stub.getState(retailerBalance);
+            const balance = parseInt(balanceBytes.toString());
             console.log('Balance for %s is %s $', clientMSP, balance);
             return balance;
         }
@@ -257,20 +273,14 @@ class wrcc extends Contract {
     // Queries the order details object with orderNo as key
     async getOrderDetails(ctx, orderNo) {
         //fetching order details
-        console.log("Order No = ", orderNo);
-        let orderObjBytes = await ctx.stub.getState(orderNo);
-        // console.log("Object Bytes", orderObjBytes);
-        // console.log("---Order Bytes----\n", orderObjBytes);
-        console.log(orderObjBytes.toString());
-        console.log("Details - 1 = ",JSON.parse(orderObjBytes.toString()));
-        let orderObj = JSON.parse(orderObjBytes.toString());
-        // console.log("Details ", orderObj);`
+        const orderObjBytes = await ctx.stub.getState(orderNo);
+        const orderObj = JSON.parse(orderObjBytes.toString());
         return orderObj;
     }
 
     async getCurrentOrderNumber(ctx) {
-        let orderNoBytes = await ctx.stub.getState(orderNumber);
-        let orderNo = parseInt(orderNoBytes.toString())
+        const orderNoBytes = await ctx.stub.getState(orderNumber);
+        const orderNo = parseInt(orderNoBytes.toString())
         return orderNo;
     }
 }

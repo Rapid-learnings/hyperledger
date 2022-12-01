@@ -58,9 +58,9 @@ Organizations:
                 Rule: "OR('teafarmMSP.peer', 'teafarmMSP.admin')"
         AnchorPeers:
             Host: peertf1.production.com
-            Port: 8050
+            Port: 8051
             Host: peertf2.production.com
-            Port: 8080
+            Port: 8081
     
     - &tata
         Name: tata
@@ -81,9 +81,9 @@ Organizations:
                 Rule: "OR('tataMSP.peer', 'tataMSP.admin')"            
         AnchorPeers:
             Host: peertm1.manufacturer.com
-            Port: 9050
+            Port: 9051
             Host: peertm2.manufacturer.com
-            Port: 9080
+            Port: 9081
     
     - &tatastore
         Name: tatastore
@@ -104,9 +104,9 @@ Organizations:
                 Rule:  "OR('tatastoreMSP.admin', 'tatastoreMSP.member', 'tatastoreMSP.peer')"
         AnchorPeers:
             Host: peerts1.wharehouse.com
-            Port: 10050
+            Port: 10051
             Host: peerts2.wharehouse.com
-            Port: 10080
+            Port: 10081
 
     - &bigbazar
         Name: bigbazar
@@ -127,7 +127,7 @@ Organizations:
                 Rule:  "OR('bigbazarMSP.admin', 'bigbazarMSP.member', 'bigbazarMSP.peer')"
         AnchorPeers:
             Host: peerbb1.retailer.com
-            Port: 11050
+            Port: 11051
 
 ################### #############################################################
 #
