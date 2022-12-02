@@ -115,16 +115,27 @@ registerUser.registerEnrollUser = async (usr, org) => {
     });
 
     // console.log("\n====== Enrollment ===== \n", enrollment);
-
-    const x509Identity = {
-      credentials: {
-        certificate: enrollment.certificate,
-        privateKey: enrollment.key.toBytes(),
-      },
-      mspId: "tataMSP",
-      type: "X.509",
-    };
-    // console.log("\n====== x509Identity ===== \n", x509Identity);
+    let x509Identity;
+    if (org == "tata") {
+      x509Identity = {
+        credentials: {
+          certificate: enrollment.certificate,
+          privateKey: enrollment.key.toBytes(),
+        },
+        mspId: "tataMSP",
+        type: "X.509",
+      };
+    } else if (org == "teafarm") {
+      x509Identity = {
+        credentials: {
+          certificate: enrollment.certificate,
+          privateKey: enrollment.key.toBytes(),
+        },
+        mspId: "teafarmMSP",
+        type: "X.509",
+      };
+    }
+    console.log("\n====== x509Identity ===== \n", x509Identity);
 
     await wallet.put(usr, x509Identity);
     console.log(
