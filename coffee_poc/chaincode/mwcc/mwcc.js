@@ -14,8 +14,8 @@ let wasteKey = 'wasted-stock'
 let whareHouseStock = 'WHAREHOUSE_STOCK'
 let packSize = 50 // Kg
 let totalPackages = 'number-of-packages'
-let status = ['READY_FOR_DISPATCH', 'DISPATCHED'];
-
+// let status = ['READY_FOR_DISPATCH', 'DISPATCHED'];
+let rawStock
 
 class mwcc extends Contract {
     // intializes stock to a fixed amount
@@ -43,7 +43,7 @@ class mwcc extends Contract {
         const stock = parseInt(currentManufacturerStockInPMCC);
         console.log('current manufacturers raw stock according to PMCC is %s', stock);
         // return currentManufacturerStockInPMCC;
-        let rawStock = stock - process;
+        rawStock = stock - process;
         console.log('After accounting for processed stock the raw stock is %s', rawStock);
 
         return rawStock
@@ -189,11 +189,10 @@ class mwcc extends Contract {
             throw new Error('Invalid weights');
         }
 
-        const rawStock = await this.availableRawStock(ctx);
         if(rawStock < wti){
             throw new Error("Stock is less in drying process, current = ", rawStock);
         }
-        await this.updateRawStock(ctx, wti, 1);
+        // await this.updateRawStock(ctx, wti, 1);
         
         let diff = wti - wto;
         await this.updateWastedStock(ctx, diff);
@@ -210,6 +209,7 @@ class mwcc extends Contract {
         await ctx.stub.putState(driedstockKey, Buffer.from(newDriedStock.toString()));
         // add to processing stock
         await this.updateProcessing(ctx, wti);
+        await ctx.stub.setEvent("dry", Buffer.from(newDriedStock.toString()));
     }
 
     // here -> weightIn is coffee sent for roast.
@@ -239,6 +239,7 @@ class mwcc extends Contract {
 
         // Fetch and update the roasted stock
         await this.updateRoastedStock(ctx, wto, 0);
+
         // const roastedStock = this.availableRoastedStock(ctx);
         // const newRoastedStock = parseInt(roastedStock) + wto;
         // await ctx.stub.putState(roastedstockKey, Buffer.from(newRoastedStock.toString()));
@@ -310,6 +311,7 @@ class mwcc extends Contract {
         // update the wharehouse stock & number of packages
         await this.updateWhareHouseStock(ctx, packages);
         await this.updateTotalPackages(ctx, packages, 1);
+        await ctx.stub.setEvent("dispatch", buffer.from(packages.toString()));
     }
 
     async getTotalPackages(ctx) {

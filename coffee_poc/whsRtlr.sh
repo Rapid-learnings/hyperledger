@@ -41,7 +41,7 @@ UpdateStatus(){
 
 queryWhsStock(){
     echo "###################### CC call querying warehouse stock ########################"
-    sudo docker exec -it cli-wharehouse-1 peer chaincode query -C whs-rtlr-channel -n wr -c '{"Args":["returnWarehouseSTockAccordingToPMCC"]}'
+    sudo docker exec -it cli-wharehouse-1 peer chaincode query -C whs-rtlr-channel -n wr -c '{"Args":["returnWarehouseSTockAccordingToMWCC"]}'
 }
 
 queryRetStock(){
@@ -52,7 +52,7 @@ queryRetStock(){
 
 # InvokeCCWhsRtlr
 queryWhsStock
-updateWhsStock
+# updateWhsStock
 placeOrder
 getOrderDetails
 UpdateStatus

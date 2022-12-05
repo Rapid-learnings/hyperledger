@@ -5,6 +5,10 @@ InvokeCCMfdPrd(){
     sleep 8
 }
 
+UpdateStock(){
+    sudo docker exec -it cli-production-1 peer chaincode invoke -o orderer1.gov.io:7050 --channelID mfd-prd-channel --name mfcprd --tls --cafile "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem" --peerAddresses peertf1.production.com:8051 --tlsRootCertFiles "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/production.com/peers/peertf1.production.com/tls/ca.crt" --peerAddresses peertm1.manufacturer.com:9051 --tlsRootCertFiles "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/manufacturer.com/peers/peertm1.manufacturer.com/tls/ca.crt" -c '{"Args":["placeOrder", "1000", "Banglore", "Karnataka"]}'
+}
+
 QueryCCMfdPrd(){  
     echo "*********************** Query ChainCode For Mfd-Prd-Channel , Fetching Balance Of Manufacturer *********************************"
     sudo docker exec -it cli-manufacturer-1 peer chaincode query -C mfd-prd-channel -n mfcprd -c '{"Args":["getManufacturerFunds"]}'
@@ -45,6 +49,7 @@ UpdateStatus(){
 }
 
 # InvokeCCMfdPrd
+# UpdateStock
 QueryCCMfdPrd
 PlaceOrder
 UpdateStatus

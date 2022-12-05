@@ -41,7 +41,7 @@ services:
       - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-tls/tlsca.manufacturer.com-cert.pem
       - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-tls/priv_sk
     ports:
-      - "2051:80524"
+      - "2051:7054"
     command:  sh -c 'fabric-ca-server start -b admin:adminpw -d'
     volumes:
       - ../crypto-config/peerOrganizations/manufacturer.com/ca/:/etc/hyperledger/fabric-ca-server-config
@@ -62,7 +62,7 @@ services:
       - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-tls/tlsca.production.com-cert.pem
       - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-tls/priv_sk
     ports:
-      - "2052:80524"
+      - "2052:7054"
     command:  sh -c 'fabric-ca-server start -b admin:adminpw -d'
     volumes:
       - ../crypto-config/peerOrganizations/production.com/ca/:/etc/hyperledger/fabric-ca-server-config
@@ -83,7 +83,7 @@ services:
       - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-tls/tlsca.wharehouse.com-cert.pem
       - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-tls/priv_sk
     ports:
-      - "2053:80524"
+      - "2053:7054"
     command:  sh -c 'fabric-ca-server start -b admin:adminpw -d'
     volumes:
       - ../crypto-config/peerOrganizations/wharehouse.com/ca/:/etc/hyperledger/fabric-ca-server-config
@@ -104,7 +104,7 @@ services:
       - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-tls/tlsca.retailer.com-cert.pem
       - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-tls/priv_sk
     ports:
-      - "2054:80524"
+      - "2054:7054"
     command:  sh -c 'fabric-ca-server start -b admin:adminpw -d'
     volumes:
       - ../crypto-config/peerOrganizations/retailer.com/ca/:/etc/hyperledger/fabric-ca-server-config

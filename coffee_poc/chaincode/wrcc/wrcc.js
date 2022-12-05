@@ -13,6 +13,7 @@ const retailerBalance = 'RETAILER_BALANCE'
 const warehouseBalance = 'WAREHOUSE_BALANCE'
 const retailerStock = 'RETAILER_STOCK'
 const pricePerPackage = 150
+let rawStock;
 
 class wrcc extends Contract {
 
@@ -23,7 +24,7 @@ class wrcc extends Contract {
         await ctx.stub.putState(retailerStock, Buffer.from('0'));
     }
 
-    async returnWarehouseSTockAccordingToPMCC(ctx) {
+    async returnWarehouseSTockAccordingToMWCC(ctx) {
         const rstock = await this.getRetailerStock(ctx)
         // Query the Manufacturers stock from pmcc
         const response = await ctx.stub.invokeChaincode('mw', ['getWharehouseStock'], 'mfd-whs-channel');
@@ -31,8 +32,8 @@ class wrcc extends Contract {
         const currentManufacturerStockInPMCC = response.payload.toString();
         // return currentManufacturerStockInPMCC;
         let stock = parseInt(currentManufacturerStockInPMCC);
-        let rawStock = stock - rstock;
-        return rawStock
+        rawStock = stock - rstock;
+        return rawStock;
     }
 
     async updateWharehouseStock(ctx, qty, flag) {
@@ -40,20 +41,20 @@ class wrcc extends Contract {
         // if (clientMSPID !== 'tatastoreMSP') {
         //     throw new Error('only Warehouse can update stock');
         // }
-
+        const q = parseInt(qty)
         const stockBytes = await ctx.stub.getState(wHStock);
         const stock = parseInt(stockBytes.toString())
-        let updatedStock = 0
+        let updatedStock;
         // if (!stockBytes || stockBytes.length === 0) {
         //     updatedStock = qty;
         // } 
-        if (flag == 0 && qty > stock) {
+        if (flag == 0 && q > stock) {
             throw new Error('Current stock is lesser than amount to deduct')
         }
         if (flag == 0) {
-            updatedStock = stock - qty;
+            updatedStock = stock - q;
         } else if(flag == 1) {
-            updatedStock = stock + qty;
+            updatedStock = stock + q;
         }
 
         //Store the updated state in the blockchain
@@ -114,13 +115,13 @@ class wrcc extends Contract {
         //     throw new Error('only Retailer can check available stock')
         // }
         // await TokenERC20Contract.transferFrom(ctx, clientMSPID, this.toString(), amt)
-        let availableWHStock = await this.availableWharehouseStock(ctx);
-        if(availableWHStock < qty){
+        // let availableWHStock = await this.availableWharehouseStock(ctx);
+        if(rawStock < parseInt(qty)){
             throw new Error("Wharehouse Stock Is Less Than The Asked Qty,  current = ", availableWHStock);
         }
         
         let currentRetailerFunds = await this.getRetailerBalance(ctx);
-        let amt = qty * pricePerPackage;
+        let amt = parseInt(qty) * pricePerPackage;
         if(amt > currentRetailerFunds){
             throw new Error("Retailer Funds Are Insufficient, current = ", currentRetailerFunds);
         }
@@ -151,6 +152,7 @@ class wrcc extends Contract {
         }
         // Store order details
         await ctx.stub.putState(orderNo.toString(), Buffer.from(JSON.stringify(order).toString('base64')));
+        await ctx.stub.setEvent("dispatch", Buffer.from(JSON.stringify(order).toString('base64')));
     }
 
     async updateStatusToInTransit(ctx, orderNo) {
