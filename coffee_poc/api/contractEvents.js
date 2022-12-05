@@ -21,14 +21,24 @@ async function contractEvents() {
         const network = await gateway.getNetwork('mfd-prd-channel');
         const contract = await network.getContract('mfcprd');
         const issueResponse = await contract.submitTransaction('placeOrder', '100', 'kerala', 'India');
-        const listener = await contract.addContractListener('my-contract-listener', 'placeOrder', (err, event, blockNumber, transactionId, status) => {
+        console.log(JSON.parse(issueResponse.toString()));
+        await contract.addContractListener('my-contract-listener', 'placeOrder', (err, event, blockNumber, transactionId, status) => {
             if (err) {
                 console.error(err);
                 return;
             }
             console.log(`Block Number: ${blockNumber} Transaction ID: ${transactionId} Status: ${status}`);
+
+            event = event.payload.toString();
+            event = JSON.parse(event);
+
+            console.log('************************ Start Trade Event *******************************************************');
+            console.log(`amount: ${event.amount}`);
+            console.log(`quantity: ${event.quantity}`);
+            console.log(`status: ${event.Status}`);
+            console.log(`country: ${event.country}`);
+            console.log(`state: ${event.state}`);
+            console.log('************************ End Trade Event ************************************');
         })
-        event = event.payload.toString();
-        event = JSON.parse(event)
-    }
+    } catch(err) {}
 }
