@@ -16,8 +16,7 @@ const enrollAdmin = {};
 enrollAdmin.enroll = async (org) => {
   try {
     // load the network configuration
-    const ccpPath =
-      "/home/ubuntu/pankajb/hyperledger/coffee_poc/api/connection-profiles/mfc-prd-config.json";
+    const ccpPath = path.join(process.cwd(), './connection-profiles/mfc-cc.json');
     const ccp = JSON.parse(fs.readFileSync(ccpPath, "utf8"));
 
     // Create a new CA client for interacting with the CA.
@@ -29,11 +28,11 @@ enrollAdmin.enroll = async (org) => {
     }
     // console.log(caInfo);
     // console.log(caInfo.tlsCAcerts.pem);
-    const caTLSCACerts = caInfo.tlsCAcerts.pem;
+    // const caTLSCACerts = caInfo.tlsCAcerts.path;
     const ca = new FabricCAServices(
-      caInfo.url,
-      { trustedRoots: caTLSCACerts, verify: false },
-      caInfo.caName
+      caInfo.url
+      // { trustedRoots: caTLSCACerts, verify: false },
+      // caInfo.caName
     );
 
     // Create a new file system based wallet for managing identities.
@@ -89,7 +88,7 @@ enrollAdmin.enroll = async (org) => {
     process.exit(1);
   }
 };
-
-module.exports = enrollAdmin;
-
+const oorg = 'tata'
+// module.exports = enrollAdmin;
+enrollAdmin.enroll(oorg)
 // enrollAdmin();

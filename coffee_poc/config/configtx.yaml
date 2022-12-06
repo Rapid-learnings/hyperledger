@@ -15,8 +15,8 @@ Organizations:
                 Rule: "OR('OrdererMSP.admin')"
         OrdererEndpoints:
             - orderer1.gov.io:7050
-            - orderer2.gov.io:8051
-            - orderer3.gov.io:8052
+            # - orderer2.gov.io:8051
+            # - orderer3.gov.io:8052
 
     - &governance
         Name: governance
