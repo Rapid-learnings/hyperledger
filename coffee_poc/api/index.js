@@ -51,7 +51,7 @@ app.post('/register/user', async(req,res,next)=>{
 app.get('/getStorage', async(req,res,next)=>{
     let ccp = fs.readFile("./connection-profiles/mfc-prd-config.json",'utf8',function(err, data){})
     const walletPath = path.join(process.cwd(),'teafarm-wallet');
-    const wallet = await Wallets.newFileSystemWallet(walletPath)
+    const wallet = await Wallets.newFileSystemwccallet(walletPath)
     // omitting check for identity
     const gateway = new Gateway();
     await gateway.connect(ccp, {wallet, identity:'user1', discovery:{enabled:true, asLocalhost:false}})
@@ -59,7 +59,7 @@ app.get('/getStorage', async(req,res,next)=>{
     // n/w to which contract is deployed
     const network = await gateway.getNetwork('mfd-prd-channel')
     // get contract
-    const contract = network.getContract('mfcPrd.js')
+    const contract = network.getContract('pmcc.js')
     const storage = await contract.evaluateTransaction('getStorage');
 
     res.json(storage);

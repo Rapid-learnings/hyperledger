@@ -7,7 +7,7 @@ Organizations:
             Readers:
                 Type: Signature
                 Rule: "OR('OrdererMSP.member')"
-            Writers:
+            wrcciters:
                 Type: Signature
                 Rule: "OR('OrdererMSP.member')"
             Admins:
@@ -15,8 +15,8 @@ Organizations:
                 Rule: "OR('OrdererMSP.admin')"
         OrdererEndpoints:
             - orderer1.gov.io:7050
-            # - orderer2.gov.io:8051
-            # - orderer3.gov.io:8052
+            # - orderer2.gov.io:7051
+            # - orderer3.gov.io:7052
 
     - &governance
         Name: governance
@@ -26,7 +26,7 @@ Organizations:
             Readers:
                 Type: Signature
                 Rule: "OR('govMSP.peer', 'govMSP.admin', 'govMSP.client')"
-            Writers:
+            wrcciters:
                 Type: Signature
                 Rule: "OR('govMSP.admin', 'govMSP.client')"
             Admins:
@@ -47,7 +47,7 @@ Organizations:
             Readers:
                 Type: Signature
                 Rule: "OR('teafarmMSP.peer', 'teafarmMSP.admin', 'teafarmMSP.client')"
-            Writers:
+            wrcciters:
                 Type: Signature
                 Rule: "OR('teafarmMSP.admin', 'teafarmMSP.client')"
             Admins:
@@ -68,7 +68,7 @@ Organizations:
             Readers:
                 Type: Signature
                 Rule: "OR('tataMSP.peer', 'tataMSP.admin', 'tataMSP.client')"
-            Writers:
+            wrcciters:
                 Type: Signature
                 Rule: "OR('tataMSP.admin', 'tataMSP.client')"
             Admins:
@@ -89,7 +89,7 @@ Organizations:
             Readers:
                 Type: Signature
                 Rule: "OR('tatastoreMSP.client', 'tatastoreMSP.admin', 'tatastoreMSP.peer')"
-            Writers:
+            wrcciters:
                 Type: Signature
                 Rule: "OR('tatastoreMSP.client', 'tatastoreMSP.admin')"
             Admins:
@@ -110,7 +110,7 @@ Organizations:
             Readers:
                 Type: Signature
                 Rule: "OR('bigbazarMSP.client', 'bigbazarMSP.admin', 'bigbazarMSP.peer')"
-            Writers:
+            wrcciters:
                 Type: Signature
                 Rule: "OR('bigbazarMSP.client', 'bigbazarMSP.admin')"
             Admins:
@@ -198,16 +198,16 @@ Application: &ApplicationDefaults
         #---New Lifecycle System Chaincode (_lifecycle) function to policy mapping for access control--#
 
         # ACL policy for _lifecycle's "CheckCommitReadiness" function
-        _lifecycle/CheckCommitReadiness: /Channel/Application/Writers
+        _lifecycle/CheckCommitReadiness: /Channel/Application/wrcciters
 
         # ACL policy for _lifecycle's "CommitChaincodeDefinition" function
-        _lifecycle/CommitChaincodeDefinition: /Channel/Application/Writers
+        _lifecycle/CommitChaincodeDefinition: /Channel/Application/wrcciters
 
         # ACL policy for _lifecycle's "QueryChaincodeDefinition" function
-        _lifecycle/QueryChaincodeDefinition: /Channel/Application/Writers
+        _lifecycle/QueryChaincodeDefinition: /Channel/Application/wrcciters
 
         # ACL policy for _lifecycle's "QueryChaincodeDefinitions" function
-        _lifecycle/QueryChaincodeDefinitions: /Channel/Application/Writers
+        _lifecycle/QueryChaincodeDefinitions: /Channel/Application/wrcciters
 
         #---Lifecycle System Chaincode (lscc) function to policy mapping for access control---#
 
@@ -251,10 +251,10 @@ Application: &ApplicationDefaults
         #---Miscellaneous peer function to policy mapping for access control---#
 
         # ACL policy for invoking chaincodes on peer
-        peer/Propose: /Channel/Application/Writers
+        peer/Propose: /Channel/Application/wrcciters
 
         # ACL policy for chaincode to chaincode invocation
-        peer/ChaincodeToChaincode: /Channel/Application/Writers
+        peer/ChaincodeToChaincode: /Channel/Application/wrcciters
 
         #---Events resource to policy mapping for access control###---#
 
@@ -281,9 +281,9 @@ Application: &ApplicationDefaults
         Readers:
             Type: ImplicitMeta
             Rule: "ANY Readers"
-        Writers:
+        wrcciters:
             Type: ImplicitMeta
-            Rule: "ANY Writers"
+            Rule: "ANY wrcciters"
         Admins:
             Type: ImplicitMeta
             Rule: "MAJORITY Admins"
@@ -345,7 +345,7 @@ Orderer: &OrdererDefaults
         # the best effort maximum size of a batch. A batch will fill with messages
         # until this size is reached (or the max message count, or batch timeout is
         # exceeded).  If adding a new message to the batch would cause the batch to
-        # exceed the preferred max bytes, then the current batch is closed and written
+        # exceed the preferred max bytes, then the current batch is closed and wrccitten
         # to a block, and a new batch containing the new message is created.  If a
         # message larger than the preferred max bytes is received, then its batch
         # will contain only that message.  Because messages may be larger than
@@ -415,9 +415,9 @@ Orderer: &OrdererDefaults
         Readers:
             Type: ImplicitMeta
             Rule: "ANY Readers"
-        Writers:
+        wrcciters:
             Type: ImplicitMeta
-            Rule: "ANY Writers"
+            Rule: "ANY wrcciters"
         Admins:
             Type: ImplicitMeta
             Rule: "MAJORITY Admins"
@@ -425,7 +425,7 @@ Orderer: &OrdererDefaults
         # from the orderer for the peer to validate it.
         BlockValidation:
             Type: ImplicitMeta
-            Rule: "ANY Writers"
+            Rule: "ANY wrcciters"
 
     # Capabilities describes the orderer level capabilities, see the
     # dedicated Capabilities section elsewhere in this file for a full
@@ -451,9 +451,9 @@ Channel: &ChannelDefaults
             Type: ImplicitMeta
             Rule: "ANY Readers"
         # Who may invoke the 'Broadcast' API
-        Writers:
+        wrcciters:
             Type: ImplicitMeta
-            Rule: "ANY Writers"
+            Rule: "ANY wrcciters"
         # By default, who may modify elements at this config level
         Admins:
             Type: ImplicitMeta

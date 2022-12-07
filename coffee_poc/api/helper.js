@@ -71,7 +71,7 @@ const getRegisteredUser = async (username, userOrg, isJson) => {
     const ca = new FabricCAServices(caURL);
 
     const walletPath = await getWalletPath(userOrg)
-    const wallet = await Wallets.newFileSystemWallet(walletPath);
+    const wallet = await Wallets.newFileSystemwccallet(walletPath);
     console.log(`Wallet path: ${walletPath}`);
 
     const userIdentity = await wallet.get(username);
@@ -156,7 +156,7 @@ const enrollAdmin = async (org, ccp) => {
         // console.log("CA = ",ca);
         // Create a new file system based wallet for managing identities.
         const walletPath = await getWalletPath(org) //path.join(process.cwd(), 'wallet');
-        const wallet = await Wallets.newFileSystemWallet(walletPath);
+        const wallet = await Wallets.newFileSystemwccallet(walletPath);
         console.log(`Wallet path: ${walletPath}`);
 
         // Check to see if we've already enrolled the admin user.
@@ -212,7 +212,7 @@ const registerAndGerSecret = async (username, userOrg) => {
     const ca = new FabricCAServices(caURL);
 
     const walletPath = await getWalletPath(userOrg)
-    const wallet = await Wallets.newFileSystemWallet(walletPath);
+    const wallet = await Wallets.newFileSystemwccallet(walletPath);
     console.log(`Wallet path: ${walletPath}`);
 
     const userIdentity = await wallet.get(username);

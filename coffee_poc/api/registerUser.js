@@ -8,7 +8,7 @@
 
 const {
   Wallets,
-  FileSystemWallet,
+  FileSystemwccallet,
   Gateway,
   X509WalletMixin,
 } = require("fabric-network");
@@ -66,7 +66,7 @@ registerUser.registerEnrollUser = async (usr, org) => {
     // console.log("CA = ", ca);
     // Create a new file system based wallet for managing identities.
     let walletPath = await registerUser.getWalletPath(org);
-    const wallet = await Wallets.newFileSystemWallet(walletPath);
+    const wallet = await Wallets.newFileSystemwccallet(walletPath);
     console.log(`Wallet path: ${walletPath}`);
 
     // Check to see if we've already enrolled the user.

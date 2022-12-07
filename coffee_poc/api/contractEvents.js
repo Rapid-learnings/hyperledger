@@ -6,7 +6,7 @@ const fs = require('fs');
 
 async function contractEvents() {
     const walletPath = path.join(process.cwd(), './tata-wallet');
-    const wallet = await Wallets.newFileSystemWallet(walletPath);
+    const wallet = await Wallets.newFileSystemwccallet(walletPath);
 
     const gateway = new Gateway();
     try{
@@ -23,7 +23,7 @@ async function contractEvents() {
         console.log('Connecting to channel');
         const network = await gateway.getNetwork('mfd-prd-channel');
         console.log('Connecting to contract');
-        const contract = await network.getContract('mfcprd');
+        const contract = await network.getContract('pmcc');
 
         console.log('Submitting transaction to place order');
         const issueResponse = await contract.submitTransaction('placeOrder', '100', 'kerala', 'India');
@@ -33,7 +33,7 @@ async function contractEvents() {
             if (event.eventName === 'placeOrder') {
                 const details = event.payload.toString('utf8');
                 event = JSON.parse(details);
-                console.log('************************ Start placeOrder Event *******************************************************');
+                console.log('************************ Start placeOrder Event **********************************');
                 console.log(`order number: ${JSON.parse(issueResponse.toString())}`);
                 console.log(`amount: ${event.amount}`);
                 console.log(`quantity: ${event.quantity}`);
@@ -48,7 +48,7 @@ async function contractEvents() {
     } catch(err) {
         throw err;
     } finally {
-        console.log("discnnecting gateway");
+        console.log("disconnecting gateway");
         gateway.disconnect();
     }
 }

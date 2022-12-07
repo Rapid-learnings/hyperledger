@@ -499,7 +499,7 @@ metrics:
 
         # the interval at which locally cached counters and gauges are pushed
         # to statsd; timings are pushed immediately
-        writeInterval: 10s
+        wrcciteInterval: 10s
 
         # prefix is prepended to all emitted statsd metrics
         prefix: server

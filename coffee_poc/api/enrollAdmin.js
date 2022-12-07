@@ -42,7 +42,7 @@ enrollAdmin.enroll = async (org) => {
     } else if (org == "teafarm") {
       walletPath = path.join(process.cwd(), "teafarm-wallet");
     }
-    const wallet = await Wallets.newFileSystemWallet(walletPath);
+    const wallet = await Wallets.newFileSystemwccallet(walletPath);
     console.log(`Wallet path: ${walletPath}`);
 
     // Check to see if we've already enrolled the admin user.
