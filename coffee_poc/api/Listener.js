@@ -53,9 +53,9 @@ blockListener = async (event) => {
         //                     console.log(`       - read set - ${BLUE}key:${RESET} ${read.key}  ${BLUE}value:${read.value.toString()}`);
         //                 }
         //             }
-        //             if (collection.rwset.wrccites) {
-        //                 for (const wrccite of collection.rwset.wrccites) {
-        //                     console.log(`      - wrccite set - ${BLUE}key:${RESET}${wrccite.key} ${BLUE}is_delete:${RESET}${wrccite.is_delete} ${BLUE}value:${RESET}${wrccite.value.toString()}`);
+        //             if (collection.rwset.writes) {
+        //                 for (const write of collection.rwset.writes) {
+        //                     console.log(`      - write set - ${BLUE}key:${RESET}${write.key} ${BLUE}is_delete:${RESET}${write.is_delete} ${BLUE}value:${RESET}${write.value.toString()}`);
         //                 }
         //             }
         //         }

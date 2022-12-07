@@ -13,11 +13,22 @@ const path = require("path");
 
 const enrollAdmin = {};
 
+enrollAdmin.getCCP = async (org) => {
+  let ccpPath;
+  if (org == "teafarm") {
+    ccpPath = "./connection-profiles/mfc-prd-config.json";
+  } else if (org == "tata") {
+    ccpPath = "./connection-profiles/mfc-prd-config.json";
+  } else return null;
+  const ccpJSON = fs.readFileSync(ccpPath, "utf8");
+  const ccp = JSON.parse(ccpJSON);
+  return ccp;
+};
+
 enrollAdmin.enroll = async (org) => {
   try {
     // load the network configuration
-    const ccpPath = path.join(process.cwd(), './connection-profiles/mfc-cc.json');
-    const ccp = JSON.parse(fs.readFileSync(ccpPath, "utf8"));
+    const ccp = await enrollAdmin.getCCP(org);
 
     // Create a new CA client for interacting with the CA.
     let caInfo = {};
@@ -28,11 +39,11 @@ enrollAdmin.enroll = async (org) => {
     }
     // console.log(caInfo);
     // console.log(caInfo.tlsCAcerts.pem);
-    // const caTLSCACerts = caInfo.tlsCAcerts.path;
+    const caTLSCACerts = caInfo.tlsCAcerts.path;
     const ca = new FabricCAServices(
-      caInfo.url
-      // { trustedRoots: caTLSCACerts, verify: false },
-      // caInfo.caName
+      caInfo.url,
+      { trustedRoots: caTLSCACerts, verify: false },
+      caInfo.caName
     );
 
     // Create a new file system based wallet for managing identities.
@@ -42,7 +53,7 @@ enrollAdmin.enroll = async (org) => {
     } else if (org == "teafarm") {
       walletPath = path.join(process.cwd(), "teafarm-wallet");
     }
-    const wallet = await Wallets.newFileSystemwccallet(walletPath);
+    const wallet = await Wallets.newFileSystemWallet(walletPath);
     console.log(`Wallet path: ${walletPath}`);
 
     // Check to see if we've already enrolled the admin user.
@@ -88,7 +99,7 @@ enrollAdmin.enroll = async (org) => {
     process.exit(1);
   }
 };
-const oorg = 'tata'
-// module.exports = enrollAdmin;
-enrollAdmin.enroll(oorg)
+
+module.exports = enrollAdmin;
+
 // enrollAdmin();

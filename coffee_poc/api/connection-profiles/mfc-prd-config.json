@@ -1,75 +1,92 @@
 {
-    "name": "test",
-    "version": "1.0",
-    "channels": {
-      "mfd-prd-channel": {
-        "peers": ["peertf1.production.com", "peertm1.manufacturer.com"]
-      }
+  "name": "test",
+  "version": "1.0",
+  "channels": {
+    "mfd-prd-channel": {
+      "peers": ["peertf1.production.com", "peertm1.manufacturer.com"]
+    }
+  },
+  "organizations": {
+    "teafarm": {
+      "mspid": "teafarmMSP",
+      "peers": ["peertf1.production.com", "peertf2.production.com"]
     },
-    "organizations": {
-      "teafarm": {
-        "mspid": "teafarmMSP",
-        "peers": ["peertf1.production.com", "peertf2.production.com"]
+    "tata": {
+      "mspid": "tataMSP",
+      "peers": ["peertm1.manufacturer.com", "peertm2.manufacturer.com"]
+    }
+  },
+  "orderers": {
+    "orderer1.gov.io": {
+      "url": "grpcs://localhost:7050",
+      "grpcOptions": {
+        "ssl-target-name-override": "orderer1.gov.io"
       },
-      "tata": {
-        "mspid": "tataMSP",
-        "peers": ["peertm1.manufacturer.com", "peertm2.manufacturer.com"]
+      "tlsCACerts": {
+        "path": "/home/ubuntu/pankajb/hyperledger/coffee_poc/crypto-config/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem"
       }
     },
-    "orderers": {
-      "orderer1.gov.io": {
-        "url": "grpcs://localhost:7050",
-        "grpcOptions": {
-          "ssl-target-name-override": "orderer1.gov.io"
-        },
-        "tlsCACerts": {
-          "path": "/home/vagrant/mount/coffee_poc/crypto-config/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem"
-        }
-      }
-    },
-    "peers": {
-      "peertf1.production.com": {
-        "url": "grpcs://localhost:8051",
-        "grpcOptions": {
-          "ssl-target-name-override": "peertf1.production.com",
-          "request-timeout": 300000
-        },
-        "tlsCACerts": {
-          "path": "/home/vagrant/mount/coffee_poc/crypto-config/peerOrganizations/production.com/peers/peertf1.production.com/msp/tlscacerts/tlsca.production.com-cert.pem"
-        }
+    "orderer2.gov.io": {
+      "url": "grpcs://localhost:7051",
+      "grpcOptions": {
+        "ssl-target-name-override": "orderer2.gov.io"
       },
-      "peertm1.manufacturer.com": {
-        "url": "grpcs://localhost:9051",
-        "grpcOptions": {
-          "ssl-target-name-override": "peertm1.manufacturer.com",
-          "request-timeout": 300000
-        },
-        "tlsCACerts": {
-          "path": "/home/vagrant/mount/coffee_poc/crypto-config/peerOrganizations/manufacturer.com/peers/peertm1.manufacturer.com/msp/tlscacerts/tlsca.manufacturer.com-cert.pem"
-        }
+      "tlsCACerts": {
+        "path": "/home/ubuntu/pankajb/hyperledger/coffee_poc/crypto-config/ordererOrganizations/gov.io/orderers/orderer2.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem"
       }
     },
-    "certificateAuthorities": {
-      "ca.manufacturer.com": {
-        "url": "https://localhost:2051",
-        "caName": "ca.manufacturer.com",
-        "tlsCAcerts": {
-          "path": "/home/vagrant/mount/coffee_poc/crypto-config/peerOrganizations/manufacturer.com/ca/ca.manufacturer.com-cert.pem"
-        },
-        "httpOptions": {
-          "verify": false
-        }
+    "orderer3.gov.io": {
+      "url": "grpcs://localhost:7052",
+      "grpcOptions": {
+        "ssl-target-name-override": "orderer3.gov.io"
       },
-      "ca.production.com": {
-        "url": "https://localhost:2052",
-        "caName": "ca.production.com",
-        "tlsCAcerts": {
-          "path": "/home/vagrant/mount/coffee_poc/crypto-config/peerOrganizations/production.com/ca/ca.production.com-cert.pem"
-        },
-        "httpOptions": {
-          "verify": false
-        }
+      "tlsCACerts": {
+        "path": "/home/ubuntu/pankajb/hyperledger/coffee_poc/crypto-config/ordererOrganizations/gov.io/orderers/orderer3.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem"
+      }
+    }
+  },
+  "peers": {
+    "peertf1.production.com": {
+      "url": "grpcs://localhost:8051",
+      "grpcOptions": {
+        "ssl-target-name-override": "peertf1.production.com",
+        "request-timeout": 300000
+      },
+      "tlsCACerts": {
+        "path": "/home/ubuntu/pankajb/hyperledger/coffee_poc/crypto-config/peerOrganizations/production.com/peers/peertf1.production.com/msp/tlscacerts/tlsca.production.com-cert.pem"
+      }
+    },
+    "peertm1.manufacturer.com": {
+      "url": "grpcs://localhost:9051",
+      "grpcOptions": {
+        "ssl-target-name-override": "peertm1.manufacturer.com",
+        "request-timeout": 300000
+      },
+      "tlsCACerts": {
+        "path": "/home/ubuntu/pankajb/hyperledger/coffee_poc/crypto-config/peerOrganizations/manufacturer.com/peers/peertm1.manufacturer.com/msp/tlscacerts/tlsca.manufacturer.com-cert.pem"
+      }
+    }
+  },
+  "certificateAuthorities": {
+    "ca.manufacturer.com": {
+      "url": "https://localhost:2051",
+      "caName": "ca.manufacturer.com",
+      "tlsCAcerts": {
+        "path": "/home/ubuntu/pankajb/hyperledger/coffee_poc/crypto-config/peerOrganizations/manufacturer.com/ca/ca.manufacturer.com-cert.pem"
+      },
+      "httpOptions": {
+        "verify": false
+      }
+    },
+    "ca.production.com": {
+      "url": "https://localhost:2052",
+      "caName": "ca.production.com",
+      "tlsCAcerts": {
+        "path": "/home/ubuntu/pankajb/hyperledger/coffee_poc/crypto-config/peerOrganizations/production.com/ca/ca.production.com-cert.pem"
+      },
+      "httpOptions": {
+        "verify": false
       }
     }
   }
-  
+}

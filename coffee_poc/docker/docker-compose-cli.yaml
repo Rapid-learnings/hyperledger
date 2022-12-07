@@ -8,13 +8,13 @@ volumes:
   peertf2.production.com:
   peerbb1.retailer.com:
   peerbb2.retailer.com:
-  peerts1.wharehouse.com:
-  peerts2.wharehouse.com:
+  peerts1.warehouse.com:
+  peerts2.warehouse.com:
   peergov1.gov.io:
 
 networks:
   test:
-    name: test
+    # name: test
 
 services:
 
@@ -74,19 +74,19 @@ services:
     networks:
       - test  
 
-  peerts1.wharehouse.com:
+  peerts1.warehouse.com:
     extends: 
       file: docker-compose-base.yaml
-      service: peerts1.wharehouse.com
-    container_name: peerts1.wharehouse.com
+      service: peerts1.warehouse.com
+    container_name: peerts1.warehouse.com
     networks:
       - test
   
-  peerts2.wharehouse.com:
+  peerts2.warehouse.com:
     extends: 
       file: docker-compose-base.yaml
-      service: peerts2.wharehouse.com
-    container_name: peerts2.wharehouse.com
+      service: peerts2.warehouse.com
+    container_name: peerts2.warehouse.com
     networks:
       - test
   
@@ -124,7 +124,7 @@ services:
       - ./../chaincode/:/opt/gopath/src/github.com/hyperledger/fabric/peer/chaincode
       - ../crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
       - ../:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
-      - ../channel-artefacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
+      - ../channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
     depends_on:
       - peertm1.manufacturer.com
       - peertm2.manufacturer.com
@@ -132,8 +132,8 @@ services:
       - peertf2.production.com
       - peerbb1.retailer.com
       - peerbb2.retailer.com
-      - peerts1.wharehouse.com
-      - peerts2.wharehouse.com
+      - peerts1.warehouse.com
+      - peerts2.warehouse.com
       - orderer
     networks:
       - test
@@ -164,7 +164,7 @@ services:
       - ./../chaincode/:/opt/gopath/src/github.com/hyperledger/fabric/peer/chaincode
       - ../crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
       - ../:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
-      - ../channel-artefacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
+      - ../channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
     depends_on:
       - peertm1.manufacturer.com
       - peertm2.manufacturer.com
@@ -172,8 +172,8 @@ services:
       - peertf2.production.com
       - peerbb1.retailer.com
       - peerbb2.retailer.com
-      - peerts1.wharehouse.com
-      - peerts2.wharehouse.com
+      - peerts1.warehouse.com
+      - peerts2.warehouse.com
       - orderer
     networks:
       - test
@@ -204,7 +204,7 @@ services:
       - ./../chaincode/:/opt/gopath/src/github.com/hyperledger/fabric/peer/chaincode
       - ../crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
       - ../:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
-      - ../channel-artefacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
+      - ../channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
     depends_on:
       - peertm1.manufacturer.com
       - peertm2.manufacturer.com
@@ -212,8 +212,8 @@ services:
       - peertf2.production.com
       - peerbb1.retailer.com
       - peerbb2.retailer.com
-      - peerts1.wharehouse.com
-      - peerts2.wharehouse.com
+      - peerts1.warehouse.com
+      - peerts2.warehouse.com
       - orderer
     networks:
       - test
@@ -244,7 +244,7 @@ services:
       - ./../chaincode/:/opt/gopath/src/github.com/hyperledger/fabric/peer/chaincode
       - ../crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
       - ../:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
-      - ../channel-artefacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
+      - ../channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
     depends_on:
       - peertm1.manufacturer.com
       - peertm2.manufacturer.com
@@ -252,8 +252,8 @@ services:
       - peertf2.production.com
       - peerbb1.retailer.com
       - peerbb2.retailer.com
-      - peerts1.wharehouse.com
-      - peerts2.wharehouse.com
+      - peerts1.warehouse.com
+      - peerts2.warehouse.com
       - orderer
     networks:
       - test
@@ -284,7 +284,7 @@ services:
       - ./../chaincode/:/opt/gopath/src/github.com/hyperledger/fabric/peer/chaincode
       - ../crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
       - ../:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
-      - ../channel-artefacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
+      - ../channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
     depends_on:
       - peertm1.manufacturer.com
       - peertm2.manufacturer.com
@@ -292,8 +292,8 @@ services:
       - peertf2.production.com
       - peerbb1.retailer.com
       - peerbb2.retailer.com
-      - peerts1.wharehouse.com
-      - peerts2.wharehouse.com
+      - peerts1.warehouse.com
+      - peerts2.warehouse.com
       - orderer
     networks:
       - test
@@ -324,7 +324,7 @@ services:
       - ./../chaincode/:/opt/gopath/src/github.com/hyperledger/fabric/peer/chaincode
       - ../crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
       - ../:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
-      - ../channel-artefacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
+      - ../channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
     depends_on:
       - peertm1.manufacturer.com
       - peertm2.manufacturer.com
@@ -332,14 +332,14 @@ services:
       - peertf2.production.com
       - peerbb1.retailer.com
       - peerbb2.retailer.com
-      - peerts1.wharehouse.com
-      - peerts2.wharehouse.com
+      - peerts1.warehouse.com
+      - peerts2.warehouse.com
       - orderer
     networks:
       - test
 
-  cli-wharehouse-1:
-    container_name: cli-wharehouse-1
+  cli-warehouse-1:
+    container_name: cli-warehouse-1
     image: hyperledger/fabric-tools:2.2
     tty: true
     stdin_open: true
@@ -349,14 +349,14 @@ services:
       - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
       #- FABRIC_LOGGING_SPEC=DEBUG
       - FABRIC_LOGGING_SPEC=INFO
-      - CORE_PEER_ID=peerts1.wharehouse.com
-      - CORE_PEER_ADDRESS=peerts1.wharehouse.com:10050
+      - CORE_PEER_ID=peerts1.warehouse.com
+      - CORE_PEER_ADDRESS=peerts1.warehouse.com:10050
       - CORE_PEER_LOCALMSPID=tatastoreMSP
       - CORE_PEER_TLS_ENABLED=true
-      - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/wharehouse.com/peers/peerts1.wharehouse.com/tls/server.crt
-      - CORE_PEER_TLS_KEY_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/wharehouse.com/peers/peerts1.wharehouse.com/tls/server.key
-      - CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/wharehouse.com/peers/peerts1.wharehouse.com/tls/ca.crt
-      - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/wharehouse.com/users/Admin@wharehouse.com/msp
+      - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/warehouse.com/peers/peerts1.warehouse.com/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/warehouse.com/peers/peerts1.warehouse.com/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/warehouse.com/peers/peerts1.warehouse.com/tls/ca.crt
+      - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/warehouse.com/users/Admin@warehouse.com/msp
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
     command: /bin/bash
     volumes:
@@ -364,7 +364,7 @@ services:
       - ./../chaincode/:/opt/gopath/src/github.com/hyperledger/fabric/peer/chaincode
       - ../crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
       - ../:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
-      - ../channel-artefacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
+      - ../channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
     depends_on:
       - peertm1.manufacturer.com
       - peertm2.manufacturer.com
@@ -372,14 +372,14 @@ services:
       - peertf2.production.com
       - peerbb1.retailer.com
       - peerbb2.retailer.com
-      - peerts1.wharehouse.com
-      - peerts2.wharehouse.com
+      - peerts1.warehouse.com
+      - peerts2.warehouse.com
       - orderer
     networks:
       - test
 
-  cli-wharehouse-2:
-    container_name: cli-wharehouse-2
+  cli-warehouse-2:
+    container_name: cli-warehouse-2
     image: hyperledger/fabric-tools:2.2
     tty: true
     stdin_open: true
@@ -389,14 +389,14 @@ services:
       - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
       #- FABRIC_LOGGING_SPEC=DEBUG
       - FABRIC_LOGGING_SPEC=INFO
-      - CORE_PEER_ID=peerts2.wharehouse.com
-      - CORE_PEER_ADDRESS=peerts2.wharehouse.com:10080
+      - CORE_PEER_ID=peerts2.warehouse.com
+      - CORE_PEER_ADDRESS=peerts2.warehouse.com:10080
       - CORE_PEER_LOCALMSPID=tatastoreMSP
       - CORE_PEER_TLS_ENABLED=true
-      - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/wharehouse.com/peers/peerts2.wharehouse.com/tls/server.crt
-      - CORE_PEER_TLS_KEY_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/wharehouse.com/peers/peerts2.wharehouse.com/tls/server.key
-      - CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/wharehouse.com/peers/peerts2.wharehouse.com/tls/ca.crt
-      - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/wharehouse.com/users/Admin@wharehouse.com/msp
+      - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/warehouse.com/peers/peerts2.warehouse.com/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/warehouse.com/peers/peerts2.warehouse.com/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/warehouse.com/peers/peerts2.warehouse.com/tls/ca.crt
+      - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/warehouse.com/users/Admin@warehouse.com/msp
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
     command: /bin/bash
     volumes:
@@ -404,7 +404,7 @@ services:
       - ./../chaincode/:/opt/gopath/src/github.com/hyperledger/fabric/peer/chaincode
       - ../crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
       - ../:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
-      - ../channel-artefacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
+      - ../channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
     depends_on:
       - peertm1.manufacturer.com
       - peertm2.manufacturer.com
@@ -412,8 +412,8 @@ services:
       - peertf2.production.com
       - peerbb1.retailer.com
       - peerbb2.retailer.com
-      - peerts1.wharehouse.com
-      - peerts2.wharehouse.com
+      - peerts1.warehouse.com
+      - peerts2.warehouse.com
       - orderer
     networks:
       - test
@@ -445,7 +445,7 @@ services:
       - ./../chaincode/:/opt/gopath/src/github.com/hyperledger/fabric/peer/chaincode
       - ../crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
       - ../:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
-      - ../channel-artefacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
+      - ../channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
     depends_on:
       - peertm1.manufacturer.com
       - peertm2.manufacturer.com
@@ -453,8 +453,8 @@ services:
       - peertf2.production.com
       - peerbb1.retailer.com
       - peerbb2.retailer.com
-      - peerts1.wharehouse.com
-      - peerts2.wharehouse.com
+      - peerts1.warehouse.com
+      - peerts2.warehouse.com
       - orderer
     networks:
       - test
@@ -485,6 +485,6 @@ services:
       - peertf2.production.com
       - peerbb1.retailer.com
       - peerbb2.retailer.com
-      - peerts1.wharehouse.com
-      - peerts2.wharehouse.com
+      - peerts1.warehouse.com
+      - peerts2.warehouse.com
       - orderer

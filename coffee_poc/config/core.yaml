@@ -20,12 +20,12 @@ peer:
 
     # The Address at local network interface this Peer will listen on.
     # By default, it will listen on all network interfaces
-    listenAddress: 0.0.0.0:8051
+    listenAddress: 0.0.0.0:7051
 
     # The endpoint this peer uses to listen for inbound chaincode connections.
     # If this is commented-out, the listen address is selected to be
-    # the peer's address (see below) with port 8052
-    # chaincodeListenAddress: 0.0.0.0:8052
+    # the peer's address (see below) with port 7052
+    # chaincodeListenAddress: 0.0.0.0:7052
 
     # The endpoint the chaincode for this peer uses to connect to the peer.
     # If this is not specified, the chaincodeListenAddress address is selected.
@@ -33,13 +33,13 @@ peer:
     # peer address (see below). If specified peer address is invalid then it
     # will fallback to the auto detected IP (local IP) regardless of the peer
     # addressAutoDetect value.
-    # chaincodeAddress: 0.0.0.0:8052
+    # chaincodeAddress: 0.0.0.0:7052
 
     # When used as peer config, this represents the endpoint to other peers
     # in the same organization. For peers in other organization, see
     # gossip.externalEndpoint for more info.
     # When used as CLI config, this means the peer's endpoint to interact with
-    address: 0.0.0.0:8051
+    address: 0.0.0.0:7051
 
     # Whether the Peer should programmatically determine its address
     # This case is useful for docker containers.
@@ -98,7 +98,7 @@ peer:
         # Important: The endpoints here have to be endpoints of peers in the same
         # organization, because the peer would refuse connecting to these endpoints
         # unless they are in the same organization as the peer.
-        bootstrap: 127.0.0.1:8051
+        bootstrap: 127.0.0.1:7051
 
         # NOTE: orgLeader and useLeaderElection parameters are mutual exclusive.
         # Setting both to true would result in the termination of the peer
@@ -225,7 +225,7 @@ peer:
             # only through reconciler.
             skipPullingInvalidTransactionsDuringCommit: false
             # implicitCollectionDisseminationPolicy specifies the dissemination  policy for the peer's own implicit collection.
-            # When a peer endorses a proposal that wrccites to its own implicit collection, below values override the default values
+            # When a peer endorses a proposal that writes to its own implicit collection, below values override the default values
             # for disseminating private data.
             # Note that it is applicable to all channels the peer has joined. The implication is that requiredPeerCount has to
             # be smaller than the number of peers in a channel that has the lowest numbers of peers from the organization.
@@ -531,7 +531,7 @@ vm:
         # https://docs.docker.com/engine/admin/logging/overview/
         # Note: Set LogConfig using Environment Variables is not supported.
         hostConfig:
-            NetworkMode: test
+            NetworkMode: host
             Dns:
                # - 192.168.0.1
             LogConfig:
@@ -663,7 +663,7 @@ ledger:
        # Otherwise proper security must be provided on the connection between
        # CouchDB client (on the peer) and server.
        couchDBAddress: couchdb:5984
-       # This username must have read and wrccite authority on CouchDB
+       # This username must have read and write authority on CouchDB
        username: admin
        # The password is recommended to pass as an environment variable
        # during start up (eg CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD).
@@ -706,7 +706,7 @@ ledger:
     # the maximum db batch size for converting
     # the ineligible missing data entries to eligible missing data entries
     collElgProcMaxDbBatchSize: 5000
-    # the minimum duration (in milliseconds) between wrcciting
+    # the minimum duration (in milliseconds) between writing
     # two consecutive db batches for converting the ineligible missing data entries to eligible missing data entries
     collElgProcDbBatchesInterval: 1000
     # The missing data entries are classified into two categories:
@@ -774,7 +774,7 @@ metrics:
 
         # the interval at which locally cached counters and gauges are pushed
         # to statsd; timings are pushed immediately
-        wrcciteInterval: 10s
+        writeInterval: 10s
 
         # prefix is prepended to all emitted statsd metrics
         prefix:

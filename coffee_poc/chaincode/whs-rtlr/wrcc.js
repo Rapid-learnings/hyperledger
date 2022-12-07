@@ -15,16 +15,16 @@ const retailerStock = 'RETAILER_STOCK'
 const pricePerPackage = 150
 let rawStock;
 
-class wrcccc extends Contract {
+class wrcc extends Contract {
 
     async initialize(ctx) {
         await ctx.stub.putState(retailerBalance, Buffer.from('100000'));
         await ctx.stub.putState(warehouseBalance, Buffer.from('100000'));
-        //! connect wharehouse i.e wHstock stock from mwcccc.js
+        //! connect wharehouse i.e wHstock stock from mwcc.js
         await ctx.stub.putState(retailerStock, Buffer.from('0'));
     }
 
-    async returnWarehouseSTockAccordingTomwccCC(ctx) {
+    async returnWarehouseSTockAccordingTomwCC(ctx) {
         const rstock = await this.getRetailerStock(ctx)
         // Query the Manufacturers stock from pmcc
         const response = await ctx.stub.invokeChaincode('mwcc', ['getWharehouseStock'], 'mfd-whs-channel');
@@ -36,7 +36,7 @@ class wrcccc extends Contract {
         return rawStock;
     }
 
-    async updateWharehouseStock(ctx, qty, flag) {
+    async updateWarehouseStock(ctx, qty, flag) {
         // const clientMSPID = await ctx.clientIdentity.getMSPID();
         // if (clientMSPID !== 'tatastoreMSP') {
         //     throw new Error('only Warehouse can update stock');
@@ -62,7 +62,7 @@ class wrcccc extends Contract {
         return updatedStock;
     }
 
-    async availableWharehouseStock(ctx) {
+    async availableWarehouseStock(ctx) {
         // const ASBytes = await ctx.stub.getState(wHStock);
         // const AS = parseInt(ASBytes.toString())
         // console.log("Available Stock is %s kg", AS);
@@ -115,7 +115,7 @@ class wrcccc extends Contract {
         //     throw new Error('only Retailer can check available stock')
         // }
         // await TokenERC20Contract.transferFrom(ctx, clientMSPID, this.toString(), amt)
-        // let availableWHStock = await this.availableWharehouseStock(ctx);
+        // let availableWHStock = await this.availableWarehouseStock(ctx);
         if(rawStock < parseInt(qty)){
             throw new Error("Wharehouse Stock Is Less Than The Asked Qty,  current = ", availableWHStock);
         }
@@ -127,8 +127,8 @@ class wrcccc extends Contract {
         }
 
         await this.updateRetailerBalance(ctx, amt, 1);
-        await this.updateWharehouseBalance(ctx, amt, 0);
-        // await this.updateWharehouseStock(ctx, qty, 1);
+        await this.updateWarehouseBalance(ctx, amt, 0);
+        // await this.updateWarehouseStock(ctx, qty, 1);
         await this.updateRetailerStock(ctx, qty, 0);
 
         const orderNoBytes = await ctx.stub.getState(orderNumber);
@@ -226,7 +226,7 @@ class wrcccc extends Contract {
     //         // transferring amount to producer
     //         let balance;
     //         try {
-    //             balance = await this.getWhareHouseBalance(ctx);
+    //             balance = await this.getWareHouseBalance(ctx);
     //         } catch (err) {
     //             throw err;
     //         }
@@ -246,7 +246,7 @@ class wrcccc extends Contract {
     //     }
     // }
 
-    async getWhareHouseBalance(ctx) {
+    async getWareHouseBalance(ctx) {
         const clientMSP = await ctx.clientIdentity.getMSPID();
         if (clientMSP === 'tatastoreMSP') {
             const balanceBytes = await ctx.stub.getState(warehouseBalance);
@@ -261,8 +261,8 @@ class wrcccc extends Contract {
         }
     }
 
-    async updateWharehouseBalance(ctx, amt, flag){
-        let bal = await this.getWhareHouseBalance(ctx);
+    async updateWarehouseBalance(ctx, amt, flag){
+        let bal = await this.getWareHouseBalance(ctx);
         if(flag == 0){
            let newBal = bal + amt;
            await ctx.stub.putState(warehouseBalance, Buffer.from(newBal.toString()))
@@ -287,4 +287,4 @@ class wrcccc extends Contract {
     }
 }
 
-module.exports = wrcccc;
+module.exports = wrcc;

@@ -17,7 +17,7 @@ let totalPackages = 'number-of-packages'
 // let status = ['READY_FOR_DISPATCH', 'DISPATCHED'];
 let rawStock
 
-class mwcccc extends Contract {
+class mwcc extends Contract {
     // intializes stock to a fixed amount
     async initialize(ctx) {
         console.log('===== Initializing all stocks =====');
@@ -136,13 +136,13 @@ class mwcccc extends Contract {
         if(flag == 1){
             let roastedStock = await this.availableRoastedStock(ctx);
             roastedStock = parseInt(roastedStock)
-            let newrccoastedStock = roastedStock - qty;
-            await ctx.stub.putState(roastedstockKey, Buffer.from(newrccoastedStock.toString()));
+            let newroastedStock = roastedStock - qty;
+            await ctx.stub.putState(roastedstockKey, Buffer.from(newroastedStock.toString()));
         }else if(flag == 0){
             let roastedStock = await this.availableRoastedStock(ctx);
             roastedStock = parseInt(roastedStock)
-            let newrccoastedStock = roastedStock + qty;
-            await ctx.stub.putState(roastedstockKey, Buffer.from(newrccoastedStock.toString()));
+            let newroastedStock = roastedStock + qty;
+            await ctx.stub.putState(roastedstockKey, Buffer.from(newroastedStock.toString()));
         }
     }
 
@@ -241,8 +241,8 @@ class mwcccc extends Contract {
         await this.updateRoastedStock(ctx, wto, 0);
 
         // const roastedStock = this.availableRoastedStock(ctx);
-        // const newrccoastedStock = parseInt(roastedStock) + wto;
-        // await ctx.stub.putState(roastedstockKey, Buffer.from(newrccoastedStock.toString()));
+        // const newroastedStock = parseInt(roastedStock) + wto;
+        // await ctx.stub.putState(roastedstockKey, Buffer.from(newroastedStock.toString()));
     }
 
         // here -> weightIn is coffee sent for QA.
@@ -311,7 +311,7 @@ class mwcccc extends Contract {
         // update the wharehouse stock & number of packages
         await this.updateWhareHouseStock(ctx, packages);
         await this.updateTotalPackages(ctx, packages, 1);
-        await ctx.stub.setEvent("dispatch", buffer.from(packages.toString()));
+        await ctx.stub.setEvent("dispatch", Buffer.from(packages.toString()));
     }
 
     async getTotalPackages(ctx) {
@@ -381,4 +381,4 @@ class mwcccc extends Contract {
     // }
 }
 
-module.exports = mwcccc;
+module.exports = mwcc;

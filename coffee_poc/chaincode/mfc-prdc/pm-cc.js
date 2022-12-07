@@ -276,14 +276,14 @@ class pmcc extends Contract {
     }
 
     async queryTestCC(ctx) {
-        const response = await ctx.stub.invokeChaincode("testcc", ["get"], "mwcc-channel");
+        const response = await ctx.stub.invokeChaincode("testcc", ["get"], "mw-channel");
         const state = response.payload.toString();
         console.log('State is %s', state);
         return state;
     }
 
     async putTestCC(ctx) {
-        await ctx.stub.invokeChaincode("testcc", ["put", "night"], "mwcc-channel");
+        await ctx.stub.invokeChaincode("testcc", ["put", "night"], "mw-channel");
     }
 }
 

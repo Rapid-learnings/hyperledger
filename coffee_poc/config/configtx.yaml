@@ -7,7 +7,7 @@ Organizations:
             Readers:
                 Type: Signature
                 Rule: "OR('OrdererMSP.member')"
-            wrcciters:
+            Writers:
                 Type: Signature
                 Rule: "OR('OrdererMSP.member')"
             Admins:
@@ -15,8 +15,8 @@ Organizations:
                 Rule: "OR('OrdererMSP.admin')"
         OrdererEndpoints:
             - orderer1.gov.io:7050
-            # - orderer2.gov.io:7051
-            # - orderer3.gov.io:7052
+            - orderer2.gov.io:7051
+            - orderer3.gov.io:7052
 
     - &governance
         Name: governance
@@ -25,16 +25,16 @@ Organizations:
         Policies:
             Readers:
                 Type: Signature
-                Rule: "OR('govMSP.peer', 'govMSP.admin', 'govMSP.client')"
-            wrcciters:
+                Rule: "OR('govMSP.member', 'govMSP.peer', 'govMSP.admin', 'govMSP.client')"
+            Writers:
                 Type: Signature
-                Rule: "OR('govMSP.admin', 'govMSP.client')"
+                Rule: "OR('govMSP.member', 'govMSP.peer', 'govMSP.admin', 'govMSP.client')"
             Admins:
                 Type: Signature
                 Rule: "OR('govMSP.admin')"
             Endorsement:
                 Type: Signature
-                Rule: "OR('govMSP.peer')"
+                Rule: "OR('govMSP.peer', 'govMSP.admin')"
         AnchorPeers:
             Host: peergov1.gov.io
             Port: 13050    
@@ -46,19 +46,21 @@ Organizations:
         Policies:
             Readers:
                 Type: Signature
-                Rule: "OR('teafarmMSP.peer', 'teafarmMSP.admin', 'teafarmMSP.client')"
-            wrcciters:
+                Rule: "OR('teafarmMSP.member', 'teafarmMSP.peer', 'teafarmMSP.admin', 'teafarmMSP.client')"
+            Writers:
                 Type: Signature
-                Rule: "OR('teafarmMSP.admin', 'teafarmMSP.client')"
+                Rule: "OR('teafarmMSP.member', 'teafarmMSP.peer', 'teafarmMSP.admin', 'teafarmMSP.client')"
             Admins:
                 Type: Signature
                 Rule: "OR('teafarmMSP.admin')"
             Endorsement:
                 Type: Signature
-                Rule: "OR('teafarmMSP.peer')"
+                Rule: "OR('teafarmMSP.peer', 'teafarmMSP.admin')"
         AnchorPeers:
             Host: peertf1.production.com
             Port: 8051
+            Host: peertf2.production.com
+            Port: 8081
     
     - &tata
         Name: tata
@@ -67,40 +69,44 @@ Organizations:
         Policies:
             Readers:
                 Type: Signature
-                Rule: "OR('tataMSP.peer', 'tataMSP.admin', 'tataMSP.client')"
-            wrcciters:
+                Rule: "OR('tataMSP.member', 'tataMSP.peer', 'tataMSP.admin', 'tataMSP.client')"
+            Writers:
                 Type: Signature
-                Rule: "OR('tataMSP.admin', 'tataMSP.client')"
+                Rule: "OR('tataMSP.member', 'tataMSP.peer', 'tataMSP.admin', 'tataMSP.client')"
             Admins:
                 Type: Signature
                 Rule: "OR('tataMSP.admin')"
             Endorsement:
                 Type: Signature
-                Rule: "OR('tataMSP.peer')"
+                Rule: "OR('tataMSP.peer', 'tataMSP.admin')"            
         AnchorPeers:
             Host: peertm1.manufacturer.com
             Port: 9051
+            Host: peertm2.manufacturer.com
+            Port: 9081
     
     - &tatastore
         Name: tatastore
         ID: tatastoreMSP
-        MSPDir: ../crypto-config/peerOrganizations/wharehouse.com/msp
+        MSPDir: ../crypto-config/peerOrganizations/warehouse.com/msp
         Policies: 
             Readers:
                 Type: Signature
-                Rule: "OR('tatastoreMSP.client', 'tatastoreMSP.admin', 'tatastoreMSP.peer')"
-            wrcciters:
+                Rule: "OR('tatastoreMSP.client', 'tatastoreMSP.admin', 'tatastoreMSP.member', 'tatastoreMSP.peer')"
+            Writers:
                 Type: Signature
-                Rule: "OR('tatastoreMSP.client', 'tatastoreMSP.admin')"
+                Rule: "OR('tatastoreMSP.client', 'tatastoreMSP.admin', 'tatastoreMSP.member', 'tatastoreMSP.peer')"
             Admins:
                 Type: Signature
                 Rule:  "OR('tatastoreMSP.admin')"
             Endorsement:
                 Type: Signature
-                Rule:  "OR('tatastoreMSP.peer')"
+                Rule:  "OR('tatastoreMSP.admin', 'tatastoreMSP.member', 'tatastoreMSP.peer')"
         AnchorPeers:
-            Host: peerts1.wharehouse.com
+            Host: peerts1.warehouse.com
             Port: 10051
+            Host: peerts2.warehouse.com
+            Port: 10081
 
     - &bigbazar
         Name: bigbazar
@@ -109,19 +115,19 @@ Organizations:
         Policies: 
             Readers:
                 Type: Signature
-                Rule: "OR('bigbazarMSP.client', 'bigbazarMSP.admin', 'bigbazarMSP.peer')"
-            wrcciters:
+                Rule: "OR('bigbazarMSP.client', 'bigbazarMSP.admin', 'bigbazarMSP.member', 'bigbazarMSP.peer')"
+            Writers:
                 Type: Signature
-                Rule: "OR('bigbazarMSP.client', 'bigbazarMSP.admin')"
+                Rule: "OR('bigbazarMSP.client', 'bigbazarMSP.admin', 'bigbazarMSP.member', 'bigbazarMSP.peer')"
             Admins:
                 Type: Signature
                 Rule:  "OR('bigbazarMSP.admin')"
             Endorsement:
                 Type: Signature
-                Rule:  "OR('bigbazarMSP.peer')"
+                Rule:  "OR('bigbazarMSP.admin', 'bigbazarMSP.member', 'bigbazarMSP.peer')"
         AnchorPeers:
             Host: peerbb1.retailer.com
-            Port: 10051
+            Port: 11051
 
 ################### #############################################################
 #
@@ -198,16 +204,16 @@ Application: &ApplicationDefaults
         #---New Lifecycle System Chaincode (_lifecycle) function to policy mapping for access control--#
 
         # ACL policy for _lifecycle's "CheckCommitReadiness" function
-        _lifecycle/CheckCommitReadiness: /Channel/Application/wrcciters
+        _lifecycle/CheckCommitReadiness: /Channel/Application/Writers
 
         # ACL policy for _lifecycle's "CommitChaincodeDefinition" function
-        _lifecycle/CommitChaincodeDefinition: /Channel/Application/wrcciters
+        _lifecycle/CommitChaincodeDefinition: /Channel/Application/Writers
 
         # ACL policy for _lifecycle's "QueryChaincodeDefinition" function
-        _lifecycle/QueryChaincodeDefinition: /Channel/Application/wrcciters
+        _lifecycle/QueryChaincodeDefinition: /Channel/Application/Writers
 
         # ACL policy for _lifecycle's "QueryChaincodeDefinitions" function
-        _lifecycle/QueryChaincodeDefinitions: /Channel/Application/wrcciters
+        _lifecycle/QueryChaincodeDefinitions: /Channel/Application/Writers
 
         #---Lifecycle System Chaincode (lscc) function to policy mapping for access control---#
 
@@ -251,10 +257,10 @@ Application: &ApplicationDefaults
         #---Miscellaneous peer function to policy mapping for access control---#
 
         # ACL policy for invoking chaincodes on peer
-        peer/Propose: /Channel/Application/wrcciters
+        peer/Propose: /Channel/Application/Writers
 
         # ACL policy for chaincode to chaincode invocation
-        peer/ChaincodeToChaincode: /Channel/Application/wrcciters
+        peer/ChaincodeToChaincode: /Channel/Application/Writers
 
         #---Events resource to policy mapping for access control###---#
 
@@ -281,9 +287,9 @@ Application: &ApplicationDefaults
         Readers:
             Type: ImplicitMeta
             Rule: "ANY Readers"
-        wrcciters:
+        Writers:
             Type: ImplicitMeta
-            Rule: "ANY wrcciters"
+            Rule: "ANY Writers"
         Admins:
             Type: ImplicitMeta
             Rule: "MAJORITY Admins"
@@ -329,7 +335,7 @@ Orderer: &OrdererDefaults
 
         # Max Message Count: The maximum number of messages to permit in a
         # batch.  No block will contain more than this number of messages.
-        MaxMessageCount: 10
+        MaxMessageCount: 500
 
         # Absolute Max Bytes: The absolute maximum number of bytes allowed for
         # the serialized messages in a batch. The maximum block size is this value
@@ -338,20 +344,20 @@ Orderer: &OrdererDefaults
         # this value will be rejected by ordering.
         # It is recommended not to exceed 49 MB, given the default grpc max message size of 100 MB
         # configured on orderer and peer nodes (and allowing for message expansion during communication).
-        AbsoluteMaxBytes: 99 MB
+        AbsoluteMaxBytes: 10 MB
 
         # Preferred Max Bytes: The preferred maximum number of bytes allowed
         # for the serialized messages in a batch. Roughly, this field may be considered
         # the best effort maximum size of a batch. A batch will fill with messages
         # until this size is reached (or the max message count, or batch timeout is
         # exceeded).  If adding a new message to the batch would cause the batch to
-        # exceed the preferred max bytes, then the current batch is closed and wrccitten
+        # exceed the preferred max bytes, then the current batch is closed and written
         # to a block, and a new batch containing the new message is created.  If a
         # message larger than the preferred max bytes is received, then its batch
         # will contain only that message.  Because messages may be larger than
         # preferred max bytes (up to AbsoluteMaxBytes), some batches may exceed
         # the preferred max bytes, but will always contain exactly one transaction.
-        PreferredMaxBytes: 512 KB
+        PreferredMaxBytes: 2 MB
 
     # Max Channels is the maximum number of channels to allow on the ordering
     # network. When set to 0, this implies no maximum number of channels.
@@ -415,9 +421,9 @@ Orderer: &OrdererDefaults
         Readers:
             Type: ImplicitMeta
             Rule: "ANY Readers"
-        wrcciters:
+        Writers:
             Type: ImplicitMeta
-            Rule: "ANY wrcciters"
+            Rule: "ANY Writers"
         Admins:
             Type: ImplicitMeta
             Rule: "MAJORITY Admins"
@@ -425,7 +431,7 @@ Orderer: &OrdererDefaults
         # from the orderer for the peer to validate it.
         BlockValidation:
             Type: ImplicitMeta
-            Rule: "ANY wrcciters"
+            Rule: "ANY Writers"
 
     # Capabilities describes the orderer level capabilities, see the
     # dedicated Capabilities section elsewhere in this file for a full
@@ -451,9 +457,9 @@ Channel: &ChannelDefaults
             Type: ImplicitMeta
             Rule: "ANY Readers"
         # Who may invoke the 'Broadcast' API
-        wrcciters:
+        Writers:
             Type: ImplicitMeta
-            Rule: "ANY wrcciters"
+            Rule: "ANY Writers"
         # By default, who may modify elements at this config level
         Admins:
             Type: ImplicitMeta
@@ -531,7 +537,7 @@ Profiles:
             Capabilities:
                 <<: *ApplicationCapabilities
 
-    ManufacturerWharehouseProfile:
+    ManufacturerwarehouseProfile:
         Consortium: Mfd-Whs-Consortium
         <<: *ChannelDefaults
         Application:
@@ -542,7 +548,7 @@ Profiles:
             Capabilities:
                 <<: *ApplicationCapabilities
 
-    WharehouseRetailerProfile:
+    warehouseRetailerProfile:
         Consortium: Whs-Rtlr-Consortium
         <<: *ChannelDefaults
         Application:

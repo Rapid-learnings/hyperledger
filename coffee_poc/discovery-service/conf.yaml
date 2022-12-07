@@ -1,0 +1,10 @@
+version: 0
+tlsconfig:
+  certpath: ""
+  keypath: ""
+  peercacertpath: /home/ubuntu/pankajb/hyperledger/coffee_poc/crypto-config/peerOrganizations/manufacturer.com/peers/peertm1.manufacturer.com/msp/tlscacerts/tlsca.manufacturer.com-cert.pem
+  timeout: 0s
+signerconfig:
+  mspid: tataMSP
+  identitypath: /home/ubuntu/pankajb/hyperledger/coffee_poc/crypto-config/peerOrganizations/manufacturer.com/users/User1@manufacturer.com/msp/signcerts/User1@manufacturer.com-cert.pem
+  keypath: /home/ubuntu/pankajb/hyperledger/coffee_poc/crypto-config/peerOrganizations/manufacturer.com/users/User1@manufacturer.com/msp/keystore/priv_sk

@@ -8,9 +8,11 @@ volumes:
   peertf2.production.com:
   peerbb1.retailer.com:
   peerbb2.retailer.com:
-  peerts1.wharehouse.com:
-  peerts2.wharehouse.com:
+  peerts1.warehouse.com:
+  peerts2.warehouse.com:
   orderer1.gov.io:
+  orderer2.gov.io:
+  orderer3.gov.io:
 
 services:
 
@@ -135,7 +137,7 @@ services:
       - CORE_PEER_LISTENADDRESS=0.0.0.0:11051
       - CORE_PEER_CHAINCODEADDRESS=peerbb1.retailer.com:11052
       - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:11052
-      - CORE_PEER_GOSSIP_BOOTSTRAP=peerbb1.retailer.com:11051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peerbb2.retailer.com:11081
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peerbb1.retailer.com:11051
       - CORE_PEER_LOCALMSPID=bigbazarMSP
     volumes:
@@ -146,71 +148,71 @@ services:
     ports:
       - 11051:11051
 
-  # peerbb2.retailer.com:
-  #   container_name: peerbb2.retailer.com
-  #   extends:
-  #     file: peer-base.yaml
-  #     service: peer-base
-  #   environment:
-  #     - CORE_PEER_ID=peerbb2.retailer.com
-  #     - CORE_PEER_ADDRESS=peerbb2.retailer.com:11080
-  #     - CORE_PEER_LISTENADDRESS=0.0.0.0:11080
-  #     - CORE_PEER_CHAINCODEADDRESS=peerbb2.retailer.com:10081
-  #     - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:10081
-  #     - CORE_PEER_GOSSIP_BOOTSTRAP=peerbb1.retailer.com:11050
-  #     - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peerbb2.retailer.com:11080
-  #     - CORE_PEER_LOCALMSPID=bigbazarMSP
-  #   volumes:
-  #     - /var/run/:/host/var/run/
-  #     - ../crypto-config/peerOrganizations/retailer.com/peers/peerbb2.retailer.com/msp:/etc/hyperledger/fabric/msp
-  #     - ../crypto-config/peerOrganizations/retailer.com/peers/peerbb2.retailer.com/tls:/etc/hyperledger/fabric/tls
-  #     - peerbb2.retailer.com:/var/hyperledger/production
-  #   ports:
-  #     - 11080:11080
-
-  peerts1.wharehouse.com:
-    container_name: peerts1.wharehouse.com
+  peerbb2.retailer.com:
+    container_name: peerbb2.retailer.com
     extends:
       file: peer-base.yaml
       service: peer-base
     environment:
-      - CORE_PEER_ID=peerts1.wharehouse.com
-      - CORE_PEER_ADDRESS=peerts1.wharehouse.com:10051
+      - CORE_PEER_ID=peerbb2.retailer.com
+      - CORE_PEER_ADDRESS=peerbb2.retailer.com:11081
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:11081
+      - CORE_PEER_CHAINCODEADDRESS=peerbb2.retailer.com:11082
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:11082
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peerbb1.retailer.com:11051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peerbb2.retailer.com:11081
+      - CORE_PEER_LOCALMSPID=bigbazarMSP
+    volumes:
+      - /var/run/:/host/var/run/
+      - ../crypto-config/peerOrganizations/retailer.com/peers/peerbb2.retailer.com/msp:/etc/hyperledger/fabric/msp
+      - ../crypto-config/peerOrganizations/retailer.com/peers/peerbb2.retailer.com/tls:/etc/hyperledger/fabric/tls
+      - peerbb2.retailer.com:/var/hyperledger/production
+    ports:
+      - 11081:11081
+
+  peerts1.warehouse.com:
+    container_name: peerts1.warehouse.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peerts1.warehouse.com
+      - CORE_PEER_ADDRESS=peerts1.warehouse.com:10051
       - CORE_PEER_LISTENADDRESS=0.0.0.0:10051
-      - CORE_PEER_CHAINCODEADDRESS=peerts1.wharehouse.com:10052
+      - CORE_PEER_CHAINCODEADDRESS=peerts1.warehouse.com:10052
       - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:10052
-      - CORE_PEER_GOSSIP_BOOTSTRAP=peerts2.wharehouse.com:10081
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peerts1.wharehouse.com:10051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peerts2.warehouse.com:10081
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peerts1.warehouse.com:10051
       - CORE_PEER_LOCALMSPID=tatastoreMSP
     volumes:
       - /var/run/:/host/var/run/
-      - ../crypto-config/peerOrganizations/wharehouse.com/peers/peerts1.wharehouse.com/msp:/etc/hyperledger/fabric/msp
-      - ../crypto-config/peerOrganizations/wharehouse.com/peers/peerts1.wharehouse.com/tls:/etc/hyperledger/fabric/tls
-      - peerts1.wharehouse.com:/var/hyperledger/production
+      - ../crypto-config/peerOrganizations/warehouse.com/peers/peerts1.warehouse.com/msp:/etc/hyperledger/fabric/msp
+      - ../crypto-config/peerOrganizations/warehouse.com/peers/peerts1.warehouse.com/tls:/etc/hyperledger/fabric/tls
+      - peerts1.warehouse.com:/var/hyperledger/production
     ports:
       - 10051:10051
 
-  peerts2.wharehouse.com:
-    container_name: peerts2.wharehouse.com
+  peerts2.warehouse.com:
+    container_name: peerts2.warehouse.com
     extends:
       file: peer-base.yaml
       service: peer-base
     environment:
-      - CORE_PEER_ID=peerts2.wharehouse.com
-      - CORE_PEER_ADDRESS=peerts2.wharehouse.com:10081
+      - CORE_PEER_ID=peerts2.warehouse.com
+      - CORE_PEER_ADDRESS=peerts2.warehouse.com:10081
       - CORE_PEER_LISTENADDRESS=0.0.0.0:10081
-      - CORE_PEER_CHAINCODEADDRESS=peerts2.wharehouse.com:10082
+      - CORE_PEER_CHAINCODEADDRESS=peerts2.warehouse.com:10082
       - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:10082
-      - CORE_PEER_GOSSIP_BOOTSTRAP=peerts1.wharehouse.com:10051
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peerts2.wharehouse.com:10081
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peerts1.warehouse.com:10051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peerts2.warehouse.com:10081
       - CORE_PEER_LOCALMSPID=tatastoreMSP
     volumes:
       - /var/run/:/host/var/run/
-      - ../crypto-config/peerOrganizations/wharehouse.com/peers/peerts2.wharehouse.com/msp:/etc/hyperledger/fabric/msp
-      - ../crypto-config/peerOrganizations/wharehouse.com/peers/peerts2.wharehouse.com/tls:/etc/hyperledger/fabric/tls
-      - peerts2.wharehouse.com:/var/hyperledger/production
+      - ../crypto-config/peerOrganizations/warehouse.com/peers/peerts2.warehouse.com/msp:/etc/hyperledger/fabric/msp
+      - ../crypto-config/peerOrganizations/warehouse.com/peers/peerts2.warehouse.com/tls:/etc/hyperledger/fabric/tls
+      - peerts2.warehouse.com:/var/hyperledger/production
     ports:
-      - 10081:10081
+      - 10080:10080
   
   orderer1.gov.io:
     container_name: orderer1.gov.io
@@ -218,9 +220,35 @@ services:
       file: peer-base.yaml
       service: orderer-base
     volumes:
-      - ../channel-artefacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
+      - ../channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
       - ../crypto-config/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp:/var/hyperledger/orderer/msp
       - ../crypto-config/ordererOrganizations/gov.io/orderers/orderer1.gov.io/tls:/var/hyperledger/orderer/tls
       - orderer:/var/hyperledger/production/orderer
     ports:
       - 7050:7050
+
+  orderer2.gov.io:
+    container_name: orderer2.gov.io
+    extends:
+      file: peer-base.yaml
+      service: orderer-base
+    volumes:
+      - ../channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
+      - ../crypto-config/ordererOrganizations/gov.io/orderers/orderer2.gov.io/msp:/var/hyperledger/orderer/msp
+      - ../crypto-config/ordererOrganizations/gov.io/orderers/orderer2.gov.io/tls:/var/hyperledger/orderer/tls
+      - orderer2:/var/hyperledger/production/orderer
+    ports:
+      - 7051:7051
+
+  orderer3.gov.io:
+    container_name: orderer3.gov.io
+    extends:
+      file: peer-base.yaml
+      service: orderer-base
+    volumes:
+      - ../channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
+      - ../crypto-config/ordererOrganizations/gov.io/orderers/orderer3.gov.io/msp:/var/hyperledger/orderer/msp
+      - ../crypto-config/ordererOrganizations/gov.io/orderers/orderer3.gov.io/tls:/var/hyperledger/orderer/tls
+      - orderer3:/var/hyperledger/production/orderer
+    ports:
+      - 7052:7052

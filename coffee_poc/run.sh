@@ -1,8 +1,8 @@
 # this file will run all the subsequent shell scripts
 
-./network.sh
+# ./network.sh
 
-sleep 5
+# sleep 5
 
 ./startdocker.sh
 
@@ -12,16 +12,12 @@ sleep 5
 
 sleep 5
 
-./invokeInit.sh
+./mfdPrd.sh
 
-# sleep 5
+sleep 5
 
-# ./mfdPrd.sh 
+./mfcWhs.sh
 
-# sleep 5
+sleep 5
 
-# ./mfcWhs.sh
-
-# sleep 5
-
-# ./whsRtlr.sh
+./whsRtlr.sh

@@ -2,7 +2,7 @@
   "name": "wrcccc",
   "version": "1.0.0",
   "description": "",
-  "main": "wrcccc.js",
+  "main": "wrcc.js",
   "dependencies": {
     "fabric-shim": "^2.2.3",
     "fabric-contract-api": "^2.2.3"
