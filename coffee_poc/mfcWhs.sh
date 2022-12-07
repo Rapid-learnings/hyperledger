@@ -6,18 +6,9 @@ InvokeCCMfdPrd(){
 }
 
 availableRawStock(){
-    echo "****** CC call Fetching Manufacturer Stock On Mfc-Whs-Channel *********"
+ echo "****** CC call Fetching Manufacturer Stock On Mfc-Whs-Channel *********"
     sudo docker exec -it cli-manufacturer-1 peer chaincode query --channelID mfd-whs-channel --name mwcc  -c '{"function":"returnRawStockAccordingToPMCC","Args":[""]}'
 
-    sleep 8
-
-    sudo docker exec -it cli-manufacturer-1 peer chaincode invoke -o orderer1.gov.io:7050 --channelID mfd-whs-channel --name mwcc --tls --cafile "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem" --peerAddresses peerts1.warehouse.com:10051 --tlsRootCertFiles "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/warehouse.com/peers/peerts1.warehouse.com/tls/ca.crt" --peerAddresses peertm1.manufacturer.com:9051 --tlsRootCertFiles "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/manufacturer.com/peers/peertm1.manufacturer.com/tls/ca.crt" -c '{"function":"updateRawStock","Args":["1000","0"]}'
-    
-    sleep 8
-
-    echo "****** Fetching Manufacturer Stock On Mfc-Whs-Channel *********"
-    sudo docker exec -it cli-manufacturer-1 peer chaincode query --channelID mfd-whs-channel --name mwcc  -c '{"function":"availableRawStock","Args":[""]}'
-    
     sleep 8
 }
 

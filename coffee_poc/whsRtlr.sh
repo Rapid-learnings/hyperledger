@@ -52,7 +52,7 @@ queryRetStock(){
 
 InvokeCCWhsRtlr
 queryWhsStock
-updateWhsStock
+# updateWhsStock
 placeOrder
 getOrderDetails
 UpdateStatus
