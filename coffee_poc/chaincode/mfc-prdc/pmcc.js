@@ -30,8 +30,8 @@ class pmcc extends Contract {
     console.log("Balance of teafarmMSP initialized to 1000000 $");
     await ctx.stub.putState(producerFunds, Buffer.from("1000000"));
 
-    console.log("Ordered Stock of Manufacturer is initialized to 0 $");
-    await ctx.stub.putState(producerFunds, Buffer.from("0"));
+    // console.log("Ordered Stock of Manufacturer is initialized to 0 $");
+    // await ctx.stub.putState(producerFunds, Buffer.from("0"));
 
     await ctx.stub.putState(productionStock, Buffer.from(initialStock));
     console.log("Production Stock Initailized to " + initialStock);

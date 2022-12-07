@@ -37,7 +37,7 @@ enrollAdmin.enroll = async (org) => {
     } else if (org == "teafarm") {
       caInfo = ccp.certificateAuthorities["ca.production.com"];
     }
-    // console.log(caInfo);
+    console.log(caInfo);
     // console.log(caInfo.tlsCAcerts.pem);
     const caTLSCACerts = caInfo.tlsCAcerts.path;
     const ca = new FabricCAServices(

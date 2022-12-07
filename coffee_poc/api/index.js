@@ -131,6 +131,7 @@ app.get("/manufacturer-fund", async (req, res, next) => {
 app.get("/manufacturer/order-details/:orderNumber", async (req, res, next) => {
   try {
     let orderNumber = req.params.orderNumber;
+    console.log(typeof orderNumber);
     let message = await invokeObj.getOrderDetails(
       "mfd-prd-channel",
       "pmcc",
@@ -145,7 +146,7 @@ app.get("/manufacturer/order-details/:orderNumber", async (req, res, next) => {
   }
 });
 
-app.get("init-pmcc", async (req, res, next) => {
+app.get("/init-pmcc", async (req, res, next) => {
   try {
     await invokeObj.evaluateTx(
       "mfd-prd-channel",

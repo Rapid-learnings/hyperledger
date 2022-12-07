@@ -11,8 +11,8 @@ volumes:
   peerts1.warehouse.com:
   peerts2.warehouse.com:
   orderer1.gov.io:
-  orderer2.gov.io:
-  orderer3.gov.io:
+  # orderer2.gov.io:
+  # orderer3.gov.io:
 
 services:
 
@@ -46,10 +46,11 @@ services:
     environment:
       - CORE_PEER_ID=peertm1.manufacturer.com
       - CORE_PEER_ADDRESS=peertm1.manufacturer.com:9051
-      - CORE_PEER_LISTENADDRESS=0.0.0.0:9051
+      - CORE_PEER_LISTENADDRESS=peertm1.manufacturer.com:9051
       - CORE_PEER_CHAINCODEADDRESS=peertm1.manufacturer.com:9052
       - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:9052
       - CORE_PEER_GOSSIP_BOOTSTRAP=peertm2.manufacturer.com:9081
+      - CORE_PEER_GOSSIP_ENDPOINT=peertm1.manufacturer.com:9051
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peertm1.manufacturer.com:9051
       - CORE_PEER_LOCALMSPID=tataMSP
     volumes:
@@ -72,6 +73,7 @@ services:
       - CORE_PEER_CHAINCODEADDRESS=peertm2.manufacturer.com:9082
       - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:9082
       - CORE_PEER_GOSSIP_BOOTSTRAP=peertm1.manufacturer.com:9051
+      - CORE_PEER_GOSSIP_ENDPOINT=peertm2.manufacturer.com:9081
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peertm2.manufacturer.com:9081
       - CORE_PEER_LOCALMSPID=tataMSP
     volumes:
@@ -90,10 +92,11 @@ services:
     environment:
       - CORE_PEER_ID=peertf1.production.com
       - CORE_PEER_ADDRESS=peertf1.production.com:8051
-      - CORE_PEER_LISTENADDRESS=0.0.0.0:8051
+      - CORE_PEER_LISTENADDRESS=peertf1.production.com:8051
       - CORE_PEER_CHAINCODEADDRESS=peertf1.production.com:8052
       - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:8052
       - CORE_PEER_GOSSIP_BOOTSTRAP=peertf2.production.com:8081
+      - CORE_PEER_GOSSIP_ENDPOINT=peertf1.production.com:8051
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peertf1.production.com:8051
       - CORE_PEER_LOCALMSPID=teafarmMSP
     volumes:
@@ -112,10 +115,11 @@ services:
     environment:
       - CORE_PEER_ID=peertf2.production.com
       - CORE_PEER_ADDRESS=peertf2.production.com:8081
-      - CORE_PEER_LISTENADDRESS=0.0.0.0:8081
+      - CORE_PEER_LISTENADDRESS=peertf2.production.com:8081
       - CORE_PEER_CHAINCODEADDRESS=peertf2.production.com:8082
       - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:8082
       - CORE_PEER_GOSSIP_BOOTSTRAP=peertf1.production.com:8051
+      - CORE_PEER_GOSSIP_ENDPOINT=peertf1.production.com:8051
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peertf2.production.com:8081
       - CORE_PEER_LOCALMSPID=teafarmMSP
     volumes:
@@ -134,10 +138,11 @@ services:
     environment:
       - CORE_PEER_ID=peerbb1.retailer.com
       - CORE_PEER_ADDRESS=peerbb1.retailer.com:11051
-      - CORE_PEER_LISTENADDRESS=0.0.0.0:11051
+      - CORE_PEER_LISTENADDRESS=peerbb1.retailer.com:11051
       - CORE_PEER_CHAINCODEADDRESS=peerbb1.retailer.com:11052
       - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:11052
       - CORE_PEER_GOSSIP_BOOTSTRAP=peerbb2.retailer.com:11081
+      - CORE_PEER_GOSSIP_ENDPOINT=peerbb1.retailer.com:11051
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peerbb1.retailer.com:11051
       - CORE_PEER_LOCALMSPID=bigbazarMSP
     volumes:
@@ -156,10 +161,11 @@ services:
     environment:
       - CORE_PEER_ID=peerbb2.retailer.com
       - CORE_PEER_ADDRESS=peerbb2.retailer.com:11081
-      - CORE_PEER_LISTENADDRESS=0.0.0.0:11081
+      - CORE_PEER_LISTENADDRESS=peerbb2.retailer.com:11081
       - CORE_PEER_CHAINCODEADDRESS=peerbb2.retailer.com:11082
       - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:11082
       - CORE_PEER_GOSSIP_BOOTSTRAP=peerbb1.retailer.com:11051
+      - CORE_PEER_GOSSIP_ENDPOINT=peerbb2.retailer.com:11081
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peerbb2.retailer.com:11081
       - CORE_PEER_LOCALMSPID=bigbazarMSP
     volumes:
@@ -178,10 +184,11 @@ services:
     environment:
       - CORE_PEER_ID=peerts1.warehouse.com
       - CORE_PEER_ADDRESS=peerts1.warehouse.com:10051
-      - CORE_PEER_LISTENADDRESS=0.0.0.0:10051
+      - CORE_PEER_LISTENADDRESS=peerts1.warehouse.com:10051
       - CORE_PEER_CHAINCODEADDRESS=peerts1.warehouse.com:10052
       - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:10052
       - CORE_PEER_GOSSIP_BOOTSTRAP=peerts2.warehouse.com:10081
+      - CORE_PEER_GOSSIP_ENDPOINT=peerts1.warehouse.com:10051
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peerts1.warehouse.com:10051
       - CORE_PEER_LOCALMSPID=tatastoreMSP
     volumes:
@@ -200,10 +207,11 @@ services:
     environment:
       - CORE_PEER_ID=peerts2.warehouse.com
       - CORE_PEER_ADDRESS=peerts2.warehouse.com:10081
-      - CORE_PEER_LISTENADDRESS=0.0.0.0:10081
+      - CORE_PEER_LISTENADDRESS=peerts2.warehouse.com:10081
       - CORE_PEER_CHAINCODEADDRESS=peerts2.warehouse.com:10082
       - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:10082
       - CORE_PEER_GOSSIP_BOOTSTRAP=peerts1.warehouse.com:10051
+      - CORE_PEER_GOSSIP_ENDPOINT=peerts2.warehouse.com:10081
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peerts2.warehouse.com:10081
       - CORE_PEER_LOCALMSPID=tatastoreMSP
     volumes:
@@ -227,28 +235,28 @@ services:
     ports:
       - 7050:7050
 
-  orderer2.gov.io:
-    container_name: orderer2.gov.io
-    extends:
-      file: peer-base.yaml
-      service: orderer-base
-    volumes:
-      - ../channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
-      - ../crypto-config/ordererOrganizations/gov.io/orderers/orderer2.gov.io/msp:/var/hyperledger/orderer/msp
-      - ../crypto-config/ordererOrganizations/gov.io/orderers/orderer2.gov.io/tls:/var/hyperledger/orderer/tls
-      - orderer2:/var/hyperledger/production/orderer
-    ports:
-      - 7051:7051
+  # orderer2.gov.io:
+  #   container_name: orderer2.gov.io
+  #   extends:
+  #     file: peer-base.yaml
+  #     service: orderer-base
+  #   volumes:
+  #     - ../channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
+  #     - ../crypto-config/ordererOrganizations/gov.io/orderers/orderer2.gov.io/msp:/var/hyperledger/orderer/msp
+  #     - ../crypto-config/ordererOrganizations/gov.io/orderers/orderer2.gov.io/tls:/var/hyperledger/orderer/tls
+  #     - orderer2:/var/hyperledger/production/orderer
+  #   ports:
+  #     - 7051:7051
 
-  orderer3.gov.io:
-    container_name: orderer3.gov.io
-    extends:
-      file: peer-base.yaml
-      service: orderer-base
-    volumes:
-      - ../channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
-      - ../crypto-config/ordererOrganizations/gov.io/orderers/orderer3.gov.io/msp:/var/hyperledger/orderer/msp
-      - ../crypto-config/ordererOrganizations/gov.io/orderers/orderer3.gov.io/tls:/var/hyperledger/orderer/tls
-      - orderer3:/var/hyperledger/production/orderer
-    ports:
-      - 7052:7052
+  # orderer3.gov.io:
+  #   container_name: orderer3.gov.io
+  #   extends:
+  #     file: peer-base.yaml
+  #     service: orderer-base
+  #   volumes:
+  #     - ../channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
+  #     - ../crypto-config/ordererOrganizations/gov.io/orderers/orderer3.gov.io/msp:/var/hyperledger/orderer/msp
+  #     - ../crypto-config/ordererOrganizations/gov.io/orderers/orderer3.gov.io/tls:/var/hyperledger/orderer/tls
+  #     - orderer3:/var/hyperledger/production/orderer
+  #   ports:
+  #     - 7052:7052

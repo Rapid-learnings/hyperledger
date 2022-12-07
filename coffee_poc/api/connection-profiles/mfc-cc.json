@@ -20,7 +20,7 @@
   },
   "peers": {
     "peertm1.manufacturer.com": {
-      "url": "grpcs://localhost:9050",
+      "url": "grpcs://localhost:9051",
       "tlsCACerts": {
         "path": "/home/ubuntu/pankajb/hyperledger/coffee_poc/crypto-config/peerOrganizations/manufacturer.com/peers/peertm1.manufacturer.com/msp/tlscacerts/tlsca.manufacturer.com-cert.pem"
       },
