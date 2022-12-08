@@ -148,7 +148,7 @@ class pmcc extends Contract {
     // console.log("Order Buffer = ", orderBuff);
     await ctx.stub.putState(orderNo.toString(),orderBuff)
     await ctx.stub.putState(orderNumber, Buffer.from(orderNo.toString()))
-
+    await ctx.stub.setEvent("placeOrder", orderBuff);
     return orderNo;
     // return await this.getOrderDetails(ctx, orderNo);
   }

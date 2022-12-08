@@ -1,3 +1,4 @@
+#!/bin/sh
 # set env variables in root directory where bin resides
 export PATH=${PWD}/bin:$PATH
 export FABRIC_CFG_PATH=${PWD}/config
@@ -44,20 +45,20 @@ createChannels(){
 # 5. Create anchor peers according to different channels 
 createAnchorPeers(){
     echo "*===========Creating the anchor peers for Manufacturer & Production=========*"
-    configtxgen -profile ManufacturerProductionProfile -outputAnchorPeersUpdate ./channel-artifacts/mfd-prd-anchor.tx -channelID mfd-prd-channel -asOrg teafarm
-    configtxgen -profile ManufacturerProductionProfile -outputAnchorPeersUpdate ./channel-artifacts/mfd-prd-anchor.tx -channelID mfd-prd-channel -asOrg tata
+    configtxgen -profile ManufacturerProductionProfile -outputAnchorPeersUpdate ./channel-artifacts/prd-anchor-1.tx -channelID mfd-prd-channel -asOrg teafarm
+    configtxgen -profile ManufacturerProductionProfile -outputAnchorPeersUpdate ./channel-artifacts/mfd-anchor-1.tx -channelID mfd-prd-channel -asOrg tata
 
     sleep 2
 
     echo "*===============Creating anchor peers for Manufacturer & warehouse===========*"
-    configtxgen -profile ManufacturerwarehouseProfile -outputAnchorPeersUpdate ./channel-artifacts/mfd-whs-anchor.tx -channelID mfd-whs-channel -asOrg tata
-    configtxgen -profile ManufacturerwarehouseProfile -outputAnchorPeersUpdate ./channel-artifacts/mfd-whs-anchor.tx -channelID mfd-whs-channel -asOrg tatastore
+    configtxgen -profile ManufacturerwarehouseProfile -outputAnchorPeersUpdate ./channel-artifacts/mfd-anchor-2.tx -channelID mfd-whs-channel -asOrg tata
+    configtxgen -profile ManufacturerwarehouseProfile -outputAnchorPeersUpdate ./channel-artifacts/whs-anchor-1.tx -channelID mfd-whs-channel -asOrg tatastore
 
     sleep 2
 
     echo "*================Creating anchor peers for warehouse & Retailer================================*"
-    configtxgen -profile warehouseRetailerProfile -outputAnchorPeersUpdate ./channel-artifacts/whs-rtlr-anchor.tx -channelID whs-rtlr-channel -asOrg tatastore
-    configtxgen -profile warehouseRetailerProfile -outputAnchorPeersUpdate ./channel-artifacts/whs-rtlr-anchor.tx -channelID whs-rtlr-channel -asOrg bigbazar
+    configtxgen -profile warehouseRetailerProfile -outputAnchorPeersUpdate ./channel-artifacts/whs-anchor-2.tx -channelID whs-rtlr-channel -asOrg tatastore
+    configtxgen -profile warehouseRetailerProfile -outputAnchorPeersUpdate ./channel-artifacts/rtlr-anchor-1.tx -channelID whs-rtlr-channel -asOrg bigbazar
 
 }
 

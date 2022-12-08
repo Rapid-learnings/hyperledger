@@ -1,3 +1,4 @@
+#!/bin/sh
 VERSION='1'
 InvokeCCMfdPrd(){
     echo "****** Invoking ChainCode On Mfc-Prd-Channel *********"
@@ -43,6 +44,6 @@ UpdateStatus(){
 }
 
 InvokeCCMfdPrd
-QueryCCMfdPrd
-PlaceOrder
-UpdateStatus
+# QueryCCMfdPrd
+# PlaceOrder
+# UpdateStatus

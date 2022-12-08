@@ -152,7 +152,7 @@ class wrcc extends Contract {
         }
         // Store order details
         await ctx.stub.putState(orderNo.toString(), Buffer.from(JSON.stringify(order).toString('base64')));
-        await ctx.stub.setEvent("dispatch", Buffer.from(JSON.stringify(order).toString('base64')));
+        await ctx.stub.setEvent("place-order", Buffer.from(JSON.stringify(order).toString('base64')));
     }
 
     async updateStatusToInTransit(ctx, orderNo) {

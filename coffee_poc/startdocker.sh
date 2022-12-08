@@ -1,3 +1,4 @@
+#!/bin/sh
 # starting the docker process
 
 sudo docker-compose -f ./docker/docker-compose-all.yaml up -d
@@ -19,10 +20,18 @@ mfdPrdChannel(){
 
     sleep 10
 
+    sudo docker exec -it cli-manufacturer-1 peer channel update -o orderer1.gov.io:7050 --channelID mfd-prd-channel -f /opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts/mfd-anchor-1.tx --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem
+
+    sleep 8
+
     echo "========= Creating shell for cli-production-1 ==========="
     sudo docker exec -it cli-production-1 peer channel join -b /opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts/mfd-prd-genesis.block
 
     sleep 10
+
+    sudo docker exec -it cli-production-1 peer channel update -o orderer1.gov.io:7050 --channelID mfd-prd-channel -f /opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts/prd-anchor-1.tx --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem
+
+    sleep 8
 }
 
 mfdWhsChannel(){
@@ -38,11 +47,20 @@ mfdWhsChannel(){
 
     sleep 10
 
+    sudo docker exec -it cli-manufacturer-1 peer channel update -o orderer1.gov.io:7050 --channelID mfd-whs-channel -f /opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts/mfd-anchor-2.tx --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem
+
+    sleep 8
+
     # Joining whs-1 peer channel
     echo "Joining whs-1 peer channel"
     sudo docker exec -it cli-warehouse-1 peer channel join -b /opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts/mfd-whs-genesis.block
 
     sleep 10
+
+    # update anchor peer
+    sudo docker exec -it cli-warehouse-1 peer channel update -o orderer1.gov.io:7050 --channelID mfd-whs-channel -f /opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts/whs-anchor-1.tx --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem
+
+    sleep 8
 }
 
 whsRtlrChannel(){
@@ -56,10 +74,18 @@ whsRtlrChannel(){
     sudo docker exec -it cli-warehouse-1 peer channel join -b /opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts/whs-rtlr-genesis.block
     sleep 10
 
+    sudo docker exec -it cli-warehouse-1 peer channel update -o orderer1.gov.io:7050 --channelID whs-rtlr-channel -f /opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts/whs-anchor-2.tx --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem
+
+    sleep 8
+
     # Joining channel rtlr-1
     echo "Joining channel rtlr-1"
     sudo docker exec -it cli-retail-1 peer channel join -b /opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts/whs-rtlr-genesis.block
     sleep 10
+
+    sudo docker exec -it cli-retail-1 peer channel update -o orderer1.gov.io:7050 --channelID whs-rtlr-channel -f /opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts/rtlr-anchor-1.tx --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem
+
+    sleep 8
 
 }
 

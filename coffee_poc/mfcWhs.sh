@@ -1,3 +1,4 @@
+#!/bin/sh
 VERSION='1'
 InvokeCCMfdPrd(){
     echo "****** Invoking ChainCode On Mfc-Whs-Channel *********"
@@ -57,9 +58,9 @@ dispatchCoffee(){
 }
 
 InvokeCCMfdPrd
-availableRawStock
-dryOperation
-roastOperation
-QAOps
-packageCoffee
-dispatchCoffee
+# availableRawStock
+# dryOperation
+# roastOperation
+# QAOps
+# packageCoffee
+# dispatchCoffee

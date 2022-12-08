@@ -1,3 +1,4 @@
+#!/bin/sh
 # this file will run all the subsequent shell scripts
 
 ./network.sh

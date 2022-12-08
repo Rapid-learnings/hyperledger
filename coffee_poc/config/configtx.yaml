@@ -59,8 +59,8 @@ Organizations:
         AnchorPeers:
             Host: peertf1.production.com
             Port: 8051
-            Host: peertf2.production.com
-            Port: 8081
+            # Host: peertf2.production.com
+            # Port: 8081
     
     - &tata
         Name: tata
@@ -82,8 +82,8 @@ Organizations:
         AnchorPeers:
             Host: peertm1.manufacturer.com
             Port: 9051
-            Host: peertm2.manufacturer.com
-            Port: 9081
+            # Host: peertm2.manufacturer.com
+            # Port: 9081
     
     - &tatastore
         Name: tatastore
@@ -105,8 +105,8 @@ Organizations:
         AnchorPeers:
             Host: peerts1.warehouse.com
             Port: 10051
-            Host: peerts2.warehouse.com
-            Port: 10081
+            # Host: peerts2.warehouse.com
+            # Port: 10081
 
     - &bigbazar
         Name: bigbazar
