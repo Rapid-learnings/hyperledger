@@ -85,11 +85,11 @@ tls:
 #############################################################################
 ca:
   # Name of this CA
-  name: govca
+  name: ca.manufacturer.com
   # Key file (is only used to import a private key into BCCSP)
-  keyfile: 
+  keyfile:
   # Certificate file (default: ca-cert.pem)
-  certfile: ./ca-cert.pem
+  certfile:
   # Chain file
   chainfile:
   # Ignore Certificate Expiration in the case of re-enroll
@@ -242,11 +242,11 @@ ldap:
 # which are always stored in lower case.
 #############################################################################
 affiliations:
-   tata:
-      # - department1
-      # - department2
-   teafarm:
-      # - department1
+   org1:
+      - department1
+      - department2
+   org2:
+      - department1
 
 #############################################################################
 #  Signing section

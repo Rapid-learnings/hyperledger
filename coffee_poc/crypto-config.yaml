@@ -35,7 +35,7 @@ PeerOrgs:
       Count: 2
 
   - Name: tatastore
-    Domain: wharehouse.com
+    Domain: warehouse.com
     EnableNodeOUs: true
     Specs:
       - Hostname: peerts1
