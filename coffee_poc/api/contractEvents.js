@@ -10,6 +10,21 @@ async function contractEvents() {
 
     const gateway = new Gateway();
     try{
+        const listener = async (event) => {
+            if (event.eventName === 'placeOrder') {
+                // Run business process to handle orders
+                const details = event.payload.toString('utf8');
+                event = JSON.parse(details);
+                console.log('************************ Start placeOrder Event **********************************');
+                console.log(`order number: ${JSON.parse(issueResponse.toString())}`);
+                console.log(`amount: ${event.amount}`);
+                console.log(`quantity: ${event.quantity}`);
+                console.log(`status: ${event.Status}`);
+                console.log(`country: ${event.country}`);
+                console.log(`state: ${event.state}`);
+                console.log('************************ End placeOrder Event ************************************');
+            }
+        };
         let userName = 'user1'
         const ccpPath = path.join(process.cwd(), './connection-profiles/mfc-prd-config.json');
         const ccp = JSON.parse(fs.readFileSync(ccpPath, 'utf8'))
@@ -27,24 +42,14 @@ async function contractEvents() {
 
         console.log('Submitting transaction to place order');
         const issueResponse = await contract.submitTransaction('placeOrder', '500', 'india', 'kochi');
-        console.log('response: ', JSON.parse(issueResponse.toString()));
-
-        const listener = async (event) => {
-            if (event.eventName === 'placeOrder') {
-                const details = event.payload.toString('utf8');
-                event = JSON.parse(details);
-                console.log('************************ Start placeOrder Event **********************************');
-                console.log(`order number: ${JSON.parse(issueResponse.toString())}`);
-                console.log(`amount: ${event.amount}`);
-                console.log(`quantity: ${event.quantity}`);
-                console.log(`status: ${event.Status}`);
-                console.log(`country: ${event.country}`);
-                console.log(`state: ${event.state}`);
-                console.log('************************ End placeOrder Event ************************************');
-                // Run business process to handle orders
-            }
-        };
+        console.log('response: ', issueResponse.toString());
+        
         await contract.addContractListener(listener);
+        
+        console.log('Submitting transaction to get order details');
+        const response = await contract.submitTransaction('getOrderDetails', issueResponse.toString());
+        console.log('order details: ', JSON.parse(response.toString()))
+
     } catch(err) {
         throw err;
     } finally {
