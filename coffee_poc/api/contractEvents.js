@@ -6,11 +6,11 @@ const fs = require('fs');
 
 async function contractEvents() {
     const walletPath = path.join(process.cwd(), './tata-wallet');
-    const wallet = await Wallets.newFileSystemwallet(walletPath);
+    const wallet = await Wallets.newFileSystemWallet(walletPath);
 
     const gateway = new Gateway();
     try{
-        let userName = 'user3'
+        let userName = 'user1'
         const ccpPath = path.join(process.cwd(), './connection-profiles/mfc-prd-config.json');
         const ccp = JSON.parse(fs.readFileSync(ccpPath, 'utf8'))
         const cco = {
@@ -26,7 +26,7 @@ async function contractEvents() {
         const contract = await network.getContract('pmcc');
 
         console.log('Submitting transaction to place order');
-        const issueResponse = await contract.submitTransaction('placeOrder', '100', 'kerala', 'India');
+        const issueResponse = await contract.submitTransaction('placeOrder', '500', 'india', 'kochi');
         console.log('response: ', JSON.parse(issueResponse.toString()));
 
         const listener = async (event) => {

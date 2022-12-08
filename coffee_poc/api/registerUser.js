@@ -149,4 +149,7 @@ registerUser.registerEnrollUser = async (usr, org) => {
   }
 };
 
-module.exports = registerUser;
+// module.exports = registerUser;
+let user = 'user1'
+let org = 'tata'
+registerUser.registerEnrollUser(user, org);

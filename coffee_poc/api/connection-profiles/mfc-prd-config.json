@@ -23,25 +23,7 @@
         "ssl-target-name-override": "orderer1.gov.io"
       },
       "tlsCACerts": {
-        "path": "/home/ubuntu/pankajb/hyperledger/coffee_poc/crypto-config/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem"
-      }
-    },
-    "orderer2.gov.io": {
-      "url": "grpcs://localhost:7051",
-      "grpcOptions": {
-        "ssl-target-name-override": "orderer2.gov.io"
-      },
-      "tlsCACerts": {
-        "path": "/home/ubuntu/pankajb/hyperledger/coffee_poc/crypto-config/ordererOrganizations/gov.io/orderers/orderer2.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem"
-      }
-    },
-    "orderer3.gov.io": {
-      "url": "grpcs://localhost:7052",
-      "grpcOptions": {
-        "ssl-target-name-override": "orderer3.gov.io"
-      },
-      "tlsCACerts": {
-        "path": "/home/ubuntu/pankajb/hyperledger/coffee_poc/crypto-config/ordererOrganizations/gov.io/orderers/orderer3.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem"
+        "path": "/home/ubuntu/fabric/hyperledger/coffee_poc/crypto-config/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem"
       }
     }
   },
@@ -53,7 +35,7 @@
         "request-timeout": 300000
       },
       "tlsCACerts": {
-        "path": "/home/ubuntu/pankajb/hyperledger/coffee_poc/crypto-config/peerOrganizations/production.com/peers/peertf1.production.com/msp/tlscacerts/tlsca.production.com-cert.pem"
+        "path": "/home/ubuntu/fabric/hyperledger/coffee_poc/crypto-config/peerOrganizations/production.com/peers/peertf1.production.com/msp/tlscacerts/tlsca.production.com-cert.pem"
       }
     },
     "peertm1.manufacturer.com": {
@@ -63,7 +45,7 @@
         "request-timeout": 300000
       },
       "tlsCACerts": {
-        "path": "/home/ubuntu/pankajb/hyperledger/coffee_poc/crypto-config/peerOrganizations/manufacturer.com/peers/peertm1.manufacturer.com/msp/tlscacerts/tlsca.manufacturer.com-cert.pem"
+        "path": "/home/ubuntu/fabric/hyperledger/coffee_poc/crypto-config/peerOrganizations/manufacturer.com/peers/peertm1.manufacturer.com/msp/tlscacerts/tlsca.manufacturer.com-cert.pem"
       }
     }
   },
@@ -72,7 +54,7 @@
       "url": "https://localhost:2051",
       "caName": "ca.manufacturer.com",
       "tlsCAcerts": {
-        "path": "/home/ubuntu/pankajb/hyperledger/coffee_poc/crypto-config/peerOrganizations/manufacturer.com/ca/ca.manufacturer.com-cert.pem"
+        "path": "/home/ubuntu/fabric/hyperledger/coffee_poc/crypto-config/peerOrganizations/manufacturer.com/ca/ca.manufacturer.com-cert.pem"
       },
       "httpOptions": {
         "verify": false
@@ -82,7 +64,7 @@
       "url": "https://localhost:2052",
       "caName": "ca.production.com",
       "tlsCAcerts": {
-        "path": "/home/ubuntu/pankajb/hyperledger/coffee_poc/crypto-config/peerOrganizations/production.com/ca/ca.production.com-cert.pem"
+        "path": "/home/ubuntu/fabric/hyperledger/coffee_poc/crypto-config/peerOrganizations/production.com/ca/ca.production.com-cert.pem"
       },
       "httpOptions": {
         "verify": false

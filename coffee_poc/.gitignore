@@ -3,6 +3,7 @@
 # channel-artifacts/*.tx
 # channel-artifacts/*.block
 /chaincode/node_modules/*
+/chaincode/*.tar.*
 /*.tar.*
 /chaincode/package-lock.json
 /api/node_modules/*
@@ -22,3 +23,6 @@ api/package-lock.json
 # /api/teafarm-wallet/*.id
 # /fabric-ca-config/*
 # /bin/
+coffee_poc/chaincode/wrcc.tar.gz
+coffee_poc/chaincode/pmcc.tar.gz
+coffee_poc/chaincode/mwcc.tar.gz

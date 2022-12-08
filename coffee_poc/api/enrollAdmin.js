@@ -100,6 +100,7 @@ enrollAdmin.enroll = async (org) => {
   }
 };
 
-module.exports = enrollAdmin;
-
+// module.exports = enrollAdmin;
+let org = 'tata'
+enrollAdmin.enroll(org)
 // enrollAdmin();
