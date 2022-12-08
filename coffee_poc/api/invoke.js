@@ -119,7 +119,7 @@ invokeObj.evaluateTx = async (
         result = JSON.parse(result);
         break;
       case "init":
-        await contract.submitTransaction(fcn);
+        await contract.submitTransaction(fcn,"10000");
         break;
       // case "placeOrder":
       //   result = await contract.submitTransaction(fcn, )
@@ -209,7 +209,7 @@ invokeObj.getOrderDetails = async (
   org_name
 ) => {
   try {
-    const ccp = await registerUser.getCCP(org_name);
+    const ccp = await getCCP(org_name);
     const wallet = await getWallet(org_name);
     // let identity = await wallet.get(username);
     // if (!identity) {
@@ -226,10 +226,13 @@ invokeObj.getOrderDetails = async (
     let result = await chainCode.submitTransaction(fcn, orderNumber);
     await gateway.disconnect();
     result = result.toString();
+    console.log("Order Details = ",result);
     return result;
   } catch (err) {
     return err;
   }
 };
+
+
 module.exports = invokeObj;
 // exports.invokeTransaction = invokeTransaction;

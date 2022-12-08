@@ -83,7 +83,7 @@ ApproveCCMfdPrd(){
     sudo docker exec -it cli-manufacturer-1 peer lifecycle chaincode queryinstalled > log.txt 2>&1
     cat log.txt
     # CC_PACKAGE_ID=$(sed -n "/${CC_NAME}_${CC_VERSION}/{s/^Package ID: //; s/, Label:.*$//; p;}" log.txt)
-    export CC_PACKAGE_ID=$(cat log.txt | grep "pmcc" | cut -d " " -f 3 | cut -d "," -f 1)
+    export CC_PACKAGE_ID=$(cat log.txt | grep "basic" | cut -d " " -f 3 | cut -d "," -f 1)
     #   export CC_PACKAGE_ID
     sudo docker exec -it cli-manufacturer-1 peer lifecycle chaincode approveformyorg -o orderer1.gov.io:7050 --channelID mfd-prd-channel --name pmcc --version ${VERSION} --package-id ${CC_PACKAGE_ID} --sequence ${VERSION} --tls true --cafile "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem"
 
@@ -103,7 +103,7 @@ ApproveCCMfdWhs(){
     sudo docker exec -it cli-warehouse-1 peer lifecycle chaincode queryinstalled > mw.txt 2>&1
     cat mw.txt
     # MW_PACKAGE_ID=$(sed -n "/${CC_NAME}_${CC_VERSION}/{s/^Package ID: //; s/, Label:.*$//; p;}" mw.txt)
-    export MW_PACKAGE_ID=$(cat mw.txt | grep "mwcc" | cut -d " " -f 3 | cut -d "," -f 1)
+    export MW_PACKAGE_ID=$(cat mw.txt | grep "mw" | cut -d " " -f 3 | cut -d "," -f 1)
 #   export CC_PACKAGE_ID
     sudo docker exec -it cli-manufacturer-1 peer lifecycle chaincode approveformyorg -o orderer1.gov.io:7050 --channelID mfd-whs-channel --name mwcc --version 1 --package-id ${MW_PACKAGE_ID} --sequence ${VERSION} --tls true --cafile "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem"
 
@@ -123,7 +123,7 @@ ApproveCCWhsRtlr(){
     sudo docker exec -it cli-retail-1 peer lifecycle chaincode queryinstalled > wr.txt 2>&1
     cat wr.txt
     # CC_PACKAGE_ID=$(sed -n "/${CC_NAME}_${CC_VERSION}/{s/^Package ID: //; s/, Label:.*$//; p;}" wrcc.txt)
-    export CC_PACKAGE_ID=$(cat wr.txt | grep "wrcc" | cut -d " " -f 3 | cut -d "," -f 1)
+    export CC_PACKAGE_ID=$(cat wr.txt | grep "wr" | cut -d " " -f 3 | cut -d "," -f 1)
     #   export CC_PACKAGE_ID
     sudo docker exec -it cli-warehouse-1 peer lifecycle chaincode approveformyorg -o orderer1.gov.io:7050 --channelID whs-rtlr-channel --name wrcc --version 1 --package-id ${CC_PACKAGE_ID} --sequence ${VERSION} --tls true --cafile "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem"
 
