@@ -155,10 +155,10 @@ class pmcc extends Contract {
 
   // updates the status of the order to in-transit
   async updateStatusToInTransit(ctx, orderNo) {
-    let clientMSP = await ctx.clientIdentity.getMSPID();
-    if (clientMSP !== "teafarmMSP") {
-      throw new Error("Only teafarm can upadte the status of shipment");
-    }
+    // let clientMSP = await ctx.clientIdentity.getMSPID();
+    // if (clientMSP !== "teafarmMSP") {
+    //   throw new Error("Only teafarm can upadte the status of shipment");
+    // }
 
     // fetching order details
     let orderObjBytes = await ctx.stub.getState(orderNo);
@@ -179,10 +179,10 @@ class pmcc extends Contract {
 
   // updates the status of the order to delivered
   async updateStatusToDelivered(ctx, orderNo) {
-    let clientMSP = await ctx.clientIdentity.getMSPID();
-    if (clientMSP !== "teafarmMSP") {
-      throw new Error("only Producer has permission to this update status");
-    }
+    // let clientMSP = await ctx.clientIdentity.getMSPID();
+    // if (clientMSP !== "teafarmMSP") {
+    //   throw new Error("only Producer has permission to this update status");
+    // }
 
     // fetching order details
     let orderObjBytes = await ctx.stub.getState(orderNo);

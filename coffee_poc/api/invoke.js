@@ -67,7 +67,7 @@ invokeObj.evaluateTx = async (
   org_name
 ) => {
   try {
-    const ccp = await registerUser.getCCP(org_name);
+    const ccp = await getCCP(org_name);
 
     const wallet = await getWallet(org_name);
 
@@ -181,7 +181,7 @@ invokeObj.placeOrder = async (
         console.log(`order number: ${JSON.parse(result.toString())}`);
         console.log(`amount: ${event.amount}`);
         console.log(`quantity: ${event.quantity}`);
-        console.log(`status: ${event.Status}`);
+        console.log(`status: ${event.orderStatus}`);
         console.log(`country: ${event.country}`);
         console.log(`state: ${event.state}`);
         console.log(
@@ -201,6 +201,72 @@ invokeObj.placeOrder = async (
 };
 
 invokeObj.getOrderDetails = async (
+  channelName,
+  chaincodeName,
+  fcn,
+  orderNumber,
+  username,
+  org_name
+) => {
+  try {
+    const ccp = await getCCP(org_name);
+    const wallet = await getWallet(org_name);
+    // let identity = await wallet.get(username);
+    // if (!identity) {
+    //   //check if user is registered or not
+    //   throw new Error(
+    //     `The identity ${username} does not exist, register & try again`
+    //   );
+    // }
+    const connectionOptions = getConnectionObject(wallet, username);
+    const gateway = new Gateway();
+    await gateway.connect(ccp, connectionOptions);
+    const network = await gateway.getNetwork(channelName);
+    const chainCode = await network.getContract(chaincodeName);
+    let result = await chainCode.submitTransaction(fcn, orderNumber);
+    await gateway.disconnect();
+    result = result.toString();
+    console.log("Order Details = ",result);
+    return result;
+  } catch (err) {
+    return err;
+  }
+};
+
+invokeObj.orderInTransit = async (
+  channelName,
+  chaincodeName,
+  fcn,
+  orderNumber,
+  username,
+  org_name
+) => {
+  try {
+    const ccp = await getCCP(org_name);
+    const wallet = await getWallet(org_name);
+    // let identity = await wallet.get(username);
+    // if (!identity) {
+    //   //check if user is registered or not
+    //   throw new Error(
+    //     `The identity ${username} does not exist, register & try again`
+    //   );
+    // }
+    const connectionOptions = getConnectionObject(wallet, username);
+    const gateway = new Gateway();
+    await gateway.connect(ccp, connectionOptions);
+    const network = await gateway.getNetwork(channelName);
+    const chainCode = await network.getContract(chaincodeName);
+    let result = await chainCode.submitTransaction(fcn, orderNumber);
+    await gateway.disconnect();
+    result = result.toString();
+    console.log("Order Details = ",result);
+    return result;
+  } catch (err) {
+    return err;
+  }
+};
+
+invokeObj.orderDelivered = async (
   channelName,
   chaincodeName,
   fcn,

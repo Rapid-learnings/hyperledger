@@ -21,7 +21,7 @@ const registerUser = {};
 
 registerUser.getAffiliation = async (org) => {
   // return org == "tata" ? 'tata' : 'teafarm'
-  return org == "teafarm" ? "org1.department1" : "org2.department1";
+  return org == "teafarm || bigbazar" ? "org1.department1" : "org2.department1";
 };
 
 registerUser.getWalletPath = async (org) => {
@@ -30,7 +30,11 @@ registerUser.getWalletPath = async (org) => {
     walletPath = path.join(process.cwd(), "tata-wallet");
   } else if (org == "teafarm") {
     walletPath = path.join(process.cwd(), "teafarm-wallet");
-  } else return null;
+  } else if (org == "tatastore") {
+    walletPath = path.join(process.cwd(), "tatastore-wallet");
+  } else if (org == "bigbazar") {
+    walletPath = path.join(process.cwd(), "bigbazar-wallet");
+  }
   return walletPath;
 };
 
@@ -40,7 +44,11 @@ registerUser.getCCP = async (org) => {
     ccpPath = "./connection-profiles/mfc-prd-config.json";
   } else if (org == "tata") {
     ccpPath = "./connection-profiles/mfc-prd-config.json";
-  } else return null;
+  } else if (org == "tatastore") {
+    ccpPath = "./connection-profiles/whs-rtlr-config.json";
+  } else if (org == "bigbazar") {
+    ccpPath = "./connection-profiles/whs-rtlr-config.json";
+  }
   const ccpJSON = fs.readFileSync(ccpPath, "utf8");
   const ccp = JSON.parse(ccpJSON);
   return ccp;
@@ -58,10 +66,12 @@ registerUser.registerEnrollUser = async (usr, org) => {
       caURL = ccp.certificateAuthorities["ca.manufacturer.com"].url;
     } else if (org == "teafarm") {
       caURL = ccp.certificateAuthorities["ca.production.com"].url;
-    } else if (org == "warehouse") {
-    } else if (org == "retailer") {
+    } else if (org == "tatastore") {
+      caURL = ccp.certificateAuthorities["ca.warehouse.com"].url;
+    } else if (org == "bigbazar") {
+      caURL = ccp.certificateAuthorities["ca.retailer.com"].url;
     }
-    // console.log("CA URL = ", caURL);
+    console.log("CA URL = ", caURL);
     const ca = new FabricCAServices(caURL);
     // console.log("CA = ", ca);
     // Create a new file system based wallet for managing identities.
@@ -132,6 +142,24 @@ registerUser.registerEnrollUser = async (usr, org) => {
           privateKey: enrollment.key.toBytes(),
         },
         mspId: "teafarmMSP",
+        type: "X.509",
+      };
+    } else if (org == "tatastore") {
+      x509Identity = {
+        credentials: {
+          certificate: enrollment.certificate,
+          privateKey: enrollment.key.toBytes(),
+        },
+        mspId: "tatastoreMSP",
+        type: "X.509",
+      };
+    } else if (org == "bigbazar") {
+      x509Identity = {
+        credentials: {
+          certificate: enrollment.certificate,
+          privateKey: enrollment.key.toBytes(),
+        },
+        mspId: "bigbazarMSP",
         type: "X.509",
       };
     }

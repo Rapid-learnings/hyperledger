@@ -148,7 +148,8 @@ class wrcc extends Contract {
             },
             "Amount": amt,
             "Quantity": qty,
-            "Status": Status[0]
+            "Status": Status[0],
+            "orderNumber":orderNo
         }
         // Store order details
         await ctx.stub.putState(orderNo.toString(), Buffer.from(JSON.stringify(order).toString('base64')));

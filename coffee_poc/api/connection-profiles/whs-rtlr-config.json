@@ -1,0 +1,74 @@
+{
+  "name": "test",
+  "version": "1.0",
+  "channels": {
+    "whs-rtlr-channel": {
+      "peers": ["peerts1.warehouse.com", "peerbb1.retailer.com"]
+    }
+  },
+  "organizations": {
+    "tatastore": {
+      "mspid": "tatastoreMSP",
+      "peers": ["peerts1.warehouse.com", "peerts2.warehouse.com"]
+    },
+    "bigbazar": {
+      "mspid": "bigbazarMSP",
+      "peers": ["peerbb1.retailer.com", "peerbb2.retailer.com"]
+    }
+  },
+  "orderers": {
+    "orderer1.gov.io": {
+      "url": "grpcs://localhost:7050",
+      "grpcOptions": {
+        "ssl-target-name-override": "orderer1.gov.io"
+      },
+      "tlsCACerts": {
+        "path": "/home/ubuntu/pankajb/hyperledger/coffee_poc/crypto-config/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem"
+      }
+    }
+  },
+  "peers": {
+    "peerts1.warehouse.com": {
+      "url": "grpcs://localhost:10051",
+      "grpcOptions": {
+        "ssl-target-name-override": "peerts1.warehouse.com",
+        "request-timeout": 300000
+      },
+      "tlsCACerts": {
+        "path": "/home/ubuntu/pankajb/hyperledger/coffee_poc/crypto-config/peerOrganizations/warehouse.com/peers/peerts1.warehouse.com/msp/tlscacerts/tlsca.warehouse.com-cert.pem"
+      }
+    },
+    "peerbb1.retailer.com": {
+      "url": "grpcs://localhost:11051",
+      "grpcOptions": {
+        "ssl-target-name-override": "peerbb1.retailer.com",
+        "request-timeout": 300000
+      },
+      "tlsCACerts": {
+        "path": "/home/ubuntu/pankajb/hyperledger/coffee_poc/crypto-config/peerOrganizations/retailer.com/peers/peerbb1.retailer.com/msp/tlscacerts/tlsca.retailer.com-cert.pem"
+      }
+    }
+  },
+  "certificateAuthorities": {
+    "ca.warehouse.com": {
+      "url": "https://localhost:2053",
+      "caName": "ca.warehouse.com",
+      "tlsCAcerts": {
+        "path": "/home/ubuntu/pankajb/hyperledger/coffee_poc/crypto-config/peerOrganizations/warehouse.com/ca/ca.warehouse.com-cert.pem"
+      },
+      "httpOptions": {
+        "verify": false
+      }
+    },
+    "ca.retailer.com": {
+      "url": "https://localhost:2054",
+      "caName": "ca.retailer.com",
+      "tlsCAcerts": {
+        "path": "/home/ubuntu/pankajb/hyperledger/coffee_poc/crypto-config/peerOrganizations/retailer.com/ca/ca.retailer.com-cert.pem"
+      },
+      "httpOptions": {
+        "verify": false
+      }
+    }
+  }
+}
