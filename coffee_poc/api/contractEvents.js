@@ -5,7 +5,7 @@ const path = require('path');
 const fs = require('fs');
 
 async function contractEvents() {
-    const walletPath = path.join(process.cwd(), './tata-wallet');
+    const walletPath = path.join(process.cwd(), './teafarm-wallet');
     const wallet = await Wallets.newFileSystemWallet(walletPath);
 
     const gateway = new Gateway();
@@ -41,10 +41,11 @@ async function contractEvents() {
         const contract = await network.getContract('pmcc');
 
         console.log('Submitting transaction to place order');
-        const issueResponse = await contract.submitTransaction('placeOrder', '500', 'india', 'kochi');
+        const issueResponse = await contract.submitTransaction('placeOrder', '100', 'india', 'delhi');
         console.log('response: ', issueResponse.toString());
-        
-        await contract.addContractListener(listener);
+        await contract.submitTransaction('updateStatusToInTransit', issueResponse.toString());
+
+        // await contract.addContractListener(listener);
         
         console.log('Submitting transaction to get order details');
         const response = await contract.submitTransaction('getOrderDetails', issueResponse.toString());

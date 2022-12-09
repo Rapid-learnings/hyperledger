@@ -14,12 +14,12 @@ const path = require("path");
 const enrollAdmin = {};
 
 enrollAdmin.getCCP = async (org) => {
-  let ccpPath;
-  if (org == "teafarm") {
-    ccpPath = "./connection-profiles/mfc-prd-config.json";
-  } else if (org == "tata") {
-    ccpPath = "./connection-profiles/mfc-prd-config.json";
-  } else return null;
+  const ccpPath = path.join(process.cwd(), './connection-profiles/mfc-prd-config.json');
+  // if (org == "teafarm") {
+  //   ccpPath = "./connection-profiles/mfc-prd-config.json";
+  // } else if (org == "tata") {
+  //   ccpPath = "./connection-profiles/mfc-prd-config.json";
+  // } else return null;
   const ccpJSON = fs.readFileSync(ccpPath, "utf8");
   const ccp = JSON.parse(ccpJSON);
   return ccp;
@@ -36,6 +36,10 @@ enrollAdmin.enroll = async (org) => {
       caInfo = ccp.certificateAuthorities["ca.manufacturer.com"];
     } else if (org == "teafarm") {
       caInfo = ccp.certificateAuthorities["ca.production.com"];
+    } else if (org == "tatastore") {
+      caInfo = ccp.certificateAuthorities["ca.warehouse.com"];
+    } else if (org == "bigbazar") {
+      caInfo = ccp.certificateAuthorities["ca.retailer.com"];
     }
     // console.log(caInfo);
     // console.log(caInfo.tlsCAcerts.pem);
@@ -52,6 +56,10 @@ enrollAdmin.enroll = async (org) => {
       walletPath = path.join(process.cwd(), "tata-wallet");
     } else if (org == "teafarm") {
       walletPath = path.join(process.cwd(), "teafarm-wallet");
+    } else if (org == "tatastore") {
+      walletPath = path.join(process.cwd(), "tatastore-wallet");
+    } else if (org == "bigbazar") {
+      walletPath = path.join(process.cwd(), "bigbazar-wallet");
     }
     const wallet = await Wallets.newFileSystemWallet(walletPath);
     console.log(`Wallet path: ${walletPath}`);
@@ -89,6 +97,24 @@ enrollAdmin.enroll = async (org) => {
         mspId: "teafarmMSP",
         type: "X.509",
       };
+    } else if (org == "tatastore") {
+      x509Identity = {
+        credentials: {
+          certificate: enrollment.certificate,
+          privateKey: enrollment.key.toBytes(),
+        },
+        mspId: "tatastoreMSP",
+        type: "X.509",
+      };
+    } else if (org == "bigbazar") {
+      x509Identity = {
+        credentials: {
+          certificate: enrollment.certificate,
+          privateKey: enrollment.key.toBytes(),
+        },
+        mspId: "bigbazarMSP",
+        type: "X.509",
+      };
     }
     await wallet.put("admin", x509Identity);
     console.log(
@@ -101,6 +127,6 @@ enrollAdmin.enroll = async (org) => {
 };
 
 // module.exports = enrollAdmin;
-let org = 'tata'
+let org = 'teafarm'
 enrollAdmin.enroll(org)
 // enrollAdmin();

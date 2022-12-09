@@ -5,6 +5,7 @@ const helper = require("./helper");
 const enrollAdmin = require("./enrollAdmin.js");
 const registerUser = require("./registerUser.js");
 const invokeObj = require("./invoke");
+const invokeObjMW = require("./invokeMWCC.js");
 
 var { Gateway, Wallets } = require("fabric-network");
 const fs = require("fs");
@@ -179,6 +180,112 @@ app.post("/manufacture/place-order", async (req, res, next) => {
     throw err;
   }
 });
+
+app.get("/manufacturer/raw-stock-from-pmcc", async (req, res, next) => {
+  try {
+    let username = req.body.username;
+    let org_name = req.body.org_name;
+    let message = await invokeObjMW.evaluateTx(
+    "mfd-whs-channel",
+    "mwcc",
+    "returnRawStockAccordingToPMCC",
+    username,
+    org_name
+    );
+    res.json({message: `manufacturer stock is ${message}`});
+  } catch (err) {
+    throw err;
+  }
+});
+
+app.post("/manufacturer/dry", async (req, res, next) => {
+  try {
+    let username = req.body.username;
+    let org_name = req.body.org_name;
+    args = req.body.args;
+    await invokeObjMW.dry(
+      "mfd-whs-channel",
+      "mwcc",
+      args,
+      username,
+      org_name
+    );
+    res.json({message: `${args[0]} Kg of raw stock dried with ${args[1]} Kg loss`});
+  } catch (err) {
+    throw err;
+  }
+});
+
+app.post("/manufacturer/roast", async (req, res, next) => {
+  try {
+    let username = req.body.username;
+    let org_name = req.body.org_name;
+    args = req.body.args;
+    await invokeObjMW.roast(
+      "mfd-whs-channel",
+      "mwcc",
+      args,
+      username,
+      org_name
+    );
+    res.json({message: `${args[0]} Kg of raw stock roasted with ${args[1]} Kg loss`});
+  } catch (err) {
+    throw err;
+  }
+});
+
+app.post("/manufacturer/doQA", async (req, res, next) => {
+  try {
+    let username = req.body.username;
+    let org_name = req.body.org_name;
+    args = req.body.args;
+    await invokeObjMW.doQA(
+      "mfd-whs-channel",
+      "mwcc",
+      args,
+      username,
+      org_name
+    );
+    res.json({message: `${args[0]} Kg of raw stock quality checked with ${args[1]} Kg rejected`});
+  } catch (err) {
+    throw err;
+  }
+});
+
+app.post("/manufacturer/package", async (req, res, next) => {
+  try {
+    let username = req.body.username;
+    let org_name = req.body.org_name;
+    args = req.body.args;
+    await invokeObjMW.package(
+      "mfd-whs-channel",
+      "mwcc",
+      args,
+      username,
+      org_name
+    );
+    res.json({message: `${args[0]} Kg of finished stock is packaged`});
+  } catch (err) {
+    throw err;
+  }
+})
+app.post("/manufacturer/dispatch", async (req, res, next) => {
+  try {
+    let username = req.body.username;
+    let org_name = req.body.org_name;
+    args = req.body.args;
+    await invokeObjMW.dispatch(
+      "mfd-whs-channel",
+      "mwcc",
+      args,
+      username,
+      org_name
+    );
+    res.json({message: `args[0]} packages are dispatched`});
+  } catch (err) {
+    throw err;
+  }
+})
 
 app.listen(1080, () => {
   console.log("======== Server Listening At 1080 =======");

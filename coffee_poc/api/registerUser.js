@@ -30,17 +30,21 @@ registerUser.getWalletPath = async (org) => {
     walletPath = path.join(process.cwd(), "tata-wallet");
   } else if (org == "teafarm") {
     walletPath = path.join(process.cwd(), "teafarm-wallet");
+  } else if (org == "tatastore") {
+    walletPath = path.join(process.cwd(), "tatastore-wallet");
+  } else if (org == "bigbazar") {
+    walletPath = path.join(process.cwd(), "bigbazar-wallet");
   } else return null;
   return walletPath;
 };
 
 registerUser.getCCP = async (org) => {
-  let ccpPath;
-  if (org == "teafarm") {
-    ccpPath = "./connection-profiles/mfc-prd-config.json";
-  } else if (org == "tata") {
-    ccpPath = "./connection-profiles/mfc-prd-config.json";
-  } else return null;
+  const ccpPath = path.join(process.cwd(), './connection-profiles/mfc-prd-config.json');
+  // if (org == "teafarm") {
+  //   ccpPath = "./connection-profiles/mfc-prd-config.json";
+  // } else if (org == "tata") {
+  //   ccpPath = "./connection-profiles/mfc-prd-config.json";
+  // } else return null;
   const ccpJSON = fs.readFileSync(ccpPath, "utf8");
   const ccp = JSON.parse(ccpJSON);
   return ccp;
@@ -58,8 +62,10 @@ registerUser.registerEnrollUser = async (usr, org) => {
       caURL = ccp.certificateAuthorities["ca.manufacturer.com"].url;
     } else if (org == "teafarm") {
       caURL = ccp.certificateAuthorities["ca.production.com"].url;
-    } else if (org == "warehouse") {
-    } else if (org == "retailer") {
+    } else if (org == "tatastore") {
+      caURL = ccp.certificateAuthorities["ca.warehouse.com"].url;
+    } else if (org == "bigbazar") {
+      caURL = ccp.certificateAuthorities["ca.retailer.com"].url;
     }
     // console.log("CA URL = ", caURL);
     const ca = new FabricCAServices(caURL);
@@ -134,6 +140,24 @@ registerUser.registerEnrollUser = async (usr, org) => {
         mspId: "teafarmMSP",
         type: "X.509",
       };
+    } else if (org == "tatastore") {
+      x509Identity = {
+        credentials: {
+          certificate: enrollment.certificate,
+          privateKey: enrollment.key.toBytes(),
+        },
+        mspId: "tatastoreMSP",
+        type: "X.509",
+      };
+    } else if (org == "bigbazar") {
+      x509Identity = {
+        credentials: {
+          certificate: enrollment.certificate,
+          privateKey: enrollment.key.toBytes(),
+        },
+        mspId: "bigbazarMSP",
+        type: "X.509",
+      };
     }
     console.log("\n====== x509Identity ===== \n", x509Identity);
 
@@ -151,5 +175,5 @@ registerUser.registerEnrollUser = async (usr, org) => {
 
 // module.exports = registerUser;
 let user = 'user1'
-let org = 'tata'
+let org = 'teafarm'
 registerUser.registerEnrollUser(user, org);

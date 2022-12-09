@@ -69,6 +69,26 @@
       "httpOptions": {
         "verify": false
       }
+    },
+    "ca.warehouse.com": {
+      "url": "https://localhost:2053",
+      "caName": "ca.warehouse.com",
+      "tlsCAcerts": {
+        "path": "/home/ubuntu/fabric/hyperledger/coffee_poc/crypto-config/peerOrganizations/warehouse.com/ca/ca.warehouse.com-cert.pem"
+      },
+      "httpOptions": {
+        "verify": false
+      }
+    },
+    "ca.retailer.com": {
+      "url": "https://localhost:2054",
+      "caName": "ca.retailer.com",
+      "tlsCAcerts": {
+        "path": "/home/ubuntu/fabric/hyperledger/coffee_poc/crypto-config/peerOrganizations/retailer.com/ca/ca.retailer.com-cert.pem"
+      },
+      "httpOptions": {
+        "verify": false
+      }
     }
   }
 }
