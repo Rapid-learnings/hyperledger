@@ -281,7 +281,7 @@ app.post("/manufacturer/dispatch", async (req, res, next) => {
       username,
       org_name
     );
-    res.json({message: `args[0]} packages are dispatched`});
+    res.json({message: `${args[0]} packages are dispatched`});
   } catch (err) {
     throw err;
   }
