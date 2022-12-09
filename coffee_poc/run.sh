@@ -10,18 +10,18 @@ sleep 5
 
 ./deployCC.sh
 
+sleep 5
+
+./invokeInit.sh
+
 # sleep 5
 
-# ./invokeInit.sh
+# ./mfdPrd.sh
 
-sleep 5
+# sleep 5
 
-./mfdPrd.sh
+# ./mfcWhs.sh
 
-sleep 5
+# sleep 5
 
-./mfcWhs.sh
-
-sleep 5
-
-./whsRtlr.sh
+# ./whsRtlr.sh

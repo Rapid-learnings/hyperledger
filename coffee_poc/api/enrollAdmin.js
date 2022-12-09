@@ -126,7 +126,7 @@ enrollAdmin.enroll = async (org) => {
   }
 };
 
-// module.exports = enrollAdmin;
-let org = 'teafarm'
-enrollAdmin.enroll(org)
+module.exports = enrollAdmin;
+// let org = 'teafarm'
+// enrollAdmin.enroll(org)
 // enrollAdmin();

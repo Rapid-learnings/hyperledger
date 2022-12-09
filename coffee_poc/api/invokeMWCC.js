@@ -29,32 +29,33 @@ invokeObjMW.evaluateTx = async (
     username,
     org_name
     ) => {
+    const wallet = await getWallet(org_name);
+    const gateway = new Gateway();
     try {
         const ccp = await registerUser.getCCP(org_name);
-    
-        const wallet = await getWallet(org_name);
     
         let identity = await wallet.get(username);
         if (!identity) {
             console.log(
             `An identity for the user ${username} does not exist in the wallet, so register user before retry`
             );
-            // await registerUser.registerEnrollUser(username, org_name);
-            // identity = await wallet.get(username);
-            // console.log("Run the registerUser.js application before retrying");
             return;
         }
     
         const connectOptions = getConnectionObject(wallet, username);
     
         console.log("Connection Object = ", connectOptions);
-    
-        const gateway = new Gateway();
 
+        console.log("connecting to gateway")
+        
         await gateway.connect(ccp, connectOptions);
-    
+        
+        console.log("connecting to network")
+        
         const network = await gateway.getNetwork(channelName);
-
+        
+        console.log("connecting to contract")
+        
         const contract = await network.getContract(chaincodeName);
 
         let result;
@@ -77,6 +78,10 @@ invokeObjMW.evaluateTx = async (
             result = await contract.evaluateTransaction(fcn);
             result = result.toString();
             break;
+            case "getTotalPackages":
+            result = await contract.evaluateTransaction(fcn);
+            result = result.toString();
+            break;
             case "getWastedStock":
             result = await contract.evaluateTransaction(fcn);
             result = result.toString();
@@ -94,7 +99,7 @@ invokeObjMW.evaluateTx = async (
         return error.message;
     } finally {
         console.log("disconnecting gateway");
-        await gateway.disconnect();
+        gateway.disconnect();
     }
 };
 
@@ -105,10 +110,10 @@ invokeObjMW.dry = async(
     username,
     org_name
     ) => {
+    const wallet = await getWallet(org_name);
+    const gateway = new Gateway();
     try {
         const ccp = await registerUser.getCCP(org_name);
-    
-        const wallet = await getWallet(org_name);
     
         let identity = await wallet.get(username);
         if (!identity) {
@@ -122,8 +127,6 @@ invokeObjMW.dry = async(
     
         console.log("Connection Object = ", connectOptions);
     
-        const gateway = new Gateway();
-
         await gateway.connect(ccp, connectOptions);
     
         const network = await gateway.getNetwork(channelName);
@@ -135,7 +138,7 @@ invokeObjMW.dry = async(
         return err;
     } finally {
         console.log("disconnecting gateway");
-        await gateway.disconnect();
+        gateway.disconnect();
     }
 }
 
@@ -146,10 +149,10 @@ invokeObjMW.roast = async(
     username,
     org_name
     ) => {
+    const wallet = await getWallet(org_name);
+    const gateway = new Gateway();
     try {
         const ccp = await registerUser.getCCP(org_name);
-    
-        const wallet = await getWallet(org_name);
     
         let identity = await wallet.get(username);
         if (!identity) {
@@ -162,8 +165,6 @@ invokeObjMW.roast = async(
         const connectOptions = getConnectionObject(wallet, username);
     
         console.log("Connection Object = ", connectOptions);
-    
-        const gateway = new Gateway();
 
         await gateway.connect(ccp, connectOptions);
     
@@ -176,7 +177,7 @@ invokeObjMW.roast = async(
         return err;
     } finally {
         console.log("disconnecting gateway");
-        await gateway.disconnect();
+        gateway.disconnect();
     }
 }
 
@@ -187,10 +188,10 @@ invokeObjMW.doQA = async(
     username,
     org_name
     ) => {
+    const wallet = await getWallet(org_name);
+    const gateway = new Gateway();
     try {
         const ccp = await registerUser.getCCP(org_name);
-    
-        const wallet = await getWallet(org_name);
     
         let identity = await wallet.get(username);
         if (!identity) {
@@ -204,8 +205,6 @@ invokeObjMW.doQA = async(
     
         console.log("Connection Object = ", connectOptions);
     
-        const gateway = new Gateway();
-
         await gateway.connect(ccp, connectOptions);
     
         const network = await gateway.getNetwork(channelName);
@@ -217,7 +216,7 @@ invokeObjMW.doQA = async(
         return err;
     } finally {
         console.log("disconnecting gateway");
-        await gateway.disconnect();
+        gateway.disconnect();
     }
 }
 
@@ -228,10 +227,10 @@ invokeObjMW.package = async(
     username,
     org_name
     ) => {
+    const wallet = await getWallet(org_name);
+    const gateway = new Gateway();
     try {
         const ccp = await registerUser.getCCP(org_name);
-    
-        const wallet = await getWallet(org_name);
     
         let identity = await wallet.get(username);
         if (!identity) {
@@ -245,8 +244,6 @@ invokeObjMW.package = async(
     
         console.log("Connection Object = ", connectOptions);
     
-        const gateway = new Gateway();
-
         await gateway.connect(ccp, connectOptions);
     
         const network = await gateway.getNetwork(channelName);
@@ -258,7 +255,7 @@ invokeObjMW.package = async(
         return err;
     } finally {
         console.log("disconnecting gateway");
-        await gateway.disconnect();
+        gateway.disconnect();
     }
 }
 
@@ -269,10 +266,10 @@ invokeObjMW.dispatch = async(
     username,
     org_name
     ) => {
+    const wallet = await getWallet(org_name);
+    const gateway = new Gateway();
     try {
         const ccp = await registerUser.getCCP(org_name);
-    
-        const wallet = await getWallet(org_name);
     
         let identity = await wallet.get(username);
         if (!identity) {
@@ -285,8 +282,6 @@ invokeObjMW.dispatch = async(
         const connectOptions = getConnectionObject(wallet, username);
     
         console.log("Connection Object = ", connectOptions);
-    
-        const gateway = new Gateway();
 
         await gateway.connect(ccp, connectOptions);
     
@@ -299,7 +294,7 @@ invokeObjMW.dispatch = async(
         return err;
     } finally {
         console.log("disconnecting gateway");
-        await gateway.disconnect();
+        gateway.disconnect();
     }
 }
 

@@ -172,7 +172,7 @@ app.post("/manufacture/place-order", async (req, res, next) => {
       "pmcc",
       "placeOrder",
       args,
-      "user101",
+      "user1",
       "tata"
     );
     res.json({ message: `Order Number for Manufacturer =  ${result}` });
@@ -186,13 +186,97 @@ app.get("/manufacturer/raw-stock-from-pmcc", async (req, res, next) => {
     let username = req.body.username;
     let org_name = req.body.org_name;
     let message = await invokeObjMW.evaluateTx(
-    "mfd-whs-channel",
-    "mwcc",
-    "returnRawStockAccordingToPMCC",
-    username,
-    org_name
+      "mfd-whs-channel",
+      "mwcc",
+      "returnRawStockAccordingToPMCC",
+      username,
+      org_name
     );
-    res.json({message: `manufacturer stock is ${message}`});
+    res.json({message: `manufacturer stock is ${message} Kg`});
+  } catch (err) {
+    throw err;
+  }
+});
+
+app.get("/manufacturer/dried-stock", async (req, res, next) => {
+  try {
+    let username = req.body.username;
+    let org_name = req.body.org_name;
+    let message = await invokeObjMW.evaluateTx(
+      "mfd-whs-channel",
+      "mwcc",
+      "availableDriedStock",
+      username,
+      org_name
+    );
+    res.json({message: `manufacturer dried stock is ${message} Kg`});
+  } catch (err) {
+    throw err;
+  }
+});
+app.get("/manufacturer/roasted-stock", async (req, res, next) => {
+  try {
+    let username = req.body.username;
+    let org_name = req.body.org_name;
+    let message = await invokeObjMW.evaluateTx(
+      "mfd-whs-channel",
+      "mwcc",
+      "availableRoastedStock",
+      username,
+      org_name
+    );
+    res.json({message: `manufacturer roasted stock is ${message} Kg`});
+  } catch (err) {
+    throw err;
+  }
+});
+
+app.get("/manufacturer/finished-stock", async (req, res, next) => {
+  try {
+    let username = req.body.username;
+    let org_name = req.body.org_name;
+    let message = await invokeObjMW.evaluateTx(
+      "mfd-whs-channel",
+      "mwcc",
+      "availableFinishedStock",
+      username,
+      org_name
+    );
+    res.json({message: `manufacturer finished stock is ${message} Kg`});
+  } catch (err) {
+    throw err;
+  }
+});
+
+app.get("/manufacturer/wasted-stock", async (req, res, next) => {
+  try {
+    let username = req.body.username;
+    let org_name = req.body.org_name;
+    let message = await invokeObjMW.evaluateTx(
+      "mfd-whs-channel",
+      "mwcc",
+      "getWastedStock",
+      username,
+      org_name
+    );
+    res.json({message: `manufacturer wasted stock is ${message} Kg`});
+  } catch (err) {
+    throw err;
+  }
+});
+
+app.get("/manufacturer/total-packages", async (req, res, next) => {
+  try {
+    let username = req.body.username;
+    let org_name = req.body.org_name;
+    let message = await invokeObjMW.evaluateTx(
+      "mfd-whs-channel",
+      "mwcc",
+      "getTotalPackages",
+      username,
+      org_name
+    );
+    res.json({message: `manufacturer total packages is ${message}`});
   } catch (err) {
     throw err;
   }
@@ -202,7 +286,7 @@ app.post("/manufacturer/dry", async (req, res, next) => {
   try {
     let username = req.body.username;
     let org_name = req.body.org_name;
-    args = req.body.args;
+    let args = req.body.args;
     await invokeObjMW.dry(
       "mfd-whs-channel",
       "mwcc",
@@ -220,7 +304,7 @@ app.post("/manufacturer/roast", async (req, res, next) => {
   try {
     let username = req.body.username;
     let org_name = req.body.org_name;
-    args = req.body.args;
+    let args = req.body.args;
     await invokeObjMW.roast(
       "mfd-whs-channel",
       "mwcc",
@@ -238,7 +322,7 @@ app.post("/manufacturer/doQA", async (req, res, next) => {
   try {
     let username = req.body.username;
     let org_name = req.body.org_name;
-    args = req.body.args;
+    let args = req.body.args;
     await invokeObjMW.doQA(
       "mfd-whs-channel",
       "mwcc",
@@ -256,7 +340,7 @@ app.post("/manufacturer/package", async (req, res, next) => {
   try {
     let username = req.body.username;
     let org_name = req.body.org_name;
-    args = req.body.args;
+    let args = req.body.args;
     await invokeObjMW.package(
       "mfd-whs-channel",
       "mwcc",
@@ -273,7 +357,7 @@ app.post("/manufacturer/dispatch", async (req, res, next) => {
   try {
     let username = req.body.username;
     let org_name = req.body.org_name;
-    args = req.body.args;
+    let args = req.body.args;
     await invokeObjMW.dispatch(
       "mfd-whs-channel",
       "mwcc",
