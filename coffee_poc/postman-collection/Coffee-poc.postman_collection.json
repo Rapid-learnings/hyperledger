@@ -125,7 +125,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"quantity\":\"100\",\n\t\"city\":\"BANGALORE\",\n\t\"state\":\"KARNATAKA\"\n}\t"
+							"raw": "{\n\t\"quantity\":\"10000\",\n\t\"city\":\"BANGALORE\",\n\t\"state\":\"KARNATAKA\"\n}\t"
 						},
 						"description": ""
 					},
@@ -429,12 +429,21 @@
 					"response": []
 				},
 				{
-					"name": "Retailer Order Delivered",
+					"name": "Retailer Place Order",
 					"request": {
-						"url": "http://18.188.17.59:1080/warehouse/order-delivered/1",
+						"url": "http://18.188.17.59:1080/retailer/place-order",
 						"method": "POST",
-						"header": [],
-						"body": {},
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"quantity\":\"5\",\n\t\"state\":\"DELHI\",\n\t\"country\":\"INDIA\"\n}"
+						},
 						"description": ""
 					},
 					"response": []
@@ -451,21 +460,12 @@
 					"response": []
 				},
 				{
-					"name": "Retailer Place Order",
+					"name": "Retailer Order Delivered",
 					"request": {
-						"url": "http://18.188.17.59:1080/retailer/place-order",
+						"url": "http://18.188.17.59:1080/warehouse/order-delivered/1",
 						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"quantity\":\"5\",\n\t\"state\":\"DELHI\",\n\t\"country\":\"INDIA\"\n}"
-						},
+						"header": [],
+						"body": {},
 						"description": ""
 					},
 					"response": []
@@ -568,7 +568,7 @@
 			"response": []
 		},
 		{
-			"name": "Register Admin - Teastore",
+			"name": "Register Admin - Tatastore",
 			"request": {
 				"url": "http://18.188.17.59:1080/register/admin",
 				"method": "POST",
@@ -588,7 +588,7 @@
 			"response": []
 		},
 		{
-			"name": "Register User - Teastore",
+			"name": "Register User - Tatastore",
 			"request": {
 				"url": "http://18.188.17.59:1080/register/user",
 				"method": "POST",
@@ -601,7 +601,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"username\":\"user303\",\n\t\"orgName\":\"tatastore\"\n}"
+					"raw": "{\n\t\"username\":\"user404\",\n\t\"orgName\":\"tatastore\"\n}"
 				},
 				"description": ""
 			},
