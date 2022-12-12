@@ -1,0 +1,651 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Coffee-poc",
+		"_postman_id": "9179ff1f-ba4c-749b-7074-902972875351",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "mfd-prd",
+			"description": "",
+			"item": [
+				{
+					"name": "Get Producer Storage Stock",
+					"request": {
+						"url": "http://18.188.17.59:1080/producer/storage",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\":\"pankaj\",\n\t\"orgName\":\"tata\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "GET Manufacturer Stock",
+					"request": {
+						"url": "http://18.188.17.59:1080/manufacturer-stock",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"quantity\":\"100\",\n\t\"city\":\"BANGALORE\",\n\t\"state\":\"KARNATAKA\"\n}\t"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "GET Manufacturer Funds",
+					"request": {
+						"url": "http://18.188.17.59:1080/manufacturer-fund",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\":\"pankaj\",\n\t\"orgName\":\"tata\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Manufacturer Order Details",
+					"request": {
+						"url": "http://18.188.17.59:1080/manufacturer/order-details/1",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"orderNumber\":\"1\"\n}\t"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Init mfd-prd",
+					"request": {
+						"url": "http://18.188.17.59:1080/init-pmcc",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"orderNumber\":\"1\"\n}\t"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Manufacture Place Order",
+					"request": {
+						"url": "http://18.188.17.59:1080/manufacture/place-order",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"quantity\":\"100\",\n\t\"city\":\"BANGALORE\",\n\t\"state\":\"KARNATAKA\"\n}\t"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Manufacture Order Status Transit",
+					"request": {
+						"url": "http://18.188.17.59:1080/production/transit/1",
+						"method": "POST",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Manufacture Order Status Delivered",
+					"request": {
+						"url": "http://18.188.17.59:1080/production/delivered/1",
+						"method": "POST",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "mfd-whs",
+			"description": "",
+			"item": [
+				{
+					"name": "Init mwcc",
+					"request": {
+						"url": "http://18.188.17.59:1080/init-mwcc",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Update manufacturer-stock From Pmcc",
+					"request": {
+						"url": "http://18.188.17.59:1080/manufacturer/raw-stock-from-pmcc",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Manufacturer Dried Stock",
+					"request": {
+						"url": "http://18.188.17.59:1080/manufacturer/dried-stock",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Manufacturer Dry",
+					"request": {
+						"url": "http://18.188.17.59:1080/manufacturer/dry",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"args\":[\"1000\",\"900\"],\n\t\"username\":\"user404\",\n\t\"org_name\":\"tatastore\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Manufacturer Roast",
+					"request": {
+						"url": "http://18.188.17.59:1080/manufacturer/roast",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"args\":[\"900\",\"750\"],\n\t\"username\":\"user404\",\n\t\"org_name\":\"tatastore\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Manufacturer QA",
+					"request": {
+						"url": "http://18.188.17.59:1080/manufacturer/doQA",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"args\":[\"750\",\"500\"],\n\t\"username\":\"user404\",\n\t\"org_name\":\"tatastore\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Manufacturer Package",
+					"request": {
+						"url": "http://18.188.17.59:1080/manufacturer/package",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"args\":[\"500\"],\n\t\"username\":\"user404\",\n\t\"org_name\":\"tatastore\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Manufacturer Dispatch",
+					"request": {
+						"url": "http://18.188.17.59:1080/manufacturer/dispatch",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"args\":[\"10\"],\n\t\"username\":\"user404\",\n\t\"org_name\":\"tatastore\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Manufacturer Roasted Stock",
+					"request": {
+						"url": "http://18.188.17.59:1080/manufacturer/roasted-stock",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Manufacturer Finished Stock",
+					"request": {
+						"url": "http://18.188.17.59:1080/manufacturer/finished-stock",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Manufacturer Total Packages",
+					"request": {
+						"url": "http://18.188.17.59:1080/manufacturer/total-packages",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Manufacturer Wasted Stock",
+					"request": {
+						"url": "http://18.188.17.59:1080/manufacturer/wasted-stock",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "whs-rtlr",
+			"description": "",
+			"item": [
+				{
+					"name": "GET Warehouse Stock",
+					"request": {
+						"url": "http://18.188.17.59:1080/warehouse/stock",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Init Wrcc",
+					"request": {
+						"url": "http://18.188.17.59:1080/init-wrcc",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "GET Warehouse Balance",
+					"request": {
+						"url": "http://18.188.17.59:1080/warehouse/balance",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "GET Retailer Balance",
+					"request": {
+						"url": "http://18.188.17.59:1080/retailer/balance",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "GET Retailer Balance",
+					"request": {
+						"url": "http://18.188.17.59:1080/retailer/balance",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "GET Retailer Stock",
+					"request": {
+						"url": "http://18.188.17.59:1080/retailer/stock",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Retailer Order Details",
+					"request": {
+						"url": "http://18.188.17.59:1080/warehouse/order-details/1",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Retailer Order Delivered",
+					"request": {
+						"url": "http://18.188.17.59:1080/warehouse/order-delivered/1",
+						"method": "POST",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Warehouse Order Transit",
+					"request": {
+						"url": "http://18.188.17.59:1080/warehouse/order-transit/1",
+						"method": "POST",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Retailer Place Order",
+					"request": {
+						"url": "http://18.188.17.59:1080/retailer/place-order",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"quantity\":\"5\",\n\t\"state\":\"DELHI\",\n\t\"country\":\"INDIA\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Register Admin - Tata",
+			"request": {
+				"url": "http://18.188.17.59:1080/register/admin",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"orgName\":\"tata\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Register User - Tata",
+			"request": {
+				"url": "http://18.188.17.59:1080/register/user",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic Og==",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\":\"user101\",\n\t\"orgName\":\"tata\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Register Admin - Teafarm",
+			"request": {
+				"url": "http://18.188.17.59:1080/register/admin",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic Og==",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"orgName\":\"teafarm\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Register User - Teafarm",
+			"request": {
+				"url": "http://18.188.17.59:1080/register/user",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic Og==",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\":\"user001\",\n\t\"orgName\":\"teafarm\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Register Admin - Teastore",
+			"request": {
+				"url": "http://18.188.17.59:1080/register/admin",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"orgName\":\"tatastore\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Register User - Teastore",
+			"request": {
+				"url": "http://18.188.17.59:1080/register/user",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\":\"user303\",\n\t\"orgName\":\"tatastore\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Register Admin - bigBazar",
+			"request": {
+				"url": "http://18.188.17.59:1080/register/admin",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"orgName\":\"bigbazar\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Register User - bigBazar",
+			"request": {
+				"url": "http://18.188.17.59:1080/register/user",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\":\"user202\",\n\t\"orgName\":\"bigbazar\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

@@ -166,9 +166,9 @@ invokeObj.placeOrder = async (
     console.log(args);
     result = await contract.submitTransaction(
       "placeOrder",
-      '100',
-      'KERALA',
-      'INDIA'
+      args[0],
+      args[1],
+      args[2]
     );
     console.log(result);
     const listener = async (event) => {

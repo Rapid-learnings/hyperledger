@@ -86,7 +86,7 @@ wr.evaluateTx = async (channelName, chaincodeName, fcn, username, org_name) => {
     let message;
 
     switch (fcn) {
-      case "availableWarehouseStock":
+      case "returnWarehouseSTockAccordingTomwCC":
         result = await contract.evaluateTransaction(fcn);
         result = result.toString();
         break;
