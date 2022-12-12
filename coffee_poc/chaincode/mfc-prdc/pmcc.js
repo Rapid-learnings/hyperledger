@@ -80,9 +80,10 @@ class pmcc extends Contract {
   async updateManufacturerStock(ctx, qty){
     let stock = await ctx.stub.getState(manufacturerOrderedStock);
     let mfcStock = parseInt(stock.toString());
-    mfcStock += parseInt(qty);
+    let quantity = parseInt(qty.toString());
+    mfcStock += quantity;
     await ctx.stub.putState(manufacturerOrderedStock, Buffer.from(mfcStock.toString()));
-    console.log("Manufacturer Ordered Stock Updated to ", mfcStock);
+    console.log("Manufacturer Ordered Stock Updated to ", mfcStock); 
   }
 
   async placeOrder(ctx, qty, cty, stateName) {
@@ -148,24 +149,22 @@ class pmcc extends Contract {
     // console.log("Order Buffer = ", orderBuff);
     await ctx.stub.putState(orderNo.toString(),orderBuff)
     await ctx.stub.putState(orderNumber, Buffer.from(orderNo.toString()))
-
+    await ctx.stub.setEvent("placeOrder", orderBuff);
     return orderNo;
     // return await this.getOrderDetails(ctx, orderNo);
   }
 
   // updates the status of the order to in-transit
   async updateStatusToInTransit(ctx, orderNo) {
-    let clientMSP = await ctx.clientIdentity.getMSPID();
-    if (clientMSP !== "teafarmMSP") {
-      throw new Error("Only teafarm can upadte the status of shipment");
-    }
+    // let clientMSP = await ctx.clientIdentity.getMSPID();
+    // if (clientMSP !== "teafarmMSP") {
+    //   throw new Error("Only teafarm can upadte the status of shipment");
+    // }
 
     // fetching order details
-    let orderObjBytes = await ctx.stub.getState(orderNo);
-    let orderObj = JSON.parse(orderObjBytes.toString());
-    console.log("In transit",orderObj);
+    let orderObj = await this.getOrderDetails(ctx, orderNo);
     let status = orderObj.orderStatus;
-    if (status != Status[0]) {
+    if (status !== Status[0]) {
       throw new Error(
         "cannot change status to in-transit as order is not even placed"
       );
@@ -179,22 +178,20 @@ class pmcc extends Contract {
 
   // updates the status of the order to delivered
   async updateStatusToDelivered(ctx, orderNo) {
-    let clientMSP = await ctx.clientIdentity.getMSPID();
-    if (clientMSP !== "teafarmMSP") {
-      throw new Error("only Producer has permission to this update status");
-    }
+    // let clientMSP = await ctx.clientIdentity.getMSPID();
+    // if (clientMSP !== "teafarmMSP") {
+    //   throw new Error("only Producer has permission to this update status");
+    // }
 
     // fetching order details
-    let orderObjBytes = await ctx.stub.getState(orderNo);
-    let orderObj = JSON.parse(orderObjBytes.toString());
-    console.log("In Delivery",orderObj);
-
+    let orderObj = await this.getOrderDetails(ctx, orderNo);
     let status = orderObj.orderStatus;
-    if (status != Status[1]) {
+    if (status !== Status[1]) {
       throw new Error(
         "cannot change status to delivered as package is not even shipped"
       );
     }
+
 
     // updating the status to delivered
     orderObj.orderStatus = Status[2];

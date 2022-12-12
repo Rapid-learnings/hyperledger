@@ -1,3 +1,4 @@
+#!/bin/sh
 VERSION='1'
 InvokeCCWhsRtlr(){
     echo "****** Invoking ChainCode On Whs-Rtlr-Channel *********"
@@ -51,9 +52,9 @@ queryRetStock(){
 
 
 InvokeCCWhsRtlr
-queryWhsStock
+# queryWhsStock
 # updateWhsStock
-placeOrder
-getOrderDetails
-UpdateStatus
-queryRetStock
+# placeOrder
+# getOrderDetails
+# UpdateStatus
+# queryRetStock

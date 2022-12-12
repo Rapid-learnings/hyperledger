@@ -19,7 +19,11 @@ enrollAdmin.getCCP = async (org) => {
     ccpPath = "./connection-profiles/mfc-prd-config.json";
   } else if (org == "tata") {
     ccpPath = "./connection-profiles/mfc-prd-config.json";
-  } else return null;
+  } else if (org == "tatastore") {
+    ccpPath = "./connection-profiles/whs-rtlr-config.json";
+  } else if (org == "bigbazar") {
+    ccpPath = "./connection-profiles/whs-rtlr-config.json";
+  }
   const ccpJSON = fs.readFileSync(ccpPath, "utf8");
   const ccp = JSON.parse(ccpJSON);
   return ccp;
@@ -36,6 +40,10 @@ enrollAdmin.enroll = async (org) => {
       caInfo = ccp.certificateAuthorities["ca.manufacturer.com"];
     } else if (org == "teafarm") {
       caInfo = ccp.certificateAuthorities["ca.production.com"];
+    } else if (org == "tatastore") {
+      caInfo = ccp.certificateAuthorities["ca.warehouse.com"];
+    } else if (org == "bigbazar") {
+      caInfo = ccp.certificateAuthorities["ca.retailer.com"];
     }
     console.log(caInfo);
     // console.log(caInfo.tlsCAcerts.pem);
@@ -52,6 +60,10 @@ enrollAdmin.enroll = async (org) => {
       walletPath = path.join(process.cwd(), "tata-wallet");
     } else if (org == "teafarm") {
       walletPath = path.join(process.cwd(), "teafarm-wallet");
+    } else if (org == "tatastore") {
+      walletPath = path.join(process.cwd(), "tatastore-wallet");
+    } else if (org == "bigbazar") {
+      walletPath = path.join(process.cwd(), "bigbazar-wallet");
     }
     const wallet = await Wallets.newFileSystemWallet(walletPath);
     console.log(`Wallet path: ${walletPath}`);
@@ -87,6 +99,24 @@ enrollAdmin.enroll = async (org) => {
           privateKey: enrollment.key.toBytes(),
         },
         mspId: "teafarmMSP",
+        type: "X.509",
+      };
+    } else if (org == "tatastore") {
+      x509Identity = {
+        credentials: {
+          certificate: enrollment.certificate,
+          privateKey: enrollment.key.toBytes(),
+        },
+        mspId: "tatastoreMSP",
+        type: "X.509",
+      };
+    } else if (org == "bigbazar") {
+      x509Identity = {
+        credentials: {
+          certificate: enrollment.certificate,
+          privateKey: enrollment.key.toBytes(),
+        },
+        mspId: "bigbazarMSP",
         type: "X.509",
       };
     }
