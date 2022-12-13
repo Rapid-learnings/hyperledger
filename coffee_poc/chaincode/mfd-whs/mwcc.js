@@ -11,7 +11,7 @@ let driedstockKey = 'dried-stock'
 let roastedstockKey = 'roasted-stock'
 let finishedstockKey = 'finished-stock'
 let wasteKey = 'wasted-stock'
-let whareHouseStock = 'WHAREHOUSE_STOCK'
+let WarehouseStock = 'Warehouse_STOCK'
 let packSize = 50 // Kg
 let totalPackages = 'number-of-packages'
 // let status = ['READY_FOR_DISPATCH', 'DISPATCHED'];
@@ -29,7 +29,7 @@ class mwcc extends Contract {
         await ctx.stub.putState(finishedstockKey, Buffer.from('0'));
         await ctx.stub.putState(wasteKey, Buffer.from('0'));
         await ctx.stub.putState(totalPackages, Buffer.from('0'));
-        await ctx.stub.putState(whareHouseStock, Buffer.from('0'));
+        await ctx.stub.putState(WarehouseStock, Buffer.from('0'));
         console.log('===== Initialized all Stocks to 0 =====');
     }
 
@@ -308,8 +308,8 @@ class mwcc extends Contract {
             throw new Error("Less Packages Are Available, current = ", currentPackages);
         }
 
-        // update the wharehouse stock & number of packages
-        await this.updateWhareHouseStock(ctx, packages);
+        // update the Warehouse stock & number of packages
+        await this.updateWarehouseStock(ctx, packages);
         await this.updateTotalPackages(ctx, packages, 1);
         await ctx.stub.setEvent("dispatch", Buffer.from(packages.toString()));
     }
@@ -336,18 +336,18 @@ class mwcc extends Contract {
         }
     }
 
-    async getWharehouseStock(ctx){
-        let stockBytes = await ctx.stub.getState(whareHouseStock);
+    async getWarehouseStock(ctx){
+        let stockBytes = await ctx.stub.getState(WarehouseStock);
         let stock = parseInt(stockBytes.toString());
         return stock;
     }
 
-    async updateWhareHouseStock(ctx, stk){
-        let stock = await this.getWharehouseStock(ctx);
+    async updateWarehouseStock(ctx, stk){
+        let stock = await this.getWarehouseStock(ctx);
         stock = parseInt(stock);
         stk = parseInt(stk);
         stock += stk;
-        await ctx.stub.putState(whareHouseStock, Buffer.from(stock.toString()));
+        await ctx.stub.putState(WarehouseStock, Buffer.from(stock.toString()));
     }
 
     // async packageDetails(ctx, packNo) {

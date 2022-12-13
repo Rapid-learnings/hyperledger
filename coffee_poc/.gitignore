@@ -26,3 +26,4 @@ api/package-lock.json
 coffee_poc/chaincode/wrcc.tar.gz
 coffee_poc/chaincode/pmcc.tar.gz
 coffee_poc/chaincode/mwcc.tar.gz
+/fabric-ca-client/fabric-ca/*

@@ -86,6 +86,10 @@ invokeObjMW.evaluateTx = async (
             result = await contract.evaluateTransaction(fcn);
             result = result.toString();
             break;
+            case "getWarehouseStock":
+            result = await contract.evaluateTransaction(fcn);
+            result = result.toString();
+            break;
             case 'initialize':
             await contract.submitTransaction(fcn);
             break;

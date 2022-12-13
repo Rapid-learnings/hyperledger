@@ -126,9 +126,10 @@ invokeObj.placeOrder = async (
   username,
   org_name
 ) => {
+  const wallet = await getWallet(org_name);
+  const gateway = new Gateway();
   try {
     const ccp = await registerUser.getCCP(org_name);
-    const wallet = await getWallet(org_name);
     let identity = await wallet.get(username);
     if (!identity) {
       throw new Error(
@@ -136,28 +137,28 @@ invokeObj.placeOrder = async (
       );
     }
     const connectOptions = getConnectionObject(wallet, username);
-    const gateway = new Gateway();
     await gateway.connect(ccp, connectOptions);
     const network = await gateway.getNetwork(channelName);
     const chainCode = await network.getContract(chaincodeName);
-
+    let result;
     switch(fcn){
       case "placeOrder":
-        let result = await chainCode.submitTransaction(
+        result = await chainCode.submitTransaction(
           fcn,
           args[0],
           args[1],
           args[2]
         );
+        result = result.toString();
         break;
       default:
         break;
     }
-    await gateway.disconnect();
-    result = result.toString();
     return result;
   } catch (err) {
     return err;
+  } finally {
+    gateway.disconnect();
   }
 };
 

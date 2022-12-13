@@ -137,7 +137,7 @@ app.get("/manufacturer/order-details/:orderNumber", async (req, res, next) => {
       "pmcc",
       "getOrderDetails",
       orderNumber,
-      "user101",
+      "user1",
       "tata"
     );
     res.json({ message: `Order Details For Manufacturer = ${message}` });
@@ -214,6 +214,7 @@ app.get("/manufacturer/dried-stock", async (req, res, next) => {
     throw err;
   }
 });
+
 app.get("/manufacturer/roasted-stock", async (req, res, next) => {
   try {
     let username = req.body.username;
@@ -277,6 +278,23 @@ app.get("/manufacturer/total-packages", async (req, res, next) => {
       org_name
     );
     res.json({message: `manufacturer total packages is ${message}`});
+  } catch (err) {
+    throw err;
+  }
+});
+
+app.get("/warehouse/stock", async (req, res, next) => {
+  try {
+    let username = req.body.username;
+    let org_name = req.body.org_name;
+    let message = await invokeObjMW.evaluateTx(
+      "mfd-whs-channel",
+      "mwcc",
+      "getWarehouseStock",
+      username,
+      org_name
+    );
+    res.json({message: `warehouse stock is ${message} packages`});
   } catch (err) {
     throw err;
   }
@@ -352,7 +370,8 @@ app.post("/manufacturer/package", async (req, res, next) => {
   } catch (err) {
     throw err;
   }
-})
+});
+
 app.post("/manufacturer/dispatch", async (req, res, next) => {
   try {
     let username = req.body.username;
@@ -369,7 +388,7 @@ app.post("/manufacturer/dispatch", async (req, res, next) => {
   } catch (err) {
     throw err;
   }
-})
+});
 
 app.listen(1080, () => {
   console.log("======== Server Listening At 1080 =======");
