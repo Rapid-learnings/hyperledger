@@ -11,8 +11,8 @@ volumes:
   peerts1.warehouse.com:
   peerts2.warehouse.com:
   orderer1.gov.io:
-  # orderer2.gov.io:
-  # orderer3.gov.io:
+  orderer2.gov.io:
+  orderer3.gov.io:
 
 services:
 
@@ -227,6 +227,8 @@ services:
     extends:
       file: peer-base.yaml
       service: orderer-base
+    environment:
+      - ORDERER_GENERAL_LISTENPORT=7050
     volumes:
       - ../channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
       - ../crypto-config/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp:/var/hyperledger/orderer/msp
@@ -235,28 +237,32 @@ services:
     ports:
       - 7050:7050
 
-  # orderer2.gov.io:
-  #   container_name: orderer2.gov.io
-  #   extends:
-  #     file: peer-base.yaml
-  #     service: orderer-base
-  #   volumes:
-  #     - ../channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
-  #     - ../crypto-config/ordererOrganizations/gov.io/orderers/orderer2.gov.io/msp:/var/hyperledger/orderer/msp
-  #     - ../crypto-config/ordererOrganizations/gov.io/orderers/orderer2.gov.io/tls:/var/hyperledger/orderer/tls
-  #     - orderer2:/var/hyperledger/production/orderer
-  #   ports:
-  #     - 7051:7051
+  orderer2.gov.io:
+    container_name: orderer2.gov.io
+    extends:
+      file: peer-base.yaml
+      service: orderer-base
+    environment:
+      - ORDERER_GENERAL_LISTENPORT=7051
+    volumes:
+      - ../channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
+      - ../crypto-config/ordererOrganizations/gov.io/orderers/orderer2.gov.io/msp:/var/hyperledger/orderer/msp
+      - ../crypto-config/ordererOrganizations/gov.io/orderers/orderer2.gov.io/tls:/var/hyperledger/orderer/tls
+      - orderer2:/var/hyperledger/production/orderer
+    ports:
+      - 7051:7051
 
-  # orderer3.gov.io:
-  #   container_name: orderer3.gov.io
-  #   extends:
-  #     file: peer-base.yaml
-  #     service: orderer-base
-  #   volumes:
-  #     - ../channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
-  #     - ../crypto-config/ordererOrganizations/gov.io/orderers/orderer3.gov.io/msp:/var/hyperledger/orderer/msp
-  #     - ../crypto-config/ordererOrganizations/gov.io/orderers/orderer3.gov.io/tls:/var/hyperledger/orderer/tls
-  #     - orderer3:/var/hyperledger/production/orderer
-  #   ports:
-  #     - 7052:7052
+  orderer3.gov.io:
+    container_name: orderer3.gov.io
+    extends:
+      file: peer-base.yaml
+      service: orderer-base
+    environment:
+      - ORDERER_GENERAL_LISTENPORT=7052
+    volumes:
+      - ../channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
+      - ../crypto-config/ordererOrganizations/gov.io/orderers/orderer3.gov.io/msp:/var/hyperledger/orderer/msp
+      - ../crypto-config/ordererOrganizations/gov.io/orderers/orderer3.gov.io/tls:/var/hyperledger/orderer/tls
+      - orderer3:/var/hyperledger/production/orderer
+    ports:
+      - 7052:7052

@@ -14,8 +14,8 @@ volumes:
   couchdb6:
   couchdb7:
   orderer:
-  # orderer2:
-  # orderer3:
+  orderer2:
+  orderer3:
   peertm1.manufacturer.com:
   peertm2.manufacturer.com:
   peertf1.production.com:
@@ -220,24 +220,30 @@ services:
       file: docker-compose-base.yaml
       service: orderer1.gov.io
     container_name: orderer1.gov.io
+    ports:
+      - 7050:7050
     networks:
       - test
       
-  # orderer2:
-  #   extends:
-  #     file: docker-compose-base.yaml
-  #     service: orderer2.gov.io
-  #   container_name: orderer2.gov.io
-  #   networks:
-  #     - test
+  orderer2:
+    extends:
+      file: docker-compose-base.yaml
+      service: orderer2.gov.io
+    container_name: orderer2.gov.io
+    ports:
+      - 7051:7051
+    networks:
+      - test
 
-  # orderer3:
-  #   extends:
-  #     file: docker-compose-base.yaml
-  #     service: orderer3.gov.io
-  #   container_name: orderer3.gov.io
-  #   networks:
-  #     - test
+  orderer3:
+    extends:
+      file: docker-compose-base.yaml
+      service: orderer3.gov.io
+    container_name: orderer3.gov.io
+    ports:
+      - 7052:7052
+    networks:
+      - test
 
   peertm1.manufacturer.com:
     extends:
