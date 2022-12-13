@@ -284,16 +284,16 @@ createCertificatesForOrg3() {
   echo 'NodeOUs:
   Enable: true
   ClientOUIdentifier:
-    Certificate: cacerts/localhost-9054-ca-org3-example-com.pem
+    Certificate: cacerts/localhost-9054-ca-warehouse-com.pem
     OrganizationalUnitIdentifier: client
   PeerOUIdentifier:
-    Certificate: cacerts/localhost-9054-ca-org3-example-com.pem
+    Certificate: cacerts/localhost-9054-ca-warehouse-com.pem
     OrganizationalUnitIdentifier: peer
   AdminOUIdentifier:
-    Certificate: cacerts/localhost-9054-ca-org3-example-com.pem
+    Certificate: cacerts/localhost-9054-ca-warehouse-com.pem
     OrganizationalUnitIdentifier: admin
   OrdererOUIdentifier:
-    Certificate: cacerts/localhost-9054-ca-org3-example-com.pem
+    Certificate: cacerts/localhost-9054-ca-warehouse-com.pem
     OrganizationalUnitIdentifier: orderer' >${PWD}/../crypto-config/peerOrganizations/warehouse.com/msp/config.yaml
 
   echo
@@ -692,7 +692,7 @@ createCertificatesForOrderer() {
   echo "Register orderer"
   echo
    
-  fabric-ca-client register --caname ca-orderer --id.name orderer --id.secret ordererpw --id.type orderer --tls.certfiles ${PWD}/fabric-ca/ordererOrg/tls-cert.pem
+  fabric-ca-client register --caname ca-orderer --id.name orderer1 --id.secret orderer1pw --id.type orderer --tls.certfiles ${PWD}/fabric-ca/ordererOrg/tls-cert.pem
    
 
 #   echo
@@ -722,33 +722,33 @@ createCertificatesForOrderer() {
   # ---------------------------------------------------------------------------
   #  Orderer
 
-  mkdir -p ../crypto-config/ordererOrganizations/gov.io/orderers/orderer.gov.io
+  mkdir -p ../crypto-config/ordererOrganizations/gov.io/orderers/orderer1.gov.io
 
   echo
   echo "## Generate the orderer msp"
   echo
    
-  fabric-ca-client enroll -u https://orderer:ordererpw@localhost:12054 --caname ca-orderer -M ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer.gov.io/msp --csr.hosts orderer.gov.io --csr.hosts localhost --tls.certfiles ${PWD}/fabric-ca/ordererOrg/tls-cert.pem
+  fabric-ca-client enroll -u https://orderer1:orderer1pw@localhost:12054 --caname ca-orderer -M ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp --csr.hosts orderer1.gov.io --csr.hosts localhost --tls.certfiles ${PWD}/fabric-ca/ordererOrg/tls-cert.pem
    
 
-  cp ${PWD}/../crypto-config/ordererOrganizations/gov.io/msp/config.yaml ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer.gov.io/msp/config.yaml
+  cp ${PWD}/../crypto-config/ordererOrganizations/gov.io/msp/config.yaml ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp/config.yaml
 
   echo
   echo "## Generate the orderer-tls certificates"
   echo
    
-  fabric-ca-client enroll -u https://orderer:ordererpw@localhost:12054 --caname ca-orderer -M ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer.gov.io/tls --enrollment.profile tls --csr.hosts orderer.gov.io --csr.hosts localhost --tls.certfiles ${PWD}/fabric-ca/ordererOrg/tls-cert.pem
+  fabric-ca-client enroll -u https://orderer1:orderer1pw@localhost:12054 --caname ca-orderer -M ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer1.gov.io/tls --enrollment.profile tls --csr.hosts orderer1.gov.io --csr.hosts localhost --tls.certfiles ${PWD}/fabric-ca/ordererOrg/tls-cert.pem
    
 
-  cp ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer.gov.io/tls/tlscacerts/* ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer.gov.io/tls/ca.crt
-  cp ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer.gov.io/tls/signcerts/* ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer.gov.io/tls/server.crt
-  cp ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer.gov.io/tls/keystore/* ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer.gov.io/tls/server.key
+  cp ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer1.gov.io/tls/tlscacerts/* ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer1.gov.io/tls/ca.crt
+  cp ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer1.gov.io/tls/signcerts/* ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer1.gov.io/tls/server.crt
+  cp ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer1.gov.io/tls/keystore/* ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer1.gov.io/tls/server.key
 
-  mkdir ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer.gov.io/msp/tlscacerts
-  cp ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer.gov.io/tls/tlscacerts/* ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem
+  mkdir ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp/tlscacerts
+  cp ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer1.gov.io/tls/tlscacerts/* ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem
 
   mkdir ${PWD}/../crypto-config/ordererOrganizations/gov.io/msp/tlscacerts
-  cp ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer.gov.io/tls/tlscacerts/* ${PWD}/../crypto-config/ordererOrganizations/gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem
+  cp ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer1.gov.io/tls/tlscacerts/* ${PWD}/../crypto-config/ordererOrganizations/gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem
 
   # -----------------------------------------------------------------------
   #  Orderer 2
@@ -828,8 +828,9 @@ createCertificatesForOrderer() {
 }
 
 # createCretificateForOrderer
-
-sudo rm -rf ../crypto-config/*
+sudo docker-compose -f docker-compose.yaml up -d
+sleep 6
+sudo rm -rf ../crypto-config
 # sudo rm -rf fabric-ca/*
 createcertificatesForOrg1
 createCertificatesForOrg2
@@ -837,3 +838,5 @@ createCertificatesForOrg3
 createCertificatesForOrg4
 createCertificatesForOrg5
 createCertificatesForOrderer
+sleep 6
+sudo docker-compose -f docker-compose.yaml down --volumes
