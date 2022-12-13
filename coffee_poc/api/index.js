@@ -6,6 +6,7 @@ const enrollAdmin = require("./enrollAdmin.js");
 const registerUser = require("./registerUser.js");
 const invokeObj = require("./invoke");
 const invokeObjMW = require("./invokeMWCC.js");
+const wr = require("./mwinvoke")
 
 var { Gateway, Wallets } = require("fabric-network");
 const fs = require("fs");
@@ -22,6 +23,10 @@ const app = express();
 app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
 app.use(cors());
+
+//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////// PMCC ////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
 
 app.post("/register/admin", async (req, res, next) => {
   let org = req.body.orgName;
@@ -180,6 +185,27 @@ app.post("/manufacture/place-order", async (req, res, next) => {
     throw err;
   }
 });
+
+//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////// MWCC ////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
+
+app.post('init-mwcc', async (req, res, next) => {
+  try {
+    let username = req.body.username;
+    let org_name = req.body.org_name;
+    await invokeObjMW.evaluateTx(
+      "mfd-whs-channel",
+      "mwcc",
+      "initialize",
+      username,
+      org_name
+    );
+    res.json({message: `Chaincode mwcc initialized`});
+  } catch (err) {
+    throw err;
+  }
+})
 
 app.get("/manufacturer/raw-stock-from-pmcc", async (req, res, next) => {
   try {
@@ -389,6 +415,158 @@ app.post("/manufacturer/dispatch", async (req, res, next) => {
     throw err;
   }
 });
+
+//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////// WRCC ////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
+
+app.get("/init-wrcc", async (req, res, next) => {
+  try {
+    await wr.evaluateTx(
+      "whs-rtlr-channel",
+      "wrcc",
+      "initialize",
+      "user202",
+      "bigbazar"
+    );
+    res.json({ message: "Chaincode wrcc initialized" });
+  } catch (err) {
+    next(err);
+  }
+});
+
+app.get("/warehouse/stock", async (req, res, next) => {
+  try {
+    let wStock = await wr.evaluateTx(
+      "whs-rtlr-channel",
+      "wrcc",
+      "returnWarehouseSTockAccordingTomwCC",
+      "user404",
+      "tatastore"
+    );
+    res.json(wStock);
+  } catch (err) {
+    next(err);
+  }
+});
+
+app.get('/warehouse/balance', async(req,res,next)=>{
+  try {
+    let wBal = await wr.evaluateTx(
+      "whs-rtlr-channel",
+      "wrcc",
+      "getWareHouseBalance",
+      "user202",
+      "bigbazar"
+    );
+    res.json(wBal);
+  } catch (err) {
+    next(err);
+  }
+})
+
+app.get("/retailer/balance", async(req,res,next)=>{
+  try{
+    let bal = await wr.evaluateTx(
+      "whs-rtlr-channel",
+      "wrcc",
+      "getRetailerBalance",
+      "user202",
+      "bigbazar"
+    );
+    res.json({message:`Retailer Balance = ${bal}`});
+  }catch(err){
+    next(err);
+  }
+})
+
+app.get("/retailer/stock", async(req,res,next)=>{
+  try{
+    let bal = await wr.evaluateTx(
+      "whs-rtlr-channel",
+      "wrcc",
+      "getRetailerStock",
+      "user202",
+      "bigbazar"
+    );
+    res.json({message:`Retailer Stock = ${bal}`});
+  }catch(err){
+    next(err);
+  }
+})
+
+app.post("/warehouse/order-transit/:orderNumber", async (req, res, next) => {
+  try {
+    let orderNo = req.params.orderNumber;
+    let status = await wr.orderInTransit(
+      "whs-rtlr-channel",
+      "wrcc",
+      "updateStatusToInTransit",
+      orderNo,
+      "user202",
+      "bigbazar"
+    );
+    res.json({ message: "Retailer Order Status Changed To In-Transit" });
+  } catch (err) {
+    next(err);
+  }
+});
+
+app.post('/retailer/place-order', async(req,res,next)=>{
+  try {
+    let args = [];
+    args.push(req.body.quantity);
+    args.push(req.body.country);
+    args.push(req.body.state);
+    console.log(args);
+    let result = await wr.placeOrder(
+      "whs-rtlr-channel",
+      "wrcc",
+      "placeOrder",
+      args,
+      "user202",
+      "bigbazar"
+    );
+    console.log(result);
+    res.json({ message: `Order Number for Reatailer =  ${result.orderNumber}` });
+  } catch (err) {
+    next(err);
+  }
+})
+
+app.post("/warehouse/order-delivered/:orderNumber", async (req, res, next) => {
+  try {
+    let orderNo = req.params.orderNumber;
+    let status = await wr.orderDelivered(
+      "whs-rtlr-channel",
+      "wrcc",
+      "updateStatusToDelivered",
+      orderNo,
+      "user202",
+      "bigbazar"
+    );
+    res.json({ message: "Retailer Order Status Changed To Delivered" });
+  } catch (err) {
+    next(err);
+  }
+});
+
+app.get('/warehouse/order-details/:orderNumber', async(req,res,next)=>{
+  try{
+    let orderNo = req.params.orderNumber;
+    let orderObj = await wr.getOrderDetails(
+      "whs-rtlr-channel",
+      "wrcc",
+      "getOrderDetails",
+      orderNo,
+      "user202",
+      "bigbazar"
+    );
+    res.json({message:orderObj});
+  }catch(err){
+    next(err);
+  }
+})
 
 app.listen(1080, () => {
   console.log("======== Server Listening At 1080 =======");
