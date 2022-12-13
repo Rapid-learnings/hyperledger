@@ -47,18 +47,18 @@ createcertificatesForOrg1() {
   mkdir -p ../crypto-config/peerOrganizations/production.com/peers
 
   # -----------------------------------------------------------------------------------
-  #  Peer 0
+  #  Peer tf1
   mkdir -p ../crypto-config/peerOrganizations/production.com/peers/peertf1.production.com
 
   echo
-  echo "## Generate the peer0 msp"
+  echo "## Generate the peertf1 msp"
   echo
   fabric-ca-client enroll -u https://peertf1:peertf1pw@localhost:7054 --caname ca.production.com -M ${PWD}/../crypto-config/peerOrganizations/production.com/peers/peertf1.production.com/msp --csr.hosts peertf1.production.com --tls.certfiles ${PWD}/fabric-ca/org1/tls-cert.pem
 
   cp ${PWD}/../crypto-config/peerOrganizations/production.com/msp/config.yaml ${PWD}/../crypto-config/peerOrganizations/production.com/peers/peertf1.production.com/msp/config.yaml
 
   echo
-  echo "## Generate the peer0-tls certificates"
+  echo "## Generate the peertf1-tls certificates"
   echo
   fabric-ca-client enroll -u https://peertf1:peertf1pw@localhost:7054 --caname ca.production.com -M ${PWD}/../crypto-config/peerOrganizations/production.com/peers/peertf1.production.com/tls --enrollment.profile tls --csr.hosts peertf1.production.com --csr.hosts localhost --tls.certfiles ${PWD}/fabric-ca/org1/tls-cert.pem
 
@@ -76,6 +76,7 @@ createcertificatesForOrg1() {
   cp ${PWD}/../crypto-config/peerOrganizations/production.com/peers/peertf1.production.com/msp/cacerts/* ${PWD}/../crypto-config/peerOrganizations/production.com/ca/ca.production.com-cert.pem
 
   # --------------------------------------------------------------------------------------------------
+  # Peer tf2
   echo
   echo "## Generate the peertf2 msp"
   echo
@@ -92,13 +93,13 @@ createcertificatesForOrg1() {
   cp ${PWD}/../crypto-config/peerOrganizations/production.com/peers/peertf2.production.com/tls/signcerts/* ${PWD}/../crypto-config/peerOrganizations/production.com/peers/peertf2.production.com/tls/server.crt
   cp ${PWD}/../crypto-config/peerOrganizations/production.com/peers/peertf2.production.com/tls/keystore/* ${PWD}/../crypto-config/peerOrganizations/production.com/peers/peertf2.production.com/tls/server.key
 
-  mkdir ${PWD}/../crypto-config/peerOrganizations/production.com/msp/tlscacerts
+  # mkdir ${PWD}/../crypto-config/peerOrganizations/production.com/msp/tlscacerts
   cp ${PWD}/../crypto-config/peerOrganizations/production.com/peers/peertf2.production.com/tls/tlscacerts/* ${PWD}/../crypto-config/peerOrganizations/production.com/msp/tlscacerts/ca.crt
 
-  mkdir ${PWD}/../crypto-config/peerOrganizations/production.com/tlsca
+  # mkdir ${PWD}/../crypto-config/peerOrganizations/production.com/tlsca
   cp ${PWD}/../crypto-config/peerOrganizations/production.com/peers/peertf2.production.com/tls/tlscacerts/* ${PWD}/../crypto-config/peerOrganizations/production.com/tlsca/tlsca.production.com-cert.pem
 
-  mkdir ${PWD}/../crypto-config/peerOrganizations/production.com/ca
+  # mkdir ${PWD}/../crypto-config/peerOrganizations/production.com/ca
   cp ${PWD}/../crypto-config/peerOrganizations/production.com/peers/peertf2.production.com/msp/cacerts/* ${PWD}/../crypto-config/peerOrganizations/production.com/ca/ca.production.com-cert.pem
   # --------------------------------------------------------------------------------------------------
 
@@ -233,13 +234,13 @@ createCertificatesForOrg2() {
   cp ${PWD}/../crypto-config/peerOrganizations/manufacturer.com/peers/peertm2.manufacturer.com/tls/signcerts/* ${PWD}/../crypto-config/peerOrganizations/manufacturer.com/peers/peertm2.manufacturer.com/tls/server.crt
   cp ${PWD}/../crypto-config/peerOrganizations/manufacturer.com/peers/peertm2.manufacturer.com/tls/keystore/* ${PWD}/../crypto-config/peerOrganizations/manufacturer.com/peers/peertm2.manufacturer.com/tls/server.key
 
-  mkdir ${PWD}/../crypto-config/peerOrganizations/manufacturer.com/msp/tlscacerts
+  # mkdir ${PWD}/../crypto-config/peerOrganizations/manufacturer.com/msp/tlscacerts
   cp ${PWD}/../crypto-config/peerOrganizations/manufacturer.com/peers/peertm2.manufacturer.com/tls/tlscacerts/* ${PWD}/../crypto-config/peerOrganizations/manufacturer.com/msp/tlscacerts/ca.crt
 
-  mkdir ${PWD}/../crypto-config/peerOrganizations/manufacturer.com/tlsca
+  # mkdir ${PWD}/../crypto-config/peerOrganizations/manufacturer.com/tlsca
   cp ${PWD}/../crypto-config/peerOrganizations/manufacturer.com/peers/peertm2.manufacturer.com/tls/tlscacerts/* ${PWD}/../crypto-config/peerOrganizations/manufacturer.com/tlsca/tlsca.manufacturer.com-cert.pem
 
-  mkdir ${PWD}/../crypto-config/peerOrganizations/manufacturer.com/ca
+  # mkdir ${PWD}/../crypto-config/peerOrganizations/manufacturer.com/ca
   cp ${PWD}/../crypto-config/peerOrganizations/manufacturer.com/peers/peertm2.manufacturer.com/msp/cacerts/* ${PWD}/../crypto-config/peerOrganizations/manufacturer.com/ca/ca.manufacturer.com-cert.pem
 
   # --------------------------------------------------------------------------------
@@ -379,13 +380,13 @@ createCertificatesForOrg3() {
   cp ${PWD}/../crypto-config/peerOrganizations/warehouse.com/peers/peerts2.warehouse.com/tls/signcerts/* ${PWD}/../crypto-config/peerOrganizations/warehouse.com/peers/peerts2.warehouse.com/tls/server.crt
   cp ${PWD}/../crypto-config/peerOrganizations/warehouse.com/peers/peerts2.warehouse.com/tls/keystore/* ${PWD}/../crypto-config/peerOrganizations/warehouse.com/peers/peerts2.warehouse.com/tls/server.key
 
-  mkdir ${PWD}/../crypto-config/peerOrganizations/warehouse.com/msp/tlscacerts
+  # mkdir ${PWD}/../crypto-config/peerOrganizations/warehouse.com/msp/tlscacerts
   cp ${PWD}/../crypto-config/peerOrganizations/warehouse.com/peers/peerts2.warehouse.com/tls/tlscacerts/* ${PWD}/../crypto-config/peerOrganizations/warehouse.com/msp/tlscacerts/ca.crt
 
-  mkdir ${PWD}/../crypto-config/peerOrganizations/warehouse.com/tlsca
+  # mkdir ${PWD}/../crypto-config/peerOrganizations/warehouse.com/tlsca
   cp ${PWD}/../crypto-config/peerOrganizations/warehouse.com/peers/peerts2.warehouse.com/tls/tlscacerts/* ${PWD}/../crypto-config/peerOrganizations/warehouse.com/tlsca/tlsca.warehouse.com-cert.pem
 
-  mkdir ${PWD}/../crypto-config/peerOrganizations/warehouse.com/ca
+  # mkdir ${PWD}/../crypto-config/peerOrganizations/warehouse.com/ca
   cp ${PWD}/../crypto-config/peerOrganizations/warehouse.com/peers/peerts2.warehouse.com/msp/cacerts/* ${PWD}/../crypto-config/peerOrganizations/warehouse.com/ca/ca.warehouse.com-cert.pem
   # --------------------------------------------------------------------------------
 
@@ -522,13 +523,13 @@ createCertificatesForOrg4() {
   cp ${PWD}/../crypto-config/peerOrganizations/retailer.com/peers/peerbb2.retailer.com/tls/signcerts/* ${PWD}/../crypto-config/peerOrganizations/retailer.com/peers/peerbb2.retailer.com/tls/server.crt
   cp ${PWD}/../crypto-config/peerOrganizations/retailer.com/peers/peerbb2.retailer.com/tls/keystore/* ${PWD}/../crypto-config/peerOrganizations/retailer.com/peers/peerbb2.retailer.com/tls/server.key
 
-  mkdir ${PWD}/../crypto-config/peerOrganizations/retailer.com/msp/tlscacerts
+  # mkdir ${PWD}/../crypto-config/peerOrganizations/retailer.com/msp/tlscacerts
   cp ${PWD}/../crypto-config/peerOrganizations/retailer.com/peers/peerbb2.retailer.com/tls/tlscacerts/* ${PWD}/../crypto-config/peerOrganizations/retailer.com/msp/tlscacerts/ca.crt
 
-  mkdir ${PWD}/../crypto-config/peerOrganizations/retailer.com/tlsca
+  # mkdir ${PWD}/../crypto-config/peerOrganizations/retailer.com/tlsca
   cp ${PWD}/../crypto-config/peerOrganizations/retailer.com/peers/peerbb2.retailer.com/tls/tlscacerts/* ${PWD}/../crypto-config/peerOrganizations/retailer.com/tlsca/tlsca.retailer.com-cert.pem
 
-  mkdir ${PWD}/../crypto-config/peerOrganizations/retailer.com/ca
+  # mkdir ${PWD}/../crypto-config/peerOrganizations/retailer.com/ca
   cp ${PWD}/../crypto-config/peerOrganizations/retailer.com/peers/peerbb2.retailer.com/msp/cacerts/* ${PWD}/../crypto-config/peerOrganizations/retailer.com/ca/ca.retailer.com-cert.pem
   # --------------------------------------------------------------------------------
 
@@ -828,10 +829,10 @@ createCertificatesForOrderer() {
 }
 
 # createCretificateForOrderer
+sudo rm -r fabric-ca
 sudo docker-compose -f docker-compose.yaml up -d
 sleep 6
-sudo rm -rf ../crypto-config
-# sudo rm -rf fabric-ca/*
+sudo rm -r ../crypto-config
 createcertificatesForOrg1
 createCertificatesForOrg2
 createCertificatesForOrg3

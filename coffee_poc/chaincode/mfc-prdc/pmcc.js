@@ -7,7 +7,7 @@ SPDX-License-Identifier: Apache-2.0
 let { Contract } = require("fabric-contract-api");
 let { ClientIdentity } = require("fabric-shim");
 // let { TokenERC20Contract } = require('./token-erc-20/chaincode-javascript/lib/tokenERC20.js')
-let productionStock = "stock";
+let productionStock = "PRODUCER_STOCK";
 let orderNumber = "orderNumber";
 let Status = [
   "order-placed",
@@ -29,9 +29,6 @@ class PmCc extends Contract {
 
     console.log("Balance of teafarmMSP initialized to 1000000 $");
     await ctx.stub.putState(producerFunds, Buffer.from("1000000"));
-
-    console.log("Ordered Stock of Manufacturer is initialized to 0 $");
-    await ctx.stub.putState(producerFunds, Buffer.from("0"));
 
     await ctx.stub.putState(productionStock, Buffer.from(initialStock));
     console.log("Production Stock Initailized to " + initialStock);
