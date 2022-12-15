@@ -66,7 +66,7 @@ echo "*================Creating anchor peers for Warehouse & Retailer===========
 }
 
 
-createCryptogenMaterial
+# createCryptogenMaterial
 createGenesis
 createChannels
 createAnchorPeers

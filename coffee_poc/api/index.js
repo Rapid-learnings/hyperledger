@@ -177,7 +177,7 @@ app.post("/manufacture/place-order", async (req, res, next) => {
       "pmcc",
       "placeOrder",
       args,
-      "user3",
+      "user2",
       "tata"
     );
     res.json({ message: `Order Number for Manufacturer =  ${result}` });

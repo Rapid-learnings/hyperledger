@@ -659,7 +659,7 @@ createCertificatesForOrg5() {
   cp ${PWD}/../crypto-config/peerOrganizations/gov.io/peers/peergov1.gov.io/tls/tlscacerts/* ${PWD}/../crypto-config/peerOrganizations/gov.io/tlsca/tlsca.gov.io-cert.pem
 
   mkdir ${PWD}/../crypto-config/peerOrganizations/gov.io/peers/peergov1.gov.io/msp/tlscacerts
-  cp ${PWD}/../crypto-config/peerOrganizations/gov.io/peers/peergov1.gov.io/tls/tlscacerts/* ${PWD}/../crypto-config/peerOrganizations/gov.com/peers/peergov1.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem
+  cp ${PWD}/../crypto-config/peerOrganizations/gov.io/peers/peergov1.gov.io/tls/tlscacerts/* ${PWD}/../crypto-config/peerOrganizations/gov.io/peers/peergov1.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem
 
   mkdir ${PWD}/../crypto-config/peerOrganizations/gov.io/ca
   cp ${PWD}/../crypto-config/peerOrganizations/gov.io/peers/peergov1.gov.io/msp/cacerts/* ${PWD}/../crypto-config/peerOrganizations/gov.io/ca/ca.gov.io-cert.pem
