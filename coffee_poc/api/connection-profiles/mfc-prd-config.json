@@ -50,8 +50,18 @@
     }
   },
   "certificateAuthorities": {
+    "ca_orderer": {
+      "url": "https://localhost:2050",
+      "caName": "ca_orderer",
+      "tlsCAcerts": {
+        "path": "/home/ubuntu/fabric/hyperledger/coffee_poc/crypto-config/ordererOrganizations/gov.io/msp/cacerts/localhost-12054-ca-orderer.pem"
+      },
+      "httpOptions": {
+        "verify": false
+      }
+    },
     "ca.manufacturer.com": {
-      "url": "https://localhost:2051",
+      "url": "https://localhost:2052",
       "caName": "ca.manufacturer.com",
       "tlsCAcerts": {
         "path": "/home/ubuntu/fabric/hyperledger/coffee_poc/crypto-config/peerOrganizations/manufacturer.com/ca/ca.manufacturer.com-cert.pem"
@@ -61,7 +71,7 @@
       }
     },
     "ca.production.com": {
-      "url": "https://localhost:2052",
+      "url": "https://localhost:2051",
       "caName": "ca.production.com",
       "tlsCAcerts": {
         "path": "/home/ubuntu/fabric/hyperledger/coffee_poc/crypto-config/peerOrganizations/production.com/ca/ca.production.com-cert.pem"
@@ -83,6 +93,16 @@
     "ca.retailer.com": {
       "url": "https://localhost:2054",
       "caName": "ca.retailer.com",
+      "tlsCAcerts": {
+        "path": "/home/ubuntu/fabric/hyperledger/coffee_poc/crypto-config/peerOrganizations/retailer.com/ca/ca.retailer.com-cert.pem"
+      },
+      "httpOptions": {
+        "verify": false
+      }
+    },
+    "ca.gov.io": {
+      "url": "https://localhost:2055",
+      "caName": "ca.gov.io",
       "tlsCAcerts": {
         "path": "/home/ubuntu/fabric/hyperledger/coffee_poc/crypto-config/peerOrganizations/retailer.com/ca/ca.retailer.com-cert.pem"
       },
