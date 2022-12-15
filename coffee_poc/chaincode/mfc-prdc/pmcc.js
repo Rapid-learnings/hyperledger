@@ -24,8 +24,12 @@ let pricePerKg = 100; // 100$ for 1 kg coffee
 class pmcc extends Contract {
 
   hello(){
-    return 290;
+    return 290000;
   }
+
+  // hello2(){
+  //   return 290000;
+  // }
   // initializes the stock of the producer to a set amount and also initializes the erc20 token contract
   async init(ctx, initialStock) {
     await ctx.stub.putState(manufacturerFunds, Buffer.from("1000000"));

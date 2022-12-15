@@ -5,13 +5,15 @@ export FABRIC_CFG_PATH=${PWD}/config
 
 rm -r -f ./channel-artifacts/*
 # sudo chown $USER:$USER ./crypto-config
-sudo rm -r -f ./crypto-config
+# sudo rm -r -f ./crypto-config
 # create cryptogen material
 createCryptogenMaterial(){
     echo "=========Creating Crypto Material========*"
-    cryptogen generate --config=${PWD}/crypto-config.yaml
-
-    sleep 2
+    # cryptogen generate --config=${PWD}/crypto-config.yaml
+    cd fabric-ca-client
+    ./create-ca.sh
+    cd ..
+    sleep 5
 }
 
 # 3. Create the genesis block, using the configtxgen & genesis profile

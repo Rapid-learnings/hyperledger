@@ -1,4 +1,5 @@
 /bin/
+/crypto-config-cryptogen/*
 /crypto-config/*
 # channel-artifacts/*.tx
 # channel-artifacts/*.block
@@ -16,9 +17,7 @@ api/package-lock.json
 /chaincode/whs-rtlr/node_modules/*
 /chaincode/coffeeCC/node_modules/*
 /chaincode/coffeeCC/*
-/fabric-ca-client
-/fabric-ca-mfc
-/fabric-ca-server-tls
+/fabric-ca-client/fabric-ca/*
 .env
 # /api/tata-wallet/*.id
 # /api/teafarm-wallet/*.id
