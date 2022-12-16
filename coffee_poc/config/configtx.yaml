@@ -15,8 +15,8 @@ Organizations:
                 Rule: "OR('OrdererMSP.admin')"
         OrdererEndpoints:
             - orderer1.gov.io:7050
-            # - orderer2.gov.io:7051
-            # - orderer3.gov.io:7052
+            - orderer2.gov.io:7051
+            - orderer3.gov.io:7052
 
     - &governance
         Name: governance
@@ -306,7 +306,7 @@ Orderer: &OrdererDefaults
 
     # Orderer Type: The orderer implementation to start.
     # Available types are "solo", "kafka" and "etcdraft".
-    OrdererType: solo
+    OrdererType: etcdraft
 
     # Addresses used to be the list of orderer addresses that clients and peers
     # could connect to.  However, this does not allow clients to associate orderer
@@ -365,18 +365,18 @@ Orderer: &OrdererDefaults
         # a subset of the host:port items enumerated in this list should be
         # replicated under the Orderer.Addresses key above.
         Consenters:
-            - Host: raft0.example.com
-              Port: 7050
-              ClientTLSCert: path/to/ClientTLSCert0
-              ServerTLSCert: path/to/ServerTLSCert0
-            - Host: raft1.example.com
-              Port: 7050
-              ClientTLSCert: path/to/ClientTLSCert1
-              ServerTLSCert: path/to/ServerTLSCert1
-            - Host: raft2.example.com
-              Port: 7050
-              ClientTLSCert: path/to/ClientTLSCert2
-              ServerTLSCert: path/to/ServerTLSCert2
+            -   Host: orderer1.gov.io
+                Port: 7050
+                ClientTLSCert: /home/ubuntu/fabric/hyperledger/coffee_poc/crypto-config/ordererOrganizations/gov.io/orderers/orderer1.gov.io/tls/server.crt
+                ServerTLSCert: /home/ubuntu/fabric/hyperledger/coffee_poc/crypto-config/ordererOrganizations/gov.io/orderers/orderer1.gov.io/tls/server.crt
+            -   Host: orderer2.gov.io
+                Port: 7051
+                ClientTLSCert: /home/ubuntu/fabric/hyperledger/coffee_poc/crypto-config/ordererOrganizations/gov.io/orderers/orderer2.gov.io/tls/server.crt
+                ServerTLSCert: /home/ubuntu/fabric/hyperledger/coffee_poc/crypto-config/ordererOrganizations/gov.io/orderers/orderer2.gov.io/tls/server.crt
+            -   Host: orderer3.gov.io
+                Port: 7052
+                ClientTLSCert: /home/ubuntu/fabric/hyperledger/coffee_poc/crypto-config/ordererOrganizations/gov.io/orderers/orderer3.gov.io/tls/server.crt
+                ServerTLSCert: /home/ubuntu/fabric/hyperledger/coffee_poc/crypto-config/ordererOrganizations/gov.io/orderers/orderer3.gov.io/tls/server.crt
 
         # Options to be specified for all the etcd/raft nodes. The values here
         # are the defaults for all new channels and can be modified on a
@@ -483,6 +483,25 @@ Profiles:
         <<: *ChannelDefaults
         Orderer:
             <<: *OrdererDefaults
+            OrdererType: etcdraft
+            EtcdRaft:
+                Consenters:
+                - Host: orderer1.gov.io
+                  Port: 7050
+                  ClientTLSCert: /home/ubuntu/fabric/hyperledger/coffee_poc/crypto-config/ordererOrganizations/gov.io/orderers/orderer1.gov.io/tls/server.crt
+                  ServerTLSCert: /home/ubuntu/fabric/hyperledger/coffee_poc/crypto-config/ordererOrganizations/gov.io/orderers/orderer1.gov.io/tls/server.crt
+                - Host: orderer2.gov.io
+                  Port: 7051
+                  ClientTLSCert: /home/ubuntu/fabric/hyperledger/coffee_poc/crypto-config/ordererOrganizations/gov.io/orderers/orderer2.gov.io/tls/server.crt
+                  ServerTLSCert: /home/ubuntu/fabric/hyperledger/coffee_poc/crypto-config/ordererOrganizations/gov.io/orderers/orderer2.gov.io/tls/server.crt
+                - Host: orderer3.gov.io
+                  Port: 7052
+                  ClientTLSCert: /home/ubuntu/fabric/hyperledger/coffee_poc/crypto-config/ordererOrganizations/gov.io/orderers/orderer3.gov.io/tls/server.crt
+                  ServerTLSCert: /home/ubuntu/fabric/hyperledger/coffee_poc/crypto-config/ordererOrganizations/gov.io/orderers/orderer3.gov.io/tls/server.crt
+            Addresses:
+                - orderer1.gov.io:7050
+                - orderer2.gov.io:7051
+                - orderer3.gov.io:7052 
             Organizations:
                 - *OrdererOrg
             Capabilities:
