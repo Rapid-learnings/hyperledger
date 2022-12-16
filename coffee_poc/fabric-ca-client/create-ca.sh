@@ -1,6 +1,5 @@
 export PATH=${PWD}/../bin:$PATH
 export FABRIC_CFG_PATH=${PWD}/../config
-
 createcertificatesForOrg1() {
   echo
   echo "Enroll the CA admin"
@@ -662,7 +661,7 @@ createCertificatesForOrg5() {
   cp ${PWD}/../crypto-config/peerOrganizations/gov.io/peers/peergov1.gov.io/tls/tlscacerts/* ${PWD}/../crypto-config/peerOrganizations/gov.io/tlsca/tlsca.gov.io-cert.pem
 
   mkdir ${PWD}/../crypto-config/peerOrganizations/gov.io/peers/peergov1.gov.io/msp/tlscacerts
-  cp ${PWD}/../crypto-config/peerOrganizations/gov.io/peers/peergov1.gov.io/tls/tlscacerts/* ${PWD}/../crypto-config/peerOrganizations/gov.com/peers/peergov1.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem
+  cp ${PWD}/../crypto-config/peerOrganizations/gov.io/peers/peergov1.gov.io/tls/tlscacerts/* ${PWD}/../crypto-config/peerOrganizations/gov.io/peers/peergov1.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem
 
   mkdir ${PWD}/../crypto-config/peerOrganizations/gov.io/ca
   cp ${PWD}/../crypto-config/peerOrganizations/gov.io/peers/peergov1.gov.io/msp/cacerts/* ${PWD}/../crypto-config/peerOrganizations/gov.io/ca/ca.gov.io-cert.pem
@@ -784,63 +783,63 @@ createCertificatesForOrderer() {
   # -----------------------------------------------------------------------
   #  Orderer 2
 
-#   mkdir -p ../crypto-config/ordererOrganizations/gov.io/orderers/orderer2.gov.io
+  mkdir -p ../crypto-config/ordererOrganizations/gov.io/orderers/orderer2.gov.io
 
-#   echo
-#   echo "## Generate the orderer msp"
-#   echo
+  echo
+  echo "## Generate the orderer msp"
+  echo
    
-#   fabric-ca-client enroll -u https://orderer2:ordererpw@localhost:2050 --caname ca-orderer -M ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer2.gov.io/msp --csr.hosts orderer2.gov.io --csr.hosts localhost --tls.certfiles ${PWD}/fabric-ca/ordererOrg/tls-cert.pem
-   
-
-#   cp ${PWD}/../crypto-config/ordererOrganizations/gov.io/msp/config.yaml ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer2.gov.io/msp/config.yaml
-
-#   echo
-#   echo "## Generate the orderer-tls certificates"
-#   echo
-   
-#   fabric-ca-client enroll -u https://orderer2:ordererpw@localhost:2050 --caname ca-orderer -M ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer2.gov.io/tls --enrollment.profile tls --csr.hosts orderer2.gov.io --csr.hosts localhost --tls.certfiles ${PWD}/fabric-ca/ordererOrg/tls-cert.pem
+  fabric-ca-client enroll -u https://orderer2:ordererpw@localhost:2050 --caname ca-orderer -M ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer2.gov.io/msp --csr.hosts orderer2.gov.io --csr.hosts localhost --tls.certfiles ${PWD}/fabric-ca/ordererOrg/tls-cert.pem
    
 
-#   cp ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer2.gov.io/tls/tlscacerts/* ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer2.gov.io/tls/ca.crt
-#   cp ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer2.gov.io/tls/signcerts/* ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer2.gov.io/tls/server.crt
-#   cp ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer2.gov.io/tls/keystore/* ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer2.gov.io/tls/server.key
+  cp ${PWD}/../crypto-config/ordererOrganizations/gov.io/msp/config.yaml ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer2.gov.io/msp/config.yaml
 
-#   mkdir ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer2.gov.io/msp/tlscacerts
-#   cp ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer2.gov.io/tls/tlscacerts/* ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer2.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem
+  echo
+  echo "## Generate the orderer-tls certificates"
+  echo
+   
+  fabric-ca-client enroll -u https://orderer2:ordererpw@localhost:2050 --caname ca-orderer -M ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer2.gov.io/tls --enrollment.profile tls --csr.hosts orderer2.gov.io --csr.hosts localhost --tls.certfiles ${PWD}/fabric-ca/ordererOrg/tls-cert.pem
+   
 
-  # mkdir ${PWD}/../crypto-config/ordererOrganizations/gov.io/msp/tlscacerts
-  # cp ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer2.gov.io/tls/tlscacerts/* ${PWD}/../crypto-config/ordererOrganizations/gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem
+  cp ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer2.gov.io/tls/tlscacerts/* ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer2.gov.io/tls/ca.crt
+  cp ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer2.gov.io/tls/signcerts/* ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer2.gov.io/tls/server.crt
+  cp ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer2.gov.io/tls/keystore/* ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer2.gov.io/tls/server.key
+
+  mkdir ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer2.gov.io/msp/tlscacerts
+  cp ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer2.gov.io/tls/tlscacerts/* ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer2.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem
+
+  mkdir ${PWD}/../crypto-config/ordererOrganizations/gov.io/msp/tlscacerts
+  cp ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer2.gov.io/tls/tlscacerts/* ${PWD}/../crypto-config/ordererOrganizations/gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem
 
   # ---------------------------------------------------------------------------
   #  Orderer 3
-#   mkdir -p ../crypto-config/ordererOrganizations/gov.io/orderers/orderer3.gov.io
+  mkdir -p ../crypto-config/ordererOrganizations/gov.io/orderers/orderer3.gov.io
 
-#   echo
-#   echo "## Generate the orderer msp"
-#   echo
+  echo
+  echo "## Generate the orderer msp"
+  echo
    
-#   fabric-ca-client enroll -u https://orderer3:ordererpw@localhost:2050 --caname ca-orderer -M ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer3.gov.io/msp --csr.hosts orderer3.gov.io --csr.hosts localhost --tls.certfiles ${PWD}/fabric-ca/ordererOrg/tls-cert.pem
-   
-
-#   cp ${PWD}/../crypto-config/ordererOrganizations/gov.io/msp/config.yaml ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer3.gov.io/msp/config.yaml
-
-#   echo
-#   echo "## Generate the orderer-tls certificates"
-#   echo
-   
-#   fabric-ca-client enroll -u https://orderer3:ordererpw@localhost:2050 --caname ca-orderer -M ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer3.gov.io/tls --enrollment.profile tls --csr.hosts orderer3.gov.io --csr.hosts localhost --tls.certfiles ${PWD}/fabric-ca/ordererOrg/tls-cert.pem
+  fabric-ca-client enroll -u https://orderer3:ordererpw@localhost:2050 --caname ca-orderer -M ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer3.gov.io/msp --csr.hosts orderer3.gov.io --csr.hosts localhost --tls.certfiles ${PWD}/fabric-ca/ordererOrg/tls-cert.pem
    
 
-#   cp ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer3.gov.io/tls/tlscacerts/* ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer3.gov.io/tls/ca.crt
-#   cp ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer3.gov.io/tls/signcerts/* ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer3.gov.io/tls/server.crt
-#   cp ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer3.gov.io/tls/keystore/* ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer3.gov.io/tls/server.key
+  cp ${PWD}/../crypto-config/ordererOrganizations/gov.io/msp/config.yaml ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer3.gov.io/msp/config.yaml
 
-#   mkdir ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer3.gov.io/msp/tlscacerts
-#   cp ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer3.gov.io/tls/tlscacerts/* ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer3.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem
+  echo
+  echo "## Generate the orderer-tls certificates"
+  echo
+   
+  fabric-ca-client enroll -u https://orderer3:ordererpw@localhost:2050 --caname ca-orderer -M ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer3.gov.io/tls --enrollment.profile tls --csr.hosts orderer3.gov.io --csr.hosts localhost --tls.certfiles ${PWD}/fabric-ca/ordererOrg/tls-cert.pem
+   
 
-  # mkdir ${PWD}/../crypto-config/ordererOrganizations/gov.io/msp/tlscacerts
-  # cp ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer3.gov.io/tls/tlscacerts/* ${PWD}/../crypto-config/ordererOrganizations/gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem
+  cp ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer3.gov.io/tls/tlscacerts/* ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer3.gov.io/tls/ca.crt
+  cp ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer3.gov.io/tls/signcerts/* ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer3.gov.io/tls/server.crt
+  cp ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer3.gov.io/tls/keystore/* ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer3.gov.io/tls/server.key
+
+  mkdir ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer3.gov.io/msp/tlscacerts
+  cp ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer3.gov.io/tls/tlscacerts/* ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer3.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem
+
+  mkdir ${PWD}/../crypto-config/ordererOrganizations/gov.io/msp/tlscacerts
+  cp ${PWD}/../crypto-config/ordererOrganizations/gov.io/orderers/orderer3.gov.io/tls/tlscacerts/* ${PWD}/../crypto-config/ordererOrganizations/gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem
 
   # ---------------------------------------------------------------------------
 
@@ -859,7 +858,7 @@ createCertificatesForOrderer() {
 }
 
 # createCretificateForOrderer
-# sudo rm -r ./fabric-ca
+sudo rm -r fabric-ca
 sudo docker-compose -f docker-compose.yaml up -d
 sleep 6
 sudo rm -r ../crypto-config

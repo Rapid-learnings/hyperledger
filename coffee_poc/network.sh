@@ -13,7 +13,7 @@ createCryptogenMaterial(){
     cd fabric-ca-client
     ./create-ca.sh
     cd ..
-    sleep 5
+    sleep 8
 }
 
 # 3. Create the genesis block, using the configtxgen & genesis profile
