@@ -365,18 +365,18 @@ Orderer: &OrdererDefaults
         # a subset of the host:port items enumerated in this list should be
         # replicated under the Orderer.Addresses key above.
         Consenters:
-            -   Host: orderer1.gov.io
-                Port: 7050
-                ClientTLSCert: /home/ubuntu/fabric/hyperledger/coffee_poc/crypto-config/ordererOrganizations/gov.io/orderers/orderer1.gov.io/tls/server.crt
-                ServerTLSCert: /home/ubuntu/fabric/hyperledger/coffee_poc/crypto-config/ordererOrganizations/gov.io/orderers/orderer1.gov.io/tls/server.crt
-            -   Host: orderer2.gov.io
-                Port: 7051
-                ClientTLSCert: /home/ubuntu/fabric/hyperledger/coffee_poc/crypto-config/ordererOrganizations/gov.io/orderers/orderer2.gov.io/tls/server.crt
-                ServerTLSCert: /home/ubuntu/fabric/hyperledger/coffee_poc/crypto-config/ordererOrganizations/gov.io/orderers/orderer2.gov.io/tls/server.crt
-            -   Host: orderer3.gov.io
-                Port: 7052
-                ClientTLSCert: /home/ubuntu/fabric/hyperledger/coffee_poc/crypto-config/ordererOrganizations/gov.io/orderers/orderer3.gov.io/tls/server.crt
-                ServerTLSCert: /home/ubuntu/fabric/hyperledger/coffee_poc/crypto-config/ordererOrganizations/gov.io/orderers/orderer3.gov.io/tls/server.crt
+            - Host: orderer1.gov.io
+              Port: 7050
+              ClientTLSCert: /home/ubuntu/fabric/hyperledger/coffee_poc/crypto-config/ordererOrganizations/gov.io/orderers/orderer1.gov.io/tls/server.crt
+              ServerTLSCert: /home/ubuntu/fabric/hyperledger/coffee_poc/crypto-config/ordererOrganizations/gov.io/orderers/orderer1.gov.io/tls/server.crt
+            - Host: orderer2.gov.io
+              Port: 7051
+              ClientTLSCert: /home/ubuntu/fabric/hyperledger/coffee_poc/crypto-config/ordererOrganizations/gov.io/orderers/orderer2.gov.io/tls/server.crt
+              ServerTLSCert: /home/ubuntu/fabric/hyperledger/coffee_poc/crypto-config/ordererOrganizations/gov.io/orderers/orderer2.gov.io/tls/server.crt
+            - Host: orderer3.gov.io
+              Port: 7052
+              ClientTLSCert: /home/ubuntu/fabric/hyperledger/coffee_poc/crypto-config/ordererOrganizations/gov.io/orderers/orderer3.gov.io/tls/server.crt
+              ServerTLSCert: /home/ubuntu/fabric/hyperledger/coffee_poc/crypto-config/ordererOrganizations/gov.io/orderers/orderer3.gov.io/tls/server.crt
 
         # Options to be specified for all the etcd/raft nodes. The values here
         # are the defaults for all new channels and can be modified on a

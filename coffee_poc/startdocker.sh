@@ -1,5 +1,6 @@
 #!/bin/sh
 # starting the docker process
+export FABRIC_CFG_PATH=${PWD}/config
 
 sudo docker-compose -f ./docker/docker-compose-all.yaml up -d
 

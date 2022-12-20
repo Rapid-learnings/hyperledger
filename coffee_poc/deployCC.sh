@@ -1,5 +1,6 @@
 #!/bin/sh
 export VERSION="1"
+export FABRIC_CFG_PATH=${PWD}/config
 
 mfdPrdCC(){
     echo "********** Packaging CC for Manufacture-Production-Channel ********************"
