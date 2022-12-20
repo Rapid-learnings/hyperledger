@@ -1,10 +1,11 @@
 version: '2'
 
 volumes:
-  ca.manufacturer.com:
-  caProduction:
-  cawarehouse:
-  caRetailer:
+  # caGov:
+  # caManufacturer:
+  # caProduction:
+  # cawarehouse:
+  # caRetailer:
   couchdb0:
   couchdb1:
   couchdb2:
@@ -32,110 +33,110 @@ networks:
 
 services:
 
-  ca.gov.io: 
-    image: hyperledger/fabric-ca
-    environment:
-      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
-      - FABRIC_CA_SERVER_CA_NAME=ca.manufacturer.com
-      - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.manufacturer.com-cert.pem
-      - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/priv_sk
-      - FABRIC_CA_SERVER_TLS_ENABLED=true
-      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-tls/tlsca.manufacturer.com-cert.pem
-      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-tls/priv_sk
-    ports:
-      - "2050:2050"
-    command:  sh -c 'fabric-ca-server start -b admin:adminpw -d'
-    volumes:
-      - ../crypto-config/peerOrganizations/manufacturer.com/ca/:/etc/hyperledger/fabric-ca-server-config
-      - ../crypto-config/peerOrganizations/manufacturer.com/tlsca/:/etc/hyperledger/fabric-ca-server-tls
-    container_name: ca.manufacturer.com
-    hostname: ca.manufacturer.com
-    networks:
-      - test
+  # caGov: 
+  #   image: hyperledger/fabric-ca
+  #   environment:
+  #     - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+  #     - FABRIC_CA_SERVER_CA_NAME=ca.gov.io
+  #     - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.gov.io-cert.pem
+  #     - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/priv_sk
+  #     - FABRIC_CA_SERVER_TLS_ENABLED=true
+  #     - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-tls/tlsca.gov.io-cert.pem
+  #     - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-tls/priv_sk
+  #   ports:
+  #     - "2055:2055"
+  #   command:  sh -c 'fabric-ca-server start -b admin:adminpw -d'
+  #   volumes:
+  #     - ../crypto-config/peerOrganizations/manufacturer.com/ca/:/etc/hyperledger/fabric-ca-server-config
+  #     - ../crypto-config/peerOrganizations/manufacturer.com/tlsca/:/etc/hyperledger/fabric-ca-server-tls
+  #   container_name: caGov
+  #   hostname: ca.gov.io
+  #   networks:
+  #     - test
 
-  ca.manufacturer.com: 
-    image: hyperledger/fabric-ca
-    environment:
-      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
-      - FABRIC_CA_SERVER_CA_NAME=ca.manufacturer.com
-      - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.manufacturer.com-cert.pem
-      - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/priv_sk
-      - FABRIC_CA_SERVER_TLS_ENABLED=true
-      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-tls/tlsca.manufacturer.com-cert.pem
-      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-tls/priv_sk
-    ports:
-      - "2051:2051"
-    command:  sh -c 'fabric-ca-server start -b admin:adminpw -d'
-    volumes:
-      - ../crypto-config/peerOrganizations/manufacturer.com/ca/:/etc/hyperledger/fabric-ca-server-config
-      - ../crypto-config/peerOrganizations/manufacturer.com/tlsca/:/etc/hyperledger/fabric-ca-server-tls
-    container_name: ca.manufacturer.com
-    hostname: ca.manufacturer.com
-    networks:
-      - test
+  # caManufacturer: 
+  #   image: hyperledger/fabric-ca
+  #   environment:
+  #     - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+  #     - FABRIC_CA_SERVER_CA_NAME=ca.manufacturer.com
+  #     - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.manufacturer.com-cert.pem
+  #     - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/priv_sk
+  #     - FABRIC_CA_SERVER_TLS_ENABLED=true
+  #     - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-tls/tlsca.manufacturer.com-cert.pem
+  #     - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-tls/priv_sk
+  #   ports:
+  #     - "2051:2051"
+  #   command:  sh -c 'fabric-ca-server start -b admin:adminpw -d'
+  #   volumes:
+  #     - ../crypto-config/peerOrganizations/manufacturer.com/ca/:/etc/hyperledger/fabric-ca-server-config
+  #     - ../crypto-config/peerOrganizations/manufacturer.com/tlsca/:/etc/hyperledger/fabric-ca-server-tls
+  #   container_name: caManufacturer
+  #   hostname: ca.manufacturer.com
+  #   networks:
+  #     - test
 
-  caProduction:
-    image: hyperledger/fabric-ca
-    environment:
-      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
-      - FABRIC_CA_SERVER_CA_NAME=ca.production.com
-      - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.production.com-cert.pem
-      - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/priv_sk
-      - FABRIC_CA_SERVER_TLS_ENABLED=true
-      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-tls/tlsca.production.com-cert.pem
-      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-tls/priv_sk
-    ports:
-      - "2052:2052"
-    command:  sh -c 'fabric-ca-server start -b admin:adminpw -d'
-    volumes:
-      - ../crypto-config/peerOrganizations/production.com/ca/:/etc/hyperledger/fabric-ca-server-config
-      - ../crypto-config/peerOrganizations/production.com/tlsca/:/etc/hyperledger/fabric-ca-server-tls
-    container_name: ca.production.com
-    hostname: ca.production.com
-    networks:
-      - test
+  # caProduction:
+  #   image: hyperledger/fabric-ca
+  #   environment:
+  #     - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+  #     - FABRIC_CA_SERVER_CA_NAME=ca.production.com
+  #     - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.production.com-cert.pem
+  #     - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/priv_sk
+  #     - FABRIC_CA_SERVER_TLS_ENABLED=true
+  #     - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-tls/tlsca.production.com-cert.pem
+  #     - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-tls/priv_sk
+  #   ports:
+  #     - "2052:2052"
+  #   command:  sh -c 'fabric-ca-server start -b admin:adminpw -d'
+  #   volumes:
+  #     - ../crypto-config/peerOrganizations/production.com/ca/:/etc/hyperledger/fabric-ca-server-config
+  #     - ../crypto-config/peerOrganizations/production.com/tlsca/:/etc/hyperledger/fabric-ca-server-tls
+  #   container_name: caProduction
+  #   hostname: ca.production.com
+  #   networks:
+  #     - test
 
-  cawarehouse:
-    image: hyperledger/fabric-ca
-    environment:
-      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
-      - FABRIC_CA_SERVER_CA_NAME=ca.warehouse.com
-      - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.warehouse.com-cert.pem
-      - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/priv_sk
-      - FABRIC_CA_SERVER_TLS_ENABLED=true
-      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-tls/tlsca.warehouse.com-cert.pem
-      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-tls/priv_sk
-    ports:
-      - "2053:2053"
-    command:  sh -c 'fabric-ca-server start -b admin:adminpw -d'
-    volumes:
-      - ../crypto-config/peerOrganizations/warehouse.com/ca/:/etc/hyperledger/fabric-ca-server-config
-      - ../crypto-config/peerOrganizations/warehouse.com/tlsca/:/etc/hyperledger/fabric-ca-server-tls
-    container_name: ca.warehouse.com
-    hostname: ca.warehouse.com
-    networks:
-      - test
+  # cawarehouse:
+  #   image: hyperledger/fabric-ca
+  #   environment:
+  #     - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+  #     - FABRIC_CA_SERVER_CA_NAME=ca.warehouse.com
+  #     - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.warehouse.com-cert.pem
+  #     - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/priv_sk
+  #     - FABRIC_CA_SERVER_TLS_ENABLED=true
+  #     - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-tls/tlsca.warehouse.com-cert.pem
+  #     - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-tls/priv_sk
+  #   ports:
+  #     - "2053:2053"
+  #   command:  sh -c 'fabric-ca-server start -b admin:adminpw -d'
+  #   volumes:
+  #     - ../crypto-config/peerOrganizations/warehouse.com/ca/:/etc/hyperledger/fabric-ca-server-config
+  #     - ../crypto-config/peerOrganizations/warehouse.com/tlsca/:/etc/hyperledger/fabric-ca-server-tls
+  #   container_name: cawarehouse
+  #   hostname: ca.warehouse.com
+  #   networks:
+  #     - test
 
-  caRetailer:
-    image: hyperledger/fabric-ca
-    environment:
-      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
-      - FABRIC_CA_SERVER_CA_NAME=ca.retailer.com
-      - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.retailer.com-cert.pem
-      - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/priv_sk
-      - FABRIC_CA_SERVER_TLS_ENABLED=true
-      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-tls/tlsca.retailer.com-cert.pem
-      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-tls/priv_sk
-    ports:
-      - "2054:2054"
-    command:  sh -c 'fabric-ca-server start -b admin:adminpw -d'
-    volumes:
-      - ../crypto-config/peerOrganizations/retailer.com/ca/:/etc/hyperledger/fabric-ca-server-config
-      - ../crypto-config/peerOrganizations/retailer.com/tlsca/:/etc/hyperledger/fabric-ca-server-tls
-    container_name: ca.retailer.com
-    hostname: ca.retailer.com
-    networks:
-      - test
+  # caRetailer:
+  #   image: hyperledger/fabric-ca
+  #   environment:
+  #     - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+  #     - FABRIC_CA_SERVER_CA_NAME=ca.retailer.com
+  #     - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.retailer.com-cert.pem
+  #     - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/priv_sk
+  #     - FABRIC_CA_SERVER_TLS_ENABLED=true
+  #     - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-tls/tlsca.retailer.com-cert.pem
+  #     - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-tls/priv_sk
+  #   ports:
+  #     - "2054:2054"
+  #   command:  sh -c 'fabric-ca-server start -b admin:adminpw -d'
+  #   volumes:
+  #     - ../crypto-config/peerOrganizations/retailer.com/ca/:/etc/hyperledger/fabric-ca-server-config
+  #     - ../crypto-config/peerOrganizations/retailer.com/tlsca/:/etc/hyperledger/fabric-ca-server-tls
+  #   container_name: caRetailer
+  #   hostname: ca.retailer.com
+  #   networks:
+  #     - test
 
   couchdb0:
     container_name: couchdb0
