@@ -1,11 +1,21 @@
 version: '2'
 
 volumes:
-  caManufacturer:
+  ca.manufacturer.com:
   caProduction:
   cawarehouse:
   caRetailer:
+  couchdb0:
+  couchdb1:
+  couchdb2:
+  couchdb3:
+  couchdb4:
+  couchdb5:
+  couchdb6:
+  couchdb7:
   orderer:
+  orderer2:
+  orderer3:
   peertm1.manufacturer.com:
   peertm2.manufacturer.com:
   peertf1.production.com:
@@ -22,24 +32,49 @@ networks:
 
 services:
 
-  caManufacturer:
+  ca.gov.io: 
     image: hyperledger/fabric-ca
     environment:
       - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
-      - FABRIC_CA_SERVER_CA_NAME=caManufacturer
+      - FABRIC_CA_SERVER_CA_NAME=ca.manufacturer.com
       - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.manufacturer.com-cert.pem
       - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/priv_sk
       - FABRIC_CA_SERVER_TLS_ENABLED=true
       - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-tls/tlsca.manufacturer.com-cert.pem
       - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-tls/priv_sk
+      - FABRIC_CA_SERVER_PORT=2050
+    ports:
+      - "2050:2050"
+    command:  sh -c 'fabric-ca-server start -b admin:adminpw -d'
+    volumes:
+      - ../crypto-config/peerOrganizations/manufacturer.com/ca/:/etc/hyperledger/fabric-ca-server-config
+      - ../crypto-config/peerOrganizations/manufacturer.com/tlsca/:/etc/hyperledger/fabric-ca-server-tls
+      - ../fabric-ca/orderer-gov:/etc/hyperledger/fabric-ca-server
+    container_name: ca.manufacturer.com
+    hostname: ca.manufacturer.com
+    networks:
+      - test
+
+  ca.manufacturer.com: 
+    image: hyperledger/fabric-ca
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca.manufacturer.com
+      - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.manufacturer.com-cert.pem
+      - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/priv_sk
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-tls/tlsca.manufacturer.com-cert.pem
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-tls/priv_sk
+      - FABRIC_CA_SERVER_PORT=2051
     ports:
       - "2051:2051"
     command:  sh -c 'fabric-ca-server start -b admin:adminpw -d'
     volumes:
       - ../crypto-config/peerOrganizations/manufacturer.com/ca/:/etc/hyperledger/fabric-ca-server-config
       - ../crypto-config/peerOrganizations/manufacturer.com/tlsca/:/etc/hyperledger/fabric-ca-server-tls
-    container_name: caManufacturer
-    hostname: caManufacturer
+      - ../fabric-ca/manufacturer:/etc/hyperledger/fabric-ca-server    
+    container_name: ca.manufacturer.com
+    hostname: ca.manufacturer.com
     networks:
       - test
 
@@ -47,20 +82,22 @@ services:
     image: hyperledger/fabric-ca
     environment:
       - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
-      - FABRIC_CA_SERVER_CA_NAME=caProduction
+      - FABRIC_CA_SERVER_CA_NAME=ca.production.com
       - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.production.com-cert.pem
       - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/priv_sk
       - FABRIC_CA_SERVER_TLS_ENABLED=true
       - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-tls/tlsca.production.com-cert.pem
       - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-tls/priv_sk
+      - FABRIC_CA_SERVER_PORT=2052
     ports:
       - "2052:2052"
     command:  sh -c 'fabric-ca-server start -b admin:adminpw -d'
     volumes:
       - ../crypto-config/peerOrganizations/production.com/ca/:/etc/hyperledger/fabric-ca-server-config
       - ../crypto-config/peerOrganizations/production.com/tlsca/:/etc/hyperledger/fabric-ca-server-tls
-    container_name: caProduction
-    hostname: caProduction
+      - ../fabric-ca/production:/etc/hyperledger/fabric-ca-server        
+    container_name: ca.production.com
+    hostname: ca.production.com
     networks:
       - test
 
@@ -68,20 +105,22 @@ services:
     image: hyperledger/fabric-ca
     environment:
       - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
-      - FABRIC_CA_SERVER_CA_NAME=cawarehouse
+      - FABRIC_CA_SERVER_CA_NAME=ca.warehouse.com
       - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.warehouse.com-cert.pem
       - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/priv_sk
       - FABRIC_CA_SERVER_TLS_ENABLED=true
       - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-tls/tlsca.warehouse.com-cert.pem
       - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-tls/priv_sk
+      - FABRIC_CA_SERVER_PORT=2053
     ports:
-      - "2003:2003"
+      - "2053:2053"
     command:  sh -c 'fabric-ca-server start -b admin:adminpw -d'
     volumes:
       - ../crypto-config/peerOrganizations/warehouse.com/ca/:/etc/hyperledger/fabric-ca-server-config
       - ../crypto-config/peerOrganizations/warehouse.com/tlsca/:/etc/hyperledger/fabric-ca-server-tls
-    container_name: cawarehouse
-    hostname: cawarehouse
+      - ../fabric-ca/warehouse:/etc/hyperledger/fabric-ca-server        
+    container_name: ca.warehouse.com
+    hostname: ca.warehouse.com
     networks:
       - test
 
@@ -89,20 +128,121 @@ services:
     image: hyperledger/fabric-ca
     environment:
       - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
-      - FABRIC_CA_SERVER_CA_NAME=caRetailer
+      - FABRIC_CA_SERVER_CA_NAME=ca.retailer.com
       - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.retailer.com-cert.pem
       - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/priv_sk
       - FABRIC_CA_SERVER_TLS_ENABLED=true
       - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-tls/tlsca.retailer.com-cert.pem
       - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-tls/priv_sk
+      - FABRIC_CA_SERVER_PORT=2054
     ports:
-      - "2004:2004"
+      - "2054:2054"
     command:  sh -c 'fabric-ca-server start -b admin:adminpw -d'
     volumes:
       - ../crypto-config/peerOrganizations/retailer.com/ca/:/etc/hyperledger/fabric-ca-server-config
       - ../crypto-config/peerOrganizations/retailer.com/tlsca/:/etc/hyperledger/fabric-ca-server-tls
-    container_name: caRetailer
-    hostname: caRetailer
+      - ../fabric-ca/retailer:/etc/hyperledger/fabric-ca-server    
+    container_name: ca.retailer.com
+    hostname: ca.retailer.com
+    networks:
+      - test
+
+  couchdb0:
+    container_name: couchdb0
+    image: couchdb:3.1.1
+    environment:
+      - COUCHDB_USER=admin
+      - COUCHDB_PASSWORD=adminpw
+    ports:
+      - "2001:5984"
+    networks:
+      - test
+
+  couchdb1:
+    container_name: couchdb1
+    image: couchdb:3.1.1
+    environment:
+      - COUCHDB_USER=admin
+      - COUCHDB_PASSWORD=adminpw
+    ports:
+      - "2002:5984"
+    networks:
+      - test
+
+  couchdb2:
+    container_name: couchdb2
+    image: couchdb:3.1.1
+    environment:
+      - COUCHDB_USER=admin
+      - COUCHDB_PASSWORD=adminpw
+    ports:
+      - "2003:5984"
+    networks:
+      - test
+
+  couchdb3:
+    container_name: couchdb3
+    image: couchdb:3.1.1
+    environment:
+      - COUCHDB_USER=admin
+      - COUCHDB_PASSWORD=adminpw
+    ports:
+      - "2004:5984"
+    networks:
+      - test
+
+  couchdb4:
+    container_name: couchdb4
+    image: couchdb:3.1.1
+    environment:
+      - COUCHDB_USER=admin
+      - COUCHDB_PASSWORD=adminpw
+    ports:
+      - "2005:5984"
+    networks:
+      - test
+
+  couchdb5:
+    container_name: couchdb5
+    image: couchdb:3.1.1
+    environment:
+      - COUCHDB_USER=admin
+      - COUCHDB_PASSWORD=adminpw
+    ports:
+      - "2006:5984"
+    networks:
+      - test
+
+  couchdb6:
+    container_name: couchdb6
+    image: couchdb:3.1.1
+    environment:
+      - COUCHDB_USER=admin
+      - COUCHDB_PASSWORD=adminpw
+    ports:
+      - "2007:5984"
+    networks:
+      - test
+
+  couchdb7:
+    container_name: couchdb7
+    image: couchdb:3.1.1
+    environment:
+      - COUCHDB_USER=admin
+      - COUCHDB_PASSWORD=adminpw
+    ports:
+      - "2008:5984"
+    networks:
+      - test
+
+  couchdb8:
+    container_name: couchdb8
+    image: couchdb:3.1.1
+    environment:
+      - COUCHDB_USER=admin
+      - COUCHDB_PASSWORD=adminpw
+    ports:
+      - "2009:5984"
     networks:
       - test
 
@@ -111,6 +251,28 @@ services:
       file: docker-compose-base.yaml
       service: orderer1.gov.io
     container_name: orderer1.gov.io
+    ports:
+      - 7050:7050
+    networks:
+      - test
+      
+  orderer2:
+    extends:
+      file: docker-compose-base.yaml
+      service: orderer2.gov.io
+    container_name: orderer2.gov.io
+    ports:
+      - 7051:7051
+    networks:
+      - test
+
+  orderer3:
+    extends:
+      file: docker-compose-base.yaml
+      service: orderer3.gov.io
+    container_name: orderer3.gov.io
+    ports:
+      - 7052:7052
     networks:
       - test
 
@@ -118,9 +280,15 @@ services:
     extends:
       file: docker-compose-base.yaml
       service: peertm1.manufacturer.com
+    environment:
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb0:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=admin
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=adminpw
+      - CORE_METRICS_PROVIDER=prometheus
     container_name: peertm1.manufacturer.com
-    # depends_on:
-      # - caManufacturer
+    depends_on:
+      - couchdb0
     networks: 
       - test
 
@@ -128,9 +296,15 @@ services:
     extends:
       file: docker-compose-base.yaml
       service: peertm2.manufacturer.com
+    environment:
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb1:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=admin
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=adminpw
+      - CORE_METRICS_PROVIDER=prometheus
     container_name: peertm2.manufacturer.com
-    # depends_on:
-      # - caManufacturer
+    depends_on:
+      - couchdb1
     networks: 
       - test  
 
@@ -138,9 +312,15 @@ services:
     extends: 
       file: docker-compose-base.yaml
       service: peertf1.production.com
+    environment:
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb2:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=admin
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=adminpw
+      - CORE_METRICS_PROVIDER=prometheus
     container_name: peertf1.production.com
-    # depends_on:
-    #   - caProduction
+    depends_on:
+      - couchdb2
     networks:
       - test
 
@@ -148,9 +328,15 @@ services:
     extends: 
       file: docker-compose-base.yaml
       service: peertf2.production.com
+    environment:
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb3:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=admin
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=adminpw
+      - CORE_METRICS_PROVIDER=prometheus
     container_name: peertf2.production.com
-    # depends_on:
-    #   - caProduction
+    depends_on:
+      - couchdb3
     networks:
       - test  
   
@@ -158,7 +344,15 @@ services:
     extends: 
       file: docker-compose-base.yaml
       service: peerbb1.retailer.com
+    environment:
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb4:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=admin
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=adminpw
+      - CORE_METRICS_PROVIDER=prometheus
     container_name: peerbb1.retailer.com
+    depends_on:
+      - couchdb4
     networks:
       - test
   
@@ -166,7 +360,15 @@ services:
     extends: 
       file: docker-compose-base.yaml
       service: peerbb2.retailer.com
+    environment:
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb5:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=admin
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=adminpw
+      - CORE_METRICS_PROVIDER=prometheus
     container_name: peerbb2.retailer.com
+    depends_on:
+      - couchdb5
     networks:
       - test  
 
@@ -174,7 +376,15 @@ services:
     extends: 
       file: docker-compose-base.yaml
       service: peerts1.warehouse.com
+    environment:
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb6:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=admin
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=adminpw
+      - CORE_METRICS_PROVIDER=prometheus
     container_name: peerts1.warehouse.com
+    depends_on:
+      - couchdb6
     networks:
       - test
   
@@ -182,7 +392,15 @@ services:
     extends: 
       file: docker-compose-base.yaml
       service: peerts2.warehouse.com
+    environment:
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb7:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=admin
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=adminpw
+      - CORE_METRICS_PROVIDER=prometheus
     container_name: peerts2.warehouse.com
+    depends_on:
+      - couchdb7
     networks:
       - test
   
@@ -190,7 +408,15 @@ services:
     extends:
       file: docker-compose-base.yaml
       service: peergov1.gov.io
+    environment:
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb8:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=admin
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=adminpw
+      - CORE_METRICS_PROVIDER=prometheus
     container_name: peergov1.gov.io
+    depends_on:
+      - couchdb8
     networks:
       - test
 
@@ -206,7 +432,7 @@ services:
       #- FABRIC_LOGGING_SPEC=DEBUG
       - FABRIC_LOGGING_SPEC=INFO
       - CORE_PEER_ID=peertm1.manufacturer.com
-      - CORE_PEER_ADDRESS=peertm1.manufacturer.com:9050
+      - CORE_PEER_ADDRESS=peertm1.manufacturer.com:9051
       - CORE_PEER_LOCALMSPID=tataMSP
       - CORE_PEER_TLS_ENABLED=true
       - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/manufacturer.com/peers/peertm1.manufacturer.com/tls/server.crt
@@ -218,6 +444,7 @@ services:
     volumes:
       - /var/run/:/host/var/run/
       - ./../chaincode/:/opt/gopath/src/github.com/hyperledger/fabric/peer/chaincode
+      # - ./../chaincode:/usr/local/src/
       - ../crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
       - ../:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
       - ../channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
@@ -246,7 +473,7 @@ services:
       #- FABRIC_LOGGING_SPEC=DEBUG
       - FABRIC_LOGGING_SPEC=INFO
       - CORE_PEER_ID=peertm2.manufacturer.com
-      - CORE_PEER_ADDRESS=peertm2.manufacturer.com:9080
+      - CORE_PEER_ADDRESS=peertm2.manufacturer.com:9081
       - CORE_PEER_LOCALMSPID=tataMSP
       - CORE_PEER_TLS_ENABLED=true
       - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/manufacturer.com/peers/peertm2.manufacturer.com/tls/server.crt
@@ -286,7 +513,7 @@ services:
       #- FABRIC_LOGGING_SPEC=DEBUG
       - FABRIC_LOGGING_SPEC=INFO
       - CORE_PEER_ID=peertf1.production.com
-      - CORE_PEER_ADDRESS=peertf1.production.com:8050
+      - CORE_PEER_ADDRESS=peertf1.production.com:8051
       - CORE_PEER_LOCALMSPID=teafarmMSP
       - CORE_PEER_TLS_ENABLED=true
       - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/production.com/peers/peertf1.production.com/tls/server.crt
@@ -326,7 +553,7 @@ services:
       #- FABRIC_LOGGING_SPEC=DEBUG
       - FABRIC_LOGGING_SPEC=INFO
       - CORE_PEER_ID=peertf1.production.com
-      - CORE_PEER_ADDRESS=peertf2.production.com:8080
+      - CORE_PEER_ADDRESS=peertf2.production.com:8081
       - CORE_PEER_LOCALMSPID=teafarmMSP
       - CORE_PEER_TLS_ENABLED=true
       - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/production.com/peers/peertf2.production.com/tls/server.crt
@@ -366,7 +593,7 @@ services:
       #- FABRIC_LOGGING_SPEC=DEBUG
       - FABRIC_LOGGING_SPEC=INFO
       - CORE_PEER_ID=peerbb1.retailer.com
-      - CORE_PEER_ADDRESS=peerbb1.retailer.com:11050
+      - CORE_PEER_ADDRESS=peerbb1.retailer.com:11051
       - CORE_PEER_LOCALMSPID=bigbazarMSP
       - CORE_PEER_TLS_ENABLED=true
       - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/retailer.com/peers/peerbb1.retailer.com/tls/server.crt
@@ -406,7 +633,7 @@ services:
       #- FABRIC_LOGGING_SPEC=DEBUG
       - FABRIC_LOGGING_SPEC=INFO
       - CORE_PEER_ID=peerbb2.retailer.com
-      - CORE_PEER_ADDRESS=peerbb2.retailer.com:11080
+      - CORE_PEER_ADDRESS=peerbb2.retailer.com:11081
       - CORE_PEER_LOCALMSPID=bigbazarMSP
       - CORE_PEER_TLS_ENABLED=true
       - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/retailer.com/peers/peerbb2.retailer.com/tls/server.crt
@@ -446,7 +673,7 @@ services:
       #- FABRIC_LOGGING_SPEC=DEBUG
       - FABRIC_LOGGING_SPEC=INFO
       - CORE_PEER_ID=peerts1.warehouse.com
-      - CORE_PEER_ADDRESS=peerts1.warehouse.com:10050
+      - CORE_PEER_ADDRESS=peerts1.warehouse.com:10051
       - CORE_PEER_LOCALMSPID=tatastoreMSP
       - CORE_PEER_TLS_ENABLED=true
       - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/warehouse.com/peers/peerts1.warehouse.com/tls/server.crt
@@ -486,7 +713,7 @@ services:
       #- FABRIC_LOGGING_SPEC=DEBUG
       - FABRIC_LOGGING_SPEC=INFO
       - CORE_PEER_ID=peerts2.warehouse.com
-      - CORE_PEER_ADDRESS=peerts2.warehouse.com:10080
+      - CORE_PEER_ADDRESS=peerts2.warehouse.com:10081
       - CORE_PEER_LOCALMSPID=tatastoreMSP
       - CORE_PEER_TLS_ENABLED=true
       - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/warehouse.com/peers/peerts2.warehouse.com/tls/server.crt
@@ -565,7 +792,7 @@ services:
       - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
       - FABRIC_LOGGING_SPEC=DEBUG
       - CORE_PEER_ID=chaincode
-      - CORE_PEER_ADDRESS=peertf1.production.com:8050
+      - CORE_PEER_ADDRESS=peertf1.production.com:8051
       - CORE_PEER_LOCALMSPID=teafarmMSP
       - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer #/opt/gopath/src/chaincode
@@ -574,6 +801,7 @@ services:
       - /var/run/:/host/var/run/
       - ./msp:/etc/hyperledger/msp
       - ./../chaincode:/opt/gopath/src/github.com/hyperledger/fabric/peer/chaincode
+      # - ./../chaincode:/usr/local/src
     depends_on:
       - peertm1.manufacturer.com
       - peertm2.manufacturer.com
