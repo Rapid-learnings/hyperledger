@@ -1,10 +1,10 @@
 version: '2'
 
 volumes:
-  ca.manufacturer.com:
-  caProduction:
-  cawarehouse:
-  caRetailer:
+  # ca.manufacturer.com:
+  # caProduction:
+  # cawarehouse:
+  # caRetailer:
   couchdb0:
   couchdb1:
   couchdb2:

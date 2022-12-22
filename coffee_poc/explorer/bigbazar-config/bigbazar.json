@@ -1,0 +1,80 @@
+{
+  "name": "docker_test",
+  "version": "1.0",
+  "license": "Apache-2.0",
+  "client": {
+    "tlsEnable": true,
+    "caCredential": {
+			"id": "admin",
+			"password": "adminpw"
+		},
+		"adminCredential": {
+			"id": "exploreradmin",
+			"password": "exploreradminpw",
+      "affiliation": "org1.department1"
+		},
+		"enableAuthentication": true,
+    "organization": "bigbazar",
+    "connection": {
+      "timeout": {
+        "peer": {
+          "endorser": "3000"
+        },
+        "orderer": "3000"
+      }
+    }
+  },
+  "channels": {
+    "whs-rtlr-channel": {
+      "peers": {
+        "peerbb1.retailer.com": {}
+      },
+      "connection": {
+				"timeout": {
+					"peer": {
+						"endorser": "6000",
+						"eventHub": "6000",
+						"eventReg": "6000"
+					}
+				}
+			}
+    }
+  },
+  "organizations": {
+    "bigbazar": {
+      "mspid": "bigbazarMSP",
+      "adminPrivateKey": {
+        "path": "/tmp/crypto/peerOrganizations/retailer.com/users/Admin@retailer.com/msp/keystore/priv_sk"
+      },
+      "peers": ["peerbb1.retailer.com"],
+      "certificateAuthorities": ["ca.retailer.com"],
+      "signedCert": {
+				"path": "/tmp/crypto/peerOrganizations/retailer.com/users/Admin@retailer.com/msp/signcerts/cert.pem"
+			}
+    }
+  },
+  "peers": {
+    "peerbb1.retailer.com": {
+      "url": "grpcs://peerbb1.retailer.com:11051",
+      "grpcOptions": {
+        "ssl-target-name-override": "peerbb1.retailer.com",
+        "request-timeout": 300000
+      },
+      "tlsCACerts": {
+        "path": "/tmp/crypto/peerOrganizations/retailer.com/peers/peerbb1.retailer.com/msp/tlscacerts/tlsca.retailer.com-cert.pem"
+      }
+    }
+  },
+  "certificateAuthorities": {
+    "ca.retailer.com": {
+      "url": "https://ca.retailer.com:2054",
+      "caName": "ca.retailer.com",
+      "tlsCAcerts": {
+        "path": "/tmp/crypto/peerOrganizations/retailer.com/tlsca/tlsca.retailer.com-cert.pem"
+      },
+      "httpOptions": {
+        "verify": false
+      }
+    }
+  }
+}

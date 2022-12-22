@@ -126,6 +126,8 @@ createcertificatesForOrg1() {
 
   cp ${PWD}/../crypto-config/peerOrganizations/production.com/msp/config.yaml ${PWD}/../crypto-config/peerOrganizations/production.com/users/Admin@production.com/msp/config.yaml
 
+  mv ${PWD}/../crypto-config/peerOrganizations/production.com/users/Admin@production.com/msp/keystore/* ${PWD}/../crypto-config/peerOrganizations/production.com/users/Admin@production.com/msp/keystore/priv_sk
+
 }
 
 # createcertificatesForOrg1
@@ -278,6 +280,8 @@ createCertificatesForOrg2() {
 
   cp ${PWD}/../crypto-config/peerOrganizations/manufacturer.com/msp/config.yaml ${PWD}/../crypto-config/peerOrganizations/manufacturer.com/users/Admin@manufacturer.com/msp/config.yaml
 
+  mv ${PWD}/../crypto-config/peerOrganizations/manufacturer.com/users/Admin@manufacturer.com/msp/keystore/* ${PWD}/../crypto-config/peerOrganizations/manufacturer.com/users/Admin@manufacturer.com/msp/keystore/priv_sk
+
 }
 
 # createCertificateForOrg2
@@ -429,6 +433,8 @@ createCertificatesForOrg3() {
 
   cp ${PWD}/../crypto-config/peerOrganizations/warehouse.com/msp/config.yaml ${PWD}/../crypto-config/peerOrganizations/warehouse.com/users/Admin@warehouse.com/msp/config.yaml
 
+  mv ${PWD}/../crypto-config/peerOrganizations/warehouse.com/users/Admin@warehouse.com/msp/keystore/* ${PWD}/../crypto-config/peerOrganizations/warehouse.com/users/Admin@warehouse.com/msp/keystore/priv_sk
+
 }
 
 createCertificatesForOrg4() {
@@ -578,6 +584,8 @@ createCertificatesForOrg4() {
 
   cp ${PWD}/../crypto-config/peerOrganizations/retailer.com/msp/config.yaml ${PWD}/../crypto-config/peerOrganizations/retailer.com/users/Admin@retailer.com/msp/config.yaml
 
+  mv ${PWD}/../crypto-config/peerOrganizations/retailer.com/users/Admin@retailer.com/msp/keystore/* ${PWD}/../crypto-config/peerOrganizations/retailer.com/users/Admin@retailer.com/msp/keystore/priv_sk
+
 }
 
 createCertificatesForOrg5() {
@@ -687,6 +695,8 @@ createCertificatesForOrg5() {
 
   cp ${PWD}/../crypto-config/peerOrganizations/gov.io/msp/config.yaml ${PWD}/../crypto-config/peerOrganizations/gov.io/users/Admin@gov.io/msp/config.yaml
 
+  mv ${PWD}/../crypto-config/peerOrganizations/gov.io/users/Admin@gov.io/msp/keystore/* ${PWD}/../crypto-config/peerOrganizations/gov.io/users/Admin@gov.io/msp/keystore/priv_sk
+
 }
 
 createCertificatesForOrderer() {
@@ -717,7 +727,7 @@ createCertificatesForOrderer() {
     OrganizationalUnitIdentifier: orderer' >${PWD}/../crypto-config/ordererOrganizations/gov.io/msp/config.yaml
 
   echo
-  echo "Register orderer"
+  echo "Register orderer1"
   echo
    
   fabric-ca-client register --caname ca-orderer --id.name orderer1 --id.secret orderer1pw --id.type orderer --tls.certfiles ${PWD}/fabric-ca/ordererOrg/tls-cert.pem

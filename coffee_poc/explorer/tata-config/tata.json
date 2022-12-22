@@ -1,0 +1,80 @@
+{
+  "name": "docker_test",
+  "version": "1.0",
+  "license": "Apache-2.0",
+  "client": {
+    "tlsEnable": true,
+    "caCredential": {
+			"id": "admin",
+			"password": "adminpw"
+		},
+		"adminCredential": {
+			"id": "exploreradmin",
+			"password": "exploreradminpw",
+      "affiliation": "org1.department1"
+		},
+		"enableAuthentication": true,
+    "organization": "tata",
+    "connection": {
+      "timeout": {
+        "peer": {
+          "endorser": "3000"
+        },
+        "orderer": "3000"
+      }
+    }
+  },
+  "channels": {
+    "mfd-prd-channel": {
+      "peers": {
+        "peertm1.manufacturer.com": {}
+      },
+      "connection": {
+				"timeout": {
+					"peer": {
+						"endorser": "6000",
+						"eventHub": "6000",
+						"eventReg": "6000"
+					}
+				}
+			}
+    }
+  },
+  "organizations": {
+    "tata": {
+      "mspid": "tataMSP",
+      "adminPrivateKey": {
+        "path": "/tmp/crypto/peerOrganizations/manufacturer.com/users/Admin@manufacturer.com/msp/keystore/priv_sk"
+      },
+      "peers": ["peertm1.manufacturer.com"],
+      "certificateAuthorities": ["ca.manufacturer.com"],
+      "signedCert": {
+				"path": "/tmp/crypto/peerOrganizations/manufacturer.com/users/Admin@manufacturer.com/msp/signcerts/cert.pem"
+			}
+    }
+  },
+  "peers": {
+    "peertm1.manufacturer.com": {
+      "url": "grpcs://peertm1.manufacturer.com:9051",
+      "grpcOptions": {
+        "ssl-target-name-override": "peertm1.manufacturer.com",
+        "request-timeout": 300000
+      },
+      "tlsCACerts": {
+        "path": "/tmp/crypto/peerOrganizations/manufacturer.com/peers/peertm1.manufacturer.com/msp/tlscacerts/tlsca.manufacturer.com-cert.pem"
+      }
+    }
+  },
+  "certificateAuthorities": {
+    "ca.manufacturer.com": {
+      "url": "https://ca.manufacturer.com:2052",
+      "caName": "ca.manufacturer.com",
+      "tlsCAcerts": {
+        "path": "/tmp/crypto/peerOrganizations/manufacturer.com/ca/ca.manufacturer.com-cert.pem"
+      },
+      "httpOptions": {
+        "verify": false
+      }
+    }
+  }
+}

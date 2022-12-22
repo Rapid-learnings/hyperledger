@@ -1,0 +1,80 @@
+{
+  "name": "docker_test",
+  "version": "1.0",
+  "license": "Apache-2.0",
+  "client": {
+    "tlsEnable": true,
+    "caCredential": {
+			"id": "admin",
+			"password": "adminpw"
+		},
+		"adminCredential": {
+			"id": "exploreradmin",
+			"password": "exploreradminpw",
+      "affiliation": "org1.department1"
+		},
+		"enableAuthentication": true,
+    "organization": "tatastore",
+    "connection": {
+      "timeout": {
+        "peer": {
+          "endorser": "3000"
+        },
+        "orderer": "3000"
+      }
+    }
+  },
+  "channels": {
+    "mfd-whs-channel": {
+      "peers": {
+        "peerts1.warehouse.com": {}
+      },
+      "connection": {
+				"timeout": {
+					"peer": {
+						"endorser": "6000",
+						"eventHub": "6000",
+						"eventReg": "6000"
+					}
+				}
+			}
+    }
+  },
+  "organizations": {
+    "tatastore": {
+      "mspid": "tatastoreMSP",
+      "adminPrivateKey": {
+        "path": "/tmp/crypto/peerOrganizations/warehouse.com/users/Admin@warehouse.com/msp/keystore/priv_sk"
+      },
+      "peers": ["peerts1.warehouse.com"],
+      "certificateAuthorities": ["ca.warehouse.com"],
+      "signedCert": {
+				"path": "/tmp/crypto/peerOrganizations/warehouse.com/users/Admin@warehouse.com/msp/signcerts/cert.pem"
+			}
+    }
+  },
+  "peers": {
+    "peerts1.warehouse.com": {
+      "url": "grpcs://peerts1.warehouse.com:10051",
+      "grpcOptions": {
+        "ssl-target-name-override": "peerts1.warehouse.com",
+        "request-timeout": 300000
+      },
+      "tlsCACerts": {
+        "path": "/tmp/crypto/peerOrganizations/warehouse.com/peers/peerts1.warehouse.com/msp/tlscacerts/tlsca.warehouse.com-cert.pem"
+      }
+    }
+  },
+  "certificateAuthorities": {
+    "ca.warehouse.com": {
+      "url": "https://ca.warehouse.com:2053",
+      "caName": "ca.warehouse.com",
+      "tlsCAcerts": {
+        "path": "/tmp/crypto/peerOrganizations/warehouse.com/tlsca/tlsca.warehouse.com-cert.pem"
+      },
+      "httpOptions": {
+        "verify": false
+      }
+    }
+  }
+}

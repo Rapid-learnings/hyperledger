@@ -1,12 +1,12 @@
 # this file will run all the subsequent shell scripts
 
-./network.sh
+# ./network.sh
 
-sleep 5
+# sleep 5
 
-./startdocker.sh
+# ./startdocker.sh
 
-sleep 5
+# sleep 5
 
 ./deployCC.sh
 

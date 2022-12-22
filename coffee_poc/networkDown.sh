@@ -1,3 +1,3 @@
-sudo docker-compose -f ./docker/docker-compose-all.yaml down --volumes
-sudo docker-compose -f ./fabric-ca-client/docker-compose.yaml down --volumes
+sudo docker-compose -f ./docker/docker-compose-all.yaml down -v
+sudo docker-compose -f ./fabric-ca-client/docker-compose.yaml down -v
 sudo docker volume prune -f

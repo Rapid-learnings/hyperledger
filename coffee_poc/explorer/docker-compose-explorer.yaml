@@ -1,0 +1,212 @@
+
+# SPDX-License-Identifier: Apache-2.0
+version: '2.1'
+
+volumes:
+  1_pgdata:
+  2_pgdata:
+  3_pgdata:
+  4_pgdata:
+  production_walletstore:
+  retailer_walletstore:
+  manufacturer_walletstore:
+  warehouse_walletstore:
+
+networks:
+  test:
+    external:
+      name: docker_test
+
+services:
+
+  explorerdb.retailer.com:
+    image: hyperledger/explorer-db:latest
+    container_name: explorerdb.retailer.com
+    hostname: explorerdb.retailer.com
+    environment:
+      - DATABASE_DATABASE=fabricexplorer
+      - DATABASE_USERNAME=hppoc
+      - DATABASE_PASSWORD=password
+    healthcheck:
+      test: "pg_isready -h localhost -p 5432 -q -U postgres"
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    ports:
+      - 5432:5432
+    volumes:
+      - 1_pgdata:/var/lib/postgresql/data
+    networks:
+      - test
+
+  explorerdb.production.com:
+    image: hyperledger/explorer-db:latest
+    container_name: explorerdb.production.com
+    hostname: explorerdb.production.com
+    environment:
+      - DATABASE_DATABASE=fabricexplorer
+      - DATABASE_USERNAME=hppoc
+      - DATABASE_PASSWORD=password
+    healthcheck:
+      test: "pg_isready -h localhost -p 5432 -q -U postgres"
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    ports:
+      - 5433:5433
+    volumes:
+      - 2_pgdata:/var/lib/postgresql/data
+    networks:
+      - test
+
+  explorerdb.manufacturer.com:
+    image: hyperledger/explorer-db:latest
+    container_name: explorerdb.manufacturer.com
+    hostname: explorerdb.manufacturer.com
+    environment:
+      - DATABASE_DATABASE=fabricexplorer
+      - DATABASE_USERNAME=hppoc
+      - DATABASE_PASSWORD=password
+    healthcheck:
+      test: "pg_isready -h localhost -p 5432 -q -U postgres"
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    ports:
+      - 5434:5434
+    volumes:
+      - 3_pgdata:/var/lib/postgresql/data
+    networks:
+      - test
+
+  explorerdb.warehouse.com:
+    image: hyperledger/explorer-db:latest
+    container_name: explorerdb.warehouse.com
+    hostname: explorerdb.warehouse.com
+    environment:
+      - DATABASE_DATABASE=fabricexplorer
+      - DATABASE_USERNAME=hppoc
+      - DATABASE_PASSWORD=password
+    healthcheck:
+      test: "pg_isready -h localhost -p 5432 -q -U postgres"
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    ports:
+      - 5435:5435
+    volumes:
+      - 4_pgdata:/var/lib/postgresql/data
+    networks:
+      - test
+
+  explorer.retailer.com:
+    image: hyperledger/explorer:latest
+    container_name: explorer.retailer.com
+    hostname: explorer.retailer.com
+    environment:
+      - DATABASE_HOST=explorerdb.retailer.com
+      - DATABASE_DATABASE=fabricexplorer
+      - DATABASE_USERNAME=hppoc
+      - DATABASE_PASSWD=password
+      - LOG_LEVEL_APP=debug
+      - LOG_LEVEL_DB=debug
+      - LOG_LEVEL_CONSOLE=info
+      - LOG_CONSOLE_STDOUT=true
+      - DISCOVERY_AS_LOCALHOST=false
+      - PORT=8000
+    volumes:
+      - ./bigbazar-config.json:/opt/explorer/app/platform/fabric/config.json
+      - ./bigbazar-config:/opt/explorer/app/platform/fabric/connection-profile
+      - ../crypto-config:/tmp/crypto
+      - retailer_walletstore:/opt/explorer/wallet
+    ports:
+      - 8000:8000
+    depends_on:
+      explorerdb.retailer.com:
+        condition: service_healthy
+    networks:
+      - test
+
+  explorer.production.com:
+    image: hyperledger/explorer:latest
+    container_name: explorer.production.com
+    hostname: explorer.production.com
+    environment:
+      - DATABASE_HOST=explorerdb.production.com
+      - DATABASE_DATABASE=fabricexplorer
+      - DATABASE_USERNAME=hppoc
+      - DATABASE_PASSWD=password
+      - LOG_LEVEL_APP=debug
+      - LOG_LEVEL_DB=debug
+      - LOG_LEVEL_CONSOLE=info
+      - LOG_CONSOLE_STDOUT=true
+      - DISCOVERY_AS_LOCALHOST=false
+      - PORT=8001
+    volumes:
+      - ./teafarm-config.json:/opt/explorer/app/platform/fabric/config.json
+      - ./teafarm-config:/opt/explorer/app/platform/fabric/connection-profile
+      - ../crypto-config:/tmp/crypto
+      - production_walletstore:/opt/explorer/wallet
+    ports:
+      - 8001:8001
+    depends_on:
+      explorerdb.production.com:
+        condition: service_healthy
+    networks:
+      - test
+
+  explorer.manufacturer.com:
+    image: hyperledger/explorer:latest
+    container_name: explorer.manufacturer.com
+    hostname: explorer.manufacturer.com
+    environment:
+      - DATABASE_HOST=explorerdb.manufacturer.com
+      - DATABASE_DATABASE=fabricexplorer
+      - DATABASE_USERNAME=hppoc
+      - DATABASE_PASSWD=password
+      - LOG_LEVEL_APP=debug
+      - LOG_LEVEL_DB=debug
+      - LOG_LEVEL_CONSOLE=info
+      - LOG_CONSOLE_STDOUT=true
+      - DISCOVERY_AS_LOCALHOST=false
+      - PORT=8002
+    volumes:
+      - ./tata-config.json:/opt/explorer/app/platform/fabric/config.json
+      - ./tata-config:/opt/explorer/app/platform/fabric/connection-profile
+      - ../crypto-config:/tmp/crypto
+      - manufacturer_walletstore:/opt/explorer/wallet
+    ports:
+      - 8002:8002
+    depends_on:
+      explorerdb.manufacturer.com:
+        condition: service_healthy
+    networks:
+      - test
+
+  explorer.warehouse.com:
+    image: hyperledger/explorer:latest
+    container_name: explorer.warehouse.com
+    hostname: explorer.warehouse.com
+    environment:
+      - DATABASE_HOST=explorerdb.warehouse.com
+      - DATABASE_DATABASE=fabricexplorer
+      - DATABASE_USERNAME=hppoc
+      - DATABASE_PASSWD=password
+      - LOG_LEVEL_APP=debug
+      - LOG_LEVEL_DB=debug
+      - LOG_LEVEL_CONSOLE=info
+      - LOG_CONSOLE_STDOUT=true
+      - DISCOVERY_AS_LOCALHOST=false
+      - PORT=8003
+    volumes:
+      - ./tatastore-config.json:/opt/explorer/app/platform/fabric/config.json
+      - ./tatastore-config:/opt/explorer/app/platform/fabric/connection-profile
+      - ../crypto-config:/tmp/crypto
+      - warehouse_walletstore:/opt/explorer/wallet
+    ports:
+      - 8003:8003
+    depends_on:
+      explorerdb.warehouse.com:
+        condition: service_healthy
+    networks:
+      - test

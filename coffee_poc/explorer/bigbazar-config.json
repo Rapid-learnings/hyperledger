@@ -1,0 +1,9 @@
+{
+	"network-configs": {
+		"docker_test": {
+			"name": "docker_test",
+			"profile": "./connection-profile/bigbazar.json"
+		}
+	},
+	"license": "Apache-2.0"
+}

@@ -1,6 +1,23 @@
 {
   "name": "test",
   "version": "1.0",
+  "client": {
+    "tlsEnable": true,
+		"adminCredential": {
+			"id": "exploreradmin",
+			"password": "exploreradminpw"
+		},
+		"enableAuthentication": true,
+    "organization": "tata",
+    "connection": {
+      "timeout": {
+        "peer": {
+          "endorser": "300"
+        },
+        "orderer": "300"
+      }
+    }
+  },
   "channels": {
     "mfd-prd-channel": {
       "peers": ["peertf1.production.com", "peertm1.manufacturer.com"]
