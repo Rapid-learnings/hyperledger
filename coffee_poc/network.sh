@@ -4,6 +4,11 @@ export PATH=${PWD}/bin:$PATH
 export FABRIC_CFG_PATH=${PWD}/config
 
 rm -r -f ./channel-artifacts/*
+
+# set +x persistence-data
+
+# sudo rm -r -f ./persistence-data/*
+
 # sudo chown $USER:$USER ./crypto-config
 # sudo rm -r -f ./crypto-config
 # create cryptogen material

@@ -34,7 +34,7 @@ services:
       - /var/run/:/host/var/run/
       - ../crypto-config/peerOrganizations/gov.io/peers/peergov1.gov.io/msp:/etc/hyperledger/fabric/msp
       - ../crypto-config/peerOrganizations/gov.io/peers/peergov1.gov.io/tls:/etc/hyperledger/fabric/tls
-      - peergov1.gov.io:/var/hyperledger/production
+      - ../persistence-data/peergov1.gov.io:/var/hyperledger/production
     ports:
       - 13050:13050
 
@@ -57,7 +57,7 @@ services:
       - /var/run/:/host/var/run/
       - ../crypto-config/peerOrganizations/manufacturer.com/peers/peertm1.manufacturer.com/msp:/etc/hyperledger/fabric/msp
       - ../crypto-config/peerOrganizations/manufacturer.com/peers/peertm1.manufacturer.com/tls:/etc/hyperledger/fabric/tls
-      - peertm1.manufacturer.com:/var/hyperledger/production
+      - ../persistence-data/peertm1.manufacturer.com:/var/hyperledger/production
     ports:
       - 9051:9051
 
@@ -80,7 +80,7 @@ services:
       - /var/run/:/host/var/run/
       - ../crypto-config/peerOrganizations/manufacturer.com/peers/peertm2.manufacturer.com/msp:/etc/hyperledger/fabric/msp
       - ../crypto-config/peerOrganizations/manufacturer.com/peers/peertm2.manufacturer.com/tls:/etc/hyperledger/fabric/tls
-      - peertm2.manufacturer.com:/var/hyperledger/production
+      - ../persistence-data/peertm2.manufacturer.com:/var/hyperledger/production
     ports:
       - 9081:9081
 
@@ -103,7 +103,7 @@ services:
       - /var/run/:/host/var/run/
       - ../crypto-config/peerOrganizations/production.com/peers/peertf1.production.com/msp:/etc/hyperledger/fabric/msp
       - ../crypto-config/peerOrganizations/production.com/peers/peertf1.production.com/tls:/etc/hyperledger/fabric/tls
-      - peertf1.production.com:/var/hyperledger/production
+      - ../persistence-data/peertf1.production.com:/var/hyperledger/production
     ports:
       - 8051:8051
 
@@ -126,7 +126,7 @@ services:
       - /var/run/:/host/var/run/
       - ../crypto-config/peerOrganizations/production.com/peers/peertf2.production.com/msp:/etc/hyperledger/fabric/msp
       - ../crypto-config/peerOrganizations/production.com/peers/peertf2.production.com/tls:/etc/hyperledger/fabric/tls
-      - peertf2.production.com:/var/hyperledger/production
+      - ../persistence-data/peertf2.production.com:/var/hyperledger/production
     ports:
       - 8081:8081
 
@@ -149,7 +149,7 @@ services:
       - /var/run/:/host/var/run/
       - ../crypto-config/peerOrganizations/retailer.com/peers/peerbb1.retailer.com/msp:/etc/hyperledger/fabric/msp
       - ../crypto-config/peerOrganizations/retailer.com/peers/peerbb1.retailer.com/tls:/etc/hyperledger/fabric/tls
-      - peerbb1.retailer.com:/var/hyperledger/production
+      - ../persistence-data/peerbb1.retailer.com:/var/hyperledger/production
     ports:
       - 11051:11051
 
@@ -172,7 +172,7 @@ services:
       - /var/run/:/host/var/run/
       - ../crypto-config/peerOrganizations/retailer.com/peers/peerbb2.retailer.com/msp:/etc/hyperledger/fabric/msp
       - ../crypto-config/peerOrganizations/retailer.com/peers/peerbb2.retailer.com/tls:/etc/hyperledger/fabric/tls
-      - peerbb2.retailer.com:/var/hyperledger/production
+      - ../persistence-data/peerbb2.retailer.com:/var/hyperledger/production
     ports:
       - 11081:11081
 
@@ -195,7 +195,7 @@ services:
       - /var/run/:/host/var/run/
       - ../crypto-config/peerOrganizations/warehouse.com/peers/peerts1.warehouse.com/msp:/etc/hyperledger/fabric/msp
       - ../crypto-config/peerOrganizations/warehouse.com/peers/peerts1.warehouse.com/tls:/etc/hyperledger/fabric/tls
-      - peerts1.warehouse.com:/var/hyperledger/production
+      - ../persistence-data/peerts1.warehouse.com:/var/hyperledger/production
     ports:
       - 10051:10051
 
@@ -218,7 +218,7 @@ services:
       - /var/run/:/host/var/run/
       - ../crypto-config/peerOrganizations/warehouse.com/peers/peerts2.warehouse.com/msp:/etc/hyperledger/fabric/msp
       - ../crypto-config/peerOrganizations/warehouse.com/peers/peerts2.warehouse.com/tls:/etc/hyperledger/fabric/tls
-      - peerts2.warehouse.com:/var/hyperledger/production
+      - ../persistence-data/peerts2.warehouse.com:/var/hyperledger/production
     ports:
       - 10080:10080
   
@@ -233,7 +233,7 @@ services:
       - ../channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
       - ../crypto-config/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp:/var/hyperledger/orderer/msp
       - ../crypto-config/ordererOrganizations/gov.io/orderers/orderer1.gov.io/tls:/var/hyperledger/orderer/tls
-      - orderer:/var/hyperledger/production/orderer
+      - ../persistence-data/orderer1:/var/hyperledger/production
     ports:
       - 7050:7050
 
@@ -248,7 +248,7 @@ services:
       - ../channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
       - ../crypto-config/ordererOrganizations/gov.io/orderers/orderer2.gov.io/msp:/var/hyperledger/orderer/msp
       - ../crypto-config/ordererOrganizations/gov.io/orderers/orderer2.gov.io/tls:/var/hyperledger/orderer/tls
-      - orderer2:/var/hyperledger/production/orderer
+      - ../persistence-data/orderer2:/var/hyperledger/production
     ports:
       - 7051:7051
 
@@ -263,6 +263,6 @@ services:
       - ../channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
       - ../crypto-config/ordererOrganizations/gov.io/orderers/orderer3.gov.io/msp:/var/hyperledger/orderer/msp
       - ../crypto-config/ordererOrganizations/gov.io/orderers/orderer3.gov.io/tls:/var/hyperledger/orderer/tls
-      - orderer3:/var/hyperledger/production/orderer
+      - ../persistence-data/orderer3:/var/hyperledger/production
     ports:
       - 7052:7052

@@ -19,6 +19,8 @@ api/package-lock.json
 /chaincode/coffeeCC/*
 /fabric-ca-client/fabric-ca/*
 .env
+docker/docker-compose-persist.yaml
+persistence-data/
 # /api/tata-wallet/*.id
 # /api/teafarm-wallet/*.id
 # /fabric-ca-config/*
