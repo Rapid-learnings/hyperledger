@@ -1,0 +1,9 @@
+{
+	"network-configs": {
+		"coffee_test": {
+			"name": "coffee_test",
+			"profile": "./connection-profile/bigbazar.json"
+		}
+	},
+	"license": "Apache-2.0"
+}
