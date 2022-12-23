@@ -50,6 +50,16 @@
     }
   },
   "certificateAuthorities": {
+    "ca_orderer": {
+      "url": "https://localhost:2050",
+      "caName": "ca_orderer",
+      "tlsCAcerts": {
+        "path": "/home/ubuntu/pankajb/hyperledger/coffee_poc/crypto-config/ordererOrganizations/gov.io/msp/cacerts/localhost-2050-ca-orderer.pem"
+      },
+      "httpOptions": {
+        "verify": false
+      }
+    },
     "ca.warehouse.com": {
       "url": "https://localhost:2053",
       "caName": "ca.warehouse.com",

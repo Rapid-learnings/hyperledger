@@ -260,8 +260,8 @@ app.get("/manufacturer/dried-stock", async (req, res, next) => {
       "mfd-whs-channel",
       "mwcc",
       "availableDriedStock",
-      "user404",
-      "tatastore"
+      "user101",
+      "tata"
     );
     res.json({message: `manufacturer dried stock is ${message} Kg`});
   } catch (err) {
@@ -275,8 +275,8 @@ app.get("/manufacturer/roasted-stock", async (req, res, next) => {
       "mfd-whs-channel",
       "mwcc",
       "availableRoastedStock",
-      "user404",
-      "tatastore"
+      "user101",
+      "tata"
     );
     res.json({message: `manufacturer roasted stock is ${message} Kg`});
   } catch (err) {
@@ -290,8 +290,8 @@ app.get("/manufacturer/finished-stock", async (req, res, next) => {
       "mfd-whs-channel",
       "mwcc",
       "availableFinishedStock",
-      "user404",
-      "tatastore"
+      "user101",
+      "tata"
     );
     res.json({message: `manufacturer finished stock is ${message} Kg`});
   } catch (err) {
@@ -305,8 +305,8 @@ app.get("/manufacturer/wasted-stock", async (req, res, next) => {
       "mfd-whs-channel",
       "mwcc",
       "getWastedStock",
-      "user404",
-      "tatastore"
+      "user101",
+      "tata"
     );
     res.json({message: `manufacturer wasted stock is ${message} Kg`});
   } catch (err) {
@@ -320,8 +320,8 @@ app.get("/manufacturer/total-packages", async (req, res, next) => {
       "mfd-whs-channel",
       "mwcc",
       "getTotalPackages",
-      "user404",
-      "tatastore"
+      "user101",
+      "tata"
     );
     res.json({message: `manufacturer total packages is ${message}`});
   } catch (err) {

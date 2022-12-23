@@ -89,7 +89,7 @@ whsRtlrChannel(){
 
 }
 
-
+# sudo docker-compose -f ./explorer/docker-compose-explorer.yaml up -d
 
 
 # call the functiions here

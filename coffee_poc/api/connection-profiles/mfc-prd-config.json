@@ -54,7 +54,7 @@
       "url": "https://localhost:2050",
       "caName": "ca_orderer",
       "tlsCAcerts": {
-        "path": "/home/ubuntu/fabric/hyperledger/coffee_poc/crypto-config/ordererOrganizations/gov.io/msp/cacerts/localhost-12054-ca-orderer.pem"
+        "path": "/home/ubuntu/pankajb/hyperledger/coffee_poc/crypto-config/ordererOrganizations/gov.io/msp/cacerts/localhost-2050-ca-orderer.pem"
       },
       "httpOptions": {
         "verify": false
@@ -84,7 +84,27 @@
       "url": "https://localhost:2055",
       "caName": "ca.gov.io",
       "tlsCAcerts": {
-        "path": "/home/ubuntu/fabric/hyperledger/coffee_poc/crypto-config/peerOrganizations/retailer.com/ca/ca.retailer.com-cert.pem"
+        "path": "/home/ubuntu/pankajb/hyperledger/coffee_poc/crypto-config/peerOrganizations/retailer.com/ca/ca.retailer.com-cert.pem"
+      },
+      "httpOptions": {
+        "verify": false
+      }
+    },
+    "ca.warehouse.com": {
+      "url": "https://localhost:2053",
+      "caName": "ca.warehouse.com",
+      "tlsCAcerts": {
+        "path": "/home/ubuntu/pankajb/hyperledger/coffee_poc/crypto-config/peerOrganizations/warehouse.com/ca/ca.warehouse.com-cert.pem"
+      },
+      "httpOptions": {
+        "verify": false
+      }
+    },
+    "ca.retailer.com": {
+      "url": "https://localhost:2054",
+      "caName": "ca.retailer.com",
+      "tlsCAcerts": {
+        "path": "/home/ubuntu/pankajb/hyperledger/coffee_poc/crypto-config/peerOrganizations/retailer.com/ca/ca.retailer.com-cert.pem"
       },
       "httpOptions": {
         "verify": false
