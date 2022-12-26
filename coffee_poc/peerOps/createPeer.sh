@@ -101,8 +101,8 @@ services:
             - CORE_METRICS_PROVIDER=prometheus
         volumes:
             - /var/run/:/host/var/run/
-            - ../../crypto-config/peerOrganizations/$1.com/peers/$NAME.$1.com/msp:/etc/hyperledger/fabric/msp
-            - ../../crypto-config/peerOrganizations/$1.com/peers/$NAME.$1.com/tls:/etc/hyperledger/fabric/tls
+            - ../crypto-config/peerOrganizations/$1.com/peers/$NAME.$1.com/msp:/etc/hyperledger/fabric/msp
+            - ../crypto-config/peerOrganizations/$1.com/peers/$NAME.$1.com/tls:/etc/hyperledger/fabric/tls
             - $NAME.$1.com:/var/hyperledger/$1
         ports:
             - $PORT:$PORT
@@ -131,10 +131,10 @@ services:
         command: /bin/bash
         volumes:
             - /var/run/:/host/var/run/
-            - ../../chaincode/:/opt/gopath/src/github.com/hyperledger/fabric/peer/chaincode
-            - ../../crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
-            - ../../:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
-            - ../../channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
+            - ../chaincode/:/opt/gopath/src/github.com/hyperledger/fabric/peer/chaincode
+            - ../crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
+            - ../:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
+            - ../channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
         depends_on:
             - $NAME.$1.com
         networks:
