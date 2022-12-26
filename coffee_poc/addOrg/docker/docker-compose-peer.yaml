@@ -1,0 +1,48 @@
+version: '2'
+
+volumes:
+  peerfssai1.safety.io:
+  couchdb-new:
+
+services:
+  peerfssai1.safety.io:
+    container_name: peerfssai1.safety.io
+    image: hyperledger/fabric-peer:2.2
+    dns_search: .
+    extends:
+      file: ../../docker/peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peerfssai1.safety.io
+      - CORE_PEER_ADDRESS=peerfssai1.safety.io:12050
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:12050
+      - CORE_PEER_CHAINCODEADDRESS=peerfssai1.safety.io:12051
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:12051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peerfssai1.safety.io:12050
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peerfssai1.safety.io:12050
+      - CORE_PEER_LOCALMSPID=fssaiMSP
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb-new:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=admin
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=adminpw
+      - CORE_METRICS_PROVIDER=prometheus
+    volumes:
+      - /var/run/:/host/var/run/
+      - ../../crypto-config/peerOrganizations/safety.io/peers/peerfssai1.safety.io/msp:/etc/hyperledger/fabric/msp
+      - ../../crypto-config/peerOrganizations/safety.io/peers/peerfssai1.safety.io/tls:/etc/hyperledger/fabric/tls
+      - ../../persistence-data/peerfssai1.safety.io:/var/hyperledger/safety
+    depends_on:
+      - couchdb-new
+    ports:
+      - 12050:12050
+
+  couchdb-new:
+    container_name: couchdb-new
+    image: hyperledger/fabric-couchdb
+    environment:
+      - COUCHDB_USER=admin
+      - COUCHDB_PASSWORD=adminpw
+    ports:
+      - "2020:5984"
+    networks:
+      - test
