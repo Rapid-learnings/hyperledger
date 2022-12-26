@@ -18,21 +18,21 @@ read DBPORT
 
 if [ $1 = production ]; 
 then
-    mspid='teafarmMSP'
+    MSPID='teafarmMSP'
     org="org1"
     CAPORT=2051
 elif [ $1 = manufacturer ]; 
 then
-    mspid='tataMSP'
+    MSPID='tataMSP'
     org="org2"
     CAPORT=2052
 elif [ $1 = warehouse ]; 
 then
-    mspid='tatastoreMSP'
+    MSPID='tatastoreMSP'
     org="org3"
     CAPORT=2053
 else
-    mspid='bigbazarMSP'
+    MSPID='bigbazarMSP'
     org="org4"
     CAPORT=2054
 fi
@@ -93,7 +93,7 @@ services:
             - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:$CCPORT
             - CORE_PEER_GOSSIP_BOOTSTRAP=$BSPEER
             - CORE_PEER_GOSSIP_EXTERNALENDPOINT=$NAME.$1.com:$PORT
-            - CORE_PEER_LOCALMSPID=$mspid
+            - CORE_PEER_LOCALMSPID=$MSPID
             - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
             - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb_$NAME.$1.com:5984
             - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=admin
@@ -121,7 +121,7 @@ services:
             - FABRIC_LOGGING_SPEC=INFO
             - CORE_PEER_ID=$NAME.$1.com
             - CORE_PEER_ADDRESS=$NAME.$1.com:$PORT
-            - CORE_PEER_LOCALMSPID=$mspid
+            - CORE_PEER_LOCALMSPID=$MSPID
             - CORE_PEER_TLS_ENABLED=true
             - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/$1.com/peers/$NAME.$1.com/tls/server.crt
             - CORE_PEER_TLS_KEY_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/$1.com/peers/$NAME.$1.com/tls/server.key
