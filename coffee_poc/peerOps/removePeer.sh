@@ -1,6 +1,6 @@
 #!/bin/sh
 
-echo 'enter peer name'
+echo 'enter peer id'
 read ID
 
 sudo docker rm $ID
