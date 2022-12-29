@@ -6,13 +6,13 @@ sleep 5
 
 ./startdocker.sh
 
-# sleep 5
+sleep 5
 
-# ./deployCC.sh
+./deployCC.sh
 
-# sleep 5
+sleep 5
 
-# ./invokeInit.sh
+./invokeInit.sh
 
 # sleep 5
 

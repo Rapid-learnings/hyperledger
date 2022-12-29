@@ -37,9 +37,9 @@ else
     CAPORT=2054
 fi
 
-echo '+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'
-echo "++++++++++++++++ Creating crypto material for $NAME.$1.com ++++++++++++++++"
-echo '+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'
+echo '+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'
+echo "Creating crypto material for $NAME.$1.com"
+echo '+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'
 
 export FABRIC_CA_CLIENT_HOME=${PWD}/../crypto-config/peerOrganizations/$1.com/
 
@@ -81,11 +81,21 @@ networks:
 
 services:
     $NAME.$1.com:
+        image: hyperledger/fabric-peer:2.2
+        dns_search: .
         container_name: $NAME.$1.com
-        extends:
-            file: ${PWD}/../docker/peer-base.yaml
-            service: peer-base
         environment:
+            - GODEBUG=netdns=go
+            - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+            - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=docker_test
+            - FABRIC_LOGGING_SPEC=INFO
+            - CORE_PEER_TLS_ENABLED=true
+            - CORE_PEER_GOSSIP_USELEADERELECTION=false
+            - CORE_PEER_GOSSIP_ORGLEADER=true
+            - CORE_PEER_PROFILE_ENABLED=true
+            - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/fabric/tls/server.crt
+            - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
+            - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
             - CORE_PEER_ID=$NAME.$1.com
             - CORE_PEER_ADDRESS=$NAME.$1.com:$PORT
             - CORE_PEER_LISTENADDRESS=0.0.0.0:$PORT
@@ -106,11 +116,13 @@ services:
             - $NAME.$1.com:/var/hyperledger/$1
         ports:
             - $PORT:$PORT
+        working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+        command: peer node start
         networks:
             - test
         
-    cli-$1-$NAME:
-        container_name: cli-$1-$NAME
+    cli_$NAME.$1.com:
+        container_name: cli_$NAME.$1.com
         image: hyperledger/fabric-tools:2.2
         tty: true
         stdin_open: true
@@ -152,9 +164,9 @@ services:
             - test" >${PWD}/$NAME.yaml
 
 
-echo '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'
-echo "++++++++++++++++ Launching container $NAME.$1.com ++++++++++++++++"
-echo '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'
+echo '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'
+echo "Launching container $NAME.$1.com"
+echo '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'
 
 export COMPOSE_PROJECT_NAME=docker
 sudo docker-compose -f ./$NAME.yaml up -d
