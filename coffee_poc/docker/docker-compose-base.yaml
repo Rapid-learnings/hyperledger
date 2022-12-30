@@ -34,7 +34,7 @@ services:
       - /var/run/:/host/var/run/
       - ../crypto-config/peerOrganizations/gov.io/peers/peergov1.gov.io/msp:/etc/hyperledger/fabric/msp
       - ../crypto-config/peerOrganizations/gov.io/peers/peergov1.gov.io/tls:/etc/hyperledger/fabric/tls
-      - peergov1.gov.io:/var/hyperledger/production
+      - ../persistence-data/peergov1.gov.io:/var/hyperledger/production
     ports:
       - 13050:13050
 
@@ -46,17 +46,18 @@ services:
     environment:
       - CORE_PEER_ID=peertm1.manufacturer.com
       - CORE_PEER_ADDRESS=peertm1.manufacturer.com:9051
-      - CORE_PEER_LISTENADDRESS=0.0.0.0:9051
+      - CORE_PEER_LISTENADDRESS=peertm1.manufacturer.com:9051
       - CORE_PEER_CHAINCODEADDRESS=peertm1.manufacturer.com:9052
       - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:9052
       - CORE_PEER_GOSSIP_BOOTSTRAP=peertm2.manufacturer.com:9081
+      - CORE_PEER_GOSSIP_ENDPOINT=peertm1.manufacturer.com:9051
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peertm1.manufacturer.com:9051
       - CORE_PEER_LOCALMSPID=tataMSP
     volumes:
       - /var/run/:/host/var/run/
       - ../crypto-config/peerOrganizations/manufacturer.com/peers/peertm1.manufacturer.com/msp:/etc/hyperledger/fabric/msp
       - ../crypto-config/peerOrganizations/manufacturer.com/peers/peertm1.manufacturer.com/tls:/etc/hyperledger/fabric/tls
-      - peertm1.manufacturer.com:/var/hyperledger/production
+      - ../persistence-data/peertm1.manufacturer.com:/var/hyperledger/production
     ports:
       - 9051:9051
 
@@ -72,13 +73,14 @@ services:
       - CORE_PEER_CHAINCODEADDRESS=peertm2.manufacturer.com:9082
       - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:9082
       - CORE_PEER_GOSSIP_BOOTSTRAP=peertm1.manufacturer.com:9051
+      - CORE_PEER_GOSSIP_ENDPOINT=peertm2.manufacturer.com:9081
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peertm2.manufacturer.com:9081
       - CORE_PEER_LOCALMSPID=tataMSP
     volumes:
       - /var/run/:/host/var/run/
       - ../crypto-config/peerOrganizations/manufacturer.com/peers/peertm2.manufacturer.com/msp:/etc/hyperledger/fabric/msp
       - ../crypto-config/peerOrganizations/manufacturer.com/peers/peertm2.manufacturer.com/tls:/etc/hyperledger/fabric/tls
-      - peertm2.manufacturer.com:/var/hyperledger/production
+      - ../persistence-data/peertm2.manufacturer.com:/var/hyperledger/production
     ports:
       - 9081:9081
 
@@ -90,17 +92,18 @@ services:
     environment:
       - CORE_PEER_ID=peertf1.production.com
       - CORE_PEER_ADDRESS=peertf1.production.com:8051
-      - CORE_PEER_LISTENADDRESS=0.0.0.0:8051
+      - CORE_PEER_LISTENADDRESS=peertf1.production.com:8051
       - CORE_PEER_CHAINCODEADDRESS=peertf1.production.com:8052
       - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:8052
       - CORE_PEER_GOSSIP_BOOTSTRAP=peertf2.production.com:8081
+      - CORE_PEER_GOSSIP_ENDPOINT=peertf1.production.com:8051
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peertf1.production.com:8051
       - CORE_PEER_LOCALMSPID=teafarmMSP
     volumes:
       - /var/run/:/host/var/run/
       - ../crypto-config/peerOrganizations/production.com/peers/peertf1.production.com/msp:/etc/hyperledger/fabric/msp
       - ../crypto-config/peerOrganizations/production.com/peers/peertf1.production.com/tls:/etc/hyperledger/fabric/tls
-      - peertf1.production.com:/var/hyperledger/production
+      - ../persistence-data/peertf1.production.com:/var/hyperledger/production
     ports:
       - 8051:8051
 
@@ -112,17 +115,18 @@ services:
     environment:
       - CORE_PEER_ID=peertf2.production.com
       - CORE_PEER_ADDRESS=peertf2.production.com:8081
-      - CORE_PEER_LISTENADDRESS=0.0.0.0:8081
+      - CORE_PEER_LISTENADDRESS=peertf2.production.com:8081
       - CORE_PEER_CHAINCODEADDRESS=peertf2.production.com:8082
       - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:8082
       - CORE_PEER_GOSSIP_BOOTSTRAP=peertf1.production.com:8051
+      - CORE_PEER_GOSSIP_ENDPOINT=peertf1.production.com:8051
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peertf2.production.com:8081
       - CORE_PEER_LOCALMSPID=teafarmMSP
     volumes:
       - /var/run/:/host/var/run/
       - ../crypto-config/peerOrganizations/production.com/peers/peertf2.production.com/msp:/etc/hyperledger/fabric/msp
       - ../crypto-config/peerOrganizations/production.com/peers/peertf2.production.com/tls:/etc/hyperledger/fabric/tls
-      - peertf2.production.com:/var/hyperledger/production
+      - ../persistence-data/peertf2.production.com:/var/hyperledger/production
     ports:
       - 8081:8081
 
@@ -134,17 +138,18 @@ services:
     environment:
       - CORE_PEER_ID=peerbb1.retailer.com
       - CORE_PEER_ADDRESS=peerbb1.retailer.com:11051
-      - CORE_PEER_LISTENADDRESS=0.0.0.0:11051
+      - CORE_PEER_LISTENADDRESS=peerbb1.retailer.com:11051
       - CORE_PEER_CHAINCODEADDRESS=peerbb1.retailer.com:11052
       - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:11052
       - CORE_PEER_GOSSIP_BOOTSTRAP=peerbb2.retailer.com:11081
+      - CORE_PEER_GOSSIP_ENDPOINT=peerbb1.retailer.com:11051
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peerbb1.retailer.com:11051
       - CORE_PEER_LOCALMSPID=bigbazarMSP
     volumes:
       - /var/run/:/host/var/run/
       - ../crypto-config/peerOrganizations/retailer.com/peers/peerbb1.retailer.com/msp:/etc/hyperledger/fabric/msp
       - ../crypto-config/peerOrganizations/retailer.com/peers/peerbb1.retailer.com/tls:/etc/hyperledger/fabric/tls
-      - peerbb1.retailer.com:/var/hyperledger/production
+      - ../persistence-data/peerbb1.retailer.com:/var/hyperledger/production
     ports:
       - 11051:11051
 
@@ -156,17 +161,18 @@ services:
     environment:
       - CORE_PEER_ID=peerbb2.retailer.com
       - CORE_PEER_ADDRESS=peerbb2.retailer.com:11081
-      - CORE_PEER_LISTENADDRESS=0.0.0.0:11081
+      - CORE_PEER_LISTENADDRESS=peerbb2.retailer.com:11081
       - CORE_PEER_CHAINCODEADDRESS=peerbb2.retailer.com:11082
       - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:11082
       - CORE_PEER_GOSSIP_BOOTSTRAP=peerbb1.retailer.com:11051
+      - CORE_PEER_GOSSIP_ENDPOINT=peerbb2.retailer.com:11081
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peerbb2.retailer.com:11081
       - CORE_PEER_LOCALMSPID=bigbazarMSP
     volumes:
       - /var/run/:/host/var/run/
       - ../crypto-config/peerOrganizations/retailer.com/peers/peerbb2.retailer.com/msp:/etc/hyperledger/fabric/msp
       - ../crypto-config/peerOrganizations/retailer.com/peers/peerbb2.retailer.com/tls:/etc/hyperledger/fabric/tls
-      - peerbb2.retailer.com:/var/hyperledger/production
+      - ../persistence-data/peerbb2.retailer.com:/var/hyperledger/production
     ports:
       - 11081:11081
 
@@ -178,17 +184,18 @@ services:
     environment:
       - CORE_PEER_ID=peerts1.warehouse.com
       - CORE_PEER_ADDRESS=peerts1.warehouse.com:10051
-      - CORE_PEER_LISTENADDRESS=0.0.0.0:10051
+      - CORE_PEER_LISTENADDRESS=peerts1.warehouse.com:10051
       - CORE_PEER_CHAINCODEADDRESS=peerts1.warehouse.com:10052
       - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:10052
       - CORE_PEER_GOSSIP_BOOTSTRAP=peerts2.warehouse.com:10081
+      - CORE_PEER_GOSSIP_ENDPOINT=peerts1.warehouse.com:10051
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peerts1.warehouse.com:10051
       - CORE_PEER_LOCALMSPID=tatastoreMSP
     volumes:
       - /var/run/:/host/var/run/
       - ../crypto-config/peerOrganizations/warehouse.com/peers/peerts1.warehouse.com/msp:/etc/hyperledger/fabric/msp
       - ../crypto-config/peerOrganizations/warehouse.com/peers/peerts1.warehouse.com/tls:/etc/hyperledger/fabric/tls
-      - peerts1.warehouse.com:/var/hyperledger/production
+      - ../persistence-data/peerts1.warehouse.com:/var/hyperledger/production
     ports:
       - 10051:10051
 
@@ -200,19 +207,20 @@ services:
     environment:
       - CORE_PEER_ID=peerts2.warehouse.com
       - CORE_PEER_ADDRESS=peerts2.warehouse.com:10081
-      - CORE_PEER_LISTENADDRESS=0.0.0.0:10081
+      - CORE_PEER_LISTENADDRESS=peerts2.warehouse.com:10081
       - CORE_PEER_CHAINCODEADDRESS=peerts2.warehouse.com:10082
       - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:10082
       - CORE_PEER_GOSSIP_BOOTSTRAP=peerts1.warehouse.com:10051
+      - CORE_PEER_GOSSIP_ENDPOINT=peerts2.warehouse.com:10081
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peerts2.warehouse.com:10081
       - CORE_PEER_LOCALMSPID=tatastoreMSP
     volumes:
       - /var/run/:/host/var/run/
       - ../crypto-config/peerOrganizations/warehouse.com/peers/peerts2.warehouse.com/msp:/etc/hyperledger/fabric/msp
       - ../crypto-config/peerOrganizations/warehouse.com/peers/peerts2.warehouse.com/tls:/etc/hyperledger/fabric/tls
-      - peerts2.warehouse.com:/var/hyperledger/production
+      - ../persistence-data/peerts2.warehouse.com:/var/hyperledger/production
     ports:
-      - 10080:10080
+      - 10081:10081
   
   orderer1.gov.io:
     container_name: orderer1.gov.io
@@ -225,7 +233,7 @@ services:
       - ../channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
       - ../crypto-config/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp:/var/hyperledger/orderer/msp
       - ../crypto-config/ordererOrganizations/gov.io/orderers/orderer1.gov.io/tls:/var/hyperledger/orderer/tls
-      - orderer:/var/hyperledger/production/orderer
+      - ../persistence-data/orderer1:/var/hyperledger/production
     ports:
       - 7050:7050
 
@@ -240,7 +248,7 @@ services:
       - ../channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
       - ../crypto-config/ordererOrganizations/gov.io/orderers/orderer2.gov.io/msp:/var/hyperledger/orderer/msp
       - ../crypto-config/ordererOrganizations/gov.io/orderers/orderer2.gov.io/tls:/var/hyperledger/orderer/tls
-      - orderer2:/var/hyperledger/production/orderer
+      - ../persistence-data/orderer2:/var/hyperledger/production
     ports:
       - 7051:7051
 
@@ -255,6 +263,6 @@ services:
       - ../channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
       - ../crypto-config/ordererOrganizations/gov.io/orderers/orderer3.gov.io/msp:/var/hyperledger/orderer/msp
       - ../crypto-config/ordererOrganizations/gov.io/orderers/orderer3.gov.io/tls:/var/hyperledger/orderer/tls
-      - orderer3:/var/hyperledger/production/orderer
+      - ../persistence-data/orderer3:/var/hyperledger/production
     ports:
       - 7052:7052
