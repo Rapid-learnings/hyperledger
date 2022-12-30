@@ -118,7 +118,7 @@ services:
 
   couchdb0:
     container_name: couchdb0
-    image: couchdb:3.1.1
+    image: hyperledger/fabric-couchdb
     environment:
       - COUCHDB_USER=admin
       - COUCHDB_PASSWORD=adminpw
@@ -129,7 +129,7 @@ services:
 
   couchdb1:
     container_name: couchdb1
-    image: couchdb:3.1.1
+    image: hyperledger/fabric-couchdb
     environment:
       - COUCHDB_USER=admin
       - COUCHDB_PASSWORD=adminpw
@@ -140,7 +140,7 @@ services:
 
   couchdb2:
     container_name: couchdb2
-    image: couchdb:3.1.1
+    image: hyperledger/fabric-couchdb
     environment:
       - COUCHDB_USER=admin
       - COUCHDB_PASSWORD=adminpw
@@ -151,7 +151,7 @@ services:
 
   couchdb3:
     container_name: couchdb3
-    image: couchdb:3.1.1
+    image: hyperledger/fabric-couchdb
     environment:
       - COUCHDB_USER=admin
       - COUCHDB_PASSWORD=adminpw
@@ -162,7 +162,7 @@ services:
 
   couchdb4:
     container_name: couchdb4
-    image: couchdb:3.1.1
+    image: hyperledger/fabric-couchdb
     environment:
       - COUCHDB_USER=admin
       - COUCHDB_PASSWORD=adminpw
@@ -173,7 +173,7 @@ services:
 
   couchdb5:
     container_name: couchdb5
-    image: couchdb:3.1.1
+    image: hyperledger/fabric-couchdb
     environment:
       - COUCHDB_USER=admin
       - COUCHDB_PASSWORD=adminpw
@@ -184,7 +184,7 @@ services:
 
   couchdb6:
     container_name: couchdb6
-    image: couchdb:3.1.1
+    image: hyperledger/fabric-couchdb
     environment:
       - COUCHDB_USER=admin
       - COUCHDB_PASSWORD=adminpw
@@ -195,7 +195,7 @@ services:
 
   couchdb7:
     container_name: couchdb7
-    image: couchdb:3.1.1
+    image: hyperledger/fabric-couchdb
     environment:
       - COUCHDB_USER=admin
       - COUCHDB_PASSWORD=adminpw
@@ -206,7 +206,7 @@ services:
 
   couchdb8:
     container_name: couchdb8
-    image: couchdb:3.1.1
+    image: hyperledger/fabric-couchdb
     environment:
       - COUCHDB_USER=admin
       - COUCHDB_PASSWORD=adminpw

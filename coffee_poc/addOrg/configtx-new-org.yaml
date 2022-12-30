@@ -1,0 +1,19 @@
+Organizations:
+    - &fssai
+        Name: fssai
+        ID: fssaiMSP
+        MSPDir: ../crypto-config/peerOrganizations/fssai.safety.io/msp
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('fssaiMSP.peer', 'fssaiMSP.admin', 'fssaiMSP.client')"
+            Writers:
+                Type: Signature
+                Rule: "OR('fssaiMSP.peer', 'fssaiMSP.admin', 'fssai.client')"
+            Admins:
+                Type: Signature
+                Rule: "OR('fssaiMSP.admin')"
+            Endorsement:
+                Type: Signature
+                Rule: "OR('fssaiMSP.peer')"
+
