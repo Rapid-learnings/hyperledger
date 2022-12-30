@@ -7,7 +7,7 @@ SPDX-License-Identifier: Apache-2.0
 let { Contract } = require("fabric-contract-api");
 let { ClientIdentity } = require("fabric-shim");
 // let { TokenERC20Contract } = require('./token-erc-20/chaincode-javascript/lib/tokenERC20.js')
-let productionStock = "PRODUCER_STOCK";
+let productionStock = "stock";
 let orderNumber = "orderNumber";
 let Status = [
   "order-placed",
@@ -21,7 +21,15 @@ let producerFunds = "PRODUCER_BALANCE";
 let manufacturerOrderedStock = "MANUFACTURE_ORDERED_STOCK";
 let pricePerKg = 100; // 100$ for 1 kg coffee
 
-class PmCc extends Contract {
+class pmcc extends Contract {
+
+  hello(){
+    return 290000;
+  }
+
+  // hello2(){
+  //   return 290000;
+  // }
   // initializes the stock of the producer to a set amount and also initializes the erc20 token contract
   async init(ctx, initialStock) {
     await ctx.stub.putState(manufacturerFunds, Buffer.from("1000000"));
@@ -29,6 +37,9 @@ class PmCc extends Contract {
 
     console.log("Balance of teafarmMSP initialized to 1000000 $");
     await ctx.stub.putState(producerFunds, Buffer.from("1000000"));
+
+    // console.log("Ordered Stock of Manufacturer is initialized to 0 $");
+    // await ctx.stub.putState(producerFunds, Buffer.from("0"));
 
     await ctx.stub.putState(productionStock, Buffer.from(initialStock));
     console.log("Production Stock Initailized to " + initialStock);
@@ -80,7 +91,7 @@ class PmCc extends Contract {
     let quantity = parseInt(qty.toString());
     mfcStock += quantity;
     await ctx.stub.putState(manufacturerOrderedStock, Buffer.from(mfcStock.toString()));
-    console.log("Manufacturer Ordered Stock Updated to ", mfcStock);
+    console.log("Manufacturer Ordered Stock Updated to ", mfcStock); 
   }
 
   async placeOrder(ctx, qty, cty, stateName) {
@@ -123,15 +134,15 @@ class PmCc extends Contract {
     const order = {
       amount: amt.toString(),
       quantity: qty.toString(),
-      Status: orderStatus,
+      orderStatus: orderStatus,
       country: cty,
       state: stateName,
     };
     // creating new order no.
     let orderNoBytes = await ctx.stub.getState(orderNumber);
-    console.log("OrderNoBytes = ", orderNoBytes);
+    // console.log("OrderNoBytes = ", orderNoBytes);
     let orderNo = parseInt(orderNoBytes.toString());
-    console.log(orderNo);
+    console.log("Order No = ",String(orderNo));
     if (!orderNoBytes || orderNoBytes.length === 0) {
       //  await ctx.stub.putState(orderNumber, Buffer.from('1'));
       orderNo = 1;
@@ -142,25 +153,25 @@ class PmCc extends Contract {
     console.log(JSON.stringify(order).toString("base64"));
     // store the order details in the blockchain with the orderNo as key
     orderNo = String(orderNo);
-    console.log("Orde Number = ", orderNo);
     let orderBuff = Buffer.from(JSON.stringify(order).toString("base64"))
-    console.log("Order Buffer = ", orderBuff);
+    // console.log("Order Buffer = ", orderBuff);
     await ctx.stub.putState(orderNo.toString(),orderBuff)
-    await ctx.stub.putState(orderNumber, Buffer.from(orderNo.toString()));
+    await ctx.stub.putState(orderNumber, Buffer.from(orderNo.toString()))
     await ctx.stub.setEvent("placeOrder", orderBuff);
     return orderNo;
+    // return await this.getOrderDetails(ctx, orderNo);
   }
 
   // updates the status of the order to in-transit
   async updateStatusToInTransit(ctx, orderNo) {
-    let clientMSP = await ctx.clientIdentity.getMSPID();
-    if (clientMSP !== "teafarmMSP") {
-      throw new Error("Only teafarm can upadte the status of shipment");
-    }
+    // let clientMSP = await ctx.clientIdentity.getMSPID();
+    // if (clientMSP !== "teafarmMSP") {
+    //   throw new Error("Only teafarm can upadte the status of shipment");
+    // }
 
     // fetching order details
     let orderObj = await this.getOrderDetails(ctx, orderNo);
-    let status = orderObj.Status;
+    let status = orderObj.orderStatus;
     if (status !== Status[0]) {
       throw new Error(
         "cannot change status to in-transit as order is not even placed"
@@ -168,29 +179,30 @@ class PmCc extends Contract {
     }
 
     // updating the status
-    orderObj.Status = Status[1];
+    orderObj.orderStatus = Status[1];
     //storing the new order details object with the orderNo key
     await ctx.stub.putState(orderNo, Buffer.from(JSON.stringify(orderObj)));
   }
 
   // updates the status of the order to delivered
   async updateStatusToDelivered(ctx, orderNo) {
-    let clientMSP = await ctx.clientIdentity.getMSPID();
-    if (clientMSP !== "tataMSP") {
-      throw new Error("only Producer has permission to this update status");
-    }
+    // let clientMSP = await ctx.clientIdentity.getMSPID();
+    // if (clientMSP !== "teafarmMSP") {
+    //   throw new Error("only Producer has permission to this update status");
+    // }
 
     // fetching order details
     let orderObj = await this.getOrderDetails(ctx, orderNo);
-    let status = orderObj.Status;
+    let status = orderObj.orderStatus;
     if (status !== Status[1]) {
       throw new Error(
         "cannot change status to delivered as package is not even shipped"
       );
     }
 
+
     // updating the status to delivered
-    orderObj.Status = Status[2];
+    orderObj.orderStatus = Status[2];
     //storing the new order details object with the orderNo key
     await ctx.stub.putState(orderNo, Buffer.from(JSON.stringify(orderObj)));
   }
@@ -231,9 +243,10 @@ class PmCc extends Contract {
   async getOrderDetails(ctx, orderNo) {
     //fetching order details
     console.log("OrderNO IN DETAILS = ", orderNo);
+    // let orderNo = String(oNo)
     let orderObjBytes = await ctx.stub.getState(orderNo);
-    console.log("---Order Bytes----\n", orderObjBytes);
-    console.log(JSON.parse(orderObjBytes));
+    // console.log("---Order Bytes----\n", orderObjBytes);
+    // console.log(JSON.parse(orderObjBytes));
     let orderObj = JSON.parse(orderObjBytes.toString());
     return orderObj;
   }
@@ -254,4 +267,4 @@ class PmCc extends Contract {
   }
 }
 
-module.exports = PmCc;
+module.exports = pmcc;
