@@ -3,6 +3,9 @@ version: '2'
 volumes:
   ca.safety.io:
 
+networks:
+  test:
+
 services:
   ca.safety.io:
     image: hyperledger/fabric-ca

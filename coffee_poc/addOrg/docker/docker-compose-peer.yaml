@@ -4,6 +4,9 @@ volumes:
   peerfssai1.safety.io:
   couchdb-new:
 
+networks:
+  test:
+
 services:
   peerfssai1.safety.io:
     container_name: peerfssai1.safety.io

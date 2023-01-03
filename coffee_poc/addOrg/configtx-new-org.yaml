@@ -9,7 +9,7 @@ Organizations:
                 Rule: "OR('fssaiMSP.peer', 'fssaiMSP.admin', 'fssaiMSP.client')"
             Writers:
                 Type: Signature
-                Rule: "OR('fssaiMSP.peer', 'fssaiMSP.admin', 'fssai.client')"
+                Rule: "OR('fssaiMSP.peer', 'fssaiMSP.admin', 'fssaiMSP.client')"
             Admins:
                 Type: Signature
                 Rule: "OR('fssaiMSP.admin')"

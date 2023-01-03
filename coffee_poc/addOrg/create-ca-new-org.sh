@@ -9,11 +9,11 @@ createCryptoForNewOrg(){
     echo "Enroll CA ADMIN"
     echo
 
-    mkdir ../crypto-config/peerOrganizations/safety.io/
+    mkdir -p  ../crypto-config/peerOrganizations/safety.io/
 
     export FABRIC_CA_CLIENT_HOME=${PWD}/../crypto-config/peerOrganizations/safety.io
 
-    fabric-ca-client enroll -u hhtps://admin:adminpw@localhost:2056 --caname ca.safety.io --tls.certfiles ${PWD}/fabric-ca/fssai/tls-cert.pem
+    fabric-ca-client enroll -u https://admin:adminpw@localhost:2056 --caname ca.safety.io --tls.certfiles ${PWD}/fabric-ca/fssai/tls-cert.pem
 
     echo 'NodeOUs:
     Enable: true
@@ -28,7 +28,7 @@ createCryptoForNewOrg(){
         OrganizationaOUIdentifier: admin
     OrdererOUIdentifier: 
         Certificate: cacerts/localhost-2056-ca-safety-io.pem
-        OrganizationalOUIdentifier: orderer' >${PWD}/../crypo-config/peerOrganizations/safety.io/msp/config.yaml
+        OrganizationalOUIdentifier: orderer' >${PWD}/../crypto-config/peerOrganizations/safety.io/msp/config.yaml
 
     echo
     echo "Register Peer 1 For FSSAI"
@@ -69,16 +69,16 @@ createCryptoForNewOrg(){
     cp ${PWD}/../crypto-config/peerOrganizations/safety.io/peers/peerfssai1.safety.io/tls/signcerts/* ${PWD}/../crypto-config/peerOrganizations/safety.io/peers/peerfssai1.safety.io/tls/server.crt
     cp ${PWD}/../crypto-config/peerOrganizations/safety.io/peers/peerfssai1.safety.io/tls/keystore/* ${PWD}/../crypto-config/peerOrganizations/safety.io/peers/peerfssai1.safety.io/tls/server.key
 
-    mkdir ${PWD}/../crypto-config/peerOrganizations/safety.io/msp/tlscacerts
+    mkdir -p ${PWD}/../crypto-config/peerOrganizations/safety.io/msp/tlscacerts
     cp ${PWD}/../crypto-config/peerOrganizations/safety.io/peers/peerfssai1.safety.io/tls/tlscacerts/* ${PWD}/../crypto-config/peerOrganizations/safety.io/msp/tlscacerts/ca.crt
 
-    mkdir ${PWD}/../crypto-config/peerOrganizations/safety.io/tlsca
+    mkdir -p ${PWD}/../crypto-config/peerOrganizations/safety.io/tlsca
     cp ${PWD}/../crypto-config/peerOrganizations/safety.io/peers/peerfssai1.safety.io/tls/tlscacerts/* ${PWD}/../crypto-config/peerOrganizations/safety.io/tlsca/tlsca.safety.io-cert.pem
 
-    mkdir ${PWD}/../crypto-config/peerOrganizations/safety.io/peers/peerfssai1.safety.io/msp/tlscacerts
+    mkdir -p ${PWD}/../crypto-config/peerOrganizations/safety.io/peers/peerfssai1.safety.io/msp/tlscacerts
     cp ${PWD}/../crypto-config/peerOrganizations/safety.io/peers/peerfssai1.safety.io/tls/tlscacerts/* ${PWD}/../crypto-config/peerOrganizations/safety.io/peers/peerfssai1.safety.io/msp/tlscacerts/tlsca.safety.io-cert.pem
 
-    mkdir ${PWD}/../crypto-config/peerOrganizations/safety.io/ca
+    mkdir -p ${PWD}/../crypto-config/peerOrganizations/safety.io/ca
     cp ${PWD}/../crypto-config/peerOrganizations/safety.io/peers/peerfssai1.safety.io/msp/cacerts/* ${PWD}/../crypto-config/peerOrganizations/safety.io/ca/ca.safety.io-cert.pem
 
     mkdir -p ../crypto-config/peerOrganizations/safety.io/users
