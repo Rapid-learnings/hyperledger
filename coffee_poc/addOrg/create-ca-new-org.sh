@@ -10,6 +10,7 @@ createCryptoForNewOrg(){
     echo
 
     mkdir -p  ../crypto-config/peerOrganizations/safety.io/
+    sudo chmod 777 ../crypto-config/peerOrganizations/safety.io/
 
     export FABRIC_CA_CLIENT_HOME=${PWD}/../crypto-config/peerOrganizations/safety.io
 
@@ -22,13 +23,13 @@ createCryptoForNewOrg(){
         OrganizationalUnitIdentifier: client
     PeerOUIdentifier:
         Certificate: cacerts/localhost-2056-ca-safety-io.pem
-        OrganizationalOUIdentifier: peer
+        OrganizationalUnitIdentifier: peer
     AdminOUIdentifier:
-        Certificate: cacaerts/localhost-2056-ca-safety-io.pem
-        OrganizationaOUIdentifier: admin
+        Certificate: cacerts/localhost-2056-ca-safety-io.pem
+        OrganizationalUnitIdentifier: admin
     OrdererOUIdentifier: 
         Certificate: cacerts/localhost-2056-ca-safety-io.pem
-        OrganizationalOUIdentifier: orderer' >${PWD}/../crypto-config/peerOrganizations/safety.io/msp/config.yaml
+        OrganizationalUnitIdentifier: orderer' >${PWD}/../crypto-config/peerOrganizations/safety.io/msp/config.yaml
 
     echo
     echo "Register Peer 1 For FSSAI"
@@ -48,8 +49,14 @@ createCryptoForNewOrg(){
 
     fabric-ca-client register --caname ca.safety.io --id.name fssaiadmin --id.secret adminpw --id.type admin --tls.certfiles ${PWD}/fabric-ca/fssai/tls-cert.pem
 
-    mkdir -p ../crypto-config/peerOrganizations/peers
-    mkdir -p ../crypto-config/peerOrganizations/peers/peerfssai1.safety.io
+    mkdir -p ../crypto-config/peerOrganizations/safety.io/peers
+    mkdir -p ../crypto-config/peerOrganizations/safety.io/peers/peerfssai1.safety.io
+    mkdir -p ../crypto-config/peerOrganizations/safety.io/peers/peerfssai1.safety.io/tls
+    
+    sudo chmod 777 ../crypto-config/peerOrganizations/safety.io/peers/peerfssai1.safety.io/tls
+    
+    mkdir ${PWD}/../crypto-config/peerOrganizations/safety.io/peers/peerfssai1.safety.io/msp
+    sudo chmod 777 ${PWD}/../crypto-config/peerOrganizations/safety.io/peers/peerfssai1.safety.io/msp
 
     echo
     echo "## Generate the peerfssai1 msp"
@@ -63,8 +70,8 @@ createCryptoForNewOrg(){
     echo "## Generate the peerfssai1-tls certificates"
     echo    
 
-    fabric-ca-client enroll -u https://peerfssai1:peerfssaipwd@localhost:2056 --caname ca.safety.io -M ${PWD}/../crypto-config/peerOrganizations/peers/peerfssai1.safety.io/tls --enrollment.profile tls --csr.hosts peerfssai1.safety.io --csr.hosts localhost --tls.certfiles ${PWD}/fabric-ca/fssai/tls-cert.pem
-
+    fabric-ca-client enroll -u https://peerfssai1:peerfssaipwd@localhost:2056 --caname ca.safety.io -M ${PWD}/../crypto-config/peerOrganizations/safety.io/peers/peerfssai1.safety.io/tls --enrollment.profile tls --csr.hosts peerfssai1.safety.io --csr.hosts localhost --tls.certfiles ${PWD}/fabric-ca/fssai/tls-cert.pem
+    
     cp ${PWD}/../crypto-config/peerOrganizations/safety.io/peers/peerfssai1.safety.io/tls/tlscacerts/* ${PWD}/../crypto-config/peerOrganizations/safety.io/peers/peerfssai1.safety.io/tls/ca.crt
     cp ${PWD}/../crypto-config/peerOrganizations/safety.io/peers/peerfssai1.safety.io/tls/signcerts/* ${PWD}/../crypto-config/peerOrganizations/safety.io/peers/peerfssai1.safety.io/tls/server.crt
     cp ${PWD}/../crypto-config/peerOrganizations/safety.io/peers/peerfssai1.safety.io/tls/keystore/* ${PWD}/../crypto-config/peerOrganizations/safety.io/peers/peerfssai1.safety.io/tls/server.key
@@ -88,7 +95,7 @@ createCryptoForNewOrg(){
     echo "## Generate the user msp"
     echo
     
-    fabric-ca-client enroll -u https://user1:user1pw@localhost:2056 --caname ca.safety.io -M ${PWD}/../crypto-config/peerOrganizations/safety.io/users/User1@safety.io/msp --tls.certfiles ${PWD}/fabric-ca/fssai/tls-cert.pem
+    fabric-ca-client enroll -u https://user1:userpwd@localhost:2056 --caname ca.safety.io -M ${PWD}/../crypto-config/peerOrganizations/safety.io/users/User1@safety.io/msp --tls.certfiles ${PWD}/fabric-ca/fssai/tls-cert.pem
     
 
     mkdir -p ../crypto-config/peerOrganizations/safety.io/users/Admin@safety.io
@@ -97,7 +104,7 @@ createCryptoForNewOrg(){
     echo "## Generate the org admin msp"
     echo
     
-    fabric-ca-client enroll -u https://fssaiadmin:fssaiadminpw@localhost:2056 --caname ca.safety.io -M ${PWD}/../crypto-config/peerOrganizations/safety.io/users/Admin@safety.io/msp --tls.certfiles ${PWD}/fabric-ca/fssai/tls-cert.pem
+    fabric-ca-client enroll -u https://fssaiadmin:adminpw@localhost:2056 --caname ca.safety.io -M ${PWD}/../crypto-config/peerOrganizations/safety.io/users/Admin@safety.io/msp --tls.certfiles ${PWD}/fabric-ca/fssai/tls-cert.pem
     
 
     cp ${PWD}/../crypto-config/peerOrganizations/safety.io/msp/config.yaml ${PWD}/../crypto-config/peerOrganizations/safety.io/users/Admin@safety.io/msp/config.yaml

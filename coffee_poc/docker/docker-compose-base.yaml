@@ -220,7 +220,7 @@ services:
       - ../crypto-config/peerOrganizations/warehouse.com/peers/peerts2.warehouse.com/tls:/etc/hyperledger/fabric/tls
       - ../persistence-data/peerts2.warehouse.com:/var/hyperledger/production
     ports:
-      - 10080:10080
+      - 10081:10081
   
   orderer1.gov.io:
     container_name: orderer1.gov.io

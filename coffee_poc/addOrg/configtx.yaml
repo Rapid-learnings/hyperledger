@@ -1,8 +1,8 @@
 Organizations:
     - &fssai
-        Name: fssai
+        Name: fssaiMSP
         ID: fssaiMSP
-        MSPDir: ../crypto-config/peerOrganizations/fssai.safety.io/msp
+        MSPDir: ../crypto-config/peerOrganizations/safety.io/peers/peerfssai1.safety.io/msp
         Policies:
             Readers:
                 Type: Signature
@@ -16,4 +16,6 @@ Organizations:
             Endorsement:
                 Type: Signature
                 Rule: "OR('fssaiMSP.peer')"
-
+        AnchorPeers:
+            Host: peerfssai1.safety.io
+            Port: 12050

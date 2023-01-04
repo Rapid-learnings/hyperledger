@@ -26,4 +26,6 @@ if [ $1 == up ]; then
 
     sleep 5
 
+    ./addToNetwork.sh
+
 fi
