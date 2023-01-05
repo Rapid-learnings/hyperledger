@@ -1,6 +1,0 @@
-/crypto-config/*
-channel-artefacts/*.tx
-channel-artefacts/*.block
-/chaincode/node_modules/*
-/*.tar.*
-# /bin/
