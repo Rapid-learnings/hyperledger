@@ -1,4 +1,7 @@
+#!/bin/sh
 # this file will run all the subsequent shell scripts
+# export COMPOSE_PROJECT_NAME=coffee
+# echo $COMPOSE_PROJECT_NAME
 
 ./network.sh
 
@@ -12,16 +15,12 @@ sleep 5
 
 sleep 5
 
-./invokeInit.sh
+./mfdPrd.sh
 
-# sleep 5
+sleep 5
 
-# ./mfdPrd.sh
+./mfcWhs.sh
 
-# sleep 5
+sleep 5
 
-# ./mfcWhs.sh
-
-# sleep 5
-
-# ./whsRtlr.sh
+./whsRtlr.sh

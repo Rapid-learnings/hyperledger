@@ -1,7 +1,8 @@
 version: '2'
 
 volumes:
-  # ca.manufacturer.com:
+  # caGov:
+  # caManufacturer:
   # caProduction:
   # cawarehouse:
   # caRetailer:
@@ -31,90 +32,6 @@ networks:
     # name: test
 
 services:
-
-  # ca.manufacturer.com: 
-  #   image: hyperledger/fabric-ca
-  #   environment:
-  #     - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
-  #     - FABRIC_CA_SERVER_CA_NAME=ca.manufacturer.com
-  #     - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.manufacturer.com-cert.pem
-  #     - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/priv_sk
-  #     - FABRIC_CA_SERVER_TLS_ENABLED=true
-  #     - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-tls/tlsca.manufacturer.com-cert.pem
-  #     - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-tls/priv_sk
-  #   ports:
-  #     - "2051:7054"
-  #   command:  sh -c 'fabric-ca-server start -b admin:adminpw -d'
-  #   volumes:
-  #     - ../crypto-config/peerOrganizations/manufacturer.com/ca/:/etc/hyperledger/fabric-ca-server-config
-  #     - ../crypto-config/peerOrganizations/manufacturer.com/tlsca/:/etc/hyperledger/fabric-ca-server-tls
-  #   container_name: ca.manufacturer.com
-  #   hostname: ca.manufacturer.com
-  #   networks:
-  #     - test
-
-  # caProduction:
-  #   image: hyperledger/fabric-ca
-  #   environment:
-  #     - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
-  #     - FABRIC_CA_SERVER_CA_NAME=ca.production.com
-  #     - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.production.com-cert.pem
-  #     - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/priv_sk
-  #     - FABRIC_CA_SERVER_TLS_ENABLED=true
-  #     - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-tls/tlsca.production.com-cert.pem
-  #     - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-tls/priv_sk
-  #   ports:
-  #     - "2052:7054"
-  #   command:  sh -c 'fabric-ca-server start -b admin:adminpw -d'
-  #   volumes:
-  #     - ../crypto-config/peerOrganizations/production.com/ca/:/etc/hyperledger/fabric-ca-server-config
-  #     - ../crypto-config/peerOrganizations/production.com/tlsca/:/etc/hyperledger/fabric-ca-server-tls
-  #   container_name: ca.production.com
-  #   hostname: ca.production.com
-  #   networks:
-  #     - test
-
-  # cawarehouse:
-  #   image: hyperledger/fabric-ca
-  #   environment:
-  #     - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
-  #     - FABRIC_CA_SERVER_CA_NAME=ca.warehouse.com
-  #     - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.warehouse.com-cert.pem
-  #     - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/priv_sk
-  #     - FABRIC_CA_SERVER_TLS_ENABLED=true
-  #     - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-tls/tlsca.warehouse.com-cert.pem
-  #     - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-tls/priv_sk
-  #   ports:
-  #     - "2053:7054"
-  #   command:  sh -c 'fabric-ca-server start -b admin:adminpw -d'
-  #   volumes:
-  #     - ../crypto-config/peerOrganizations/warehouse.com/ca/:/etc/hyperledger/fabric-ca-server-config
-  #     - ../crypto-config/peerOrganizations/warehouse.com/tlsca/:/etc/hyperledger/fabric-ca-server-tls
-  #   container_name: ca.warehouse.com
-  #   hostname: ca.warehouse.com
-  #   networks:
-  #     - test
-
-  # caRetailer:
-  #   image: hyperledger/fabric-ca
-  #   environment:
-  #     - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
-  #     - FABRIC_CA_SERVER_CA_NAME=ca.retailer.com
-  #     - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.retailer.com-cert.pem
-  #     - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/priv_sk
-  #     - FABRIC_CA_SERVER_TLS_ENABLED=true
-  #     - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-tls/tlsca.retailer.com-cert.pem
-  #     - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-tls/priv_sk
-  #   ports:
-  #     - "2054:7054"
-  #   command:  sh -c 'fabric-ca-server start -b admin:adminpw -d'
-  #   volumes:
-  #     - ../crypto-config/peerOrganizations/retailer.com/ca/:/etc/hyperledger/fabric-ca-server-config
-  #     - ../crypto-config/peerOrganizations/retailer.com/tlsca/:/etc/hyperledger/fabric-ca-server-tls
-  #   container_name: ca.retailer.com
-  #   hostname: ca.retailer.com
-  #   networks:
-  #     - test
 
   couchdb0:
     container_name: couchdb0
@@ -220,6 +137,8 @@ services:
       file: docker-compose-base.yaml
       service: orderer1.gov.io
     container_name: orderer1.gov.io
+    ports:
+      - 7050:7050
     networks:
       - test
       
@@ -228,6 +147,8 @@ services:
       file: docker-compose-base.yaml
       service: orderer2.gov.io
     container_name: orderer2.gov.io
+    ports:
+      - 7051:7051
     networks:
       - test
 
@@ -236,6 +157,8 @@ services:
       file: docker-compose-base.yaml
       service: orderer3.gov.io
     container_name: orderer3.gov.io
+    ports:
+      - 7052:7052
     networks:
       - test
 
@@ -704,6 +627,45 @@ services:
     networks:
       - test
 
+  cli-orderer:
+    container_name: cli-orderer
+    image: hyperledger/fabric-tools:2.2
+    tty: true
+    stdin_open: true
+    environment:
+      - SYS_CHANNEL=orderer-channel
+      - GOPATH=/opt/gopath
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      #- FABRIC_LOGGING_SPEC=DEBUG
+      - FABRIC_LOGGING_SPEC=INFO
+      - CORE_PEER_ID=orderer1.gov.io
+      - CORE_PEER_ADDRESS=orderer1.gov.io:7050
+      - CORE_PEER_LOCALMSPID=OrdererMSP
+      - CORE_PEER_TLS_ENABLED=true
+      - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/gov.io/orderers/orderer1.gov.io/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/gov.io/orderers/orderer1.gov.io/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/gov.io/orderers/orderer1.gov.io/tls/ca.crt
+      - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/gov.io/users/Admin@gov.io/msp
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    command: /bin/bash
+    volumes:
+      - /var/run/:/host/var/run/
+      - ./../chaincode/:/opt/gopath/src/github.com/hyperledger/fabric/peer/chaincode
+      - ../crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
+      - ../:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
+      - ../channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
+    depends_on:
+      - peertm1.manufacturer.com
+      - peertm2.manufacturer.com
+      - peertf1.production.com
+      - peertf2.production.com
+      - peerbb1.retailer.com
+      - peerbb2.retailer.com
+      - peerts1.warehouse.com
+      - peerts2.warehouse.com
+      - orderer
+    networks:
+      - test
 
   cli-gov-1:
     container_name: cli-gov-1

@@ -1,9 +1,12 @@
 /bin/
+/crypto-config-cryptogen/*
 /crypto-config/*
+channel-artifacts/*.pb
+channel-artifacts/*.json
+
 # channel-artifacts/*.tx
-channel-artifacts/*
+# channel-artifacts/*.block
 /chaincode/node_modules/*
-/chaincode/*.tar.*
 /*.tar.*
 /chaincode/package-lock.json
 /api/node_modules/*
@@ -15,16 +18,15 @@ api/package-lock.json
 /chaincode/mfc-prdc/node_modules/*
 /chaincode/mfd-whs/node_modules/*
 /chaincode/whs-rtlr/node_modules/*
-/fabric-ca-mfc
-/fabric-ca-server-tls
+/chaincode/coffeeCC/node_modules/*
+/chaincode/coffeeCC/*
+/fabric-ca-client/fabric-ca/*
 .env
+docker/docker-compose-persist.yaml
+persistence-data/
 # /api/tata-wallet/*.id
 # /api/teafarm-wallet/*.id
 # /fabric-ca-config/*
 # /bin/
-coffee_poc/chaincode/wrcc.tar.gz
-coffee_poc/chaincode/pmcc.tar.gz
-coffee_poc/chaincode/mwcc.tar.gz
-/fabric-ca-client/fabric-ca/*
-/persistence-data/*
-/addOrg/fabric-ca/*
+
+addOrg/fabric-ca/

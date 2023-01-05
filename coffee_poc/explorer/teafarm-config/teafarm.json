@@ -1,5 +1,5 @@
 {
-  "name": "docker_test",
+  "name": "coffee_test",
   "version": "1.0",
   "license": "Apache-2.0",
   "client": {
@@ -9,7 +9,7 @@
 			"password": "adminpw"
 		},
 		"adminCredential": {
-			"id": "exploreradmin",
+			"id": "prdadmin",
 			"password": "exploreradminpw",
       "affiliation": "org1.department1"
 		},
@@ -67,7 +67,7 @@
   },
   "certificateAuthorities": {
     "ca.production.com": {
-      "url": "https://ca.production.com:2051",
+      "url": "https://ca.production.com:2052",
       "caName": "ca.production.com",
       "tlsCAcerts": {
         "path": "/tmp/crypto/peerOrganizations/production.com/ca/ca.production.com-cert.pem"

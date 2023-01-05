@@ -1,1 +1,0 @@
-cp ${PWD}/../crypto-config/peerOrganizations/gov.com/peers/peergov1.gov.com/tls/tlscacerts/* ${PWD}/../crypto-config/peerOrganizations/gov.com/peers/peergov1.gov.com/msp/tlscacerts/tlsca.gov.com-cert.pem

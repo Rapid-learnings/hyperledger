@@ -21,7 +21,7 @@ const registerUser = {};
 
 registerUser.getAffiliation = async (org) => {
   // return org == "tata" ? 'tata' : 'teafarm'
-  return org == "teafarm" ? "org1.department1" : "org2.department1";
+  return org == "teafarm || bigbazar" ? "org1.department1" : "org2.department1";
 };
 
 registerUser.getWalletPath = async (org) => {
@@ -34,17 +34,21 @@ registerUser.getWalletPath = async (org) => {
     walletPath = path.join(process.cwd(), "tatastore-wallet");
   } else if (org == "bigbazar") {
     walletPath = path.join(process.cwd(), "bigbazar-wallet");
-  } else return null;
+  }
   return walletPath;
 };
 
 registerUser.getCCP = async (org) => {
-  const ccpPath = path.join(process.cwd(), './connection-profiles/mfc-prd-config.json');
-  // if (org == "teafarm") {
-  //   ccpPath = "./connection-profiles/mfc-prd-config.json";
-  // } else if (org == "tata") {
-  //   ccpPath = "./connection-profiles/mfc-prd-config.json";
-  // } else return null;
+  let ccpPath;
+  if (org == "teafarm") {
+    ccpPath = "./connection-profiles/mfc-prd-config.json";
+  } else if (org == "tata") {
+    ccpPath = "./connection-profiles/mfc-prd-config.json";
+  } else if (org == "tatastore") {
+    ccpPath = "./connection-profiles/whs-rtlr-config.json";
+  } else if (org == "bigbazar") {
+    ccpPath = "./connection-profiles/whs-rtlr-config.json";
+  }
   const ccpJSON = fs.readFileSync(ccpPath, "utf8");
   const ccp = JSON.parse(ccpJSON);
   return ccp;
@@ -67,7 +71,7 @@ registerUser.registerEnrollUser = async (usr, org) => {
     } else if (org == "bigbazar") {
       caURL = ccp.certificateAuthorities["ca.retailer.com"].url;
     }
-    // console.log("CA URL = ", caURL);
+    console.log("CA URL = ", caURL);
     const ca = new FabricCAServices(caURL);
     // console.log("CA = ", ca);
     // Create a new file system based wallet for managing identities.
@@ -174,6 +178,3 @@ registerUser.registerEnrollUser = async (usr, org) => {
 };
 
 module.exports = registerUser;
-// let user = 'user1'
-// let org = 'teafarm'
-// registerUser.registerEnrollUser(user, org);

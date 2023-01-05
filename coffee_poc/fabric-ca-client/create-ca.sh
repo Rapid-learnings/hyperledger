@@ -6,22 +6,22 @@ createcertificatesForOrg1() {
   export FABRIC_CA_CLIENT_HOME=${PWD}/../crypto-config/peerOrganizations/production.com/
 
    
-  fabric-ca-client enroll -u https://admin:adminpw@localhost:2051 --caname ca.production.com --tls.certfiles ${PWD}/fabric-ca/org1/tls-cert.pem
+  fabric-ca-client enroll -u https://admin:adminpw@localhost:2052 --caname ca.production.com --tls.certfiles ${PWD}/fabric-ca/org1/tls-cert.pem
    
 
   echo 'NodeOUs:
   Enable: true
   ClientOUIdentifier:
-    Certificate: cacerts/localhost-2051-ca-production-com.pem
+    Certificate: cacerts/localhost-2052-ca-production-com.pem
     OrganizationalUnitIdentifier: client
   PeerOUIdentifier:
-    Certificate: cacerts/localhost-2051-ca-production-com.pem
+    Certificate: cacerts/localhost-2052-ca-production-com.pem
     OrganizationalUnitIdentifier: peer
   AdminOUIdentifier:
-    Certificate: cacerts/localhost-2051-ca-production-com.pem
+    Certificate: cacerts/localhost-2052-ca-production-com.pem
     OrganizationalUnitIdentifier: admin
   OrdererOUIdentifier:
-    Certificate: cacerts/localhost-2051-ca-production-com.pem
+    Certificate: cacerts/localhost-2052-ca-production-com.pem
     OrganizationalUnitIdentifier: orderer' >${PWD}/../crypto-config/peerOrganizations/production.com/msp/config.yaml
 
   echo
@@ -53,14 +53,14 @@ createcertificatesForOrg1() {
   echo
   echo "## Generate the peertf1 msp"
   echo
-  fabric-ca-client enroll -u https://peertf1:peertf1pw@localhost:2051 --caname ca.production.com -M ${PWD}/../crypto-config/peerOrganizations/production.com/peers/peertf1.production.com/msp --csr.hosts peertf1.production.com --tls.certfiles ${PWD}/fabric-ca/org1/tls-cert.pem
+  fabric-ca-client enroll -u https://peertf1:peertf1pw@localhost:2052 --caname ca.production.com -M ${PWD}/../crypto-config/peerOrganizations/production.com/peers/peertf1.production.com/msp --csr.hosts peertf1.production.com --tls.certfiles ${PWD}/fabric-ca/org1/tls-cert.pem
 
   cp ${PWD}/../crypto-config/peerOrganizations/production.com/msp/config.yaml ${PWD}/../crypto-config/peerOrganizations/production.com/peers/peertf1.production.com/msp/config.yaml
 
   echo
   echo "## Generate the peertf1-tls certificates"
   echo
-  fabric-ca-client enroll -u https://peertf1:peertf1pw@localhost:2051 --caname ca.production.com -M ${PWD}/../crypto-config/peerOrganizations/production.com/peers/peertf1.production.com/tls --enrollment.profile tls --csr.hosts peertf1.production.com --csr.hosts localhost --tls.certfiles ${PWD}/fabric-ca/org1/tls-cert.pem
+  fabric-ca-client enroll -u https://peertf1:peertf1pw@localhost:2052 --caname ca.production.com -M ${PWD}/../crypto-config/peerOrganizations/production.com/peers/peertf1.production.com/tls --enrollment.profile tls --csr.hosts peertf1.production.com --csr.hosts localhost --tls.certfiles ${PWD}/fabric-ca/org1/tls-cert.pem
 
   cp ${PWD}/../crypto-config/peerOrganizations/production.com/peers/peertf1.production.com/tls/tlscacerts/* ${PWD}/../crypto-config/peerOrganizations/production.com/peers/peertf1.production.com/tls/ca.crt
   cp ${PWD}/../crypto-config/peerOrganizations/production.com/peers/peertf1.production.com/tls/signcerts/* ${PWD}/../crypto-config/peerOrganizations/production.com/peers/peertf1.production.com/tls/server.crt
@@ -83,14 +83,14 @@ createcertificatesForOrg1() {
   echo
   echo "## Generate the peertf2 msp"
   echo
-  fabric-ca-client enroll -u https://peertf2:peertf2pw@localhost:2051 --caname ca.production.com -M ${PWD}/../crypto-config/peerOrganizations/production.com/peers/peertf2.production.com/msp --csr.hosts peertf2.production.com --tls.certfiles ${PWD}/fabric-ca/org1/tls-cert.pem
+  fabric-ca-client enroll -u https://peertf2:peertf2pw@localhost:2052 --caname ca.production.com -M ${PWD}/../crypto-config/peerOrganizations/production.com/peers/peertf2.production.com/msp --csr.hosts peertf2.production.com --tls.certfiles ${PWD}/fabric-ca/org1/tls-cert.pem
 
   cp ${PWD}/../crypto-config/peerOrganizations/production.com/msp/config.yaml ${PWD}/../crypto-config/peerOrganizations/production.com/peers/peertf2.production.com/msp/config.yaml
 
   echo
   echo "## Generate the peertf2-tls certificates"
   echo
-  fabric-ca-client enroll -u https://peertf2:peertf2pw@localhost:2051 --caname ca.production.com -M ${PWD}/../crypto-config/peerOrganizations/production.com/peers/peertf2.production.com/tls --enrollment.profile tls --csr.hosts peertf2.production.com --csr.hosts localhost --tls.certfiles ${PWD}/fabric-ca/org1/tls-cert.pem
+  fabric-ca-client enroll -u https://peertf2:peertf2pw@localhost:2052 --caname ca.production.com -M ${PWD}/../crypto-config/peerOrganizations/production.com/peers/peertf2.production.com/tls --enrollment.profile tls --csr.hosts peertf2.production.com --csr.hosts localhost --tls.certfiles ${PWD}/fabric-ca/org1/tls-cert.pem
 
   cp ${PWD}/../crypto-config/peerOrganizations/production.com/peers/peertf2.production.com/tls/tlscacerts/* ${PWD}/../crypto-config/peerOrganizations/production.com/peers/peertf2.production.com/tls/ca.crt
   cp ${PWD}/../crypto-config/peerOrganizations/production.com/peers/peertf2.production.com/tls/signcerts/* ${PWD}/../crypto-config/peerOrganizations/production.com/peers/peertf2.production.com/tls/server.crt
@@ -115,19 +115,18 @@ createcertificatesForOrg1() {
   echo
   echo "## Generate the user msp"
   echo
-  fabric-ca-client enroll -u https://user1:user1pw@localhost:2051 --caname ca.production.com -M ${PWD}/../crypto-config/peerOrganizations/production.com/users/User1@production.com/msp --tls.certfiles ${PWD}/fabric-ca/org1/tls-cert.pem
+  fabric-ca-client enroll -u https://user1:user1pw@localhost:2052 --caname ca.production.com -M ${PWD}/../crypto-config/peerOrganizations/production.com/users/User1@production.com/msp --tls.certfiles ${PWD}/fabric-ca/org1/tls-cert.pem
 
   mkdir -p ../crypto-config/peerOrganizations/production.com/users/Admin@production.com
 
   echo
   echo "## Generate the org admin msp"
   echo
-  fabric-ca-client enroll -u https://org1admin:org1adminpw@localhost:2051 --caname ca.production.com -M ${PWD}/../crypto-config/peerOrganizations/production.com/users/Admin@production.com/msp --tls.certfiles ${PWD}/fabric-ca/org1/tls-cert.pem
+  fabric-ca-client enroll -u https://org1admin:org1adminpw@localhost:2052 --caname ca.production.com -M ${PWD}/../crypto-config/peerOrganizations/production.com/users/Admin@production.com/msp --tls.certfiles ${PWD}/fabric-ca/org1/tls-cert.pem
 
   cp ${PWD}/../crypto-config/peerOrganizations/production.com/msp/config.yaml ${PWD}/../crypto-config/peerOrganizations/production.com/users/Admin@production.com/msp/config.yaml
 
   mv ${PWD}/../crypto-config/peerOrganizations/production.com/users/Admin@production.com/msp/keystore/* ${PWD}/../crypto-config/peerOrganizations/production.com/users/Admin@production.com/msp/keystore/priv_sk
-
 }
 
 # createcertificatesForOrg1
@@ -141,22 +140,22 @@ createCertificatesForOrg2() {
   export FABRIC_CA_CLIENT_HOME=${PWD}/../crypto-config/peerOrganizations/manufacturer.com/
 
    
-  fabric-ca-client enroll -u https://admin:adminpw@localhost:2052 --caname ca.manufacturer.com --tls.certfiles ${PWD}/fabric-ca/org2/tls-cert.pem
+  fabric-ca-client enroll -u https://admin:adminpw@localhost:2051 --caname ca.manufacturer.com --tls.certfiles ${PWD}/fabric-ca/org2/tls-cert.pem
    
 
   echo 'NodeOUs:
   Enable: true
   ClientOUIdentifier:
-    Certificate: cacerts/localhost-2052-ca-manufacturer-com.pem
+    Certificate: cacerts/localhost-2051-ca-manufacturer-com.pem
     OrganizationalUnitIdentifier: client
   PeerOUIdentifier:
-    Certificate: cacerts/localhost-2052-ca-manufacturer-com.pem
+    Certificate: cacerts/localhost-2051-ca-manufacturer-com.pem
     OrganizationalUnitIdentifier: peer
   AdminOUIdentifier:
-    Certificate: cacerts/localhost-2052-ca-manufacturer-com.pem
+    Certificate: cacerts/localhost-2051-ca-manufacturer-com.pem
     OrganizationalUnitIdentifier: admin
   OrdererOUIdentifier:
-    Certificate: cacerts/localhost-2052-ca-manufacturer-com.pem
+    Certificate: cacerts/localhost-2051-ca-manufacturer-com.pem
     OrganizationalUnitIdentifier: orderer' >${PWD}/../crypto-config/peerOrganizations/manufacturer.com/msp/config.yaml
 
   echo
@@ -195,7 +194,7 @@ createCertificatesForOrg2() {
   echo "## Generate the peertm1 msp"
   echo
    
-  fabric-ca-client enroll -u https://peertm1:peertm1pw@localhost:2052 --caname ca.manufacturer.com -M ${PWD}/../crypto-config/peerOrganizations/manufacturer.com/peers/peertm1.manufacturer.com/msp --csr.hosts peertm1.manufacturer.com --tls.certfiles ${PWD}/fabric-ca/org2/tls-cert.pem
+  fabric-ca-client enroll -u https://peertm1:peertm1pw@localhost:2051 --caname ca.manufacturer.com -M ${PWD}/../crypto-config/peerOrganizations/manufacturer.com/peers/peertm1.manufacturer.com/msp --csr.hosts peertm1.manufacturer.com --tls.certfiles ${PWD}/fabric-ca/org2/tls-cert.pem
    
 
   cp ${PWD}/../crypto-config/peerOrganizations/manufacturer.com/msp/config.yaml ${PWD}/../crypto-config/peerOrganizations/manufacturer.com/peers/peertm1.manufacturer.com/msp/config.yaml
@@ -204,7 +203,7 @@ createCertificatesForOrg2() {
   echo "## Generate the peertm1-tls certificates"
   echo
    
-  fabric-ca-client enroll -u https://peertm1:peertm1pw@localhost:2052 --caname ca.manufacturer.com -M ${PWD}/../crypto-config/peerOrganizations/manufacturer.com/peers/peertm1.manufacturer.com/tls --enrollment.profile tls --csr.hosts peertm1.manufacturer.com --csr.hosts localhost --tls.certfiles ${PWD}/fabric-ca/org2/tls-cert.pem
+  fabric-ca-client enroll -u https://peertm1:peertm1pw@localhost:2051 --caname ca.manufacturer.com -M ${PWD}/../crypto-config/peerOrganizations/manufacturer.com/peers/peertm1.manufacturer.com/tls --enrollment.profile tls --csr.hosts peertm1.manufacturer.com --csr.hosts localhost --tls.certfiles ${PWD}/fabric-ca/org2/tls-cert.pem
    
 
   cp ${PWD}/../crypto-config/peerOrganizations/manufacturer.com/peers/peertm1.manufacturer.com/tls/tlscacerts/* ${PWD}/../crypto-config/peerOrganizations/manufacturer.com/peers/peertm1.manufacturer.com/tls/ca.crt
@@ -229,7 +228,7 @@ createCertificatesForOrg2() {
   echo "## Generate the peertm2 msp"
   echo
    
-  fabric-ca-client enroll -u https://peertm2:peertm2pw@localhost:2052 --caname ca.manufacturer.com -M ${PWD}/../crypto-config/peerOrganizations/manufacturer.com/peers/peertm2.manufacturer.com/msp --csr.hosts peertm2.manufacturer.com --tls.certfiles ${PWD}/fabric-ca/org2/tls-cert.pem
+  fabric-ca-client enroll -u https://peertm2:peertm2pw@localhost:2051 --caname ca.manufacturer.com -M ${PWD}/../crypto-config/peerOrganizations/manufacturer.com/peers/peertm2.manufacturer.com/msp --csr.hosts peertm2.manufacturer.com --tls.certfiles ${PWD}/fabric-ca/org2/tls-cert.pem
    
 
   cp ${PWD}/../crypto-config/peerOrganizations/manufacturer.com/msp/config.yaml ${PWD}/../crypto-config/peerOrganizations/manufacturer.com/peers/peertm2.manufacturer.com/msp/config.yaml
@@ -238,7 +237,7 @@ createCertificatesForOrg2() {
   echo "## Generate the peertm2-tls certificates"
   echo
    
-  fabric-ca-client enroll -u https://peertm2:peertm2pw@localhost:2052 --caname ca.manufacturer.com -M ${PWD}/../crypto-config/peerOrganizations/manufacturer.com/peers/peertm2.manufacturer.com/tls --enrollment.profile tls --csr.hosts peertm2.manufacturer.com --csr.hosts localhost --tls.certfiles ${PWD}/fabric-ca/org2/tls-cert.pem
+  fabric-ca-client enroll -u https://peertm2:peertm2pw@localhost:2051 --caname ca.manufacturer.com -M ${PWD}/../crypto-config/peerOrganizations/manufacturer.com/peers/peertm2.manufacturer.com/tls --enrollment.profile tls --csr.hosts peertm2.manufacturer.com --csr.hosts localhost --tls.certfiles ${PWD}/fabric-ca/org2/tls-cert.pem
    
 
   cp ${PWD}/../crypto-config/peerOrganizations/manufacturer.com/peers/peertm2.manufacturer.com/tls/tlscacerts/* ${PWD}/../crypto-config/peerOrganizations/manufacturer.com/peers/peertm2.manufacturer.com/tls/ca.crt
@@ -266,7 +265,7 @@ createCertificatesForOrg2() {
   echo "## Generate the user msp"
   echo
    
-  fabric-ca-client enroll -u https://user1:user1pw@localhost:2052 --caname ca.manufacturer.com -M ${PWD}/../crypto-config/peerOrganizations/manufacturer.com/users/User1@manufacturer.com/msp --tls.certfiles ${PWD}/fabric-ca/org2/tls-cert.pem
+  fabric-ca-client enroll -u https://user1:user1pw@localhost:2051 --caname ca.manufacturer.com -M ${PWD}/../crypto-config/peerOrganizations/manufacturer.com/users/User1@manufacturer.com/msp --tls.certfiles ${PWD}/fabric-ca/org2/tls-cert.pem
    
 
   mkdir -p ../crypto-config/peerOrganizations/manufacturer.com/users/Admin@manufacturer.com
@@ -275,13 +274,12 @@ createCertificatesForOrg2() {
   echo "## Generate the org admin msp"
   echo
    
-  fabric-ca-client enroll -u https://org2admin:org2adminpw@localhost:2052 --caname ca.manufacturer.com -M ${PWD}/../crypto-config/peerOrganizations/manufacturer.com/users/Admin@manufacturer.com/msp --tls.certfiles ${PWD}/fabric-ca/org2/tls-cert.pem
+  fabric-ca-client enroll -u https://org2admin:org2adminpw@localhost:2051 --caname ca.manufacturer.com -M ${PWD}/../crypto-config/peerOrganizations/manufacturer.com/users/Admin@manufacturer.com/msp --tls.certfiles ${PWD}/fabric-ca/org2/tls-cert.pem
    
 
   cp ${PWD}/../crypto-config/peerOrganizations/manufacturer.com/msp/config.yaml ${PWD}/../crypto-config/peerOrganizations/manufacturer.com/users/Admin@manufacturer.com/msp/config.yaml
 
   mv ${PWD}/../crypto-config/peerOrganizations/manufacturer.com/users/Admin@manufacturer.com/msp/keystore/* ${PWD}/../crypto-config/peerOrganizations/manufacturer.com/users/Admin@manufacturer.com/msp/keystore/priv_sk
-
 }
 
 # createCertificateForOrg2
@@ -727,7 +725,7 @@ createCertificatesForOrderer() {
     OrganizationalUnitIdentifier: orderer' >${PWD}/../crypto-config/ordererOrganizations/gov.io/msp/config.yaml
 
   echo
-  echo "Register orderer1"
+  echo "Register orderer"
   echo
    
   fabric-ca-client register --caname ca-orderer --id.name orderer1 --id.secret orderer1pw --id.type orderer --tls.certfiles ${PWD}/fabric-ca/ordererOrg/tls-cert.pem
@@ -869,7 +867,7 @@ createCertificatesForOrderer() {
 sudo rm -r fabric-ca
 sudo docker-compose -f docker-compose.yaml up -d
 sleep 6
-sudo rm -r ../crypto-config
+sudo rm -r ../crypto-config/*
 createcertificatesForOrg1
 createCertificatesForOrg2
 createCertificatesForOrg3

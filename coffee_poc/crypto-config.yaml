@@ -4,8 +4,8 @@ OrdererOrgs:
     EnableNodeOUs: true
     Specs:
       - Hostname: orderer1
-      # - Hostname: orderer2
-      # - Hostname: orderer3
+      - Hostname: orderer2
+      - Hostname: orderer3
 
 PeerOrgs:
   - Name: governance

@@ -1,7 +1,7 @@
 {
 	"network-configs": {
-		"docker_test": {
-			"name": "docker_test",
+		"coffee_test": {
+			"name": "coffee_test",
 			"profile": "./connection-profile/bigbazar.json"
 		}
 	},

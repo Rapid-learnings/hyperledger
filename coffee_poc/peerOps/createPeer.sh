@@ -5,8 +5,8 @@ echo 'Enter peer name'
 read NAME
 echo 'Enter peer secret'
 read SECRET
-# echo 'Enter peer ca port'
-# read CAPORT
+echo 'Enter peer ca port'
+read CAPORT
 echo 'enter port for new peer'
 read PORT
 echo 'enter bootstrap peer address'

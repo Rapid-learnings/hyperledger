@@ -1,5 +1,13 @@
 version: '2'
 
+volumes:
+  ca.production.com:
+  ca.manufacturer.com:
+  ca.warehouse.com:
+  ca.retailer.com:
+  ca.gov.io:
+  ca_orderer:
+
 networks:
   test:
 
@@ -11,12 +19,14 @@ services:
       - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
       - FABRIC_CA_SERVER_CA_NAME=ca.production.com
       - FABRIC_CA_SERVER_TLS_ENABLED=true
-      - FABRIC_CA_SERVER_PORT=2051
+      - FABRIC_CA_SERVER_PORT=2052
+      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=coffee_test
     ports:
-      - "2051:2051"
+      - "2052:2052"
     command: sh -c 'fabric-ca-server start -b admin:adminpw -d'
     volumes:
       - ./fabric-ca/org1:/etc/hyperledger/fabric-ca-server
+      - ../persistence-data/ca.production.com:/etc/hyperledger
     container_name: ca.production.com
     hostname: ca.production.com
     networks:
@@ -28,12 +38,14 @@ services:
       - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
       - FABRIC_CA_SERVER_CA_NAME=ca.manufacturer.com
       - FABRIC_CA_SERVER_TLS_ENABLED=true
-      - FABRIC_CA_SERVER_PORT=2052
+      - FABRIC_CA_SERVER_PORT=2051
+      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=coffee_test
     ports:
-      - "2052:2052"
+      - "2051:2051"
     command: sh -c 'fabric-ca-server start -b admin:adminpw -d'
     volumes:
       - ./fabric-ca/org2:/etc/hyperledger/fabric-ca-server
+      - ../persistence-data/ca.manufacturer.com:/etc/hyperledger
     container_name: ca.manufacturer.com
     hostname: ca.manufacturer.com
     networks:
@@ -46,11 +58,13 @@ services:
       - FABRIC_CA_SERVER_CA_NAME=ca.warehouse.com
       - FABRIC_CA_SERVER_TLS_ENABLED=true
       - FABRIC_CA_SERVER_PORT=2053
+      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=coffee_test
     ports:
       - "2053:2053"
     command: sh -c 'fabric-ca-server start -b admin:adminpw -d'
     volumes:
       - ./fabric-ca/org3:/etc/hyperledger/fabric-ca-server
+      - ../persistence-data/ca.warehouse.com:/etc/hyperledger
     container_name: ca.warehouse.com
     hostname: ca.warehouse.com
     networks:
@@ -63,11 +77,13 @@ services:
       - FABRIC_CA_SERVER_CA_NAME=ca.retailer.com
       - FABRIC_CA_SERVER_TLS_ENABLED=true
       - FABRIC_CA_SERVER_PORT=2054
+      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=coffee_test
     ports:
       - "2054:2054"
     command: sh -c 'fabric-ca-server start -b admin:adminpw -d'
     volumes:
       - ./fabric-ca/org4:/etc/hyperledger/fabric-ca-server
+      - ../persistence-data/ca.retailer.com:/etc/hyperledger
     container_name: ca.retailer.com
     hostname: ca.retailer.com
     networks:
@@ -80,11 +96,13 @@ services:
       - FABRIC_CA_SERVER_CA_NAME=ca.gov.io
       - FABRIC_CA_SERVER_TLS_ENABLED=true
       - FABRIC_CA_SERVER_PORT=2055
+      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=coffee_test
     ports:
       - "2055:2055"
     command: sh -c 'fabric-ca-server start -b admin:adminpw -d'
     volumes:
       - ./fabric-ca/org5:/etc/hyperledger/fabric-ca-server
+      - ../persistence-data/ca.gov.io:/etc/hyperledger
     container_name: ca.gov.io
     hostname: ca.gov.io
     networks:
@@ -97,11 +115,125 @@ services:
       - FABRIC_CA_SERVER_CA_NAME=ca-orderer
       - FABRIC_CA_SERVER_TLS_ENABLED=true
       - FABRIC_CA_SERVER_PORT=2050
+      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=coffee_test
     ports:
       - "2050:2050"
     command: sh -c 'fabric-ca-server start -b admin:adminpw -d'
     volumes:
       - ./fabric-ca/ordererOrg:/etc/hyperledger/fabric-ca-server
+      - ../persistence-data/ca_orderer:/etc/hyperledger
     container_name: ca_orderer
     networks:
       - test
+
+
+######################################
+
+
+# version: '2'
+
+# networks:
+#   test:
+
+# services:
+
+#   ca.production.com:
+#     image: hyperledger/fabric-ca
+#     environment:
+#       - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+#       - FABRIC_CA_SERVER_CA_NAME=ca.production.com
+#       - FABRIC_CA_SERVER_TLS_ENABLED=true
+#       - FABRIC_CA_SERVER_PORT=2052
+#     ports:
+#       - "2052:2052"
+#     command: sh -c 'fabric-ca-server start -b admin:adminpw -d'
+#     volumes:
+#       - ./fabric-ca/org1:/etc/hyperledger/fabric-ca-server
+#     container_name: ca.production.com
+#     hostname: ca.production.com
+#     networks:
+#       - test
+
+#   ca.manufacturer.com:
+#     image: hyperledger/fabric-ca
+#     environment:
+#       - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+#       - FABRIC_CA_SERVER_CA_NAME=ca.manufacturer.com
+#       - FABRIC_CA_SERVER_TLS_ENABLED=true
+#       - FABRIC_CA_SERVER_PORT=2051
+#     ports:
+#       - "2051:2051"
+#     command: sh -c 'fabric-ca-server start -b admin:adminpw -d'
+#     volumes:
+#       - ./fabric-ca/org2:/etc/hyperledger/fabric-ca-server
+#     container_name: ca.manufacturer.com
+#     hostname: ca.manufacturer.com
+#     networks:
+#       - test
+
+#   ca.warehouse.com:
+#     image: hyperledger/fabric-ca
+#     environment:
+#       - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+#       - FABRIC_CA_SERVER_CA_NAME=ca.warehouse.com
+#       - FABRIC_CA_SERVER_TLS_ENABLED=true
+#       - FABRIC_CA_SERVER_PORT=2053
+#     ports:
+#       - "2053:2053"
+#     command: sh -c 'fabric-ca-server start -b admin:adminpw -d'
+#     volumes:
+#       - ./fabric-ca/org3:/etc/hyperledger/fabric-ca-server
+#     container_name: ca.warehouse.com
+#     hostname: ca.warehouse.com
+#     networks:
+#       - test
+
+#   ca.retailer.com:
+#     image: hyperledger/fabric-ca
+#     environment:
+#       - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+#       - FABRIC_CA_SERVER_CA_NAME=ca.retailer.com
+#       - FABRIC_CA_SERVER_TLS_ENABLED=true
+#       - FABRIC_CA_SERVER_PORT=2054
+#     ports:
+#       - "2054:2054"
+#     command: sh -c 'fabric-ca-server start -b admin:adminpw -d'
+#     volumes:
+#       - ./fabric-ca/org4:/etc/hyperledger/fabric-ca-server
+#     container_name: ca.retailer.com
+#     hostname: ca.retailer.com
+#     networks:
+#       - test
+
+#   ca.gov.io:
+#     image: hyperledger/fabric-ca
+#     environment:
+#       - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+#       - FABRIC_CA_SERVER_CA_NAME=ca.gov.io
+#       - FABRIC_CA_SERVER_TLS_ENABLED=true
+#       - FABRIC_CA_SERVER_PORT=2055
+#     ports:
+#       - "2055:2055"
+#     command: sh -c 'fabric-ca-server start -b admin:adminpw -d'
+#     volumes:
+#       - ./fabric-ca/org5:/etc/hyperledger/fabric-ca-server
+#     container_name: ca.gov.io
+#     hostname: ca.gov.io
+#     networks:
+#       - test
+
+#   ca_orderer:
+#     image: hyperledger/fabric-ca
+#     environment:
+#       - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+#       - FABRIC_CA_SERVER_CA_NAME=ca-orderer
+#       - FABRIC_CA_SERVER_TLS_ENABLED=true
+#       - FABRIC_CA_SERVER_PORT=2050
+#     ports:
+#       - "2050:2050"
+#     command: sh -c 'fabric-ca-server start -b admin:adminpw -d'
+#     volumes:
+#       - ./fabric-ca/ordererOrg:/etc/hyperledger/fabric-ca-server
+#     container_name: ca_orderer
+#     networks:
+#       - test

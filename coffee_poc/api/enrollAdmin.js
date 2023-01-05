@@ -14,12 +14,16 @@ const path = require("path");
 const enrollAdmin = {};
 
 enrollAdmin.getCCP = async (org) => {
-  const ccpPath = path.join(process.cwd(), './connection-profiles/mfc-prd-config.json');
-  // if (org == "teafarm") {
-  //   ccpPath = "./connection-profiles/mfc-prd-config.json";
-  // } else if (org == "tata") {
-  //   ccpPath = "./connection-profiles/mfc-prd-config.json";
-  // } else return null;
+  let ccpPath;
+  if (org == "teafarm") {
+    ccpPath = "./connection-profiles/mfc-prd-config.json";
+  } else if (org == "tata") {
+    ccpPath = "./connection-profiles/mfc-prd-config.json";
+  } else if (org == "tatastore") {
+    ccpPath = "./connection-profiles/whs-rtlr-config.json";
+  } else if (org == "bigbazar") {
+    ccpPath = "./connection-profiles/whs-rtlr-config.json";
+  }
   const ccpJSON = fs.readFileSync(ccpPath, "utf8");
   const ccp = JSON.parse(ccpJSON);
   return ccp;
@@ -41,7 +45,7 @@ enrollAdmin.enroll = async (org) => {
     } else if (org == "bigbazar") {
       caInfo = ccp.certificateAuthorities["ca.retailer.com"];
     }
-    // console.log(caInfo);
+    console.log(caInfo);
     // console.log(caInfo.tlsCAcerts.pem);
     const caTLSCACerts = caInfo.tlsCAcerts.path;
     const ca = new FabricCAServices(
@@ -127,6 +131,5 @@ enrollAdmin.enroll = async (org) => {
 };
 
 module.exports = enrollAdmin;
-// let org = 'teafarm'
-// enrollAdmin.enroll(org)
+
 // enrollAdmin();

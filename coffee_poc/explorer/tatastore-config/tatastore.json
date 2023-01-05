@@ -1,5 +1,5 @@
 {
-  "name": "docker_test",
+  "name": "coffee_test",
   "version": "1.0",
   "license": "Apache-2.0",
   "client": {
@@ -9,7 +9,7 @@
 			"password": "adminpw"
 		},
 		"adminCredential": {
-			"id": "exploreradmin",
+			"id": "whsadmin",
 			"password": "exploreradminpw",
       "affiliation": "org1.department1"
 		},
