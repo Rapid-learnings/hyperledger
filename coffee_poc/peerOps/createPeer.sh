@@ -113,7 +113,7 @@ services:
             - /var/run/:/host/var/run/
             - ../crypto-config/peerOrganizations/$1.com/peers/$NAME.$1.com/msp:/etc/hyperledger/fabric/msp
             - ../crypto-config/peerOrganizations/$1.com/peers/$NAME.$1.com/tls:/etc/hyperledger/fabric/tls
-            - $NAME.$1.com:/var/hyperledger/$1
+            - ../persistence-data/$NAME.$1.com:/var/hyperledger/$1
         ports:
             - $PORT:$PORT
         working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer

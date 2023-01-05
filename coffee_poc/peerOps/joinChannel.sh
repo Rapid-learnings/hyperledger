@@ -1,7 +1,7 @@
 #!/bin/sh
 
-echo 'Enter org msp'
-read MSPID
+echo 'Enter org name'
+read ORG_NAME
 echo 'Enter peer id'
 read ID
 echo 'Enter peers port'
@@ -40,7 +40,7 @@ then
     echo "Updating Anchors for peer $ID in $CHANNEL_NAME"
     echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 
-    sudo docker exec -it cli_$ID ./scripts/anchor.sh $CHANNEL_NAME $ID $MSPID $PORT $ORDERER_CA
+    sudo docker exec -it cli_$ID ./scripts/anchor.sh $CHANNEL_NAME $ID $ORG_NAME $PORT $ORDERER_CA
     #                                                    1          2     3     4       5
 
     echo 'Sign the transaction and send'
