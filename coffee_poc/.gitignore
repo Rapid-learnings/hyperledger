@@ -1,9 +1,6 @@
 /bin/
 /crypto-config-cryptogen/*
 /crypto-config/*
-channel-artifacts/*.pb
-channel-artifacts/*.json
-
 # channel-artifacts/*.tx
 # channel-artifacts/*.block
 /chaincode/node_modules/*
@@ -28,5 +25,4 @@ persistence-data/
 # /api/teafarm-wallet/*.id
 # /fabric-ca-config/*
 # /bin/
-
-addOrg/fabric-ca/
+/channel-artifacts/
