@@ -1,2 +1,2 @@
 Installed chaincodes on peer:
-Package ID: fssai_1:3eea37a92cea388e01732875ccb0bcbdb6f6b1843c9c7e4a0432b0022960c14b, Label: fssai_1
+Package ID: fssai_1:45bd89579af6ccfea5022f13e9f9c81be7c59cbbe2b6a1fabe7e690c12c7b1e6, Label: fssai_1

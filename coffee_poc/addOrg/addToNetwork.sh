@@ -79,6 +79,17 @@ sudo docker exec -it cli-fssai-1 peer lifecycle chaincode approveformyorg -o ord
 
 sleep 5
 
+# echo "Checking Commit Readiness for Channel mfd-prd-channel"
+# sudo docker exec -it cli-fssai-1 peer lifecycle chaincode checkcommitreadiness --channelID mfd-prd-channel --name pmcc --version ${VERSION} --sequence 1 --output json --init-required
+
+# sleep 5
+
+# echo "******************** Making commit **********************"
+
+# sudo docker exec -it cli-fssai-1 peer lifecycle chaincode commit -o orderer1.gov.io:7050 --channelID mfd-prd-channel --name pmcc --version ${VERSION} --sequence 1 --init-required --tls --cafile "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem" --peerAddresses peertf1.production.com:8051 --tlsRootCertFiles "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/production.com/peers/peertf1.production.com/tls/ca.crt" --peerAddresses peertm1.manufacturer.com:9051 --tlsRootCertFiles "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/manufacturer.com/peers/peertm1.manufacturer.com/tls/ca.crt" --peerAddresses peerfssai1.safety.io:12050 --tlsRootCertFiles "/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/safety.io/peers/peerfssai1.safety.io/tls/ca.crt"
+
+# sleep 5
+
 echo "*********************** Query ChainCode For Mfd-Prd-Channel , Fetching Balance Of Manufacturer *********************************"
 sudo docker exec -it cli-fssai-1 peer chaincode query -C mfd-prd-channel -n pmcc -c '{"Args":["getManufacturerFunds"]}'
 
