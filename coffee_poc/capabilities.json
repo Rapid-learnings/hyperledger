@@ -3,7 +3,7 @@
     "mod_policy": "Admins",
     "value": {
       "capabilities": {
-        "V2_0": {}
+        "V2_4": {}
       }
     },
     "version": "0"
@@ -12,8 +12,7 @@
     "mod_policy": "Admins",
     "value": {
       "capabilities": {
-        "V2_4":{},
-        "V2_0": {}
+        "V2_4":{}
       }
     },
     "version": "0"
@@ -22,8 +21,7 @@
     "mod_policy": "Admins",
     "value": {
       "capabilities": {
-        "V1_4":{},
-        "V2_0": {}
+        "V2_4":{}
       }
     },
     "version": "0"
