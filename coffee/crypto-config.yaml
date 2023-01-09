@@ -1,0 +1,66 @@
+OrdererOrgs:
+
+  - Name: Orderer
+    Domain: poc.com
+    EnableNodeOUs: true
+    Specs:
+      - Hostname: orderer
+
+  # - Name: Orderer2
+  #   Domain: poc.com
+  #   EnableNodeOUs: true
+  #   Specs:
+  #     - Hostname: orderer2
+
+  # - Name: Orderer3
+  #   Domain: poc.com
+  #   EnableNodeOUs: true
+  #   Specs:
+  #     - Hostname: orderer3
+
+  # - Name: Orderer4
+  #   Domain: poc.com
+  #   EnableNodeOUs: true
+  #   Specs:
+  #     - Hostname: orderer4
+
+PeerOrgs:
+
+  - Name: Producer
+    Domain: producer.poc.com
+    EnableNodeOUs: true
+    Template:
+      Count: 2
+    Users:
+      Count: 2
+
+  - Name: Manufacturer
+    Domain: manufacturer.poc.com
+    EnableNodeOUs: true
+    Template:
+      Count: 2
+    Users:
+      Count: 2
+  - Name: Warehouse
+    Domain: warehouse.poc.com
+    EnableNodeOUs: true
+    Template:
+      Count: 2
+    Users:
+      Count: 2
+
+  - Name: Gov
+    Domain: gov.poc.com
+    EnableNodeOUs: true
+    Template:
+      Count: 2
+    Users:
+      Count: 2
+
+  - Name: Retailer
+    Domain: retailer.poc.com
+    EnableNodeOUs: true
+    Template:
+      Count: 2
+    Users:
+      Count: 2

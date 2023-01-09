@@ -1,0 +1,89 @@
+version: '2'
+
+volumes:
+  peerfssai1.safety.io:
+  couchdb11:
+
+networks:
+  test:
+
+services:
+  peerfssai1.safety.io:
+    container_name: peerfssai1.safety.io
+    image: hyperledger/fabric-peer:2.2
+    dns_search: .
+    extends:
+      file: ../../docker/peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peerfssai1.safety.io
+      - CORE_PEER_ADDRESS=peerfssai1.safety.io:12050
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:12050
+      - CORE_PEER_CHAINCODEADDRESS=peerfssai1.safety.io:12051
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:12051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peerfssai1.safety.io:12050
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peerfssai1.safety.io:12050
+      - CORE_PEER_LOCALMSPID=fssaiMSP
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb11:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=admin
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=adminpw
+      - CORE_METRICS_PROVIDER=prometheus
+      - CORE_PEER_GOSSIP_USELEADERELECTION=true
+      - CORE_PEER_GOSSIP_ORGLEADER=false
+    volumes:
+      - /var/run/:/host/var/run/
+      - ../../crypto-config/peerOrganizations/safety.io/peers/peerfssai1.safety.io/msp:/etc/hyperledger/fabric/msp
+      - ../../crypto-config/peerOrganizations/safety.io/peers/peerfssai1.safety.io/tls:/etc/hyperledger/fabric/tls
+      - ../../persistence-data/peerfssai1.safety.io:/var/hyperledger/safety
+    depends_on:
+      - couchdb11
+    ports:
+      - 12050:12050
+    networks:
+      - test
+
+  couchdb11:
+    container_name: couchdb11
+    image: hyperledger/fabric-couchdb
+    environment:
+      - COUCHDB_USER=admin
+      - COUCHDB_PASSWORD=adminpw
+    ports:
+      - "2020:5984"
+    networks:
+      - test
+
+  cli-fssai-1:
+    container_name: cli-fssai-1
+    image: hyperledger/fabric-tools:2.2
+    tty: true
+    stdin_open: true
+    environment:
+      - SYS_CHANNEL=orderer-channel
+      - GOPATH=/opt/gopath
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      #- FABRIC_LOGGING_SPEC=DEBUG
+      - FABRIC_LOGGING_SPEC=INFO
+      - CORE_PEER_ID=peerfssai1.safety.io
+      - CORE_PEER_ADDRESS=peerfssai1.safety.io:12050
+      - CORE_PEER_LOCALMSPID=fssaiMSP
+      - CORE_PEER_TLS_ENABLED=true
+      - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/safety.io/peers/peerfssai1.safety.io/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/safety.io/peers/peerfssai1.safety.io/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/safety.io/peers/peerfssai1.safety.io/tls/ca.crt
+      - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/safety.io/users/Admin@safety.io/msp
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    command: /bin/bash
+    volumes:
+      - /var/run/:/host/var/run/
+      - ../../chaincode/:/opt/gopath/src/github.com/hyperledger/fabric/peer/chaincode
+      # - ./../chaincode:/usr/local/src/
+      - ../../crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
+      - ../../:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
+      - ../../channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
+    depends_on:
+      - peerfssai1.safety.io
+      - couchdb11
+    networks:
+      - test

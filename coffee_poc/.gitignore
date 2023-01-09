@@ -25,3 +25,4 @@ persistence-data/
 # /api/teafarm-wallet/*.id
 # /fabric-ca-config/*
 # /bin/
+/channel-artifacts/

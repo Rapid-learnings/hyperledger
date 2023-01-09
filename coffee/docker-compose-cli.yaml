@@ -1,0 +1,151 @@
+version: '2'
+
+volumes:
+  orderer.poc.com:
+  peer1.producer.poc.com:
+  peer1.manufacturer.poc.com:
+  peer1.warehouse.poc.com:
+  peer1.retailer.poc.com:
+  peer1.gov.poc.com:
+  peer0.producer.poc.com:
+  peer0.manufacturer.poc.com:
+  peer0.warehouse.poc.com:
+  peer0.retailer.poc.com:
+  peer0.gov.poc.com:
+
+networks:
+  poc:
+
+services:
+
+  cli:
+    container_name: cli
+    image: hyperledger/fabric-tools:2.2
+    tty: true
+    stdin_open: true
+    environment:
+      - TLS_ROOT_CA=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/poc.com/orderers/orderer.poc.com/msp/tlscacerts/tlsca.poc.com-cert.pem
+      - CHANNEL_NAME=poc-channel
+      - SYS_CHANNEL=poc-system-channel
+      - GOPATH=/opt/gopath
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      #- FABRIC_LOGGING_SPEC=DEBUG
+      - FABRIC_LOGGING_SPEC=INFO
+      - CORE_PEER_ID=cli
+      - CORE_PEER_ADDRESS=peer0.producer.poc.com:7051
+      - CORE_PEER_LOCALMSPID=ProducerMSP
+      - CORE_PEER_TLS_ENABLED=true
+      - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/producer.poc.com/peers/peer0.producer.poc.com/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/producer.poc.com/peers/peer0.producer.poc.com/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/producer.poc.com/peers/peer0.producer.poc.com/tls/ca.crt
+      - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/producer.poc.com/users/Admin@producer.poc.com/msp
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    command: /bin/bash
+    volumes:
+      - /var/run/:/host/var/run/
+      - ./crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
+      - ./scripts:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
+      - ./channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts/
+      - ./chaincode:/opt/gopath/src/github.com/hyperledger/fabric/peer/chaincode/
+    depends_on:
+      - orderer.poc.com
+      - peer1.producer.poc.com
+      - peer1.manufacturer.poc.com
+      - peer1.warehouse.poc.com
+      - peer1.retailer.poc.com
+      - peer1.gov.poc.com
+      - peer0.producer.poc.com
+      - peer0.manufacturer.poc.com
+      - peer0.warehouse.poc.com
+      - peer0.retailer.poc.com
+      - peer0.gov.poc.com
+    networks:
+      - poc
+
+  orderer.poc.com:
+    container_name: orderer.poc.com
+    extends:
+      file: base/docker-compose-base.yaml
+      service: orderer.poc.com
+    networks:
+      - poc
+  
+  peer0.producer.poc.com:
+    container_name: peer0.producer.poc.com
+    extends:
+      file: base/docker-compose-base.yaml
+      service: peer0.producer.poc.com
+    networks:
+      - poc
+
+  peer0.manufacturer.poc.com:
+    container_name: peer0.manufacturer.poc.com
+    extends:
+      file: base/docker-compose-base.yaml
+      service: peer0.manufacturer.poc.com
+    networks:
+      - poc
+
+  peer0.warehouse.poc.com:
+    container_name: peer0.warehouse.poc.com
+    extends:
+      file: base/docker-compose-base.yaml
+      service: peer0.warehouse.poc.com
+    networks:
+      - poc
+
+  peer0.retailer.poc.com:
+    container_name: peer0.retailer.poc.com
+    extends:
+      file: base/docker-compose-base.yaml
+      service: peer0.retailer.poc.com
+    networks:
+      - poc
+
+  peer0.gov.poc.com:
+    container_name: peer0.gov.poc.com
+    extends:
+      file: base/docker-compose-base.yaml
+      service: peer0.gov.poc.com
+    networks:
+      - poc
+
+  peer1.producer.poc.com:
+    container_name: peer1.producer.poc.com
+    extends:
+      file: base/docker-compose-base.yaml
+      service: peer1.producer.poc.com
+    networks:
+      - poc
+
+  peer1.manufacturer.poc.com:
+    container_name: peer1.manufacturer.poc.com
+    extends:
+      file: base/docker-compose-base.yaml
+      service: peer1.manufacturer.poc.com
+    networks:
+      - poc
+
+  peer1.warehouse.poc.com:
+    container_name: peer1.warehouse.poc.com
+    extends:
+      file: base/docker-compose-base.yaml
+      service: peer1.warehouse.poc.com
+    networks:
+      - poc
+
+  peer1.retailer.poc.com:
+    container_name: peer1.retailer.poc.com
+    extends:
+      file: base/docker-compose-base.yaml
+      service: peer1.retailer.poc.com
+    networks:
+      - poc
+
+  peer1.gov.poc.com:
+    container_name: peer1.gov.poc.com
+    extends:
+      file: base/docker-compose-base.yaml
+      service: peer1.gov.poc.com
+    networks:
+      - poc

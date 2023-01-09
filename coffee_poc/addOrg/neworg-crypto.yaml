@@ -1,0 +1,8 @@
+PeerOrgs:
+  - Name: fssai
+    Domain: safety.io
+    EnableNodeOUs: true
+    Specs:
+      - Hostname: peerfssai1 
+    Users:
+      Count: 1

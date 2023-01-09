@@ -376,6 +376,18 @@ Orderer: &OrdererDefaults
         Consenters:
             - Host: orderer1.gov.io
               Port: 7050
+<<<<<<< HEAD
+              ClientTLSCert: /home/ubuntu/fabric/hyperledger/coffee_poc/crypto-config/ordererOrganizations/gov.io/orderers/orderer1.gov.io/tls/server.crt
+              ServerTLSCert: /home/ubuntu/fabric/hyperledger/coffee_poc/crypto-config/ordererOrganizations/gov.io/orderers/orderer1.gov.io/tls/server.crt
+            # - Host: orderer2.gov.io
+            #   Port: 7051
+            #   ClientTLSCert: /home/ubuntu/fabric/hyperledger/coffee_poc/crypto-config/ordererOrganizations/gov.io/orderers/orderer2.gov.io/tls/server.crt
+            #   ServerTLSCert: /home/ubuntu/fabric/hyperledger/coffee_poc/crypto-config/ordererOrganizations/gov.io/orderers/orderer2.gov.io/tls/server.crt
+            # - Host: orderer3.gov.io
+            #   Port: 7052
+            #   ClientTLSCert: /home/ubuntu/fabric/hyperledger/coffee_poc/crypto-config/ordererOrganizations/gov.io/orderers/orderer3.gov.io/tls/server.crt
+            #   ServerTLSCert: /home/ubuntu/fabric/hyperledger/coffee_poc/crypto-config/ordererOrganizations/gov.io/orderers/orderer3.gov.io/tls/server.crt
+=======
               ClientTLSCert: /home/ubuntu/pankajb/hyperledger/coffee_poc/crypto-config/ordererOrganizations/gov.io/orderers/orderer1.gov.io/tls/server.crt
               ServerTLSCert: /home/ubuntu/pankajb/hyperledger/coffee_poc/crypto-config/ordererOrganizations/gov.io/orderers/orderer1.gov.io/tls/server.crt
             # - Host: orderer2.gov.io
@@ -386,6 +398,7 @@ Orderer: &OrdererDefaults
             #   Port: 7052
             #   ClientTLSCert: /home/ubuntu/pankajb/hyperledger/coffee_poc/crypto-config/ordererOrganizations/gov.io/orderers/orderer3.gov.io/tls/server.crt
             #   ServerTLSCert: /home/ubuntu/pankajb/hyperledger/coffee_poc/crypto-config/ordererOrganizations/gov.io/orderers/orderer3.gov.io/tls/server.crt
+>>>>>>> main
 
         # Options to be specified for all the etcd/raft nodes. The values here
         # are the defaults for all new channels and can be modified on a
@@ -497,6 +510,18 @@ Profiles:
                 Consenters:
                 - Host: orderer1.gov.io
                   Port: 7050
+<<<<<<< HEAD
+                  ClientTLSCert: /home/ubuntu/fabric/hyperledger/coffee_poc/crypto-config/ordererOrganizations/gov.io/orderers/orderer1.gov.io/tls/server.crt
+                  ServerTLSCert: /home/ubuntu/fabric/hyperledger/coffee_poc/crypto-config/ordererOrganizations/gov.io/orderers/orderer1.gov.io/tls/server.crt
+                - Host: orderer2.gov.io
+                  Port: 7051
+                  ClientTLSCert: /home/ubuntu/fabric/hyperledger/coffee_poc/crypto-config/ordererOrganizations/gov.io/orderers/orderer2.gov.io/tls/server.crt
+                  ServerTLSCert: /home/ubuntu/fabric/hyperledger/coffee_poc/crypto-config/ordererOrganizations/gov.io/orderers/orderer2.gov.io/tls/server.crt
+                - Host: orderer3.gov.io
+                  Port: 7052
+                  ClientTLSCert: /home/ubuntu/fabric/hyperledger/coffee_poc/crypto-config/ordererOrganizations/gov.io/orderers/orderer3.gov.io/tls/server.crt
+                  ServerTLSCert: /home/ubuntu/fabric/hyperledger/coffee_poc/crypto-config/ordererOrganizations/gov.io/orderers/orderer3.gov.io/tls/server.crt
+=======
                   ClientTLSCert: /home/ubuntu/pankajb/hyperledger/coffee_poc/crypto-config/ordererOrganizations/gov.io/orderers/orderer1.gov.io/tls/server.crt
                   ServerTLSCert: /home/ubuntu/pankajb/hyperledger/coffee_poc/crypto-config/ordererOrganizations/gov.io/orderers/orderer1.gov.io/tls/server.crt
                 - Host: orderer2.gov.io
@@ -507,6 +532,7 @@ Profiles:
                   Port: 7052
                   ClientTLSCert: /home/ubuntu/pankajb/hyperledger/coffee_poc/crypto-config/ordererOrganizations/gov.io/orderers/orderer3.gov.io/tls/server.crt
                   ServerTLSCert: /home/ubuntu/pankajb/hyperledger/coffee_poc/crypto-config/ordererOrganizations/gov.io/orderers/orderer3.gov.io/tls/server.crt
+>>>>>>> main
             Addresses:
                 - orderer1.gov.io:7050
                 - orderer2.gov.io:7051
