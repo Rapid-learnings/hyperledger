@@ -21,6 +21,7 @@ class mwcc extends Contract {
     // intializes stock to a fixed amount
     async initialize(ctx) {
         console.log('===== Initializing all stocks =====');
+        let txID = await ctx.stub.getTxID();
         // const currentStock = await this.updateRawSTockAccordingToPMCC(ctx);
         await ctx.stub.putState(rawstockKey, Buffer.from('0')); //link this to pmcc.js
         await ctx.stub.putState(driedstockKey, Buffer.from('0'));
@@ -31,6 +32,7 @@ class mwcc extends Contract {
         await ctx.stub.putState(totalPackages, Buffer.from('0'));
         await ctx.stub.putState(whareHouseStock, Buffer.from('0'));
         console.log('===== Initialized all Stocks to 0 =====');
+        return txID;
     }
 
     async returnRawStockAccordingToPMCC(ctx) {
@@ -54,6 +56,7 @@ class mwcc extends Contract {
         // if (clientMSPID !== 'tataMSP') {
         //     throw new Error('only Manufacturer can update stock');
         // }
+        // let txID = await ctx.stub.getTxID();
         let currentStockBytes = await ctx.stub.getState(rawstockKey);
         let currentStock = parseInt(currentStockBytes.toString());
 
@@ -72,6 +75,7 @@ class mwcc extends Contract {
         // Store the new state in the blockchain
         await ctx.stub.putState(rawstockKey, Buffer.from(stock.toString()));
         // return stock;
+        // return txID;
     }
 
     // Queries available raw stock
@@ -183,6 +187,7 @@ class mwcc extends Contract {
         // if (clientMSPID !== 'tataMSP') {
         //     throw new Error('Only Manufacturer can process the material');
         // }
+        let txID = await ctx.stub.getTxID();
         let wti = parseInt(weightIn)
         let wto = parseInt(weightOut)
         if (wti < wto) {
@@ -210,6 +215,7 @@ class mwcc extends Contract {
         // add to processing stock
         await this.updateProcessing(ctx, wti);
         await ctx.stub.setEvent("dry", Buffer.from(newDriedStock.toString()));
+        return txID;
     }
 
     // here -> weightIn is coffee sent for roast.
@@ -220,7 +226,7 @@ class mwcc extends Contract {
         // if (clientMSPID !== 'tataMSP') {
         //     throw new Error('Only Manufacturer can process the material');
         // }
-
+        let txID = await ctx.stub.getTxID();
         let wti = parseInt(weightIn)
         let wto = parseInt(weightOut)
         if (wti < wto) {
@@ -239,7 +245,7 @@ class mwcc extends Contract {
 
         // Fetch and update the roasted stock
         await this.updateRoastedStock(ctx, wto, 0);
-
+        return txID;
         // const roastedStock = this.availableRoastedStock(ctx);
         // const newroastedStock = parseInt(roastedStock) + wto;
         // await ctx.stub.putState(roastedstockKey, Buffer.from(newroastedStock.toString()));
@@ -253,7 +259,7 @@ class mwcc extends Contract {
         // if (clientMSPID !== 'tataMSP') {
         //     throw new Error('Only Manufacturer can process the material');
         // }
-
+        let txID = await ctx.stub.getTxID();
         let wti = parseInt(weightIn)
         let wto = parseInt(weightOut)
         if (wti < wto) {
@@ -271,6 +277,7 @@ class mwcc extends Contract {
 
         // Fetch and update finished stock
         await this.updateFinishedStock(ctx, wto, 0);
+        return txID;
         // let newFinishedStock = finishedStock + weightOut;
         // await ctx.stub.putState(finishedstockKey, Buffer.from(newFinishedStock.toString()));
     }
@@ -283,6 +290,7 @@ class mwcc extends Contract {
         //     throw new Error('Only Manufacturer can process the material');
         // }
         // check for current stock fulfills demand for packaging or not
+        let txID = await ctx.stub.getTxID();
         let amt = parseInt(amtInKg);
         let currentStock = await this.availableFinishedStock(ctx);
         if(currentStock < amt) {
@@ -294,6 +302,7 @@ class mwcc extends Contract {
         await this.updateFinishedStock(ctx, amt, 1);
         // update total packages
         await this.updateTotalPackages(ctx, noOfPackages, 0);
+        return txID;
     }
 
     async dispatch(ctx, packages) {
@@ -303,6 +312,7 @@ class mwcc extends Contract {
         // }
         
         // check the available packages
+        let txID = await ctx.stub.getTxID();
         let currentPackages = await ctx.stub.getState(totalPackages);
         if(currentPackages < packages){
             throw new Error("Less Packages Are Available, current = ", currentPackages);
@@ -312,6 +322,7 @@ class mwcc extends Contract {
         await this.updateWhareHouseStock(ctx, packages);
         await this.updateTotalPackages(ctx, packages, 1);
         await ctx.stub.setEvent("dispatch", Buffer.from(packages.toString()));
+        return txID;
     }
 
     async getTotalPackages(ctx) {

@@ -18,10 +18,12 @@ let rawStock;
 class wrcc extends Contract {
 
     async initialize(ctx) {
+        let txID = await ctx.stub.getTxID();
         await ctx.stub.putState(retailerBalance, Buffer.from('100000'));
         await ctx.stub.putState(warehouseBalance, Buffer.from('100000'));
         //! connect wharehouse i.e wHstock stock from mwcc.js
         await ctx.stub.putState(retailerStock, Buffer.from('0'));
+        return txID;
     }
 
     async returnWarehouseSTockAccordingTomwCC(ctx) {
@@ -116,6 +118,7 @@ class wrcc extends Contract {
         // }
         // await TokenERC20Contract.transferFrom(ctx, clientMSPID, this.toString(), amt)
         // let availableWHStock = await this.availableWarehouseStock(ctx);
+        let txID = await ctx.stub.getTxID();
         if(rawStock < parseInt(qty)){
             throw new Error("Wharehouse Stock Is Less Than The Asked Qty,  current = ", availableWHStock);
         }
@@ -154,6 +157,7 @@ class wrcc extends Contract {
         // Store order details
         await ctx.stub.putState(orderNo.toString(), Buffer.from(JSON.stringify(order).toString('base64')));
         await ctx.stub.setEvent("place-order", Buffer.from(JSON.stringify(order).toString('base64')));
+        return txID;
     }
 
     async updateStatusToInTransit(ctx, orderNo) {
@@ -163,6 +167,7 @@ class wrcc extends Contract {
         // }
 
         // fetching order details
+        let txID = await ctx.stub.getTxID();
         let orderObj;
         try {
             orderObj = await this.getOrderDetails(ctx, orderNo)
@@ -178,6 +183,7 @@ class wrcc extends Contract {
         orderObj.Status = Status[1]
         //storing the new order details object with the orderNo key
         await ctx.stub.putState(orderNo, Buffer.from(JSON.stringify(orderObj)));
+        return txID;
     }
 
     // updates the status of the order to delivered
@@ -188,6 +194,7 @@ class wrcc extends Contract {
         // }
 
         // fetching order details
+        let txID = await ctx.stub.getTxID();
         let orderObj;
         try {
             orderObj = await this.getOrderDetails(ctx, orderNo)
@@ -203,6 +210,7 @@ class wrcc extends Contract {
         orderObj.Status = Status[2]
         //storing the new order details object with the orderNo key
         await ctx.stub.putState(orderNo, Buffer.from(JSON.stringify(orderObj)));
+        return txID;
     }
 
     // async claimPayout(ctx, orderNo) {

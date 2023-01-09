@@ -22,16 +22,8 @@ let manufacturerOrderedStock = "MANUFACTURE_ORDERED_STOCK";
 let pricePerKg = 100; // 100$ for 1 kg coffee
 
 class pmcc extends Contract {
-
-  hello(){
-    return 290000;
-  }
-
-  // hello2(){
-  //   return 290000;
-  // }
-  // initializes the stock of the producer to a set amount and also initializes the erc20 token contract
   async init(ctx, initialStock) {
+    let txID = await ctx.stub.getTxID();
     await ctx.stub.putState(manufacturerFunds, Buffer.from("1000000"));
     console.log("Balance of tataMSP initialized to 1000000 $");
 
@@ -44,11 +36,15 @@ class pmcc extends Contract {
     await ctx.stub.putState(productionStock, Buffer.from(initialStock));
     console.log("Production Stock Initailized to " + initialStock);
 
-    await ctx.stub.putState(manufacturerOrderedStock, Buffer.from('0'));
+    await ctx.stub.putState(manufacturerOrderedStock, Buffer.from("0"));
+    return txID;
   }
 
   // this function updates the stock in production.
   async updateProductionStock(ctx, amtInKg, flag) {
+    //  getting txid
+    // let txID = await ctx.stub.getTxID();
+
     // Fetching current stock
     let currentStockBytes = await ctx.stub.getState(productionStock);
     let updatedStock = 0;
@@ -66,6 +62,10 @@ class pmcc extends Contract {
       productionStock,
       Buffer.from(updatedStock.toString())
     );
+    await ctx.stub.putState(
+      txID.toString(),
+      Buffer.from(updatedStock.toString())
+    );
     console.log("Stock is updated to %s", updatedStock);
     let stock = await ctx.stub.getState(productionStock);
     return parseInt(stock.toString());
@@ -79,27 +79,34 @@ class pmcc extends Contract {
     return availableStock;
   }
 
-  async getManufacturerStock(ctx){
+  async getManufacturerStock(ctx) {
     let stock = await ctx.stub.getState(manufacturerOrderedStock);
     let mfcStock = parseInt(stock.toString());
     return mfcStock;
   }
 
-  async updateManufacturerStock(ctx, qty){
+  async updateManufacturerStock(ctx, qty) {
+    // let txID = await ctx.stub.getTxID();
     let stock = await ctx.stub.getState(manufacturerOrderedStock);
     let mfcStock = parseInt(stock.toString());
     let quantity = parseInt(qty.toString());
     mfcStock += quantity;
-    await ctx.stub.putState(manufacturerOrderedStock, Buffer.from(mfcStock.toString()));
-    console.log("Manufacturer Ordered Stock Updated to ", mfcStock); 
+    await ctx.stub.putState(
+      manufacturerOrderedStock,
+      Buffer.from(mfcStock.toString())
+    );
+    console.log("Manufacturer Ordered Stock Updated to ", mfcStock);
+    // return txID;
   }
 
   async placeOrder(ctx, qty, cty, stateName) {
+    //  getting txid
+    let txID = await ctx.stub.getTxID();
     // let clientMSPID = await ctx.clientIdentity.getMSPID();
     // if (clientMSPID !== 'tataMSP') {
     //     throw new Error('only manufacturer can place an order')
     // }
-    
+
     // Updating the balances of the manufacturer
     let manufacturerBalance = await this.getManufacturerFunds(ctx);
     let prdBalance = await this.getProducerFunds(ctx);
@@ -117,7 +124,7 @@ class pmcc extends Contract {
 
     // update stock
     try {
-      let stock = await this.updateProductionStock(ctx, qty, 0);
+      await this.updateProductionStock(ctx, qty, 0);
     } catch (err) {
       throw err;
     }
@@ -142,7 +149,7 @@ class pmcc extends Contract {
     let orderNoBytes = await ctx.stub.getState(orderNumber);
     // console.log("OrderNoBytes = ", orderNoBytes);
     let orderNo = parseInt(orderNoBytes.toString());
-    console.log("Order No = ",String(orderNo));
+    console.log("Order No = ", String(orderNo));
     if (!orderNoBytes || orderNoBytes.length === 0) {
       //  await ctx.stub.putState(orderNumber, Buffer.from('1'));
       orderNo = 1;
@@ -153,12 +160,15 @@ class pmcc extends Contract {
     console.log(JSON.stringify(order).toString("base64"));
     // store the order details in the blockchain with the orderNo as key
     orderNo = String(orderNo);
-    let orderBuff = Buffer.from(JSON.stringify(order).toString("base64"))
+    let orderBuff = Buffer.from(JSON.stringify(order).toString("base64"));
     // console.log("Order Buffer = ", orderBuff);
-    await ctx.stub.putState(orderNo.toString(),orderBuff)
-    await ctx.stub.putState(orderNumber, Buffer.from(orderNo.toString()))
+    await ctx.stub.putState(orderNo.toString(), orderBuff);
+    await ctx.stub.putState(orderNumber, Buffer.from(orderNo.toString()));
     await ctx.stub.setEvent("placeOrder", orderBuff);
-    return orderNo;
+    return {
+      orderNo: orderNo,
+      txId: txID,
+    };
     // return await this.getOrderDetails(ctx, orderNo);
   }
 
@@ -168,7 +178,7 @@ class pmcc extends Contract {
     // if (clientMSP !== "teafarmMSP") {
     //   throw new Error("Only teafarm can upadte the status of shipment");
     // }
-
+    let txID = await ctx.stub.getTxID();
     // fetching order details
     let orderObj = await this.getOrderDetails(ctx, orderNo);
     let status = orderObj.orderStatus;
@@ -182,6 +192,7 @@ class pmcc extends Contract {
     orderObj.orderStatus = Status[1];
     //storing the new order details object with the orderNo key
     await ctx.stub.putState(orderNo, Buffer.from(JSON.stringify(orderObj)));
+    return txID;
   }
 
   // updates the status of the order to delivered
@@ -192,6 +203,7 @@ class pmcc extends Contract {
     // }
 
     // fetching order details
+    let txID = await ctx.stub.getTxID();
     let orderObj = await this.getOrderDetails(ctx, orderNo);
     let status = orderObj.orderStatus;
     if (status !== Status[1]) {
@@ -200,11 +212,11 @@ class pmcc extends Contract {
       );
     }
 
-
     // updating the status to delivered
     orderObj.orderStatus = Status[2];
     //storing the new order details object with the orderNo key
     await ctx.stub.putState(orderNo, Buffer.from(JSON.stringify(orderObj)));
+    return txID;
   }
 
   // async claimPayout(ctx, orderNo) {
