@@ -11,6 +11,8 @@ channel-artifacts/*.json
 /chaincode/package-lock.json
 /api/node_modules/*
 api/package-lock.json
+/api-ts/node_modules/*
+api-ts/package-lock.json
 /chaincode/package-lock.json
 /chaincode/mfc-prdc/package-lock.json
 /chaincode/mfd-whs/package-lock.json
