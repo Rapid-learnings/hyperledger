@@ -6,7 +6,8 @@ const enrollAdmin = require("./enrollAdmin.js");
 const registerUser = require("./registerUser.js");
 const invokeObj = require("./invoke");
 
-var { Gateway, Wallets } = require("fabric-network");
+let { Gateway, Wallets } = require("fabric-network");
+// const { Client } = require("fabric-client");
 const fs = require("fs");
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -14,37 +15,95 @@ const cors = require("cors");
 const path = require("path");
 const wr = require("./wrInvoke");
 const invokeObjMW = require("./invokeMWCC");
+const queryObj = require("./query");
+
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
 
+// ############################## QUERY BLOCKCHAIN RELATED TASKS #########################################
+//  Query Get Block by BlockNumber
+
+app.get("/qscc/channels/:channelName/chaincodes/:chaincodeName", async function (req, res) {
+  try {
+      console.log('==================== QUERY BY CHAINCODE ==================');
+
+      let channelName = req.params.channelName;
+      let chaincodeName = req.params.chaincodeName;
+
+      console.log(`chaincode name is :${chaincodeName}`)
+      let args = req.query.args;
+      let fcn = req.query.fcn;
+      // let peer = req.query.peer;
+
+      console.log('channelName : ' + channelName);
+      console.log('chaincodeName : ' + chaincodeName);
+      console.log('fcn : ' + fcn);
+      console.log('args : ' + args);
+
+      if (!chaincodeName) {
+        throw new Error("Chaincode name missing");
+      }
+      if (!channelName) {
+        throw new Error("Channel name missing");
+      }
+      if (!fcn) {
+        throw new Error("Function name missing");
+      }
+      if (!args) {
+        throw new Error("Arguments are missing missing");
+      }
+      // console.log('args==========', args);
+      // args = args.replace(/'/g, '"');
+      // args = JSON.parse(args);
+      // console.log(args);
+
+      let response_payload = await queryObj.qscc(channelName, chaincodeName, args, fcn, req.query.username, req.query.orgname);
+      // let response = Buffer.from(JSON.parse(JSON.stringify(response_payload))).toString()
+      res.send(response_payload);
+  } catch (error) {
+      const response_payload = {
+          result: null,
+          error: error.name,
+          errorData: error.message
+      }
+      res.send(response_payload)
+  }
+});
+
+// ##################################### Register User #########################################################
 app.post("/register/admin", async (req, res, next) => {
-  try{
+  try {
     let org = req.body.orgName;
     console.log(org);
     await enrollAdmin.enroll(org);
-    res.json({message:"Successfully enrolled admin and imported it into the wallet"});
-  }catch(err){
+    res.json({
+      message: "Successfully enrolled admin and imported it into the wallet",
+    });
+  } catch (err) {
     next(err);
   }
 });
 
 app.post("/register/user", async (req, res, next) => {
-  try{
+  try {
     let usrname = req.body.username;
     let orgName = req.body.orgName;
     console.log(orgName);
     console.log(usrname);
     let resp = await registerUser.registerEnrollUser(usrname, orgName);
     // let resp = await helper.getRegisteredUser(usrname, orgName, true);
-    res.json({message:"Successfully enrolled User and imported it into the wallet"});
-  }catch(err){
+    res.json({
+      message: "Successfully enrolled User and imported it into the wallet",
+    });
+  } catch (err) {
     next(err);
   }
 });
 
+// ################### PMCC #######################
 // app.post('/register', async(req,res,next)=>{
 // console.log(req.body);
 //     let usrname = req.body.username;
@@ -154,14 +213,14 @@ app.get("/manufacturer/order-details/:orderNumber", async (req, res, next) => {
 
 app.get("/init-pmcc", async (req, res, next) => {
   try {
-    await invokeObj.evaluateTx(
+   let txId = await invokeObj.evaluateTx(
       "mfd-prd-channel",
       "pmcc",
       "init",
       "user101",
       "tata"
     );
-    res.json({ message: "Chaincode pmcc initialized" });
+    res.json({ message: `Chaincode pmcc initialized with Transaction ID: ${txId}` });
   } catch (err) {
     next(err);
   }
@@ -182,7 +241,7 @@ app.post("/manufacture/place-order", async (req, res, next) => {
       "user101",
       "tata"
     );
-    res.json({ message: `Order Number for Manufacturer =  ${result}` });
+    res.json({ message: `Order Number & Transaction ID for Manufacturer =  ${result}` });
   } catch (err) {
     next(err);
   }
@@ -199,7 +258,7 @@ app.post("/production/transit/:orderNumber", async (req, res, next) => {
       "user101",
       "tata"
     );
-    res.json({ message: `Order Status Changed To In-Transit` });
+    res.json({ message: `Order Status Changed To In-Transit & Tx Id = ${result}` });
   } catch (err) {
     next(err);
   }
@@ -216,7 +275,7 @@ app.post("/production/delivered/:orderNumber", async (req, res, next) => {
       "user101",
       "tata"
     );
-    res.json({ message: `Order Status Changed To Delivered` });
+    res.json({ message: `Order Status Changed To Delivered & Tx ID : ${result}` });
   } catch (err) {
     next(err);
   }
@@ -224,20 +283,20 @@ app.post("/production/delivered/:orderNumber", async (req, res, next) => {
 
 // ###################################### MWCC ##################################################
 
-app.get('/init-mwcc', async(req,res,next)=>{
-  try{
-    await invokeObjMW.evaluateTx(
+app.get("/init-mwcc", async (req, res, next) => {
+  try {
+    let txId = await invokeObjMW.evaluateTx(
       "mfd-whs-channel",
       "mwcc",
       "initialize",
       "user404",
       "tatastore"
     );
-    res.json({message:"MWCC Initialized"});
-  }catch(err){
+    res.json({ message: `MWCC Initialized & Transaction ID : ${txId}` });
+  } catch (err) {
     next(err);
   }
-})
+});
 
 app.get("/manufacturer/raw-stock-from-pmcc", async (req, res, next) => {
   try {
@@ -248,7 +307,7 @@ app.get("/manufacturer/raw-stock-from-pmcc", async (req, res, next) => {
       "user101",
       "tata"
     );
-    res.json({message: `manufacturer stock is ${message} Kg`});
+    res.json({ message: `manufacturer stock is ${message} Kg` });
   } catch (err) {
     next(err);
   }
@@ -263,7 +322,7 @@ app.get("/manufacturer/dried-stock", async (req, res, next) => {
       "user101",
       "tata"
     );
-    res.json({message: `manufacturer dried stock is ${message} Kg`});
+    res.json({ message: `manufacturer dried stock is ${message} Kg` });
   } catch (err) {
     next(err);
   }
@@ -278,7 +337,7 @@ app.get("/manufacturer/roasted-stock", async (req, res, next) => {
       "user101",
       "tata"
     );
-    res.json({message: `manufacturer roasted stock is ${message} Kg`});
+    res.json({ message: `manufacturer roasted stock is ${message} Kg` });
   } catch (err) {
     next(err);
   }
@@ -293,7 +352,7 @@ app.get("/manufacturer/finished-stock", async (req, res, next) => {
       "user101",
       "tata"
     );
-    res.json({message: `manufacturer finished stock is ${message} Kg`});
+    res.json({ message: `manufacturer finished stock is ${message} Kg` });
   } catch (err) {
     next(err);
   }
@@ -308,7 +367,7 @@ app.get("/manufacturer/wasted-stock", async (req, res, next) => {
       "user101",
       "tata"
     );
-    res.json({message: `manufacturer wasted stock is ${message} Kg`});
+    res.json({ message: `manufacturer wasted stock is ${message} Kg` });
   } catch (err) {
     next(err);
   }
@@ -323,7 +382,7 @@ app.get("/manufacturer/total-packages", async (req, res, next) => {
       "user101",
       "tata"
     );
-    res.json({message: `manufacturer total packages is ${message}`});
+    res.json({ message: `manufacturer total packages is ${message}` });
   } catch (err) {
     next(err);
   }
@@ -334,14 +393,8 @@ app.post("/manufacturer/dry", async (req, res, next) => {
     let username = req.body.username;
     let org_name = req.body.org_name;
     let args = req.body.args;
-    await invokeObjMW.dry(
-      "mfd-whs-channel",
-      "mwcc",
-      args,
-      username,
-      org_name
-    );
-    res.json({message: `${args[1]} Kg of raw stock dried`});
+    let txId = await invokeObjMW.dry("mfd-whs-channel", "mwcc", args, username, org_name);
+    res.json({ message: `${args[1]} Kg of raw stock dried & Tx Id : ${txId}` });
   } catch (err) {
     next(err);
   }
@@ -352,14 +405,14 @@ app.post("/manufacturer/roast", async (req, res, next) => {
     let username = req.body.username;
     let org_name = req.body.org_name;
     let args = req.body.args;
-    await invokeObjMW.roast(
+    let txId = await invokeObjMW.roast(
       "mfd-whs-channel",
       "mwcc",
       args,
       username,
       org_name
     );
-    res.json({message: `${args[1]} Kg of raw stock roasted`});
+    res.json({ message: `${args[1]} Kg of raw stock roasted & Tx ID : ${txId}` });
   } catch (err) {
     next(err);
   }
@@ -370,14 +423,8 @@ app.post("/manufacturer/doQA", async (req, res, next) => {
     let username = req.body.username;
     let org_name = req.body.org_name;
     let args = req.body.args;
-    await invokeObjMW.doQA(
-      "mfd-whs-channel",
-      "mwcc",
-      args,
-      username,
-      org_name
-    );
-    res.json({message: `${args[1]} Kg of raw stock quality checked`});
+    let txId = await invokeObjMW.doQA("mfd-whs-channel", "mwcc", args, username, org_name);
+    res.json({ message: `${args[1]} Kg of raw stock quality checked & Tx ID : ${txId}` });
   } catch (err) {
     next(err);
   }
@@ -388,50 +435,49 @@ app.post("/manufacturer/package", async (req, res, next) => {
     let username = req.body.username;
     let org_name = req.body.org_name;
     let args = req.body.args;
-    await invokeObjMW.package(
+    let txId = await invokeObjMW.package(
       "mfd-whs-channel",
       "mwcc",
       args,
       username,
       org_name
     );
-    res.json({message: `${args[0]} Kg of finished stock is packaged`});
+    res.json({ message: `${args[0]} Kg of finished stock is packaged & Tx ID : ${txId}` });
   } catch (err) {
     next(err);
   }
-})
+});
 
 app.post("/manufacturer/dispatch", async (req, res, next) => {
   try {
     let username = req.body.username;
     let org_name = req.body.org_name;
     let args = req.body.args;
-    await invokeObjMW.dispatch(
+    let txId = await invokeObjMW.dispatch(
       "mfd-whs-channel",
       "mwcc",
       args,
       username,
       org_name
     );
-    res.json({message: `${args[0]} packages are dispatched`});
+    res.json({ message: `${args[0]} packages are dispatched & Tx ID : ${txId}` });
   } catch (err) {
     next(err);
   }
-})
-
+});
 
 // ###################################### WRCC ##################################################
 
 app.get("/init-wrcc", async (req, res, next) => {
   try {
-    await wr.evaluateTx(
+    let txId = await wr.evaluateTx(
       "whs-rtlr-channel",
       "wrcc",
       "initialize",
       "user202",
       "bigbazar"
     );
-    res.json({ message: "Chaincode wrcc initialized" });
+    res.json({ message: `Chaincode wrcc initialized & Transaction ID : ${txId}` });
   } catch (err) {
     next(err);
   }
@@ -452,7 +498,7 @@ app.get("/warehouse/stock", async (req, res, next) => {
   }
 });
 
-app.get('/warehouse/balance', async(req,res,next)=>{
+app.get("/warehouse/balance", async (req, res, next) => {
   try {
     let wBal = await wr.evaluateTx(
       "whs-rtlr-channel",
@@ -465,10 +511,10 @@ app.get('/warehouse/balance', async(req,res,next)=>{
   } catch (err) {
     next(err);
   }
-})
+});
 
-app.get("/retailer/balance", async(req,res,next)=>{
-  try{
+app.get("/retailer/balance", async (req, res, next) => {
+  try {
     let bal = await wr.evaluateTx(
       "whs-rtlr-channel",
       "wrcc",
@@ -476,14 +522,14 @@ app.get("/retailer/balance", async(req,res,next)=>{
       "user202",
       "bigbazar"
     );
-    res.json({message:`Retailer Balance = ${bal}`});
-  }catch(err){
+    res.json({ message: `Retailer Balance = ${bal}` });
+  } catch (err) {
     next(err);
   }
-})
+});
 
-app.get("/retailer/stock", async(req,res,next)=>{
-  try{
+app.get("/retailer/stock", async (req, res, next) => {
+  try {
     let bal = await wr.evaluateTx(
       "whs-rtlr-channel",
       "wrcc",
@@ -491,16 +537,16 @@ app.get("/retailer/stock", async(req,res,next)=>{
       "user202",
       "bigbazar"
     );
-    res.json({message:`Retailer Stock = ${bal}`});
-  }catch(err){
+    res.json({ message: `Retailer Stock = ${bal}` });
+  } catch (err) {
     next(err);
   }
-})
+});
 
 app.post("/warehouse/order-transit/:orderNumber", async (req, res, next) => {
   try {
     let orderNo = req.params.orderNumber;
-    let status = await wr.orderInTransit(
+    let txId = await wr.orderInTransit(
       "whs-rtlr-channel",
       "wrcc",
       "updateStatusToInTransit",
@@ -508,13 +554,13 @@ app.post("/warehouse/order-transit/:orderNumber", async (req, res, next) => {
       "user202",
       "bigbazar"
     );
-    res.json({ message: "Retailer Order Status Changed To In-Transit" });
+    res.json({ message: `Retailer Order Status Changed To In-Transit & Tx ID : ${txId}` });
   } catch (err) {
     next(err);
   }
 });
 
-app.post('/retailer/place-order', async(req,res,next)=>{
+app.post("/retailer/place-order", async (req, res, next) => {
   try {
     let args = [];
     args.push(req.body.quantity);
@@ -530,11 +576,13 @@ app.post('/retailer/place-order', async(req,res,next)=>{
       "bigbazar"
     );
     console.log(result);
-    res.json({ message: `Order Number for Reatailer =  ${result.orderNumber}` });
+    res.json({
+      message: `Order Number for Reatailer =  ${result.result.orderNumber} & Tx ID : ${result.txId}`,
+    });
   } catch (err) {
     next(err);
   }
-})
+});
 
 app.post("/warehouse/order-delivered/:orderNumber", async (req, res, next) => {
   try {
@@ -553,23 +601,22 @@ app.post("/warehouse/order-delivered/:orderNumber", async (req, res, next) => {
   }
 });
 
-app.get('/warehouse/order-details/:orderNumber', async(req,res,next)=>{
-  try{
+app.get("/warehouse/order-details/:orderNumber", async (req, res, next) => {
+  try {
     let orderNo = req.params.orderNumber;
     let orderObj = await wr.getOrderDetails(
       "whs-rtlr-channel",
-        "wrcc",
-        "getOrderDetails",
-        orderNo,
-        "user202",
-        "bigbazar"
+      "wrcc",
+      "getOrderDetails",
+      orderNo,
+      "user202",
+      "bigbazar"
     );
-    res.json({message:orderObj});
-  }catch(err){
+    res.json({ message: orderObj });
+  } catch (err) {
     next(err);
   }
-})
-
+});
 
 // ###################################### Server listening ##################################################
 

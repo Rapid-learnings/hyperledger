@@ -47,3 +47,6 @@ InvokeCCMfdPrd
 # QueryCCMfdPrd
 # PlaceOrder
 # UpdateStatus
+
+
+# sudo docker exec -it cli-manufacturer-1 peer chaincode invoke -o orderer1.gov.io:7050 --ordererTLSHostnameOverride orderer1.gov.io --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem -C mfd-prd-channel -n qscc -c '{"function":"GetTransactionByID","Args":["mfd-prd-channel","794f0282b270a5f4feb8b0c28e51e819fb2dae11c9fbc5013a323d1d6b86cab7"]}'

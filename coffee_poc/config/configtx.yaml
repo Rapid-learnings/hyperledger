@@ -541,9 +541,9 @@ Profiles:
         Application:
             <<: *ApplicationDefaults
             Organizations:
-                - *teafarm
+                # - *teafarm
                 - *tata
-                - *tatastore
+                # - *tatastore
                 - *bigbazar
             Capabilities:
                 <<: *ApplicationCapabilities

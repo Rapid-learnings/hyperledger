@@ -75,6 +75,7 @@ sudo docker exec -it cli-retail-1 peer lifecycle chaincode install /opt/gopath/s
 
 sleep 6
 
+echo -n "" > fabcar.txt 2>&1
 sudo docker exec -it cli-manufacturer-1 peer lifecycle chaincode queryinstalled > fabcar.txt 2>&1
 cat fabcar.txt
     # CC_PACKAGE_ID=$(sed -n "/${CC_NAME}_${CC_VERSION}/{s/^Package ID: //; s/, Label:.*$//; p;}" log.txt)

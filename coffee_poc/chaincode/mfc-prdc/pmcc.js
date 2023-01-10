@@ -23,7 +23,8 @@ let pricePerKg = 100; // 100$ for 1 kg coffee
 
 class pmcc extends Contract {
   async init(ctx, initialStock) {
-    let txID = await ctx.stub.getTxID();
+    let txID = ctx.stub.getTxID();
+
     await ctx.stub.putState(manufacturerFunds, Buffer.from("1000000"));
     console.log("Balance of tataMSP initialized to 1000000 $");
 
@@ -37,6 +38,9 @@ class pmcc extends Contract {
     console.log("Production Stock Initailized to " + initialStock);
 
     await ctx.stub.putState(manufacturerOrderedStock, Buffer.from("0"));
+    console.log("###########################",txID);
+    console.log("###########################",ctx.stub.getTxID());
+
     return txID;
   }
 
@@ -62,10 +66,10 @@ class pmcc extends Contract {
       productionStock,
       Buffer.from(updatedStock.toString())
     );
-    await ctx.stub.putState(
-      txID.toString(),
-      Buffer.from(updatedStock.toString())
-    );
+    // await ctx.stub.putState(
+    //   txID.toString(),
+    //   Buffer.from(updatedStock.toString())
+    // );
     console.log("Stock is updated to %s", updatedStock);
     let stock = await ctx.stub.getState(productionStock);
     return parseInt(stock.toString());
@@ -100,8 +104,6 @@ class pmcc extends Contract {
   }
 
   async placeOrder(ctx, qty, cty, stateName) {
-    //  getting txid
-    let txID = await ctx.stub.getTxID();
     // let clientMSPID = await ctx.clientIdentity.getMSPID();
     // if (clientMSPID !== 'tataMSP') {
     //     throw new Error('only manufacturer can place an order')
@@ -124,7 +126,7 @@ class pmcc extends Contract {
 
     // update stock
     try {
-      await this.updateProductionStock(ctx, qty, 0);
+      let stock = await this.updateProductionStock(ctx, qty, 0);
     } catch (err) {
       throw err;
     }
@@ -165,10 +167,16 @@ class pmcc extends Contract {
     await ctx.stub.putState(orderNo.toString(), orderBuff);
     await ctx.stub.putState(orderNumber, Buffer.from(orderNo.toString()));
     await ctx.stub.setEvent("placeOrder", orderBuff);
-    return {
-      orderNo: orderNo,
-      txId: txID,
+    //  getting txid
+    let txId = ctx.stub.getTxID();
+    console.log("TX ID PMCC PLACE ORDER");
+    console.log("###########################",txId);
+    let result = {
+      "orderNo": orderNo,
+      "txId": txId,
     };
+    return result; 
+    // return orderNo;
     // return await this.getOrderDetails(ctx, orderNo);
   }
 

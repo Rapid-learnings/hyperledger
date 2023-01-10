@@ -149,7 +149,7 @@ wr.placeOrder = async (
     let result;
 
     console.log(args);
-    await contract.submitTransaction(
+   let txId =  await contract.submitTransaction(
       "placeOrder",
       args[0],
       args[1],
@@ -169,7 +169,7 @@ wr.placeOrder = async (
 
     await gateway.disconnect();
     console.log("result",result);
-    return result;
+    return {"result":result,"txId":txId};
   } catch (err) {
     return err;
   }
