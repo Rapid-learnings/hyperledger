@@ -348,4 +348,15 @@ export class HelperService {
     };
     return response;
   };
+
+  getConnectionObject = (wallet, username) => {
+    const connObj = {
+      wallet:wallet,
+      identity: username,
+      discovery: { enabled: true, asLocalhost: true } 
+      // eventHandlerOptions: EventStrategies.NONE
+    };
+    return connObj;
+  };
+  
 }

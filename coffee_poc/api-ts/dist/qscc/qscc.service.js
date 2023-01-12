@@ -8,13 +8,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.QsccService = void 0;
 const common_1 = require("@nestjs/common");
-const path_1 = __importDefault(require("path"));
 const helper_service_1 = require("../helper/helper.service");
 const util = require('util');
 const { Gateway, Wallets } = require('fabric-network');
@@ -52,25 +48,7 @@ let QsccService = class QsccService {
             else if (fcn == 'GetTransactionByID') {
                 console.log('Enter');
                 result = await contract.evaluateTransaction(fcn, channelName, args);
-                let pathLocation = path_1.default.join(process.cwd(), '/src/qscc/data/transactionData.block');
-                fs.writeFileSync(pathLocation, result);
-                let runScript = () => new Promise((resolve, reject) => {
-                    const { exec } = require('child_process');
-                    exec('sh transaction-decoder.sh', (error, stdout, stderr) => {
-                        console.log(stdout);
-                        console.log(stderr);
-                        if (error !== null) {
-                            console.log(`exec error: ${error}`);
-                            reject(false);
-                        }
-                        else {
-                            resolve(true);
-                        }
-                    });
-                });
-                result = await runScript();
-                result = fs.readFileSync('./transaction.json');
-                result = JSON.parse(result);
+                result = BlockDecoder.decodeTransaction(result);
             }
             return result;
         }

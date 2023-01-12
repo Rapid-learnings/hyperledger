@@ -265,6 +265,14 @@ let HelperService = class HelperService {
             };
             return response;
         };
+        this.getConnectionObject = (wallet, username) => {
+            const connObj = {
+                wallet: wallet,
+                identity: username,
+                discovery: { enabled: true, asLocalhost: true }
+            };
+            return connObj;
+        };
     }
 };
 HelperService = __decorate([

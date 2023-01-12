@@ -13,13 +13,21 @@ const app_service_1 = require("./app.service");
 const user_module_1 = require("./user/user.module");
 const helper_service_1 = require("./helper/helper.service");
 const helper_module_1 = require("./helper/helper.module");
+const qscc_module_1 = require("./qscc/qscc.module");
+const pmcc_module_1 = require("./pmcc/pmcc.module");
+const mwcc_module_1 = require("./mwcc/mwcc.module");
+const wrcc_service_1 = require("./wrcc/wrcc.service");
+const wrcc_controller_1 = require("./wrcc/wrcc.controller");
+const wrcc_module_1 = require("./wrcc/wrcc.module");
+const mwcc_controller_1 = require("./mwcc/mwcc.controller");
+const mwcc_service_1 = require("./mwcc/mwcc.service");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
     (0, common_1.Module)({
-        imports: [user_module_1.UserModule, helper_module_1.HelperModule],
-        controllers: [app_controller_1.AppController],
-        providers: [app_service_1.AppService, helper_service_1.HelperService],
+        imports: [user_module_1.UserModule, helper_module_1.HelperModule, qscc_module_1.QsccModule, pmcc_module_1.PmccModule, mwcc_module_1.MwccModule, wrcc_module_1.WrccModule],
+        controllers: [app_controller_1.AppController, wrcc_controller_1.WrccController, mwcc_controller_1.MwccController],
+        providers: [app_service_1.AppService, helper_service_1.HelperService, wrcc_service_1.WrccService, mwcc_service_1.MwccService],
     })
 ], AppModule);
 exports.AppModule = AppModule;

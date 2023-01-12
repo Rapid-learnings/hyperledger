@@ -92,7 +92,7 @@ queryObj.qscc = async (
 
       result = await runScript();
       result = fs.readFileSync("./transaction.json");
-      result = JSON.parse(result)
+      result = JSON.parse(result);
       // result = BlockDecoder.decodeTransaction(result);
     }
 

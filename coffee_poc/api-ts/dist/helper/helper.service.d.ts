@@ -9,4 +9,12 @@ export declare class HelperService {
     getRegisteredUser: (username: any, userOrg: any, isJson: any) => Promise<any>;
     enrollAdmin: (org: any, ccp: any) => Promise<any>;
     registerAndGerSecret: (username: any, userOrg: any) => Promise<any>;
+    getConnectionObject: (wallet: any, username: any) => {
+        wallet: any;
+        identity: any;
+        discovery: {
+            enabled: boolean;
+            asLocalhost: boolean;
+        };
+    };
 }
