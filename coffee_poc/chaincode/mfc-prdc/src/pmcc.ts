@@ -4,11 +4,10 @@ SPDX-License-Identifier: Apache-2.0
 
 "use strict";
 
-let { Contract } = require("fabric-contract-api");
-let { ClientIdentity } = require("fabric-shim");
-// let { TokenERC20Contract } = require('./token-erc-20/chaincode-javascript/lib/tokenERC20.js')
-let productionStock = "stock";
-let orderNumber = "orderNumber";
+// let { Contract, Context } = require("fabric-contract-api");
+import { Contract, Context } from "fabric-contract-api"
+let productionStock: string = "stock";
+let orderNumber: string = "orderNumber";
 let Status = [
   "order-placed",
   "in-transit",
@@ -16,22 +15,19 @@ let Status = [
   "payout-claimed",
   "cancelled",
 ];
-let manufacturerFunds = "MANUFACTURER_BALANCE";
-let producerFunds = "PRODUCER_BALANCE";
-let manufacturerOrderedStock = "MANUFACTURE_ORDERED_STOCK";
-let pricePerKg = 100; // 100$ for 1 kg coffee
+let manufacturerFunds: string = "MANUFACTURER_BALANCE";
+let producerFunds: string = "PRODUCER_BALANCE";
+let manufacturerOrderedStock: string = "MANUFACTURE_ORDERED_STOCK";
+let pricePerKg: number = 100; // 100$ for 1 kg coffee
 
-class pmcc extends Contract {
+export class pmcc extends Contract {
 
-  hello(){
-    return 290000;
+  constructor() {
+    super('pmcc');
   }
 
-  // hello2(){
-  //   return 290000;
-  // }
   // initializes the stock of the producer to a set amount and also initializes the erc20 token contract
-  async init(ctx, initialStock) {
+  async init(ctx: Context, initialStock: string) {
     await ctx.stub.putState(manufacturerFunds, Buffer.from("1000000"));
     console.log("Balance of tataMSP initialized to 1000000 $");
 
@@ -48,11 +44,11 @@ class pmcc extends Contract {
   }
 
   // this function updates the stock in production.
-  async updateProductionStock(ctx, amtInKg, flag) {
+  async updateProductionStock(ctx: Context, amtInKg: number, flag: number) {
     // Fetching current stock
     let currentStockBytes = await ctx.stub.getState(productionStock);
     let updatedStock = 0;
-    let currentStock = parseInt(currentStockBytes.toString()); //get current stock in production
+    let currentStock: number = parseInt(currentStockBytes.toString()); //get current stock in production
 
     if (flag == 0) {
       //flag == 0 is for deduction of stock in production
@@ -72,20 +68,20 @@ class pmcc extends Contract {
   }
 
   // Queries available stock of the producer using the productionStock
-  async availableStock(ctx) {
+  async availableStock(ctx: Context) {
     let ASBytes = await ctx.stub.getState(productionStock);
     let availableStock = parseInt(ASBytes.toString());
     console.log("Available Stock is %s kg", availableStock);
     return availableStock;
   }
 
-  async getManufacturerStock(ctx){
+  async getManufacturerStock(ctx: Context){
     let stock = await ctx.stub.getState(manufacturerOrderedStock);
     let mfcStock = parseInt(stock.toString());
     return mfcStock;
   }
 
-  async updateManufacturerStock(ctx, qty){
+  async updateManufacturerStock(ctx: Context, qty: number){
     let stock = await ctx.stub.getState(manufacturerOrderedStock);
     let mfcStock = parseInt(stock.toString());
     let quantity = parseInt(qty.toString());
@@ -94,7 +90,7 @@ class pmcc extends Contract {
     console.log("Manufacturer Ordered Stock Updated to ", mfcStock); 
   }
 
-  async placeOrder(ctx, qty, cty, stateName) {
+  async placeOrder(ctx: Context, qty: number, cty: string, stateName: string) {
     // let clientMSPID = await ctx.clientIdentity.getMSPID();
     // if (clientMSPID !== 'tataMSP') {
     //     throw new Error('only manufacturer can place an order')
@@ -105,7 +101,7 @@ class pmcc extends Contract {
     let prdBalance = await this.getProducerFunds(ctx);
 
     // Check for insufficient funds
-    let amt = parseInt(qty) * pricePerKg; // calculate price to be paid
+    let amt = qty * pricePerKg; // calculate price to be paid
     if (manufacturerBalance < amt) {
       throw new Error("Manufacturer Has Insufficient Funds");
     }
@@ -150,20 +146,29 @@ class pmcc extends Contract {
       orderNo += 1;
       //  await ctx.stub.putState(orderNumber, Buffer.from(orderNo.toString()));
     }
-    console.log(JSON.stringify(order).toString("base64"));
+    console.log(JSON.stringify(order).toString());
     // store the order details in the blockchain with the orderNo as key
-    orderNo = String(orderNo);
-    let orderBuff = Buffer.from(JSON.stringify(order).toString("base64"))
+    // orderNo = String(orderNo);
+    let orderBuff = Buffer.from(JSON.stringify(order).toString())
     // console.log("Order Buffer = ", orderBuff);
     await ctx.stub.putState(orderNo.toString(),orderBuff)
     await ctx.stub.putState(orderNumber, Buffer.from(orderNo.toString()))
     await ctx.stub.setEvent("placeOrder", orderBuff);
-    return orderNo;
+    
+    // fetching txID
+    let txId = ctx.stub.getTxID();
+    console.log("TX ID PMCC PLACE ORDER");
+    console.log("###########################",txId);
+    let result = {
+      "orderNo": orderNo,
+      "txId": txId,
+    };
+    return result; 
     // return await this.getOrderDetails(ctx, orderNo);
   }
 
   // updates the status of the order to in-transit
-  async updateStatusToInTransit(ctx, orderNo) {
+  async updateStatusToInTransit(ctx: Context, orderNo: string) {
     // let clientMSP = await ctx.clientIdentity.getMSPID();
     // if (clientMSP !== "teafarmMSP") {
     //   throw new Error("Only teafarm can upadte the status of shipment");
@@ -185,7 +190,7 @@ class pmcc extends Contract {
   }
 
   // updates the status of the order to delivered
-  async updateStatusToDelivered(ctx, orderNo) {
+  async updateStatusToDelivered(ctx: Context, orderNo: string) {
     // let clientMSP = await ctx.clientIdentity.getMSPID();
     // if (clientMSP !== "teafarmMSP") {
     //   throw new Error("only Producer has permission to this update status");
@@ -240,7 +245,7 @@ class pmcc extends Contract {
   // }
 
   // Queries the order details object with orderNo as key
-  async getOrderDetails(ctx, orderNo) {
+  async getOrderDetails(ctx: Context, orderNo: string) {
     //fetching order details
     console.log("OrderNO IN DETAILS = ", orderNo);
     // let orderNo = String(oNo)
@@ -252,14 +257,14 @@ class pmcc extends Contract {
   }
 
   // function to check account balances in $ of the user
-  async getManufacturerFunds(ctx) {
+  async getManufacturerFunds(ctx: Context) {
     let balanceBytes = await ctx.stub.getState(manufacturerFunds);
     let balance = parseInt(balanceBytes.toString());
     console.log("Balance for %s is %s $", balance);
     return balance;
   }
 
-  async getProducerFunds(ctx) {
+  async getProducerFunds(ctx: Context) {
     let balanceBytes = await ctx.stub.getState(producerFunds);
     let balance = parseInt(balanceBytes.toString());
     console.log("Balance for %s is %s $", balance);
@@ -267,4 +272,4 @@ class pmcc extends Contract {
   }
 }
 
-module.exports = pmcc;
+// export default new pmcc;

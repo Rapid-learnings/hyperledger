@@ -1,2 +1,2 @@
 Installed chaincodes on peer:
-Package ID: wr_1:e0971bcfb813268ac3caa54ec4667042d643f4e5ffd73a391ca09a3adb86e410, Label: wr_1
+Package ID: wr_1:403c8806e160b3bf6557ea209c24eb0435a7ba214eaec791f03516632b54fa3f, Label: wr_1

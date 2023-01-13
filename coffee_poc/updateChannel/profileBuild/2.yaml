@@ -1,0 +1,39 @@
+Organizations:
+- AnchorPeers:
+    Host: bb
+    Port: 22
+  ID: bMSP
+  MSPDir: ../crypto-config/peerOrganizations/gov.io/msp
+  Name: governance
+  Policies:
+    Admins:
+      Rule: OR(bMSP.admin)
+      Type: Signature
+    Endorsement:
+      Rule: OR(bMSP.peer, bMSP.admin)
+      Type: Signature
+    Readers:
+      Rule: OR(bMSP.member, bMSP.peer, bMSP.admin, bMSP.client)
+      Type: Signature
+    Writers:
+      Rule: OR(bMSP.member, bMSP.peer, bMSP.admin, bMSP.client)
+      Type: Signature
+- AnchorPeers:
+    Host: aa
+    Port: 11
+  ID: aMSP
+  MSPDir: ../crypto-config/peerOrganizations/gov.io/msp
+  Name: governance
+  Policies:
+    Admins:
+      Rule: OR(aMSP.admin)
+      Type: Signature
+    Endorsement:
+      Rule: OR(aMSP.peer, aMSP.admin)
+      Type: Signature
+    Readers:
+      Rule: OR(aMSP.member, aMSP.peer, aMSP.admin, aMSP.client)
+      Type: Signature
+    Writers:
+      Rule: OR(aMSP.member, aMSP.peer, aMSP.admin, aMSP.client)
+      Type: Signature

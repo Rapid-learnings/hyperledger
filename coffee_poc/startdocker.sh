@@ -2,7 +2,9 @@
 # starting the docker process
 export FABRIC_CFG_PATH=${PWD}/config
 
-sudo docker-compose -f ./docker/docker-compose-all.yaml up -d
+cd docker
+sudo docker-compose -f docker-compose-all.yaml up -d
+cd ..
 
 # starting different organizattions shell & creating channels
 

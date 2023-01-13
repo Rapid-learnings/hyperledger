@@ -1,10 +1,11 @@
 // index.js
 'use strict';
 
-const mwcc = require('./mwcc')
+import { wrcc } from './wrcc'
+export { wrcc } from './wrcc'
 // const RemoveValues = require('./removevalues')
 // const PmCc = require('./mfcPrd')
 
 
 
-module.exports.contracts = [mwcc];
+export const contracts: any[] = [ wrcc ];
