@@ -126,7 +126,8 @@ export class MwccService {
       
           const contract = await network.getContract(chaincodeName);
       
-          await contract.submitTransaction("dry", args[0], args[1]);
+          let res = await contract.submitTransaction("dry", args[0], args[1]);
+          return res;
         } catch (err) {
           return err;
         } finally {
@@ -165,7 +166,8 @@ export class MwccService {
       
           const contract = await network.getContract(chaincodeName);
       
-          await contract.submitTransaction("roast", args[0], args[1]);
+          let res = await contract.submitTransaction("roast", args[0], args[1]);
+          return res;
         } catch (err) {
           return err;
         } finally {
@@ -204,7 +206,8 @@ export class MwccService {
       
           const contract = await network.getContract(chaincodeName);
       
-          await contract.submitTransaction("doQA", args[0], args[1]);
+          let res = await contract.submitTransaction("doQA", args[0], args[1]);
+          return res;
         } catch (err) {
           return err;
         } finally {
@@ -243,7 +246,8 @@ export class MwccService {
       
           const contract = await network.getContract(chaincodeName);
       
-          await contract.submitTransaction("package", args[0]);
+          let res = await contract.submitTransaction("package", args[0]);
+          return res;
         } catch (err) {
           return err;
         } finally {
@@ -282,7 +286,8 @@ export class MwccService {
       
           const contract = await network.getContract(chaincodeName);
       
-          await contract.submitTransaction("dispatch", args[0]);
+          let res = await contract.submitTransaction("dispatch", args[0]);
+          return res;
         } catch (err) {
           return err;
         } finally {
