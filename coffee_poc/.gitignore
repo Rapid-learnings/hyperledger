@@ -7,8 +7,10 @@ channel-artifacts/*.json
 # channel-artifacts/*.tx
 # channel-artifacts/*.block
 /chaincode/node_modules/*
+/chaincode-js/node_modules/*
 /*.tar.*
 /chaincode/package-lock.json
+/chaincode-js/package-lock.json
 /api/node_modules/*
 api/package-lock.json
 /api-ts/node_modules/*
@@ -22,6 +24,16 @@ api-ts/package-lock.json
 /chaincode/whs-rtlr/node_modules/*
 /chaincode/coffeeCC/node_modules/*
 /chaincode/fabcar/node_modules/*
+
+/chaincode-js/mfc-prdc/package-lock.json
+/chaincode-js/mfd-whs/package-lock.json
+/chaincode-js/whs-rtlr/package-lock.json
+/chaincode-js/mfc-prdc/node_modules/*
+/chaincode-js/mfd-whs/node_modules/*
+/chaincode-js/whs-rtlr/node_modules/*
+/chaincode-js/coffeeCC/node_modules/*
+/chaincode-js/fabcar/node_modules/*
+
 ../chaincode/fabcar/package-lock.json
 /chaincode/coffeeCC/*
 /fabric-ca-client/fabric-ca/*

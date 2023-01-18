@@ -1,0 +1,3 @@
+Installed chaincodes on peer:
+Package ID: mw_1:9d1990ec9d891747d7bec8037ca6848f7693363b47b92f434ce7ee83c7f3e247, Label: mw_1
+Package ID: basic_1:a71b90e9de99bf3cdf75af4e42d53c02b88e87ba1d226c3493594f7c2fbd6377, Label: basic_1
