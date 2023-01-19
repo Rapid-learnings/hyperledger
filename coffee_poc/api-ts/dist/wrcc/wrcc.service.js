@@ -28,32 +28,32 @@ let WrccService = class WrccService {
                 const ccp = await this.helperObj.getCCP(org_name);
                 const wallet = await this.getWallet(org_name);
                 const connectOptions = this.helperObj.getConnectionObject(wallet, username);
-                console.log("Connection Object = ", connectOptions);
+                console.log('Connection Object = ', connectOptions);
                 const gateway = new fabric_network_1.Gateway();
                 await gateway.connect(ccp, connectOptions);
-                const network = await gateway.getNetwork("whs-rtlr-channel");
-                const contract = await network.getContract("wrcc");
+                const network = await gateway.getNetwork('whs-rtlr-channel');
+                const contract = await network.getContract('wrcc');
                 let result;
                 let message;
                 switch (fcn) {
-                    case "returnWarehouseSTockAccordingTomwCC":
+                    case 'returnWarehouseSTockAccordingTomwCC':
                         result = await contract.evaluateTransaction(fcn);
                         result = result.toString();
                         break;
-                    case "getRetailerBalance":
+                    case 'getRetailerBalance':
                         result = await contract.evaluateTransaction(fcn);
                         result = JSON.parse(result);
                         console.log(result);
                         break;
-                    case "getRetailerStock":
+                    case 'getRetailerStock':
                         result = await contract.evaluateTransaction(fcn);
                         result = JSON.parse(result);
                         break;
-                    case "getWareHouseBalance":
+                    case 'getWareHouseBalance':
                         result = await contract.evaluateTransaction(fcn);
                         result = JSON.parse(result);
                         break;
-                    case "initialize":
+                    case 'initialize':
                         await contract.submitTransaction(fcn);
                         break;
                     default:
@@ -75,24 +75,24 @@ let WrccService = class WrccService {
                 let wallet = await this.getWallet(org_name);
                 const connectOptions = await this.helperObj.getConnectionObject(wallet, username);
                 await gateway.connect(ccp, connectOptions);
-                let network = await gateway.getNetwork("whs-rtlr-channel");
-                let contract = await network.getContract("wrcc");
+                let network = await gateway.getNetwork('whs-rtlr-channel');
+                let contract = await network.getContract('wrcc');
                 let result;
                 console.log(args);
-                let txId = await contract.submitTransaction("placeOrder", args[0], args[1], args[2]);
+                let txId = await contract.submitTransaction('placeOrder', args[0], args[1], args[2]);
                 const listener = async (event) => {
-                    if (event.eventName === "place-order") {
-                        const details = event.payload.toString("utf8");
-                        console.log("details = ", details);
+                    if (event.eventName === 'place-order') {
+                        const details = event.payload.toString('utf8');
+                        console.log('details = ', details);
                         event = JSON.parse(details);
-                        console.log("event = ", event);
+                        console.log('event = ', event);
                         result = event;
                     }
                 };
                 await contract.addContractListener(listener);
                 await gateway.disconnect();
-                console.log("result", result);
-                return { "result": result, "txId": txId };
+                console.log('result', result);
+                return { result: result, txId: txId };
             }
             catch (err) {
                 return err;
@@ -105,10 +105,10 @@ let WrccService = class WrccService {
                 let wallet = await this.getWallet(org_name);
                 const connectOptions = await this.helperObj.getConnectionObject(wallet, username);
                 await gateway.connect(ccp, connectOptions);
-                let network = await gateway.getNetwork("whs-rtlr-channel");
-                let contract = await network.getContract("wrcc");
+                let network = await gateway.getNetwork('whs-rtlr-channel');
+                let contract = await network.getContract('wrcc');
                 let result;
-                result = await contract.submitTransaction("updateStatusToInTransit", orderNumber);
+                result = await contract.submitTransaction('updateStatusToInTransit', orderNumber);
                 console.log(result);
                 await gateway.disconnect();
                 result = result.toString();
@@ -125,10 +125,10 @@ let WrccService = class WrccService {
                 let wallet = await this.getWallet(org_name);
                 const connectOptions = await this.helperObj.getConnectionObject(wallet, username);
                 await gateway.connect(ccp, connectOptions);
-                let network = await gateway.getNetwork("whs-rtlr-channel");
-                let contract = await network.getContract("wrcc");
+                let network = await gateway.getNetwork('whs-rtlr-channel');
+                let contract = await network.getContract('wrcc');
                 let result;
-                result = await contract.submitTransaction("updateStatusToDelivered", orderNumber);
+                result = await contract.submitTransaction('updateStatusToDelivered', orderNumber);
                 console.log(result);
                 await gateway.disconnect();
                 result = result.toString();
@@ -150,7 +150,7 @@ let WrccService = class WrccService {
                 let result = await chainCode.submitTransaction(fcn, orderNumber);
                 await gateway.disconnect();
                 result = result.toString();
-                console.log("Order Details = ", result);
+                console.log('Order Details = ', result);
                 return result;
             }
             catch (err) {

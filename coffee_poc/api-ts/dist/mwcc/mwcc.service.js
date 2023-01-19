@@ -34,40 +34,40 @@ let MwccService = class MwccService {
                     return;
                 }
                 const connectOptions = this.helperObj.getConnectionObject(wallet, username);
-                console.log("Connection Object = ", connectOptions);
-                console.log("connecting to gateway");
+                console.log('Connection Object = ', connectOptions);
+                console.log('connecting to gateway');
                 await gateway.connect(ccp, connectOptions);
-                console.log("connecting to network");
+                console.log('connecting to network');
                 const network = await gateway.getNetwork(channelName);
-                console.log("connecting to contract");
+                console.log('connecting to contract');
                 const contract = await network.getContract(chaincodeName);
                 let result;
                 switch (fcn) {
-                    case "returnRawStockAccordingToPMCC":
+                    case 'returnRawStockAccordingToPMCC':
                         result = await contract.evaluateTransaction(fcn);
                         result = result.toString();
                         break;
-                    case "availableDriedStock":
+                    case 'availableDriedStock':
                         result = await contract.evaluateTransaction(fcn);
                         result = result.toString();
                         break;
-                    case "availableRoastedStock":
+                    case 'availableRoastedStock':
                         result = await contract.evaluateTransaction(fcn);
                         result = result.toString();
                         break;
-                    case "availableFinishedStock":
+                    case 'availableFinishedStock':
                         result = await contract.evaluateTransaction(fcn);
                         result = result.toString();
                         break;
-                    case "getTotalPackages":
+                    case 'getTotalPackages':
                         result = await contract.evaluateTransaction(fcn);
                         result = result.toString();
                         break;
-                    case "getWastedStock":
+                    case 'getWastedStock':
                         result = await contract.evaluateTransaction(fcn);
                         result = result.toString();
                         break;
-                    case "initialize":
+                    case 'initialize':
                         await contract.submitTransaction(fcn);
                         break;
                     default:
@@ -80,7 +80,7 @@ let MwccService = class MwccService {
                 return error.message;
             }
             finally {
-                console.log("disconnecting gateway");
+                console.log('disconnecting gateway');
                 gateway.disconnect();
             }
         };
@@ -95,17 +95,18 @@ let MwccService = class MwccService {
                     return;
                 }
                 const connectOptions = this.helperObj.getConnectionObject(wallet, username);
-                console.log("Connection Object = ", connectOptions);
+                console.log('Connection Object = ', connectOptions);
                 await gateway.connect(ccp, connectOptions);
                 const network = await gateway.getNetwork(channelName);
                 const contract = await network.getContract(chaincodeName);
-                await contract.submitTransaction("dry", args[0], args[1]);
+                let res = await contract.submitTransaction('dry', args[0], args[1]);
+                return res;
             }
             catch (err) {
                 return err;
             }
             finally {
-                console.log("disconnecting gateway");
+                console.log('disconnecting gateway');
                 gateway.disconnect();
             }
         };
@@ -120,17 +121,18 @@ let MwccService = class MwccService {
                     return;
                 }
                 const connectOptions = this.helperObj.getConnectionObject(wallet, username);
-                console.log("Connection Object = ", connectOptions);
+                console.log('Connection Object = ', connectOptions);
                 await gateway.connect(ccp, connectOptions);
                 const network = await gateway.getNetwork(channelName);
                 const contract = await network.getContract(chaincodeName);
-                await contract.submitTransaction("roast", args[0], args[1]);
+                let res = await contract.submitTransaction('roast', args[0], args[1]);
+                return res;
             }
             catch (err) {
                 return err;
             }
             finally {
-                console.log("disconnecting gateway");
+                console.log('disconnecting gateway');
                 gateway.disconnect();
             }
         };
@@ -145,17 +147,18 @@ let MwccService = class MwccService {
                     return;
                 }
                 const connectOptions = this.helperObj.getConnectionObject(wallet, username);
-                console.log("Connection Object = ", connectOptions);
+                console.log('Connection Object = ', connectOptions);
                 await gateway.connect(ccp, connectOptions);
                 const network = await gateway.getNetwork(channelName);
                 const contract = await network.getContract(chaincodeName);
-                await contract.submitTransaction("doQA", args[0], args[1]);
+                let res = await contract.submitTransaction('doQA', args[0], args[1]);
+                return res;
             }
             catch (err) {
                 return err;
             }
             finally {
-                console.log("disconnecting gateway");
+                console.log('disconnecting gateway');
                 gateway.disconnect();
             }
         };
@@ -170,17 +173,18 @@ let MwccService = class MwccService {
                     return;
                 }
                 const connectOptions = this.helperObj.getConnectionObject(wallet, username);
-                console.log("Connection Object = ", connectOptions);
+                console.log('Connection Object = ', connectOptions);
                 await gateway.connect(ccp, connectOptions);
                 const network = await gateway.getNetwork(channelName);
                 const contract = await network.getContract(chaincodeName);
-                await contract.submitTransaction("package", args[0]);
+                let res = await contract.submitTransaction('package', args[0]);
+                return res;
             }
             catch (err) {
                 return err;
             }
             finally {
-                console.log("disconnecting gateway");
+                console.log('disconnecting gateway');
                 gateway.disconnect();
             }
         };
@@ -195,17 +199,18 @@ let MwccService = class MwccService {
                     return;
                 }
                 const connectOptions = this.helperObj.getConnectionObject(wallet, username);
-                console.log("Connection Object = ", connectOptions);
+                console.log('Connection Object = ', connectOptions);
                 await gateway.connect(ccp, connectOptions);
                 const network = await gateway.getNetwork(channelName);
                 const contract = await network.getContract(chaincodeName);
-                await contract.submitTransaction("dispatch", args[0]);
+                let res = await contract.submitTransaction('dispatch', args[0]);
+                return res;
             }
             catch (err) {
                 return err;
             }
             finally {
-                console.log("disconnecting gateway");
+                console.log('disconnecting gateway');
                 gateway.disconnect();
             }
         };

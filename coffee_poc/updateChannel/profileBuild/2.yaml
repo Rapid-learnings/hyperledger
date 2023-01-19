@@ -1,39 +1,41 @@
-Organizations:
-- AnchorPeers:
-    Host: bb
-    Port: 22
-  ID: bMSP
-  MSPDir: ../crypto-config/peerOrganizations/gov.io/msp
-  Name: governance
-  Policies:
-    Admins:
-      Rule: OR(bMSP.admin)
-      Type: Signature
-    Endorsement:
-      Rule: OR(bMSP.peer, bMSP.admin)
-      Type: Signature
-    Readers:
-      Rule: OR(bMSP.member, bMSP.peer, bMSP.admin, bMSP.client)
-      Type: Signature
-    Writers:
-      Rule: OR(bMSP.member, bMSP.peer, bMSP.admin, bMSP.client)
-      Type: Signature
-- AnchorPeers:
-    Host: aa
-    Port: 11
-  ID: aMSP
-  MSPDir: ../crypto-config/peerOrganizations/gov.io/msp
-  Name: governance
-  Policies:
-    Admins:
-      Rule: OR(aMSP.admin)
-      Type: Signature
-    Endorsement:
-      Rule: OR(aMSP.peer, aMSP.admin)
-      Type: Signature
-    Readers:
-      Rule: OR(aMSP.member, aMSP.peer, aMSP.admin, aMSP.client)
-      Type: Signature
-    Writers:
-      Rule: OR(aMSP.member, aMSP.peer, aMSP.admin, aMSP.client)
-      Type: Signature
+Profile:
+  Application:
+    Organizations:
+      - Name: bigbazar
+        ID: bigbazarMSP
+        MSPDir: ../crypto-config/peerOrganizations/retailer.com/msp
+        Policies:
+          Readers:
+            Type: Signature
+            Rule: "OR(bigbazarMSP.member, bigbazarMSP.peer, bigbazarMSP.admin, bigbazarMSP.client)"
+          Writers:
+            Type: Signature
+            Rule: "OR(bigbazarMSP.member, bigbazarMSP.peer, bigbazarMSP.admin, bigbazarMSP.client)"
+          Admins:
+            Type: Signature
+            Rule: "OR(bigbazarMSP.admin)"
+          Endorsement:
+            Type: Signature
+            Rule: "OR(bigbazarMSP.peer, bigbazarMSP.admin)"
+        AnchorPeers:
+          Host: peerbb1.retailer.com
+          Port: 11051
+      - Name: tata
+        ID: tataMSP
+        MSPDir: ../crypto-config/peerOrganizations/manufacturer.com/msp
+        Policies:
+          Readers:
+            Type: Signature
+            Rule: "OR(tataMSP.member, tataMSP.peer, tataMSP.admin, tataMSP.client)"
+          Writers:
+            Type: Signature
+            Rule: "OR(tataMSP.member, tataMSP.peer, tataMSP.admin, tataMSP.client)"
+          Admins:
+            Type: Signature
+            Rule: "OR(tataMSP.admin)"
+          Endorsement:
+            Type: Signature
+            Rule: "OR(tataMSP.peer, tataMSP.admin)"
+        AnchorPeers:
+          Host: peertm1.manufacturer.com
+          Port: 9051

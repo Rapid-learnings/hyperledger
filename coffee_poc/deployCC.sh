@@ -29,6 +29,7 @@ mfdPrdCC(){
     cd ./chaincode/mfc-prdc
     npm install
     npm run build
+    cd ../..
 
     echo "********** Packaging CC for Manufacture-Production-Channel ********************"
     # sudo docker exec -it cli-manufacturer-1 peer lifecycle chaincode package basic.tar.gz --path /opt/gopath/src/github.com/hyperledger/fabric/peer/chaincode/mfc-prdc --lang node --label basic_1.0
@@ -54,6 +55,12 @@ mfdPrdCC(){
 }
 
 mfdWhsCC(){
+    echo '********** installing and building typescript chaincode *************'
+    cd ./chaincode/mfd-whs
+    npm install
+    npm run build
+    cd ../..
+
     echo "********** Packaging CC for Manufacture-warehouse-Channel ********************"
     # sudo docker exec -it cli-manufacturer-1 peer lifecycle chaincode package basic.tar.gz --path /opt/gopath/src/github.com/hyperledger/fabric/peer/chaincode/mfc-prdc --lang node --label basic_1.0
     sudo docker exec -it cli-manufacturer-1 peer lifecycle chaincode package mwcc.tar.gz --path /opt/gopath/src/github.com/hyperledger/fabric/peer/chaincode/mfd-whs --lang node --label mw_${VERSION}
@@ -78,6 +85,12 @@ mfdWhsCC(){
 }
 
 whsRtlrCC(){
+    echo '********** installing and building typescript chaincode *************'
+    cd ./chaincode/whs-rtlr
+    npm install
+    npm run build
+    cd ../..
+
     echo "********** Packaging CC for Retailer-warehouse-Channel ********************"
     # sudo docker exec -it cli-manufacturer-1 peer lifecycle chaincode package basic.tar.gz --path /opt/gopath/src/github.com/hyperledger/fabric/peer/chaincode/mfc-prdc --lang node --label basic_1.0
     sudo docker exec -it cli-warehouse-1 peer lifecycle chaincode package wrcc.tar.gz --path /opt/gopath/src/github.com/hyperledger/fabric/peer/chaincode/whs-rtlr --lang node --label wr_${VERSION}

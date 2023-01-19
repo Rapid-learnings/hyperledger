@@ -3,96 +3,91 @@
 echo 'Enter number of orgs for channel'
 read NUM
 
-mkdir ${PWD}/profileBuild
+mkdir -p ${PWD}/profileBuild
 
 echo '
-Capabilities:
-    Channel: &ChannelCapabilities
-        V2_0: true
+Profile:
+    Consortium: SampleConsortium
+    Channel: 
+        Policies:
+            Readers:
+                Type: ImplicitMeta
+                Rule: "ANY Readers"
+            Writers:
+                Type: ImplicitMeta
+                Rule: "ANY Writers"
+            Admins:
+                Type: ImplicitMeta
+                Rule: "MAJORITY Admins"
 
-    Orderer: &OrdererCapabilities
-        V2_0: true
+        Capabilities:
+            Channel: 
+                V2_0: true
+    Application: 
+        ACLs:
+            
+            _lifecycle/CheckCommitReadiness: /Channel/Application/Writers
 
-    Application: &ApplicationCapabilities
-        V2_0: true
+            _lifecycle/CommitChaincodeDefinition: /Channel/Application/Writers
 
-Channel: &ChannelDefaults
-    Policies:
-        Readers:
-            Type: ImplicitMeta
-            Rule: "ANY Readers"
-        Writers:
-            Type: ImplicitMeta
-            Rule: "ANY Writers"
-        Admins:
-            Type: ImplicitMeta
-            Rule: "MAJORITY Admins"
+            _lifecycle/QueryChaincodeDefinition: /Channel/Application/Writers
 
-    Capabilities:
-        <<: *ChannelCapabilities
+            _lifecycle/QueryChaincodeDefinitions: /Channel/Application/Writers
 
-Application: &ApplicationDefaults
-    ACLs: &ACLsDefault
-        _lifecycle/CheckCommitReadiness: /Channel/Application/Writers
+            lscc/ChaincodeExists: /Channel/Application/Readers
 
-        _lifecycle/CommitChaincodeDefinition: /Channel/Application/Writers
+            lscc/GetDeploymentSpec: /Channel/Application/Readers
 
-        _lifecycle/QueryChaincodeDefinition: /Channel/Application/Writers
+            lscc/GetChaincodeData: /Channel/Application/Readers
 
-        _lifecycle/QueryChaincodeDefinitions: /Channel/Application/Writers
+            lscc/GetInstantiatedChaincodes: /Channel/Application/Readers
 
-        lscc/ChaincodeExists: /Channel/Application/Readers
+            qscc/GetChainInfo: /Channel/Application/Readers
 
-        lscc/GetDeploymentSpec: /Channel/Application/Readers
+            qscc/GetBlockByNumber: /Channel/Application/Readers
 
-        lscc/GetChaincodeData: /Channel/Application/Readers
+            qscc/GetBlockByHash: /Channel/Application/Readers
 
-        lscc/GetInstantiatedChaincodes: /Channel/Application/Readers
+            qscc/GetTransactionByID: /Channel/Application/Readers
 
-        qscc/GetChainInfo: /Channel/Application/Readers
+            qscc/GetBlockByTxID: /Channel/Application/Readers
 
-        qscc/GetBlockByNumber: /Channel/Application/Readers
+            cscc/GetConfigBlock: /Channel/Application/Readers
 
-        qscc/GetBlockByHash: /Channel/Application/Readers
+            cscc/GetChannelConfig: /Channel/Application/Readers
 
-        qscc/GetTransactionByID: /Channel/Application/Readers
+            peer/Propose: /Channel/Application/Writers
 
-        qscc/GetBlockByTxID: /Channel/Application/Readers
+            peer/ChaincodeToChaincode: /Channel/Application/Writers
 
-        cscc/GetConfigBlock: /Channel/Application/Readers
+            event/Block: /Channel/Application/Readers
 
-        cscc/GetChannelConfig: /Channel/Application/Readers
+            event/FilteredBlock: /Channel/Application/Readers
 
-        peer/Propose: /Channel/Application/Writers
+        Organizations:
 
-        peer/ChaincodeToChaincode: /Channel/Application/Writers
+        Policies: 
+            LifecycleEndorsement:
+                Type: ImplicitMeta
+                Rule: "MAJORITY Endorsement"
+            Endorsement:
+                Type: ImplicitMeta
+                Rule: "MAJORITY Endorsement"
+            Readers:
+                Type: ImplicitMeta
+                Rule: "ANY Readers"
+            Writers:
+                Type: ImplicitMeta
+                Rule: "ANY Writers"
+            Admins:
+                Type: ImplicitMeta
+                Rule: "MAJORITY Admins"
 
-        event/Block: /Channel/Application/Readers
+        Capabilities:
+                    Application:
+                        V2_0: true
 
-        event/FilteredBlock: /Channel/Application/Readers
-
-    Organizations:
-
-    Policies: &ApplicationDefaultPolicies
-        LifecycleEndorsement:
-            Type: ImplicitMeta
-            Rule: "MAJORITY Endorsement"
-        Endorsement:
-            Type: ImplicitMeta
-            Rule: "MAJORITY Endorsement"
-        Readers:
-            Type: ImplicitMeta
-            Rule: "ANY Readers"
-        Writers:
-            Type: ImplicitMeta
-            Rule: "ANY Writers"
-        Admins:
-            Type: ImplicitMeta
-            Rule: "MAJORITY Admins"
-
-    Capabilities:
-        <<: *ApplicationCapabilities
-' >${PWD}/profileBuild/default-config.yaml
+' >${PWD}/profileBuild/new-config.yaml
 
 
 i=1
@@ -104,27 +99,31 @@ do
     read ID
     echo 'Enter anchor peer port'
     read PORT
+    echo 'Enter org level'
+    read LEVEL
     echo '
-Organizations: &OrganizationsList
-    -   Name: governance
-        ID: '${ORG}'MSP
-        MSPDir: ../crypto-config/peerOrganizations/gov.io/msp
-        Policies:
-            Readers:
-                Type: Signature
-                Rule: "OR('${ORG}MSP.member', '${ORG}MSP.peer', '${ORG}MSP.admin', '${ORG}MSP.client')"
-            Writers:
-                Type: Signature
-                Rule: "OR('${ORG}MSP.member', '${ORG}MSP.peer', '${ORG}MSP.admin', '${ORG}MSP.client')"
-            Admins:
-                Type: Signature
-                Rule: "OR('${ORG}MSP.admin')"
-            Endorsement:
-                Type: Signature
-                Rule: "OR('${ORG}MSP.peer', '${ORG}MSP.admin')"
-        AnchorPeers:
-            Host: '$ID'
-            Port: '$PORT'
+Profile:
+    Application:
+        Organizations: 
+            -   Name: '${ORG}'
+                ID: '${ORG}'MSP
+                MSPDir: ../crypto-config/peerOrganizations/'${LEVEL}'.com/msp
+                Policies:
+                    Readers:
+                        Type: Signature
+                        Rule: "OR('${ORG}MSP.member', '${ORG}MSP.peer', '${ORG}MSP.admin', '${ORG}MSP.client')"
+                    Writers:
+                        Type: Signature
+                        Rule: "OR('${ORG}MSP.member', '${ORG}MSP.peer', '${ORG}MSP.admin', '${ORG}MSP.client')"
+                    Admins:
+                        Type: Signature
+                        Rule: "OR('${ORG}MSP.admin')"
+                    Endorsement:
+                        Type: Signature
+                        Rule: "OR('${ORG}MSP.peer', '${ORG}MSP.admin')"
+                AnchorPeers:
+                    Host: '$ID'
+                    Port: '$PORT'
 ' >${PWD}/profileBuild/$i.yaml
 
     i=$((i+1))
@@ -133,21 +132,110 @@ done
 j=1
 while [ $j -lt $NUM ]
 do
-    k=$((j+1))
-    yq merge -a -i -v ${PWD}/profileBuild/$k.yaml ${PWD}/profileBuild/$j.yaml 
+    yq merge -i -a=append ${PWD}/profileBuild/$((j+1)).yaml ${PWD}/profileBuild/$j.yaml 
     j=$((j+1))
 done
 
-yq m -ai ${PWD}/profileBuild/j.yaml ${PWD}/profileBuild/default-config.yaml
+yq m -i ${PWD}/profileBuild/new-config.yaml ${PWD}/profileBuild/$j.yaml
 
-yq 
 
-    # Profiles:
-    #     CoffeeChannelProfile:
-    #         Consortium: SampleConsortium
-    #         <<: *ChannelDefaults
-    #         Application:
-    #             <<: *ApplicationDefaults
-    #             <<: *OrganizationsList
-    #             Capabilities:
-    #                 <<: *ApplicationCapabilities
+
+# customGeneratedProfile:
+#     Consortium: SampleConsortium
+#     Channel: 
+#         Policies:
+#             Readers:
+#                 Type: ImplicitMeta
+#                 Rule: "ANY Readers"
+#             Writers:
+#                 Type: ImplicitMeta
+#                 Rule: "ANY Writers"
+#             Admins:
+#                 Type: ImplicitMeta
+#                 Rule: "MAJORITY Admins"
+
+#         Capabilities:
+#             Channel: 
+#                 V2_0: true
+#     Application: 
+#         ACLs:
+
+#             _lifecycle/CheckCommitReadiness: /Channel/Application/Writers
+
+#             _lifecycle/CommitChaincodeDefinition: /Channel/Application/Writers
+
+#             _lifecycle/QueryChaincodeDefinition: /Channel/Application/Writers
+
+#             _lifecycle/QueryChaincodeDefinitions: /Channel/Application/Writers
+
+#             lscc/ChaincodeExists: /Channel/Application/Readers
+
+#             lscc/GetDeploymentSpec: /Channel/Application/Readers
+
+#             lscc/GetChaincodeData: /Channel/Application/Readers
+
+#             lscc/GetInstantiatedChaincodes: /Channel/Application/Readers
+
+#             qscc/GetChainInfo: /Channel/Application/Readers
+
+#             qscc/GetBlockByNumber: /Channel/Application/Readers
+
+#             qscc/GetBlockByHash: /Channel/Application/Readers
+
+#             qscc/GetTransactionByID: /Channel/Application/Readers
+
+#             qscc/GetBlockByTxID: /Channel/Application/Readers
+
+#             cscc/GetConfigBlock: /Channel/Application/Readers
+
+#             cscc/GetChannelConfig: /Channel/Application/Readers
+
+#             peer/Propose: /Channel/Application/Writers
+
+#             peer/ChaincodeToChaincode: /Channel/Application/Writers
+
+#             event/Block: /Channel/Application/Readers
+
+#             event/FilteredBlock: /Channel/Application/Readers
+
+#         Organizations:
+#             -
+
+#         Policies: 
+#             LifecycleEndorsement:
+#                 Type: ImplicitMeta
+#                 Rule: "MAJORITY Endorsement"
+#             Endorsement:
+#                 Type: ImplicitMeta
+#                 Rule: "MAJORITY Endorsement"
+#             Readers:
+#                 Type: ImplicitMeta
+#                 Rule: "ANY Readers"
+#             Writers:
+#                 Type: ImplicitMeta
+#                 Rule: "ANY Writers"
+#             Admins:
+#                 Type: ImplicitMeta
+#                 Rule: "MAJORITY Admins"
+
+#         Capabilities:
+#                     Application:
+#                         V2_0: true
+
+# //
+# //
+# //
+# ///
+
+# CoffeeChannelProfile:
+#         Consortium: SampleConsortium
+#         <<: *ChannelDefaults
+#         Application:
+#             <<: *ApplicationDefaults
+#             Organizations:
+#                 - *teafarm
+#                 - *tata
+#                 - *tatastore
+#                 - *bigbazar
+#             Capabilities:
+#                 <<: *ApplicationCapabilities

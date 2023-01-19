@@ -1,22 +1,24 @@
 
-Organizations: &OrganizationsList
-    -   Name: governance
-        ID: aMSP
-        MSPDir: ../crypto-config/peerOrganizations/gov.io/msp
-        Policies:
-            Readers:
-                Type: Signature
-                Rule: "OR(aMSP.member, aMSP.peer, aMSP.admin, aMSP.client)"
-            Writers:
-                Type: Signature
-                Rule: "OR(aMSP.member, aMSP.peer, aMSP.admin, aMSP.client)"
-            Admins:
-                Type: Signature
-                Rule: "OR(aMSP.admin)"
-            Endorsement:
-                Type: Signature
-                Rule: "OR(aMSP.peer, aMSP.admin)"
-        AnchorPeers:
-            Host: aa
-            Port: 11
+Profile:
+    Application:
+        Organizations: 
+            -   Name: tata
+                ID: tataMSP
+                MSPDir: ../crypto-config/peerOrganizations/manufacturer.com/msp
+                Policies:
+                    Readers:
+                        Type: Signature
+                        Rule: "OR(tataMSP.member, tataMSP.peer, tataMSP.admin, tataMSP.client)"
+                    Writers:
+                        Type: Signature
+                        Rule: "OR(tataMSP.member, tataMSP.peer, tataMSP.admin, tataMSP.client)"
+                    Admins:
+                        Type: Signature
+                        Rule: "OR(tataMSP.admin)"
+                    Endorsement:
+                        Type: Signature
+                        Rule: "OR(tataMSP.peer, tataMSP.admin)"
+                AnchorPeers:
+                    Host: peertm1.manufacturer.com
+                    Port: 9051
 

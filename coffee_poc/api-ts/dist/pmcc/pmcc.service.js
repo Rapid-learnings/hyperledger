@@ -28,7 +28,7 @@ let PmccService = class PmccService {
                 const ccp = await this.helperObj.getCCP(org_name);
                 const wallet = await this.getWallet(org_name);
                 const connectOptions = this.helperObj.getConnectionObject(wallet, username);
-                console.log("Connection Object = ", connectOptions);
+                console.log('Connection Object = ', connectOptions);
                 const gateway = new fabric_network_1.Gateway();
                 await gateway.connect(ccp, connectOptions);
                 const network = await gateway.getNetwork(channelName);
@@ -36,21 +36,21 @@ let PmccService = class PmccService {
                 let result;
                 let message;
                 switch (fcn) {
-                    case "availableStock":
+                    case 'availableStock':
                         result = await contract.evaluateTransaction(fcn);
                         result = result.toString();
                         break;
-                    case "getManufacturerStock":
+                    case 'getManufacturerStock':
                         result = await contract.evaluateTransaction(fcn);
                         result = JSON.parse(result);
                         console.log(result);
                         break;
-                    case "getManufacturerFunds":
+                    case 'getManufacturerFunds':
                         result = await contract.evaluateTransaction(fcn);
                         result = JSON.parse(result);
                         break;
-                    case "init":
-                        await contract.submitTransaction(fcn, "10000");
+                    case 'init':
+                        await contract.submitTransaction(fcn, '10000');
                         break;
                     default:
                         break;
@@ -71,24 +71,24 @@ let PmccService = class PmccService {
                 let wallet = await this.getWallet(org_name);
                 const connectOptions = await this.helperObj.getConnectionObject(wallet, username);
                 await gateway.connect(ccp, connectOptions);
-                let network = await gateway.getNetwork("mfd-prd-channel");
-                let contract = await network.getContract("pmcc");
+                let network = await gateway.getNetwork('mfd-prd-channel');
+                let contract = await network.getContract('pmcc');
                 let result;
                 console.log(args[0], args[1]);
-                result = await contract.submitTransaction("placeOrder", args[0], args[1], args[2]);
+                result = await contract.submitTransaction('placeOrder', args[0], args[1], args[2]);
                 console.log(result);
                 const listener = async (event) => {
-                    if (event.eventName === "placeOrder") {
-                        const details = event.payload.toString("utf8");
+                    if (event.eventName === 'placeOrder') {
+                        const details = event.payload.toString('utf8');
                         event = JSON.parse(details);
-                        console.log("************************ Start placeOrder Event **********************************");
+                        console.log('************************ Start placeOrder Event **********************************');
                         console.log(`order number: ${JSON.parse(result.toString())}`);
                         console.log(`amount: ${event.amount}`);
                         console.log(`quantity: ${event.quantity}`);
                         console.log(`status: ${event.orderStatus}`);
                         console.log(`country: ${event.country}`);
                         console.log(`state: ${event.state}`);
-                        console.log("************************ End placeOrder Event ************************************");
+                        console.log('************************ End placeOrder Event ************************************');
                     }
                 };
                 await contract.addContractListener(listener);
@@ -112,7 +112,7 @@ let PmccService = class PmccService {
                 let result = await chainCode.submitTransaction(fcn, orderNumber);
                 await gateway.disconnect();
                 result = result.toString();
-                console.log("Order Details = ", result);
+                console.log('Order Details = ', result);
                 return result;
             }
             catch (err) {
@@ -131,7 +131,7 @@ let PmccService = class PmccService {
                 let result = await chainCode.submitTransaction(fcn, orderNumber);
                 await gateway.disconnect();
                 result = result.toString();
-                console.log("Order Details = ", result);
+                console.log('Order Details = ', result);
                 return result;
             }
             catch (err) {
@@ -150,7 +150,7 @@ let PmccService = class PmccService {
                 let result = await chainCode.submitTransaction(fcn, orderNumber);
                 await gateway.disconnect();
                 result = result.toString();
-                console.log("Order Details = ", result);
+                console.log('Order Details = ', result);
                 return result;
             }
             catch (err) {
