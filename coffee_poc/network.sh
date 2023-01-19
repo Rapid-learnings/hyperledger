@@ -34,7 +34,7 @@ createChannels(){
     echo "*==================Creating Channel for Manufacturer & Production=================*"
     configtxgen -profile ManufacturerProductionProfile -outputCreateChannelTx ./channel-artifacts/mfd-prd-channel.tx -channelID mfd-prd-channel
 
-    configtxgen -profile CProfile -outputCreateChannelTx ./channel-artifacts/c-channel.tx -channelID c-channel
+    # configtxgen -profile newProfile -outputCreateChannelTx ./channel-artifacts/new-channel.tx -channelID new-channel
 
     sleep 2
 

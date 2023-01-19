@@ -22,7 +22,7 @@
     "peertf1.production.com": {
       "url": "grpcs://localhost:8051",
       "tlsCACerts": {
-        "path": "/home/ubuntu/pankajb/hyperledger/coffee_poc/crypto-config/peerOrganizations/production.com/peers/peertf1.production.com/msp/tlscacerts/tlsca.production.com-cert.pem"
+        "path": "/home/ubuntu/hyperledger/coffee_poc/crypto-config/peerOrganizations/production.com/peers/peertf1.production.com/msp/tlscacerts/tlsca.production.com-cert.pem"
       },
       "grpcOptions": {
         "ssl-target-name-override": "peertf1.production.com",
@@ -35,7 +35,7 @@
       "url": "https://localhost:2052",
       "caName": "ca.production.com",
       "tlsCACerts": {
-        "path": "/home/ubuntu/pankajb/hyperledger/coffee_poc/crypto-config/peerOrganizations/production.com/ca/ca.production.com-cert.pem"
+        "path": "/home/ubuntu/hyperledger/coffee_poc/crypto-config/peerOrganizations/production.com/ca/ca.production.com-cert.pem"
       },
       "httpOptions": {
         "verify": false

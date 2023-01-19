@@ -257,19 +257,23 @@ InstantiateCCMfdPrd(){
     sleep 8
 }
 
-
+# pmcc
 mfdPrdCC
-# mfdWhsCC
-# whsRtlrCC
 ApproveCCMfdPrd
-# ApproveCCMfdWhs
-# ApproveCCWhsRtlr
 CheckCommitMfdPrd
-# CheckCommitMfdWhs
-# CheckCommitWhsRtlr
 CommitCCMfdPrd
-# CommitCCMfdWhs
-# CommitCCWhsRtlr
+
+# mwcc
+mfdWhsCC
+ApproveCCMfdWhs
+CheckCommitMfdWhs
+CommitCCMfdWhs
+
+# wrcc
+whsRtlrCC
+ApproveCCWhsRtlr
+CheckCommitWhsRtlr
+CommitCCWhsRtlr
 # InstantiateCCMfdPrd
 
 # fabcarCC

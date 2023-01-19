@@ -1,20 +1,18 @@
 Profiles:
-  CProfile:
+  newProfile:
     Consortium: SampleConsortium
-    Channel:
-      Policies:
-        Readers:
-          Type: ImplicitMeta
-          Rule: "ANY Readers"
-        Writers:
-          Type: ImplicitMeta
-          Rule: "ANY Writers"
-        Admins:
-          Type: ImplicitMeta
-          Rule: "MAJORITY Admins"
-      Capabilities:
-        Channel:
-          V2_0: true
+    Policies:
+      Readers:
+        Type: ImplicitMeta
+        Rule: "ANY Readers"
+      Writers:
+        Type: ImplicitMeta
+        Rule: "ANY Writers"
+      Admins:
+        Type: ImplicitMeta
+        Rule: "MAJORITY Admins"
+    Capabilities:
+      V2_0: true
     Application:
       ACLs:
         _lifecycle/CheckCommitReadiness: /Channel/Application/Writers
@@ -39,39 +37,39 @@ Profiles:
       Organizations:
         - Name: bigbazar
           ID: bigbazarMSP
-          MSPDir: ../crypto-config/peerOrganizations/retailer.com/msp
+          MSPDir: /home/ubuntu/hyperledger/coffee_poc/crypto-config/peerOrganizations/retailer.com/msp
           Policies:
             Readers:
               Type: Signature
-              Rule: "OR(bigbazarMSP.member, bigbazarMSP.peer, bigbazarMSP.admin, bigbazarMSP.client)"
+              Rule: "OR('bigbazarMSP.member', 'bigbazarMSP.peer', 'bigbazarMSP.admin', 'bigbazarMSP.client')"
             Writers:
               Type: Signature
-              Rule: "OR(bigbazarMSP.member, bigbazarMSP.peer, bigbazarMSP.admin, bigbazarMSP.client)"
+              Rule: "OR('bigbazarMSP.member', 'bigbazarMSP.peer', 'bigbazarMSP.admin', 'bigbazarMSP.client')"
             Admins:
               Type: Signature
-              Rule: "OR(bigbazarMSP.admin)"
+              Rule: "OR('bigbazarMSP.admin')"
             Endorsement:
               Type: Signature
-              Rule: "OR(bigbazarMSP.peer, bigbazarMSP.admin)"
+              Rule: "OR('bigbazarMSP.peer', 'bigbazarMSP.admin')"
           AnchorPeers:
             Host: peerbb1.retailer.com
             Port: 11051
         - Name: tata
           ID: tataMSP
-          MSPDir: ../crypto-config/peerOrganizations/manufacturer.com/msp
+          MSPDir: /home/ubuntu/hyperledger/coffee_poc/crypto-config/peerOrganizations/manufacturer.com/msp
           Policies:
             Readers:
               Type: Signature
-              Rule: "OR(tataMSP.member, tataMSP.peer, tataMSP.admin, tataMSP.client)"
+              Rule: "OR('tataMSP.member', 'tataMSP.peer', 'tataMSP.admin', 'tataMSP.client')"
             Writers:
               Type: Signature
-              Rule: "OR(tataMSP.member, tataMSP.peer, tataMSP.admin, tataMSP.client)"
+              Rule: "OR('tataMSP.member', 'tataMSP.peer', 'tataMSP.admin', 'tataMSP.client')"
             Admins:
               Type: Signature
-              Rule: "OR(tataMSP.admin)"
+              Rule: "OR('tataMSP.admin')"
             Endorsement:
               Type: Signature
-              Rule: "OR(tataMSP.peer, tataMSP.admin)"
+              Rule: "OR('tataMSP.peer', 'tataMSP.admin')"
           AnchorPeers:
             Host: peertm1.manufacturer.com
             Port: 9051
@@ -92,5 +90,4 @@ Profiles:
           Type: ImplicitMeta
           Rule: "MAJORITY Admins"
       Capabilities:
-        Application:
-          V2_0: true
+        V2_0: true

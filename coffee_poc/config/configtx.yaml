@@ -580,14 +580,3 @@ Profiles:
                 - *bigbazar
             Capabilities:
                 <<: *ApplicationCapabilities
-
-    someProfile:
-        Consortium: SampleConsortium
-        <<: *ChannelDefaults
-        Application:
-            <<: *ApplicationDefaults
-            Organizations:
-                - *tata
-                - *bigbazar
-            Capabilities:
-                <<: *ApplicationCapabilities

@@ -23,7 +23,7 @@
         "ssl-target-name-override": "orderer1.gov.io"
       },
       "tlsCACerts": {
-        "path": "/home/ubuntu/pankajb/hyperledger/coffee_poc/crypto-config/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem"
+        "path": "/home/ubuntu/hyperledger/coffee_poc/crypto-config/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem"
       }
     }
   },
@@ -35,7 +35,7 @@
         "request-timeout": 300000
       },
       "tlsCACerts": {
-        "path": "/home/ubuntu/pankajb/hyperledger/coffee_poc/crypto-config/peerOrganizations/warehouse.com/peers/peerts1.warehouse.com/msp/tlscacerts/tlsca.warehouse.com-cert.pem"
+        "path": "/home/ubuntu/hyperledger/coffee_poc/crypto-config/peerOrganizations/warehouse.com/peers/peerts1.warehouse.com/msp/tlscacerts/tlsca.warehouse.com-cert.pem"
       }
     },
     "peerbb1.retailer.com": {
@@ -45,7 +45,7 @@
         "request-timeout": 300000
       },
       "tlsCACerts": {
-        "path": "/home/ubuntu/pankajb/hyperledger/coffee_poc/crypto-config/peerOrganizations/retailer.com/peers/peerbb1.retailer.com/msp/tlscacerts/tlsca.retailer.com-cert.pem"
+        "path": "/home/ubuntu/hyperledger/coffee_poc/crypto-config/peerOrganizations/retailer.com/peers/peerbb1.retailer.com/msp/tlscacerts/tlsca.retailer.com-cert.pem"
       }
     }
   },
@@ -54,7 +54,7 @@
       "url": "https://localhost:2050",
       "caName": "ca_orderer",
       "tlsCAcerts": {
-        "path": "/home/ubuntu/pankajb/hyperledger/coffee_poc/crypto-config/ordererOrganizations/gov.io/msp/cacerts/localhost-2050-ca-orderer.pem"
+        "path": "/home/ubuntu/hyperledger/coffee_poc/crypto-config/ordererOrganizations/gov.io/msp/cacerts/localhost-2050-ca-orderer.pem"
       },
       "httpOptions": {
         "verify": false
@@ -64,7 +64,7 @@
       "url": "https://localhost:2053",
       "caName": "ca.warehouse.com",
       "tlsCAcerts": {
-        "path": "/home/ubuntu/pankajb/hyperledger/coffee_poc/crypto-config/peerOrganizations/warehouse.com/ca/ca.warehouse.com-cert.pem"
+        "path": "/home/ubuntu/hyperledger/coffee_poc/crypto-config/peerOrganizations/warehouse.com/ca/ca.warehouse.com-cert.pem"
       },
       "httpOptions": {
         "verify": false
@@ -74,7 +74,7 @@
       "url": "https://localhost:2054",
       "caName": "ca.retailer.com",
       "tlsCAcerts": {
-        "path": "/home/ubuntu/pankajb/hyperledger/coffee_poc/crypto-config/peerOrganizations/retailer.com/ca/ca.retailer.com-cert.pem"
+        "path": "/home/ubuntu/hyperledger/coffee_poc/crypto-config/peerOrganizations/retailer.com/ca/ca.retailer.com-cert.pem"
       },
       "httpOptions": {
         "verify": false

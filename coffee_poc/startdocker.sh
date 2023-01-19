@@ -1,3 +1,4 @@
+ peer channel join -b /opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts/mfd-prd-genesis.block
 #!/bin/sh
 # starting the docker process
 export FABRIC_CFG_PATH=${PWD}/config
