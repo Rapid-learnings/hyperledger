@@ -1,0 +1,25 @@
+
+Profiles:
+    newProfile:
+        Application:
+            Organizations: 
+                -   Name: tata
+                    ID: tataMSP
+                    MSPDir: /home/ubuntu/hyperledger/coffee_poc/crypto-config/peerOrganizations/manufacturer.com/msp
+                    Policies:
+                        Readers:
+                            Type: Signature
+                            Rule: "OR('tataMSP.member', 'tataMSP.peer', 'tataMSP.admin', 'tataMSP.client')"
+                        Writers:
+                            Type: Signature
+                            Rule: "OR('tataMSP.member', 'tataMSP.peer', 'tataMSP.admin', 'tataMSP.client')"
+                        Admins:
+                            Type: Signature
+                            Rule: "OR('tataMSP.admin')"
+                        Endorsement:
+                            Type: Signature
+                            Rule: "OR('tataMSP.peer', 'tataMSP.admin')"
+                    AnchorPeers:
+                        Host: peertm1.manufacturer.com
+                        Port: 9051
+

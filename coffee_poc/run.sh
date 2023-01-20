@@ -3,13 +3,13 @@
 # export COMPOSE_PROJECT_NAME=coffee
 # echo $COMPOSE_PROJECT_NAME
 
-./network.sh
+# ./network.sh
 
-sleep 5
+# sleep 5
 
-./startdocker.sh
+# ./startdocker.sh
 
-sleep 5
+# sleep 5
 
 ./deployCC.sh
 

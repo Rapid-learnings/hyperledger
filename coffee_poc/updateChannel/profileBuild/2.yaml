@@ -1,0 +1,42 @@
+Profiles:
+  newProfile:
+    Application:
+      Organizations:
+        - Name: bigbazar
+          ID: bigbazarMSP
+          MSPDir: /home/ubuntu/hyperledger/coffee_poc/crypto-config/peerOrganizations/retailer.com/msp
+          Policies:
+            Readers:
+              Type: Signature
+              Rule: "OR('bigbazarMSP.member', 'bigbazarMSP.peer', 'bigbazarMSP.admin', 'bigbazarMSP.client')"
+            Writers:
+              Type: Signature
+              Rule: "OR('bigbazarMSP.member', 'bigbazarMSP.peer', 'bigbazarMSP.admin', 'bigbazarMSP.client')"
+            Admins:
+              Type: Signature
+              Rule: "OR('bigbazarMSP.admin')"
+            Endorsement:
+              Type: Signature
+              Rule: "OR('bigbazarMSP.peer', 'bigbazarMSP.admin')"
+          AnchorPeers:
+            Host: peerbb1.retailer.com
+            Port: 11051
+        - Name: tata
+          ID: tataMSP
+          MSPDir: /home/ubuntu/hyperledger/coffee_poc/crypto-config/peerOrganizations/manufacturer.com/msp
+          Policies:
+            Readers:
+              Type: Signature
+              Rule: "OR('tataMSP.member', 'tataMSP.peer', 'tataMSP.admin', 'tataMSP.client')"
+            Writers:
+              Type: Signature
+              Rule: "OR('tataMSP.member', 'tataMSP.peer', 'tataMSP.admin', 'tataMSP.client')"
+            Admins:
+              Type: Signature
+              Rule: "OR('tataMSP.admin')"
+            Endorsement:
+              Type: Signature
+              Rule: "OR('tataMSP.peer', 'tataMSP.admin')"
+          AnchorPeers:
+            Host: peertm1.manufacturer.com
+            Port: 9051

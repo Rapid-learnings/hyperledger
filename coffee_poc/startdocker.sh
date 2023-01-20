@@ -1,8 +1,11 @@
+ peer channel join -b /opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts/mfd-prd-genesis.block
 #!/bin/sh
 # starting the docker process
 export FABRIC_CFG_PATH=${PWD}/config
 
-sudo docker-compose -f ./docker/docker-compose-all.yaml up -d
+cd docker
+sudo docker-compose -f docker-compose-all.yaml up -d
+cd ..
 
 # starting different organizattions shell & creating channels
 
