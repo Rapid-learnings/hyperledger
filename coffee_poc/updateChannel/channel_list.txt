@@ -1,0 +1,4 @@
+[34m2023-01-27 12:10:34.682 UTC [channelCmd] InitCmdFactory -> INFO 001[0m Endorser and orderer connections initialized
+Channels peers has joined: 
+p-r-channel
+mfd-prd-channel

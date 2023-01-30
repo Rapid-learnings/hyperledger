@@ -71,6 +71,7 @@ whsRtlrChannel(){
     # create whs-rtlr channel
     echo "create whs-rtlr channel"
     sudo docker exec -it cli-warehouse-1 peer channel create -o orderer1.gov.io:7050 -c whs-rtlr-channel -f /opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts/whs-rtlr-channel.tx --outputBlock /opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts/whs-rtlr-genesis.block --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem
+
     sleep 10
 
     # Joining channel whs-2 peer

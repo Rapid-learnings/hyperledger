@@ -7,13 +7,13 @@ echo 'Enter peer secret'
 read SECRET
 echo 'Enter peer ca port'
 read CAPORT
-echo 'enter port for new peer'
+echo 'Enter port for new peer'
 read PORT
-echo 'enter bootstrap peer address'
+echo 'Enter bootstrap peer address'
 read BSPEER
-echo 'enter chaincode port'
+echo 'Enter chaincode port'
 read CCPORT
-echo 'enter couchdb port'
+echo 'Enter couchdb port'
 read DBPORT
 
 if [ $1 = production ]; 
@@ -168,5 +168,5 @@ echo '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 echo "Launching container $NAME.$1.com"
 echo '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'
 
-export COMPOSE_PROJECT_NAME=docker
+export COMPOSE_PROJECT_NAME=coffee
 sudo docker-compose -f ./$NAME.yaml up -d

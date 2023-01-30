@@ -4,7 +4,7 @@ Profiles:
       Organizations:
         - Name: bigbazar
           ID: bigbazarMSP
-          MSPDir: /home/ubuntu/hyperledger/coffee_poc/crypto-config/peerOrganizations/retailer.com/msp
+          MSPDir: /home/ubuntu/fabric/hyperledger/coffee_poc/updateChannel/../crypto-config/peerOrganizations/retailer.com/msp
           Policies:
             Readers:
               Type: Signature
@@ -21,22 +21,22 @@ Profiles:
           AnchorPeers:
             Host: peerbb1.retailer.com
             Port: 11051
-        - Name: tata
-          ID: tataMSP
-          MSPDir: /home/ubuntu/hyperledger/coffee_poc/crypto-config/peerOrganizations/manufacturer.com/msp
+        - Name: teafarm
+          ID: teafarmMSP
+          MSPDir: /home/ubuntu/fabric/hyperledger/coffee_poc/updateChannel/../crypto-config/peerOrganizations/production.com/msp
           Policies:
             Readers:
               Type: Signature
-              Rule: "OR('tataMSP.member', 'tataMSP.peer', 'tataMSP.admin', 'tataMSP.client')"
+              Rule: "OR('teafarmMSP.member', 'teafarmMSP.peer', 'teafarmMSP.admin', 'teafarmMSP.client')"
             Writers:
               Type: Signature
-              Rule: "OR('tataMSP.member', 'tataMSP.peer', 'tataMSP.admin', 'tataMSP.client')"
+              Rule: "OR('teafarmMSP.member', 'teafarmMSP.peer', 'teafarmMSP.admin', 'teafarmMSP.client')"
             Admins:
               Type: Signature
-              Rule: "OR('tataMSP.admin')"
+              Rule: "OR('teafarmMSP.admin')"
             Endorsement:
               Type: Signature
-              Rule: "OR('tataMSP.peer', 'tataMSP.admin')"
+              Rule: "OR('teafarmMSP.peer', 'teafarmMSP.admin')"
           AnchorPeers:
-            Host: peertm1.manufacturer.com
-            Port: 9051
+            Host: peertf1.production.com
+            Port: 8051
