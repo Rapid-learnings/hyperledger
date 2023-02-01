@@ -8,7 +8,7 @@
 3. **tatastore** : works as warehouse
 4. **bigbazar** : works as retail seller
 
-![](/home/ubuntu/fabric/hyperledger/coffee_poc/assets/mermaid-diagram-2023-01-31-133719.png)
+![](https://github.com/Rapid-learnings/hyperledger/blob/mrasheed/coffee_poc/assets/mermaid-diagram-2023-01-31-133719.png)
 
 ### About POC ###
 
