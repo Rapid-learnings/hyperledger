@@ -103,38 +103,3 @@ sudo docker-compose down
 cd api-ts
 node index
 ```
-
-
-### FABRIC-CA ###
-
-In order to generate certificates for the peers and organisations as a whole we must set up the Certificate Authorities for each organisation.
-
-Each organisation must have atleast 2 CAs
-    - an Enrollment CA
-    - a TLS CA
-
-The Enrollment CA is responsible for the generation of IDs that are consumed by the Membersip service providers (MSP) and the TLS CA is used to generate the tls certificates for the cross peer communication and tls handshakes.
-
-Within the scripts that generate the certificates we first define the the CA server specs in yaml and launch it as a docker container. We then pass the required commands to register thr CA admin (already bootstrapped to the CA, so no need to enroll) then we need to enroll and register the peers, users and organisational admins
-
-### Building the Network ###
-
-The building of the network consists of 4 steps:
-1. Generating crypto materials using a Certificate Authority
-2. Creating the artifacts for the Genesis block for the system channel and peer channels and achor peer transactions
-3. writing the yaml configuration for the docker containers running the peer and orderer nodes and deploying using docker-compose
-4. Once the containers are up use the genesis block artifacts to start and join the each peer to their respective channel and update anchor peers using the peer cli
-
-### Deploying ChainCodes ###
-
-Now the network is up and running but we must install the necessary chaincodes to the peers of the concerned channels
-
-Steps to deploy the chaincode:
-1. package chaincode into a tar.gz file, this can be done by one or all orgs in the respective channel.
-2. install the tar file in each of the peer nodes
-3. Once all the peers have installed the chaincode each org must approve the chaincode
-4. Once all the approvals have been given the chaincode is ready to be committed by the nodes
-5. after commiting the chaincodes it must be initialised by any of the channel members.
-
-Chaincodes are successfully deployed on the channels.
-
