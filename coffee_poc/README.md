@@ -1,3 +1,5 @@
+![Project Logo](./assets/Rapid%20Logo.jpeg)
+
 # Coffee POC
 
 > Note : This repo uses fabric binaries & docker images of version 2.2
@@ -8,7 +10,48 @@
 3. **tatastore** : works as warehouse
 4. **bigbazar** : works as retail seller
 
-![](https://github.com/Rapid-learnings/hyperledger/blob/mrasheed/coffee_poc/assets/mermaid-diagram-2023-01-31-133719.png)
+```mermaid
+flowchart LR;
+    id0((Orderer));
+    id00((Orderer));
+    id000((Orderer));
+    id1((producer));
+    id2((manufacturer));
+    id3((warehouse));
+    id4((retailer));
+    peertf1((peer1));
+    peertm1((peer1));
+    peerts1((peer1));
+    peerbb1((peer1));
+    peertf2((peer2));
+    peertm2((peer2));
+    peerts2((peer2));
+    peerbb2((peer2));
+    gov((governance org));
+    gov --> id0;
+    gov --> id00;
+    gov --> id000;
+    peertf1 --> id1;
+    peertf2 --> id1
+    peertm1 --> id2;
+    peertm2 --> id2;
+    peerts1 --> id3;
+    peerts2 --> id3;
+    peerbb1 --> id4;
+    peerbb2 --> id4;
+    id0 --> id1;
+    id1 --> id0;
+    id0 --> id2;
+    id2 --> id0;
+    id2 --> id00;
+    id00 --> id2;
+    id00 --> id3;
+    id3 --> id00;
+    id3 --> id000;
+    id000 --> id3;
+    id4 --> id000;
+    id000 --> id4;
+```
 
 ### About POC ###
 
@@ -27,17 +70,40 @@ here the first 4 organisations runs peer nodes while the government organisation
 there also exists by default the system channel called 'orderer-channel' which contains the orderer nodes and the Consortium organisation. In Fabric only members of a certain Consortium can create channels.
 
 ### Steps to run the network ###
+***To start the network***
+```bash
+./run.sh
+```
+The above command will:
+1. generate crypto materials
+2. create channels
+3. start containers
+4. join channels
+5. deploy chaincodes
 
-In order to run the network run the ./run.sh script on the terminal. This will do multiple operations:
-1. Start the CA servers and create crypto materials.
-2. Deploy peer and orderer nodes with their state db's and cli's.
-3. Create and join the respective organisations to their respective channels and update anchor peers.
-4. Deploy and initalise chaincodes on each channel.
+***To shut down the network***
+```bash
+./networkDown.sh
+```
 
-To run explorer 
+***To run explorer***
+```bash
 cd explorer
 sudo docker-compose up
+```
 login and password for each org can be found under adminCredential inside the json file inside the organisations config folder
+
+***To shut down explorers***
+```bash
+sudo docker-compose down
+```
+
+***To run API***
+```bash
+cd api-ts
+node index
+```
+
 
 ### FABRIC-CA ###
 
