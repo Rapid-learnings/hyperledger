@@ -101,5 +101,5 @@ sudo docker-compose down
 ***To run API***
 ```bash
 cd api-ts
-node index
+npm start
 ```
