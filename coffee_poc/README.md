@@ -10,48 +10,7 @@
 3. **tatastore** : works as warehouse
 4. **bigbazar** : works as retail seller
 
-```mermaid
-flowchart LR;
-    id0((Orderer));
-    id00((Orderer));
-    id000((Orderer));
-    id1((producer));
-    id2((manufacturer));
-    id3((warehouse));
-    id4((retailer));
-    peertf1((peer1));
-    peertm1((peer1));
-    peerts1((peer1));
-    peerbb1((peer1));
-    peertf2((peer2));
-    peertm2((peer2));
-    peerts2((peer2));
-    peerbb2((peer2));
-    gov((governance org));
-    gov --> id0;
-    gov --> id00;
-    gov --> id000;
-    peertf1 --> id1;
-    peertf2 --> id1
-    peertm1 --> id2;
-    peertm2 --> id2;
-    peerts1 --> id3;
-    peerts2 --> id3;
-    peerbb1 --> id4;
-    peerbb2 --> id4;
-    id0 --> id1;
-    id1 --> id0;
-    id0 --> id2;
-    id2 --> id0;
-    id2 --> id00;
-    id00 --> id2;
-    id00 --> id3;
-    id3 --> id00;
-    id3 --> id000;
-    id000 --> id3;
-    id4 --> id000;
-    id000 --> id4;
-```
+![](./assets/coffeePOC.png)
 
 ### About POC ###
 

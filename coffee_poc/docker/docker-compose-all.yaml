@@ -35,6 +35,7 @@ services:
 
   couchdb0:
     container_name: couchdb0
+    
     image: hyperledger/fabric-couchdb
     environment:
       - COUCHDB_USER=admin
