@@ -8,6 +8,8 @@
 3. **tatastore** : works as warehouse
 4. **bigbazar** : works as retail seller
 
+![](/home/ubuntu/fabric/hyperledger/coffee_poc/assets/mermaid-diagram-2023-01-31-133719.png)
+
 ### About POC ###
 
 Here in this POC we have built and deployed nodes for a total of five organisations :-
@@ -18,9 +20,9 @@ Here in this POC we have built and deployed nodes for a total of five organisati
 5. **governance** : works as government regulator
 
 here the first 4 organisations runs peer nodes while the government organisation runs the orderer nodes. the nodes in the network can transact with each other through their specified channels that have been implemented:-
-1. mfd-prd-channel : channel between the producer and manufacturer
-2. mfd-whs-channel : channel between the producer and warehouse
-3. whs-rtlr-channel : channel between the warehouse and retailer
+1. **mfd-prd-channel** : channel between the producer and manufacturer
+2. **mfd-whs-channel** : channel between the producer and warehouse
+3. **whs-rtlr-channel** : channel between the warehouse and retailer
 
 there also exists by default the system channel called 'orderer-channel' which contains the orderer nodes and the Consortium organisation. In Fabric only members of a certain Consortium can create channels.
 
@@ -31,6 +33,11 @@ In order to run the network run the ./run.sh script on the terminal. This will d
 2. Deploy peer and orderer nodes with their state db's and cli's.
 3. Create and join the respective organisations to their respective channels and update anchor peers.
 4. Deploy and initalise chaincodes on each channel.
+
+To run explorer 
+cd explorer
+sudo docker-compose up
+login and password for each org can be found under adminCredential inside the json file inside the organisations config folder
 
 ### FABRIC-CA ###
 
@@ -64,3 +71,4 @@ Steps to deploy the chaincode:
 5. after commiting the chaincodes it must be initialised by any of the channel members.
 
 Chaincodes are successfully deployed on the channels.
+

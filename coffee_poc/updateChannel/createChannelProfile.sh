@@ -179,7 +179,7 @@ then
         configtxgen -profile newProfile -outputAnchorPeersUpdate ../channel-artifacts/${CHANNEL_NAME}_${ORG_NAME}_anchor.tx -channelID $CHANNEL_NAME -asOrg $ORG_NAME
         
         echo 'Updating anchor peer to '$CHANNEL_NAME''
-        sudo docker exec -it cli-$ORG_LEVEL-1 peer channel update -o orderer1.gov.io:7050 --channelID $CHANNEL_NAME -f /opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts/${CHANNEL_NAME}_${ORG_NAME}.tx --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem
+        sudo docker exec -it cli-$ORG_LEVEL-1 peer channel update -o orderer1.gov.io:7050 --channelID $CHANNEL_NAME -f /opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts/${CHANNEL_NAME}_${ORG_NAME}_anchor.tx --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem
     fi
 
 

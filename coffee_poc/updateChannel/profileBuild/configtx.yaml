@@ -54,25 +54,25 @@ Profiles:
           AnchorPeers:
             Host: peerbb1.retailer.com
             Port: 11051
-        - Name: teafarm
-          ID: teafarmMSP
-          MSPDir: /home/ubuntu/fabric/hyperledger/coffee_poc/updateChannel/../crypto-config/peerOrganizations/production.com/msp
+        - Name: tata
+          ID: tataMSP
+          MSPDir: /home/ubuntu/fabric/hyperledger/coffee_poc/updateChannel/../crypto-config/peerOrganizations/manufacturer.com/msp
           Policies:
             Readers:
               Type: Signature
-              Rule: "OR('teafarmMSP.member', 'teafarmMSP.peer', 'teafarmMSP.admin', 'teafarmMSP.client')"
+              Rule: "OR('tataMSP.member', 'tataMSP.peer', 'tataMSP.admin', 'tataMSP.client')"
             Writers:
               Type: Signature
-              Rule: "OR('teafarmMSP.member', 'teafarmMSP.peer', 'teafarmMSP.admin', 'teafarmMSP.client')"
+              Rule: "OR('tataMSP.member', 'tataMSP.peer', 'tataMSP.admin', 'tataMSP.client')"
             Admins:
               Type: Signature
-              Rule: "OR('teafarmMSP.admin')"
+              Rule: "OR('tataMSP.admin')"
             Endorsement:
               Type: Signature
-              Rule: "OR('teafarmMSP.peer', 'teafarmMSP.admin')"
+              Rule: "OR('tataMSP.peer', 'tataMSP.admin')"
           AnchorPeers:
-            Host: peertf1.production.com
-            Port: 8051
+            Host: peertm1.manufacturer.com
+            Port: 9051
       Policies:
         LifecycleEndorsement:
           Type: ImplicitMeta
