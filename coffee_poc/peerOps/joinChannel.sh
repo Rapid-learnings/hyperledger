@@ -8,7 +8,7 @@ echo 'Enter peers port'
 read PORT
 echo 'Enter channel name'
 read CHANNEL_NAME
-echo 'Want to submit as anchor (y/n)'
+echo 'Want to submit as anchor peer (y/n)'
 read res
 
 ORDERER_CA="/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/gov.io/orderers/orderer1.gov.io/msp/tlscacerts/tlsca.gov.io-cert.pem"
@@ -23,7 +23,8 @@ elif [ $CHANNEL_NAME = whs-rtlr-channel ];
 then
     GENESIS=whs-rtlr-genesis.block
 else    
-    exit 'incorrect channel name'
+    exit 'Incorrect channel name'
+    exit
 fi
 
 echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"

@@ -68,7 +68,6 @@ createAnchorPeers(){
     echo "*================Creating anchor peers for warehouse & Retailer================================*"
     configtxgen -profile warehouseRetailerProfile -outputAnchorPeersUpdate ./channel-artifacts/whs-anchor-2.tx -channelID whs-rtlr-channel -asOrg tatastore
     configtxgen -profile warehouseRetailerProfile -outputAnchorPeersUpdate ./channel-artifacts/rtlr-anchor-1.tx -channelID whs-rtlr-channel -asOrg bigbazar
-
 }
 
 

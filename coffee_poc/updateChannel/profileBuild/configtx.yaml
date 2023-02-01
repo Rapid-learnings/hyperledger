@@ -37,7 +37,7 @@ Profiles:
       Organizations:
         - Name: bigbazar
           ID: bigbazarMSP
-          MSPDir: /home/ubuntu/hyperledger/coffee_poc/crypto-config/peerOrganizations/retailer.com/msp
+          MSPDir: /home/ubuntu/fabric/hyperledger/coffee_poc/updateChannel/../crypto-config/peerOrganizations/retailer.com/msp
           Policies:
             Readers:
               Type: Signature
@@ -56,7 +56,7 @@ Profiles:
             Port: 11051
         - Name: tata
           ID: tataMSP
-          MSPDir: /home/ubuntu/hyperledger/coffee_poc/crypto-config/peerOrganizations/manufacturer.com/msp
+          MSPDir: /home/ubuntu/fabric/hyperledger/coffee_poc/updateChannel/../crypto-config/peerOrganizations/manufacturer.com/msp
           Policies:
             Readers:
               Type: Signature
