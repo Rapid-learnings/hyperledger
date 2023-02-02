@@ -35,7 +35,7 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - 1_pgdata:/var/lib/postgresql/data
+      - ../persistence-data/1_pgdata:/var/lib/postgresql/data
     networks:
       - test
 
@@ -55,7 +55,7 @@ services:
     ports:
       - 5433:5433
     volumes:
-      - 2_pgdata:/var/lib/postgresql/data
+      - ../persistence-data/2_pgdata:/var/lib/postgresql/data
     networks:
       - test
 
@@ -75,7 +75,7 @@ services:
     ports:
       - 5434:5434
     volumes:
-      - 3_pgdata:/var/lib/postgresql/data
+      - ../persistence-data/3_pgdata:/var/lib/postgresql/data
     networks:
       - test
 
@@ -95,7 +95,7 @@ services:
     ports:
       - 5435:5435
     volumes:
-      - 4_pgdata:/var/lib/postgresql/data
+      - ../persistence-data/4_pgdata:/var/lib/postgresql/data
     networks:
       - test
 
@@ -118,7 +118,7 @@ services:
       - ./bigbazar-config.json:/opt/explorer/app/platform/fabric/config.json
       - ./bigbazar-config:/opt/explorer/app/platform/fabric/connection-profile
       - ../crypto-config:/tmp/crypto
-      - retailer_walletstore:/opt/explorer/wallet
+      - ../persistence-data/retailer_walletstore:/opt/explorer/wallet
     ports:
       - 8000:8000
     depends_on:
@@ -146,7 +146,7 @@ services:
       - ./teafarm-config.json:/opt/explorer/app/platform/fabric/config.json
       - ./teafarm-config:/opt/explorer/app/platform/fabric/connection-profile
       - ../crypto-config:/tmp/crypto
-      - production_walletstore:/opt/explorer/wallet
+      - ../persistence-data/production_walletstore:/opt/explorer/wallet
     ports:
       - 8001:8001
     depends_on:
@@ -174,7 +174,7 @@ services:
       - ./tata-config.json:/opt/explorer/app/platform/fabric/config.json
       - ./tata-config:/opt/explorer/app/platform/fabric/connection-profile
       - ../crypto-config:/tmp/crypto
-      - manufacturer_walletstore:/opt/explorer/wallet
+      - ../persistence-data/manufacturer_walletstore:/opt/explorer/wallet
     ports:
       - 8002:8002
     depends_on:
@@ -202,7 +202,7 @@ services:
       - ./tatastore-config.json:/opt/explorer/app/platform/fabric/config.json
       - ./tatastore-config:/opt/explorer/app/platform/fabric/connection-profile
       - ../crypto-config:/tmp/crypto
-      - warehouse_walletstore:/opt/explorer/wallet
+      - ../persistence-data/warehouse_walletstore:/opt/explorer/wallet
     ports:
       - 8003:8003
     depends_on:
